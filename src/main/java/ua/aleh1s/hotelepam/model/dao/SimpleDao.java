@@ -1,0 +1,32 @@
+package ua.aleh1s.hotelepam.model.dao;
+
+import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+import java.util.Optional;
+
+import static java.util.Objects.nonNull;
+
+public abstract class SimpleDao<K, E> {
+    protected Connection connection;
+    public abstract Optional<E> findById(K id);
+    public abstract List<E> getAll();
+    public abstract int delete(E entity);
+    public abstract int update(E entity);
+    public abstract int save(E entity);
+    public void close(Statement statement) throws DaoException {
+        if (nonNull(statement)) {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                throw new DaoException(e);
+            }
+        }
+    }
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+}
