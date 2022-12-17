@@ -1,0 +1,5 @@
+1,test_login_1,test_password_1,UTC,en,CUSTOMER
+2,test_login_2,test_password_2,UTC,en,MANAGER
+3,test_login_3,test_password_3,UTC,en,CUSTOMER
+4,test_login_4,test_password_4,UTC,en,MANAGER
+5,test_login_5,test_password_5,UTC,en,CUSTOMER
