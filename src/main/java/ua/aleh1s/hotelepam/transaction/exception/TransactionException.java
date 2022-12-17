@@ -1,4 +1,4 @@
-package ua.aleh1s.hotelepam.database.exception;
+package ua.aleh1s.hotelepam.jdbc.exception;
 
 public class TransactionException extends JdbcException {
     public TransactionException() {

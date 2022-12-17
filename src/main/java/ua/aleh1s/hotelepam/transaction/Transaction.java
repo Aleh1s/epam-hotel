@@ -1,7 +1,7 @@
-package ua.aleh1s.hotelepam.database;
+package ua.aleh1s.hotelepam.jdbc;
 
-import com.zaxxer.hikari.HikariDataSource;
-import ua.aleh1s.hotelepam.database.exception.TransactionException;
+import ua.aleh1s.hotelepam.jdbc.exception.JdbcException;
+import ua.aleh1s.hotelepam.jdbc.exception.TransactionException;
 import ua.aleh1s.hotelepam.model.dao.SimpleDao;
 
 import java.sql.Connection;
@@ -10,12 +10,11 @@ import java.sql.SQLException;
 import static java.util.Objects.isNull;
 
 public class Transaction implements AutoCloseable {
+    private final DatabaseManager databaseManager;
     private Connection connection;
-    private final HikariDataSource dataSource;
 
     private Transaction() {
-        DBManager dbManager = DBManager.getInstance();
-        this.dataSource = dbManager.getDataSource();
+        this.databaseManager = DatabaseManagerFactory.getManager();
     }
 
     public static Transaction start(SimpleDao<?, ?> dao, SimpleDao<?, ?>... daos)
@@ -66,8 +65,8 @@ public class Transaction implements AutoCloseable {
     private void openConnection() throws TransactionException {
         if (isNull(connection)) {
             try {
-                this.connection = dataSource.getConnection();
-            } catch (SQLException e) {
+                this.connection = databaseManager.getConnection();
+            } catch (JdbcException e) {
                 throw new TransactionException(e);
             }
         }

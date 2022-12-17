@@ -1,4 +1,4 @@
-package ua.aleh1s.hotelepam.database.exception;
+package ua.aleh1s.hotelepam.jdbc.exception;
 
 import ua.aleh1s.hotelepam.exception.ApplicationException;
 
