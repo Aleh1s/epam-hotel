@@ -1,8 +1,10 @@
-package ua.aleh1s.hotelepam.jdbc;
+package ua.aleh1s.hotelepam.transaction;
 
+import ua.aleh1s.hotelepam.jdbc.DatabaseManager;
+import ua.aleh1s.hotelepam.jdbc.DatabaseManagerFactory;
 import ua.aleh1s.hotelepam.jdbc.exception.JdbcException;
-import ua.aleh1s.hotelepam.jdbc.exception.TransactionException;
 import ua.aleh1s.hotelepam.model.dao.SimpleDao;
+import ua.aleh1s.hotelepam.transaction.exception.TransactionException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -14,7 +16,7 @@ public class Transaction implements AutoCloseable {
     private Connection connection;
 
     private Transaction() {
-        this.databaseManager = DatabaseManagerFactory.getManager();
+        this.databaseManager = DatabaseManagerFactory.INSTANCE.getDatabaseManager();
     }
 
     public static Transaction start(SimpleDao<?, ?> dao, SimpleDao<?, ?>... daos)

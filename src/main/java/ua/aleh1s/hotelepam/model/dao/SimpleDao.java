@@ -12,11 +12,11 @@ import static java.util.Objects.nonNull;
 
 public abstract class SimpleDao<K, E> {
     protected Connection connection;
-    public abstract Optional<E> findById(K id);
-    public abstract List<E> getAll();
-    public abstract int delete(E entity);
-    public abstract int update(E entity);
-    public abstract int save(E entity);
+    public abstract Optional<E> findBy(K id) throws DaoException;
+    public abstract List<E> getAll() throws DaoException;
+    public abstract int delete(E entity) throws DaoException;
+    public abstract int update(E entity) throws DaoException;
+    public abstract E create(E entity) throws DaoException;
     public void close(Statement statement) throws DaoException {
         if (nonNull(statement)) {
             try {
