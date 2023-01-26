@@ -6,21 +6,39 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.aleh1s.hotelepam.jdbc.exception.JdbcException;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.Properties;
 
 import static ua.aleh1s.hotelepam.Constant.DATABASE_PROPERTIES;
 
-public class MainDatabaseManager extends DatabaseManager {
-    private static final Logger LOGGER = LogManager.getLogger(MainDatabaseManager.class);
+public class DBManager {
+    private static final Logger LOGGER = LogManager.getLogger(DBManager.class);
+    private static DBManager INSTANCE;
+    private DataSource dataSource;
 
-    MainDatabaseManager() {
+    private DBManager() {
         LOGGER.trace("DBManager initialization...");
-        initDataSource();
+        initialize();
         LOGGER.trace("DBManager initialized");
+    }
+
+    public static synchronized DBManager getInstance() {
+        if (Objects.isNull(INSTANCE))
+            INSTANCE = new DBManager();
+        return INSTANCE;
+    }
+
+    private void initialize() {
+        LOGGER.trace("Data source initialization...");
+        Properties properties = loadProperties();
+        HikariConfig config = new HikariConfig(properties);
+        this.dataSource = new HikariDataSource(config);
+        LOGGER.trace("Data source initialized");
     }
 
     public synchronized void shutdown() {
@@ -29,20 +47,12 @@ public class MainDatabaseManager extends DatabaseManager {
         LOGGER.trace("Shutdown data source is completed");
     }
 
-    public Connection getConnection() throws JdbcException {
+    public synchronized Connection getConnection() throws JdbcException {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
             throw new JdbcException(e);
         }
-    }
-
-    private void initDataSource() {
-        LOGGER.trace("Data source initialization...");
-        Properties properties = loadProperties();
-        HikariConfig config = new HikariConfig(properties);
-        this.dataSource = new HikariDataSource(config);
-        LOGGER.trace("Data source initialized");
     }
 
     private Properties loadProperties() {

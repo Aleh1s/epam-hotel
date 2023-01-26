@@ -1,8 +1,7 @@
 package ua.aleh1s.hotelepam.jdbc.exception;
 
-import ua.aleh1s.hotelepam.exception.ApplicationException;
+public class JdbcException extends Exception {
 
-public class JdbcException extends ApplicationException {
     public JdbcException() {
     }
 
