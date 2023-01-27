@@ -5,13 +5,13 @@ import org.apache.logging.log4j.Logger;
 import ua.aleh1s.hotelepam.model.dao.SimpleDao;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
-import ua.aleh1s.hotelepam.model.mapper.sql.exception.SqlEntityMapperException;
-import ua.aleh1s.hotelepam.model.mapper.sql.impl.SqlUserEntityMapper;
+import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
+import ua.aleh1s.hotelepam.model.mapper.impl.SqlUserEntityMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.sql.Statement;
 import java.util.Optional;
 
 import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
@@ -28,22 +28,13 @@ public class UserSimpleDao extends SimpleDao<String, UserEntity> {
             Optional<UserEntity> userEntityOptional;
             try (ResultSet resultSet = statement.executeQuery()) {
                 SqlUserEntityMapper userMapper = new SqlUserEntityMapper();
-                userEntityOptional = userMapper.mapOne(resultSet);
+                userEntityOptional = userMapper.map(resultSet);
             }
-            log.trace("User entity with login {} is found", login);
+            if (userEntityOptional.isPresent())
+                log.trace("User entity with login {} is found", login);
+            else
+                log.trace("User entity with login {} is not found", login);
             return userEntityOptional;
-        } catch (SQLException | SqlEntityMapperException e) {
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
-    public List<UserEntity> getAll() throws DaoException {
-        log.trace("Get all user entities");
-        try (PreparedStatement statement = connection.prepareStatement(USER_SELECT_ALL);
-             ResultSet resultSet = statement.executeQuery()) {
-            SqlUserEntityMapper userMapper = new SqlUserEntityMapper();
-            return userMapper.mapAll(resultSet);
         } catch (SQLException | SqlEntityMapperException e) {
             throw new DaoException(e);
         }
@@ -89,15 +80,25 @@ public class UserSimpleDao extends SimpleDao<String, UserEntity> {
     }
 
     @Override
-    public UserEntity create(UserEntity entity) throws DaoException {
+    public UserEntity save(UserEntity entity) throws DaoException {
         log.trace("Create user with login {}", entity.getLogin());
-        try (PreparedStatement statement = connection.prepareStatement(USER_INSERT)) {
+        try (PreparedStatement statement = connection.prepareStatement(USER_INSERT,
+                Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getLogin());
             statement.setString(2, entity.getPassword());
             statement.setString(3, entity.getTimezone().getId());
             statement.setString(4, entity.getLocale().getLanguage());
             statement.setString(5, entity.getRole().name());
             statement.executeUpdate();
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    entity.setId(generatedKeys.getLong(1));
+                } else {
+                    throw new DaoException("Generated key does not exist");
+                }
+            }
+
             log.trace("User with login {} was created", entity.getLogin());
         } catch (SQLException e) {
             throw new DaoException(e);
