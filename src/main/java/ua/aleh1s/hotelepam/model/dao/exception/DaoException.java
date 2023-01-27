@@ -1,8 +1,6 @@
 package ua.aleh1s.hotelepam.model.dao.exception;
 
-import ua.aleh1s.hotelepam.exception.ApplicationException;
-
-public class DaoException extends ApplicationException {
+public class DaoException extends Exception {
     public DaoException() {
 
     }
