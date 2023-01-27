@@ -1,9 +1,9 @@
-package ua.aleh1s.hotelepam.model.mapper.impl.sql.impl;
+package ua.aleh1s.hotelepam.model.mapper.impl;
 
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
-import ua.aleh1s.hotelepam.model.entity.role.UserRole;
-import ua.aleh1s.hotelepam.model.mapper.exception.EntityMapperException;
-import ua.aleh1s.hotelepam.model.mapper.impl.sql.SqlEntityMapper;
+import ua.aleh1s.hotelepam.model.entity.UserRole;
+import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
+import ua.aleh1s.hotelepam.model.mapper.SqlEntityMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,12 +16,12 @@ import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
 public class SqlUserEntityMapper implements SqlEntityMapper<UserEntity> {
 
     @Override
-    public Optional<UserEntity> map(ResultSet resultSet) throws EntityMapperException {
+    public Optional<UserEntity> map(ResultSet resultSet) throws SqlEntityMapperException {
         try {
             if (resultSet.next())
                 return Optional.of(buildUserEntity(resultSet));
         } catch (SQLException e) {
-            throw new EntityMapperException(e);
+            throw new SqlEntityMapperException(e);
         }
         return Optional.empty();
     }
