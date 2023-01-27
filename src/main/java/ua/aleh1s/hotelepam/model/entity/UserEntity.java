@@ -1,7 +1,5 @@
 package ua.aleh1s.hotelepam.model.entity;
 
-import ua.aleh1s.hotelepam.model.entity.role.UserRole;
-
 import java.time.ZoneId;
 import java.util.Locale;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package ua.aleh1s.hotelepam.model.entity.role;
+package ua.aleh1s.hotelepam.model.entity;
 
 public enum UserRole {
     CUSTOMER,
