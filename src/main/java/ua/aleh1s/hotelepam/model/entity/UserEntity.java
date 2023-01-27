@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class UserEntity {
     private Long id;
-    private String login;
+    private String email;
     private String password;
     private ZoneId timezone;
     private Locale locale;
@@ -14,13 +14,13 @@ public class UserEntity {
 
     public UserEntity(
             Long id,
-            String login,
+            String email,
             String password,
             ZoneId timezone,
             Locale locale,
             UserRole role) {
         this.id = id;
-        this.login = login;
+        this.email = email;
         this.password = password;
         this.timezone = timezone;
         this.locale = locale;
@@ -29,7 +29,7 @@ public class UserEntity {
 
     public static class Builder {
         private Long id;
-        private String login;
+        private String email;
         private String password;
         private ZoneId timezone;
         private Locale locale;
@@ -46,8 +46,8 @@ public class UserEntity {
             return this;
         }
 
-        public Builder login(String login) {
-            this.login = login;
+        public Builder email(String email) {
+            this.email = email;
             return this;
         }
 
@@ -72,7 +72,7 @@ public class UserEntity {
         }
 
         public UserEntity build() {
-            return new UserEntity(id, login, password, timezone, locale, role);
+            return new UserEntity(id, email, password, timezone, locale, role);
         }
     }
 
@@ -84,12 +84,12 @@ public class UserEntity {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -130,7 +130,7 @@ public class UserEntity {
         if (!(o instanceof UserEntity that)) return false;
 
         if (!Objects.equals(id, that.id)) return false;
-        if (!Objects.equals(login, that.login)) return false;
+        if (!Objects.equals(email, that.email)) return false;
         if (!Objects.equals(password, that.password)) return false;
         if (!Objects.equals(timezone, that.timezone)) return false;
         if (!Objects.equals(locale, that.locale)) return false;
@@ -140,7 +140,7 @@ public class UserEntity {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (timezone != null ? timezone.hashCode() : 0);
         result = 31 * result + (locale != null ? locale.hashCode() : 0);
@@ -152,7 +152,7 @@ public class UserEntity {
     public String toString() {
         final StringBuffer sb = new StringBuffer("UserEntity{");
         sb.append("id=").append(id);
-        sb.append(", login='").append(login).append('\'');
+        sb.append(", email='").append(email).append('\'');
         sb.append(", password='").append(password).append('\'');
         sb.append(", timezone=").append(timezone);
         sb.append(", locale=").append(locale);

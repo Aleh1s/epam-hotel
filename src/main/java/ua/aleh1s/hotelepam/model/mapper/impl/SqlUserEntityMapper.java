@@ -29,7 +29,7 @@ public class SqlUserEntityMapper implements SqlEntityMapper<UserEntity> {
     private UserEntity buildUserEntity(ResultSet resultSet) throws SQLException {
         return UserEntity.Builder.newBuilder()
                 .id(resultSet.getLong(USER_ID))
-                .login(resultSet.getString(USER_LOGIN))
+                .email(resultSet.getString(USER_EMAIL))
                 .password(resultSet.getString(USER_PASSWORD))
                 .timezone(ZoneId.of(resultSet.getString(USER_TIMEZONE)))
                 .locale(new Locale(resultSet.getString(USER_LOCALE)))

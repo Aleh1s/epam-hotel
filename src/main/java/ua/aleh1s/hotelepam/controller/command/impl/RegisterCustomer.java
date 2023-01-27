@@ -24,7 +24,7 @@ public class RegisterCustomer implements Command {
 
     @Override
     public Result execute(HttpServletRequest request, HttpServletResponse response) {
-        String login = request.getParameter("login");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
         String zoneOffsetStr = request.getParameter("timezoneOffset");
         ZoneId timezone = ZoneId.ofOffset("UTC", ZoneOffset.of(zoneOffsetStr));
@@ -35,20 +35,20 @@ public class RegisterCustomer implements Command {
         String errorMessage;
         String page = Path.REGISTRATION_PAGE.getPath();
 
-        if (userRepository.findByLogin(login).isPresent()) {
-            errorMessage = String.format("User with login %s already exists", login);
+        if (userRepository.findByEmail(email).isPresent()) {
+            errorMessage = String.format("User with email %s already exists", email);
             request.setAttribute("errorMessage", errorMessage);
             return Result.of(page, false);
         }
 
-        Locale locale = Locale.ENGLISH;
+        Locale defaultLocale = Locale.ENGLISH;
         UserRole userRole = UserRole.CUSTOMER;
 
         UserEntity user = UserEntity.Builder.newBuilder()
-                .login(login)
+                .email(email)
                 .password(password)
                 .timezone(timezone)
-                .locale(locale)
+                .locale(defaultLocale)
                 .role(userRole)
                 .build();
 
@@ -62,7 +62,7 @@ public class RegisterCustomer implements Command {
         Long userId = user.getId();
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
-        String email = request.getParameter("email");
+//        String email = request.getParameter("email");
 
         CustomerEntity customer = CustomerEntity.Builder.newBuilder()
                 .firstName(firstName)
@@ -78,12 +78,11 @@ public class RegisterCustomer implements Command {
         }
 
         CustomerDto customerDto = CustomerDto.Builder.newBuilder()
-                .login(login)
+                .email(email)
                 .firstName(firstName)
                 .lastName(lastName)
-                .email(email)
                 .timezone(timezone)
-                .locale(locale)
+                .locale(defaultLocale)
                 .role(userRole)
                 .locale(user.getLocale())
                 .timezone(user.getTimezone())

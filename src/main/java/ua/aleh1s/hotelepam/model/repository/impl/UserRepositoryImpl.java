@@ -17,7 +17,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<UserEntity> findByLogin(String login) {
-        return runInsideTransactionWithReturn(dao -> dao.findBy(login).orElse(null), new UserSimpleDao());
+    public Optional<UserEntity> findByEmail(String email) {
+        return runInsideTransactionWithReturn(dao -> dao.findBy(email).orElse(null), new UserSimpleDao());
     }
 }

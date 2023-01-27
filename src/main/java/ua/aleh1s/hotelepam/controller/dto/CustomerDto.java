@@ -9,10 +9,9 @@ import java.util.Locale;
 
 public class CustomerDto {
 
-    private final String login;
+    private final String email;
     private final String firstName;
     private final String lastName;
-    private final String email;
     private final String country;
     private final ZonedDateTime dateOfBirth;
     private final Gender gender;
@@ -21,20 +20,18 @@ public class CustomerDto {
     private final UserRole role;
 
     private CustomerDto(
-            String login,
+            String email,
             String firstName,
             String lastName,
-            String email,
             String country,
             ZonedDateTime dateOfBirth,
             Gender gender,
             ZoneId timezone,
             Locale locale,
             UserRole role) {
-        this.login = login;
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.country = country;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
@@ -44,10 +41,9 @@ public class CustomerDto {
     }
 
     public static class Builder {
-        private String login;
+        private String email;
         private String firstName;
         private String lastName;
-        private String email;
         private String country;
         private ZonedDateTime dateOfBirth;
         private Gender gender;
@@ -60,11 +56,6 @@ public class CustomerDto {
 
         public static Builder newBuilder() {
             return new Builder();
-        }
-
-        public Builder login(String login) {
-            this.login = login;
-            return this;
         }
 
         public Builder firstName(String firstName) {
@@ -113,13 +104,10 @@ public class CustomerDto {
         }
 
         public CustomerDto build() {
-            return new CustomerDto(login, firstName, lastName, email, country, dateOfBirth, gender, timezone, locale, role);
+            return new CustomerDto(email, firstName, lastName, country, dateOfBirth, gender, timezone, locale, role);
         }
     }
 
-    public String getLogin() {
-        return login;
-    }
 
     public String getFirstName() {
         return firstName;
