@@ -12,9 +12,7 @@ public class CustomerDto {
     private final String email;
     private final String firstName;
     private final String lastName;
-    private final String country;
-    private final ZonedDateTime dateOfBirth;
-    private final Gender gender;
+    private final String phoneNumber;
     private final ZoneId timezone;
     private final Locale locale;
     private final UserRole role;
@@ -23,18 +21,14 @@ public class CustomerDto {
             String email,
             String firstName,
             String lastName,
-            String country,
-            ZonedDateTime dateOfBirth,
-            Gender gender,
+            String phoneNumber,
             ZoneId timezone,
             Locale locale,
             UserRole role) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.country = country;
-        this.dateOfBirth = dateOfBirth;
-        this.gender = gender;
+        this.phoneNumber = phoneNumber;
         this.timezone = timezone;
         this.locale = locale;
         this.role = role;
@@ -44,9 +38,7 @@ public class CustomerDto {
         private String email;
         private String firstName;
         private String lastName;
-        private String country;
-        private ZonedDateTime dateOfBirth;
-        private Gender gender;
+        private String phoneNumber;
         private ZoneId timezone;
         private Locale locale;
         private UserRole role;
@@ -88,23 +80,13 @@ public class CustomerDto {
             return this;
         }
 
-        public Builder country(String country) {
-            this.country = country;
-            return this;
-        }
-
-        public Builder dateOfBirth(ZonedDateTime dateOfBirth) {
-            this.dateOfBirth = dateOfBirth;
-            return this;
-        }
-
-        public Builder gender(Gender gender) {
-            this.gender = gender;
+        public Builder phoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
             return this;
         }
 
         public CustomerDto build() {
-            return new CustomerDto(email, firstName, lastName, country, dateOfBirth, gender, timezone, locale, role);
+            return new CustomerDto(email, firstName, lastName, phoneNumber, timezone, locale, role);
         }
     }
 
@@ -133,15 +115,7 @@ public class CustomerDto {
         return email;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public ZonedDateTime getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public Gender getGender() {
-        return gender;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }

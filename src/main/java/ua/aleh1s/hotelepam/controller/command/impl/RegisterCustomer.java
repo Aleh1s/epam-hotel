@@ -62,34 +62,31 @@ public class RegisterCustomer implements Command {
         Long userId = user.getId();
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
-//        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
 
         CustomerEntity customer = CustomerEntity.Builder.newBuilder()
                 .firstName(firstName)
                 .lastName(lastName)
-                .email(email)
+                .phoneNumber(phoneNumber)
                 .userId(userId)
                 .build();
 
         Optional<CustomerEntity> customerEntityOptional = customerRepository.create(customer);
-        if (customerEntityOptional.isEmpty()) {
-            System.out.println("Is empty");
+        if (customerEntityOptional.isEmpty())
             return handleServerError(request);
-        }
 
         CustomerDto customerDto = CustomerDto.Builder.newBuilder()
                 .email(email)
                 .firstName(firstName)
                 .lastName(lastName)
                 .timezone(timezone)
+                .phoneNumber(phoneNumber)
                 .locale(defaultLocale)
                 .role(userRole)
-                .locale(user.getLocale())
-                .timezone(user.getTimezone())
                 .build();
 
         HttpSession session = request.getSession();
-        session.setAttribute("userInfo", customerDto);
+        session.setAttribute("userDto", customerDto);
 
         boolean isRedirect;
         try {

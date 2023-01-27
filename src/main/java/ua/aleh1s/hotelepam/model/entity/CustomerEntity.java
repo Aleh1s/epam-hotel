@@ -7,28 +7,19 @@ public class CustomerEntity {
     private Long id;
     private String firstName;
     private String lastName;
-    private String email;
-    private String country;
-    private ZonedDateTime dateOfBirth;
-    private Gender gender;
+    private String phoneNumber;
     private Long userId;
 
     public CustomerEntity(
             Long id,
             String firstName,
             String lastName,
-            String email,
-            String country,
-            ZonedDateTime dateOfBirth,
-            Gender gender,
+            String phoneNumber,
             Long userId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
-        this.country = country;
-        this.dateOfBirth = dateOfBirth;
-        this.gender = gender;
+        this.phoneNumber = phoneNumber;
         this.userId = userId;
     }
 
@@ -36,10 +27,7 @@ public class CustomerEntity {
         private Long id;
         private String firstName;
         private String lastName;
-        private String email;
-        private String country;
-        private ZonedDateTime dateOfBirth;
-        private Gender gender;
+        private String phoneNumber;
         private Long userId;
 
         private Builder() {}
@@ -63,25 +51,10 @@ public class CustomerEntity {
             return this;
         }
 
-        public Builder email(String email) {
-            this.email = email;
+       public Builder phoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
             return this;
-        }
-
-        public Builder country(String country) {
-            this.country = country;
-            return this;
-        }
-
-        public Builder dateOfBirth(ZonedDateTime dateOfBirth) {
-            this.dateOfBirth = dateOfBirth;
-            return this;
-        }
-
-        public Builder gender(Gender gender) {
-            this.gender = gender;
-            return this;
-        }
+       }
 
         public Builder userId(Long userId) {
             this.userId = userId;
@@ -89,7 +62,7 @@ public class CustomerEntity {
         }
 
         public CustomerEntity build() {
-            return new CustomerEntity(id, firstName, lastName, email, country, dateOfBirth, gender, userId);
+            return new CustomerEntity(id, firstName, lastName, phoneNumber, userId);
         }
     }
 
@@ -120,39 +93,12 @@ public class CustomerEntity {
         return this;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public CustomerEntity setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public CustomerEntity setCountry(String country) {
-        this.country = country;
-        return this;
-    }
-
-    public ZonedDateTime getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public CustomerEntity setDateOfBirth(ZonedDateTime dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-        return this;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public CustomerEntity setGender(Gender gender) {
-        this.gender = gender;
+    public CustomerEntity setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
         return this;
     }
 
@@ -173,10 +119,7 @@ public class CustomerEntity {
         if (!Objects.equals(id, that.id)) return false;
         if (!Objects.equals(firstName, that.firstName)) return false;
         if (!Objects.equals(lastName, that.lastName)) return false;
-        if (!Objects.equals(email, that.email)) return false;
-        if (!Objects.equals(country, that.country)) return false;
-        if (!Objects.equals(dateOfBirth, that.dateOfBirth)) return false;
-        if (gender != that.gender) return false;
+        if (!Objects.equals(phoneNumber, that.phoneNumber)) return false;
         return Objects.equals(userId, that.userId);
     }
 
@@ -185,10 +128,7 @@ public class CustomerEntity {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (country != null ? country.hashCode() : 0);
-        result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
-        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         return result;
     }
@@ -199,10 +139,7 @@ public class CustomerEntity {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", country='" + country + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", gender=" + gender +
+                ", phoneNumber=" + phoneNumber +
                 ", userId=" + userId +
                 '}';
     }

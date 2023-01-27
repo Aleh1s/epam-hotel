@@ -12,9 +12,9 @@ public class SqlQuery {
     public static final String USER_INSERT = "insert into \"user\" (email, password, timezone, locale, role) values (?, ?, ?, ?, ?)";
 
     // CustomerEntity
-    public static final String CUSTOMER_SELECT_BY_EMAIL = "select * from customer where email = ?";
+    public static final String CUSTOMER_SELECT_BY_PHONE_NUMBER = "select * from customer where phone_number = ?";
     public static final String CUSTOMER_SELECT_ALL = "select * from customer";
     public static final String CUSTOMER_SELECT_BY_ID = "select * from customer where id = ?";
     public static final String CUSTOMER_DELETE_BY_ID = "delete from customer where id = ?";
-    public static final String CUSTOMER_INSERT = "insert into customer (first_name, last_name, date_of_birth, gender, email, country, user_id) values (?, ?, ?, ?, ?, ?, ?)";
+    public static final String CUSTOMER_INSERT = "insert into customer (first_name, last_name, phone_number, user_id) values (?, ?, ?, ?)";
 }

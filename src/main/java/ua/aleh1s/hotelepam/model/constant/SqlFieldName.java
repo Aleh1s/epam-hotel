@@ -16,9 +16,6 @@ public class SqlFieldName {
     public final static String CUSTOMER_ID = "id";
     public final static String CUSTOMER_FIRST_NAME = "first_name";
     public final static String CUSTOMER_LAST_NAME = "last_name";
-    public final static String CUSTOMER_EMAIL = "email";
-    public final static String CUSTOMER_COUNTRY = "country";
-    public final static String CUSTOMER_DATE_OF_BIRTH = "date_of_birth";
-    public final static String CUSTOMER_GENDER = "gender";
+    public final static String CUSTOMER_PHONE_NUMBER = "phone_number";
     public final static String CUSTOMER_USER_ID = "user_id";
 }
