@@ -29,7 +29,7 @@
     <div class="main">
         <div class="form-container">
             <form class="register-form" action="controller?command=registerCustomer" method="post">
-                <h1 class="form-header">Registration info</h1>
+                <h1 class="form-header">Signup info</h1>
                 <div class="input-group">
                     <input class="form-input" id="email" name="email" type="email" placeholder="Email">
                 </div>
@@ -91,7 +91,7 @@
                         <option value="+14:00">(GMT +14:00) Line Islands, Tokelau</option>
                     </select>
                 </div>
-                <button class="form-button" type="submit">Register</button>
+                <button class="form-button" type="submit">Sign up</button>
             </form>
         </div>
     </div>
