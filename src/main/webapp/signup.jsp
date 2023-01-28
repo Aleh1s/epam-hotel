@@ -17,6 +17,7 @@
         <ul class="nav-center">
             <li class="nav-item"><a href="#"><b>Home</b></a></li>
             <li class="nav-item"><a href="#">Room list</a></li>
+            <li class="nav-item"><a href="#">Application</a></li>
         </ul>
         <ul class="nav-left">
             <li class="nav-item"><a href="#">Sign up</a></li>
