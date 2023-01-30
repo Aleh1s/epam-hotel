@@ -5,13 +5,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.controller.Path;
-import ua.aleh1s.hotelepam.controller.dto.CustomerDto;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.command.Result;
-import ua.aleh1s.hotelepam.model.entity.CustomerEntity;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.model.entity.UserRole;
-import ua.aleh1s.hotelepam.model.repository.CustomerRepository;
 import ua.aleh1s.hotelepam.model.repository.UserRepository;
 
 import java.io.IOException;
