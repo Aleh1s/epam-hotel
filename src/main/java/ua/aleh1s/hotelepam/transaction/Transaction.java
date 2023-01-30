@@ -18,39 +18,45 @@ public class Transaction implements AutoCloseable {
         this.dbManager = DBManager.getInstance();
     }
 
-    public static Transaction start(SimpleDao<?, ?> dao, SimpleDao<?, ?>... daos)
-            throws TransactionException {
+    public static Transaction start(SimpleDao<?, ?> dao, SimpleDao<?, ?>... daos) {
         Transaction transaction = new Transaction();
         transaction.initDaos(dao, daos);
         return transaction;
     }
 
-    private void initDaos(SimpleDao<?, ?> dao, SimpleDao<?, ?>... daos)
-            throws TransactionException {
-        openConnection();
-        setAutoCommit(false);
-        injectConnections(dao, daos);
-    }
-
-    @Override
-    public void close() throws TransactionException {
-        setAutoCommit(true);
-        closeConnection();
-    }
-
-    public void commit() throws TransactionException {
+    private void initDaos(SimpleDao<?, ?> dao, SimpleDao<?, ?>... daos) {
         try {
-            connection.commit();
-        } catch (SQLException e) {
-            throw new TransactionException(e);
+            openConnection();
+            setAutoCommit(false);
+            injectConnections(dao, daos);
+        } catch (TransactionException e) {
+            e.printStackTrace();
         }
     }
 
-    public void rollback() throws TransactionException {
+    @Override
+    public void close() {
+        try {
+            setAutoCommit(true);
+            closeConnection();
+        } catch (TransactionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void commit() {
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void rollback()  {
         try {
             connection.rollback();
         } catch (SQLException e) {
-            throw new TransactionException(e);
+            e.printStackTrace();
         }
     }
 

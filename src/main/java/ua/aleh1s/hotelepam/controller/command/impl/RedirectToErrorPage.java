@@ -7,7 +7,7 @@ import ua.aleh1s.hotelepam.controller.command.Result;
 
 import java.io.IOException;
 
-import static ua.aleh1s.hotelepam.controller.Path.ERROR_PAGE;
+import static ua.aleh1s.hotelepam.controller.Page.ERROR_PAGE;
 
 public class RedirectToErrorPage implements Command {
     @Override

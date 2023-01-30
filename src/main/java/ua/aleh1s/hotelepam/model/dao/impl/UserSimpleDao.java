@@ -90,15 +90,6 @@ public class UserSimpleDao extends SimpleDao<String, UserEntity> {
             statement.setString(4, entity.getLocale().getLanguage());
             statement.setString(5, entity.getRole().name());
             statement.executeUpdate();
-
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    entity.setId(generatedKeys.getLong(1));
-                } else {
-                    throw new DaoException("Generated key does not exist");
-                }
-            }
-
             log.trace("User with email {} was created", entity.getEmail());
         } catch (SQLException e) {
             throw new DaoException(e);

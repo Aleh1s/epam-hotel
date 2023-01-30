@@ -6,6 +6,6 @@ import java.util.Optional;
 
 public interface UserRepository {
 
-    Optional<UserEntity> create(UserEntity userEntity);
+    UserEntity create(UserEntity userEntity);
     Optional<UserEntity> findByEmail(String login);
 }

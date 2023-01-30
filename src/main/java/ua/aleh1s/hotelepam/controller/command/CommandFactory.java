@@ -1,7 +1,7 @@
 package ua.aleh1s.hotelepam.controller.command;
 
 import ua.aleh1s.hotelepam.controller.command.impl.RedirectToErrorPage;
-import ua.aleh1s.hotelepam.controller.command.impl.RegisterCustomer;
+import ua.aleh1s.hotelepam.controller.command.impl.SignupCommand;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ public final class CommandFactory {
     {
         commandMap = new HashMap<>();
 
-        commandMap.put("registerCustomer", new RegisterCustomer());
+        commandMap.put("registerCustomer", new SignupCommand());
         commandMap.put("redirectToErrorPage", new RedirectToErrorPage());
     }
 }

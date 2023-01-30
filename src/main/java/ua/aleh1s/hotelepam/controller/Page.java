@@ -1,13 +1,13 @@
 package ua.aleh1s.hotelepam.controller;
 
-public enum Path {
+public enum Page {
 
     ERROR_PAGE("error.jsp"),
-    REGISTRATION_PAGE("registration.jsp");
+    SIGNUP("signup.jsp");
 
     private final String path;
 
-    Path(String path) {
+    Page(String path) {
         this.path = path;
     }
 
