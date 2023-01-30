@@ -9,5 +9,5 @@ public class SqlQuery {
     public static final String USER_SELECT_BY_ID = "select * from \"user\" where id = ?";
     public static final String USER_SELECT_ALL = "select * from \"user\"";
     public static final String USER_DELETE_BY_ID = "delete from \"user\" where id = ?";
-    public static final String USER_INSERT = "insert into \"user\" (email, password, timezone, locale, role) values (?, ?, ?, ?, ?)";
+    public static final String USER_INSERT = "insert into \"user\" (email, first_name, last_name, phone_number, password, timezone, locale, role) values (?, ?, ?, ?, ?)";
 }

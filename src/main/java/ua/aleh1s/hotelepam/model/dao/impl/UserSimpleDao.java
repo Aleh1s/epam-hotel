@@ -59,6 +59,9 @@ public class UserSimpleDao extends SimpleDao<String, UserEntity> {
                 if (resultSet.next()) {
                     resultSet.updateLong(USER_ID, entity.getId());
                     resultSet.updateString(USER_EMAIL, entity.getEmail());
+                    resultSet.updateString(USER_FIRST_NAME, entity.getFirstName());
+                    resultSet.updateString(USER_LAST_NAME, entity.getLastName());
+                    resultSet.updateString(USER_PHONE_NUMBER, entity.getPhoneNumber());
                     resultSet.updateString(USER_PASSWORD, entity.getPassword());
                     resultSet.updateString(USER_TIMEZONE, entity.getTimezone().getId());
                     resultSet.updateString(USER_LOCALE, entity.getLocale().getLanguage());
@@ -81,10 +84,13 @@ public class UserSimpleDao extends SimpleDao<String, UserEntity> {
         try (PreparedStatement statement = connection.prepareStatement(USER_INSERT,
                 Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getEmail());
-            statement.setString(2, entity.getPassword());
-            statement.setString(3, entity.getTimezone().getId());
-            statement.setString(4, entity.getLocale().getLanguage());
-            statement.setString(5, entity.getRole().name());
+            statement.setString(2, entity.getFirstName());
+            statement.setString(3, entity.getLastName());
+            statement.setString(4, entity.getPhoneNumber());
+            statement.setString(5, entity.getPassword());
+            statement.setString(6, entity.getTimezone().getId());
+            statement.setString(7, entity.getLocale().getLanguage());
+            statement.setString(8, entity.getRole().name());
             statement.executeUpdate();
             log.trace("User with email {} was created", entity.getEmail());
         } catch (SQLException e) {
