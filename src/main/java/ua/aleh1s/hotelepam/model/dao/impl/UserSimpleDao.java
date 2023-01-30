@@ -21,23 +21,19 @@ public class UserSimpleDao extends SimpleDao<String, UserEntity> {
     private static final Logger log = LogManager.getLogger(UserSimpleDao.class);
 
     @Override
-    public Optional<UserEntity> findBy(String email) throws DaoException {
+    public UserEntity findBy(String email) throws DaoException {
+        UserEntity userEntity;
         log.trace("Find user entity by email {}", email);
         try (PreparedStatement statement = connection.prepareStatement(USER_SELECT_BY_EMAIL)) {
             statement.setString(1, email);
-            Optional<UserEntity> userEntityOptional;
             try (ResultSet resultSet = statement.executeQuery()) {
                 SqlUserEntityMapper userMapper = new SqlUserEntityMapper();
-                userEntityOptional = userMapper.map(resultSet);
+                userEntity = userMapper.map(resultSet);
             }
-            if (userEntityOptional.isPresent())
-                log.trace("User entity with email {} is found", email);
-            else
-                log.trace("User entity with email {} is not found", email);
-            return userEntityOptional;
         } catch (SQLException | SqlEntityMapperException e) {
             throw new DaoException(e);
         }
+        return userEntity;
     }
 
     @Override
