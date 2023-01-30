@@ -24,11 +24,10 @@ public class SignupCommand implements Command {
         String email = request.getParameter("email");
         UserRepository userRepository = AppContext.getInstance().getUserRepository();
 
-        String errorMessage;
         String page = Page.SIGNUP.getPath();
-
+        
         if (userRepository.findByEmail(email).isPresent()) {
-            errorMessage = String.format("User with email %s already exists", email);
+            String errorMessage = String.format("User with email %s already exists", email);
             request.setAttribute("errorMessage", errorMessage);
             return Result.of(page, false);
         }
