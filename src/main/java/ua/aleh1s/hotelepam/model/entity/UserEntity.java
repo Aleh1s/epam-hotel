@@ -7,6 +7,9 @@ import java.util.Objects;
 public class UserEntity {
     private Long id;
     private String email;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
     private String password;
     private ZoneId timezone;
     private Locale locale;
@@ -15,12 +18,18 @@ public class UserEntity {
     public UserEntity(
             Long id,
             String email,
+            String firstName,
+            String lastName,
+            String phoneNumber,
             String password,
             ZoneId timezone,
             Locale locale,
             UserRole role) {
         this.id = id;
         this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
         this.password = password;
         this.timezone = timezone;
         this.locale = locale;
@@ -30,12 +39,16 @@ public class UserEntity {
     public static class Builder {
         private Long id;
         private String email;
+        private String firstName;
+        private String lastName;
+        private String phoneNumber;
         private String password;
         private ZoneId timezone;
         private Locale locale;
         private UserRole role;
 
-        private Builder() {}
+        private Builder() {
+        }
 
         public static Builder newBuilder() {
             return new Builder();
@@ -48,6 +61,21 @@ public class UserEntity {
 
         public Builder email(String email) {
             this.email = email;
+            return this;
+        }
+
+        public Builder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public Builder phoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
             return this;
         }
 
@@ -72,7 +100,7 @@ public class UserEntity {
         }
 
         public UserEntity build() {
-            return new UserEntity(id, email, password, timezone, locale, role);
+            return new UserEntity(id, email, firstName, lastName, phoneNumber, password, timezone, locale, role);
         }
     }
 
@@ -90,6 +118,30 @@ public class UserEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPassword() {
@@ -122,42 +174,5 @@ public class UserEntity {
 
     public void setRole(UserRole role) {
         this.role = role;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UserEntity that)) return false;
-
-        if (!Objects.equals(id, that.id)) return false;
-        if (!Objects.equals(email, that.email)) return false;
-        if (!Objects.equals(password, that.password)) return false;
-        if (!Objects.equals(timezone, that.timezone)) return false;
-        if (!Objects.equals(locale, that.locale)) return false;
-        return role == that.role;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (timezone != null ? timezone.hashCode() : 0);
-        result = 31 * result + (locale != null ? locale.hashCode() : 0);
-        result = 31 * result + (role != null ? role.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("UserEntity{");
-        sb.append("id=").append(id);
-        sb.append(", email='").append(email).append('\'');
-        sb.append(", password='").append(password).append('\'');
-        sb.append(", timezone=").append(timezone);
-        sb.append(", locale=").append(locale);
-        sb.append(", role=").append(role);
-        sb.append('}');
-        return sb.toString();
     }
 }
