@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="ua" scope="session"/>
@@ -9,20 +9,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="header">
-    <div class="nav">
-        <ul class="nav-center">
-            <li class="nav-item"><a href="#"><b><fmt:message key="nav.label.home"/></b></a></li>
-            <li class="nav-item"><a href="#"><fmt:message key="nav.label.room_list"/></a></li>
-            <li class="nav-item"><a href="#"><fmt:message key="nav.label.application"/></a></li>
-        </ul>
-        <ul class="nav-left">
-            <li class="nav-item"><a href="#"><fmt:message key="nav.label.sign_up"/></a></li>
-            <li class="nav-item"><a href="#"><fmt:message key="nav.label.log_in"/></a></li>
-            <li class="nav-item"><a href="#"><fmt:message key="nav.label.profile"/></a></li>
-        </ul>
-    </div>
-</div>
+<c:import url="header.jsp"/>
 <div class="container">
     <div class="main">
         <div class="form-container">
@@ -40,9 +27,7 @@
             </form>
         </div>
     </div>
-    <div class="footer">
-
-    </div>
+    <c:import url="footer.jsp"/>
 </div>
 </body>
 </html>

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: sasha
@@ -12,20 +13,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="header">
-    <div class="nav">
-        <ul class="nav-center">
-            <li class="nav-item"><a href="#"><b>Home</b></a></li>
-            <li class="nav-item"><a href="#">Room list</a></li>
-            <li class="nav-item"><a href="#">Application</a></li>
-        </ul>
-        <ul class="nav-left">
-            <li class="nav-item"><a href="#">Sign up</a></li>
-            <li class="nav-item"><a href="#">Log in</a></li>
-            <li class="nav-item"><a href="#">Profile</a></li>
-        </ul>
-    </div>
-</div>
+<c:import url="header.jsp"/>
 <div class="container">
     <div class="main">
         <div class="form-container">
@@ -99,9 +87,7 @@
             </form>
         </div>
     </div>
-    <div class="footer">
-
-    </div>
+    <c:import url="footer.jsp"/>
 </div>
 <script src="script.js"></script>
 </body>
