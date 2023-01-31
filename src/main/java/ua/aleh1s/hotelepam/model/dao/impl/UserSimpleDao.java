@@ -22,13 +22,32 @@ public class UserSimpleDao extends SimpleDao<String, UserEntity> {
 
     @Override
     public UserEntity findBy(String email) throws DaoException {
-        UserEntity userEntity;
+        UserEntity userEntity = null;
         log.trace("Find user entity by email {}", email);
         try (PreparedStatement statement = connection.prepareStatement(USER_SELECT_BY_EMAIL)) {
             statement.setString(1, email);
             try (ResultSet resultSet = statement.executeQuery()) {
-                SqlUserEntityMapper userMapper = new SqlUserEntityMapper();
-                userEntity = userMapper.map(resultSet);
+                if (resultSet.next()) {
+                    SqlUserEntityMapper userMapper = new SqlUserEntityMapper();
+                    userEntity = userMapper.map(resultSet);
+                }
+            }
+        } catch (SQLException | SqlEntityMapperException e) {
+            throw new DaoException(e);
+        }
+        return userEntity;
+    }
+
+    public UserEntity findByPhoneNumber(String phoneNumber) throws DaoException {
+        UserEntity userEntity = null;
+        log.trace("Find user entity by phone number {}", phoneNumber);
+        try (PreparedStatement statement = connection.prepareStatement(USER_FIND_BY_PHONE_NUMBER)) {
+            statement.setString(1, phoneNumber);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    SqlUserEntityMapper userMapper = new SqlUserEntityMapper();
+                    userEntity = userMapper.map(resultSet);
+                }
             }
         } catch (SQLException | SqlEntityMapperException e) {
             throw new DaoException(e);

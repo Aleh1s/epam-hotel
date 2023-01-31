@@ -16,25 +16,35 @@ import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.Optional;
 
 public class SignupCommand implements Command {
 
     @Override
     public Result execute(HttpServletRequest request, HttpServletResponse response) {
         String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
         UserRepository userRepository = AppContext.getInstance().getUserRepository();
 
+        String errorMessage = null;
         String page = Page.SIGNUP.getPath();
-        
-        if (userRepository.findByEmail(email).isPresent()) {
-            String errorMessage = String.format("User with email %s already exists", email);
+
+        Optional<UserEntity> userEntityByEmail = userRepository.findByEmail(email);
+        if (userEntityByEmail.isPresent())
+            errorMessage = String.format("User with email %s already exists", email);
+
+        Optional<UserEntity> userEntityByPhoneNumber = userRepository.findByPhoneNumber(phoneNumber);
+        if (userEntityByPhoneNumber.isPresent())
+            errorMessage = String.format("User with phone number %s already exists", phoneNumber);
+
+        if (Objects.nonNull(errorMessage)) {
             request.setAttribute("errorMessage", errorMessage);
             return Result.of(page, false);
         }
 
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
-        String phoneNumber = request.getParameter("phoneNumber");
         String password = request.getParameter("password");
         String zoneOffsetStr = request.getParameter("timezoneOffset");
         ZoneId timezone = ZoneId.ofOffset("UTC", ZoneOffset.of(zoneOffsetStr));
@@ -63,13 +73,12 @@ public class SignupCommand implements Command {
 
         boolean isRedirect;
         try {
-            response.sendRedirect("/hello.jsp");
+            response.sendRedirect("/test.jsp"); //todo: redirect to valid page
             isRedirect = true;
         } catch (IOException e) {
-            page = Page.ERROR_PAGE.name();
+            page = Page.ERROR_PAGE.getPath();
             isRedirect = false;
         }
-
         return Result.of(page, isRedirect);
     }
 }
