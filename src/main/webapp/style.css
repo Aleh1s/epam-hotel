@@ -144,3 +144,23 @@
     width: 100%;
     background-color: #238bff;
 }
+
+.error-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 15px;
+    width: 80%;
+    min-height: 50px;
+    height: fit-content;
+    background-color: #ff9494;
+    border: 2px solid #ff6666;
+    color: white;
+    font-size: 12px;
+    border-radius: 25px;
+}
+
+.error-container.active {
+    display: flex;
+}
