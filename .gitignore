@@ -31,5 +31,5 @@ build/
 ### VS Code ###
 .vscode/
 
-### Mac OS ###
-.DS_Store
+src/main/resources/jdbc.properties
+src/main/webapp/test.jsp
