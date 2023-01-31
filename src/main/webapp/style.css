@@ -124,6 +124,7 @@
 .form-button {
     width: 120px;
     height: 35px;
+    font-size: 12px;
     border-radius: 15px;
     background-color: #238bff;
     color: white;

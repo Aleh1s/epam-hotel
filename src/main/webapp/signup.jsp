@@ -1,12 +1,8 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: sasha
-  Date: 09.01.2023
-  Time: 12:34
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="ua" scope="session"/>
+<fmt:setBundle basename="locale"/>
 <html>
 <head>
     <title>Sign up</title>
@@ -18,24 +14,29 @@
     <div class="main">
         <div class="form-container">
             <form class="register-form" action="controller?command=signup" method="post">
-                <h1 class="form-header">Signup info</h1>
+                <h1 class="form-header"><fmt:message key="form.header.signup_info"/></h1>
                 <div id="error-container" class="error-container">
                     <p id="error-message">${requestScope.get("errorMessage")}</p>
                 </div>
                 <div class="input-group">
-                    <input class="form-input" id="email" name="email" type="email" placeholder="Email">
+                    <fmt:message var="email" key="form.input.email"/>
+                    <input class="form-input" id="email" name="email" type="email" placeholder="${email}">
                 </div>
                 <div class="input-group">
-                    <input class="form-input" id="password" name="password" type="password" placeholder="Password">
+                    <fmt:message var="password" key="form.input.password"/>
+                    <input class="form-input" id="password" name="password" type="password" placeholder="${password}">
                 </div>
                 <div class="input-group">
-                    <input class="form-input" id="firstName" name="firstName" type="text" placeholder="First name">
+                    <fmt:message var="firstName" key="form.input.first_name"/>
+                    <input class="form-input" id="firstName" name="firstName" type="text" placeholder="${firstName}">
                 </div>
                 <div class="input-group">
-                    <input class="form-input" id="lastName" name="lastName" type="text" placeholder="Last name">
+                    <fmt:message var="lastName" key="form.input.last_name"/>
+                    <input class="form-input" id="lastName" name="lastName" type="text" placeholder="${lastName}">
                 </div>
                 <div class="input-group">
-                    <input class="form-input" id="phoneNumber" name="phoneNumber" type="tel" placeholder="Phone number">
+                    <fmt:message var="phoneNumber" key="form.input.phone_number"/>
+                    <input class="form-input" id="phoneNumber" name="phoneNumber" type="tel" placeholder="${phoneNumber}">
                 </div>
                 <div class="input-group">
                     <select class="form-input" id="timezoneOffset" name="timezoneOffset">
@@ -83,7 +84,7 @@
                         <option value="+14:00">(GMT +14:00) Line Islands, Tokelau</option>
                     </select>
                 </div>
-                <button class="form-button" type="submit">Sign up</button>
+                <button class="form-button" type="submit"><fmt:message key="form.button.sign_up"/></button>
             </form>
         </div>
     </div>
