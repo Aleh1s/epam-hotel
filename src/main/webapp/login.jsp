@@ -1,11 +1,8 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: sasha
-  Date: 28.01.2023
-  Time: 19:57
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="ua" scope="session"/>
+<fmt:setBundle basename="locale"/>
 <html>
 <head>
     <title>Log in</title>
@@ -15,14 +12,14 @@
 <div class="header">
     <div class="nav">
         <ul class="nav-center">
-            <li class="nav-item"><a href="#"><b>Home</b></a></li>
-            <li class="nav-item"><a href="#">Room list</a></li>
-            <li class="nav-item"><a href="#">Application</a></li>
+            <li class="nav-item"><a href="#"><b><fmt:message key="nav.label.home"/></b></a></li>
+            <li class="nav-item"><a href="#"><fmt:message key="nav.label.room_list"/></a></li>
+            <li class="nav-item"><a href="#"><fmt:message key="nav.label.application"/></a></li>
         </ul>
         <ul class="nav-left">
-            <li class="nav-item"><a href="#">Sign up</a></li>
-            <li class="nav-item"><a href="#">Log in</a></li>
-            <li class="nav-item"><a href="#">Profile</a></li>
+            <li class="nav-item"><a href="#"><fmt:message key="nav.label.sign_up"/></a></li>
+            <li class="nav-item"><a href="#"><fmt:message key="nav.label.log_in"/></a></li>
+            <li class="nav-item"><a href="#"><fmt:message key="nav.label.profile"/></a></li>
         </ul>
     </div>
 </div>
@@ -30,14 +27,16 @@
     <div class="main">
         <div class="form-container">
             <form class="register-form" action="controller?command=login" method="post">
-                <h1 class="form-header">Login info</h1>
+                <h1 class="form-header"><fmt:message key="form.header.login_info"/></h1>
                 <div class="input-group">
-                    <input class="form-input" id="email" name="email" type="email" placeholder="Email">
+                    <fmt:message var="email" key="form.input.email"/>
+                    <input class="form-input" id="email" name="email" type="email" placeholder="${email}">
                 </div>
                 <div class="input-group">
-                    <input class="form-input" id="password" name="password" type="password" placeholder="Password">
+                    <fmt:message var="password" key="form.input.password"/>
+                    <input class="form-input" id="password" name="password" type="password" placeholder="${password}">
                 </div>
-                <button class="form-button" type="submit">Log in</button>
+                <button class="form-button" type="submit"><fmt:message key="form.button.log_in"/></button>
             </form>
         </div>
     </div>
