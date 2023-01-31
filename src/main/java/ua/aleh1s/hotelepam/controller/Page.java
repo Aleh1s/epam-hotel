@@ -3,7 +3,8 @@ package ua.aleh1s.hotelepam.controller;
 public enum Page {
 
     ERROR_PAGE("error.jsp"),
-    SIGNUP("signup.jsp");
+    SIGNUP("signup.jsp"),
+    LOGIN("login.jsp");
 
     private final String path;
 

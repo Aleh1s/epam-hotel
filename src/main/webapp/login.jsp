@@ -29,7 +29,7 @@
 <div class="container">
     <div class="main">
         <div class="form-container">
-            <form class="register-form" action="controller?command=registerCustomer" method="post">
+            <form class="register-form" action="controller?command=login" method="post">
                 <h1 class="form-header">Login info</h1>
                 <div class="input-group">
                     <input class="form-input" id="email" name="email" type="email" placeholder="Email">
