@@ -44,7 +44,7 @@
 
 .nav-center {}
 
-.nav-left {
+.nav-right {
     position: absolute;
     right: 10px;
 }
@@ -259,10 +259,28 @@
 .room-card-footer {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
+}
+
+.room-card-footer > a {
+    text-decoration: none;
+    color: #238bff;
+    font-size: 16px;
 }
 
 .room-card-footer > p {
-    font-size: 20px;
+    font-size: 18px;
     color: #1d3c62;
+}
+
+.vertical-delimiter {
+    content: '';
+    width: 1px;
+    height: 25px;
+    border-right: 1px solid white;
+}
+
+.nav-left {
+    position: absolute;
+    left: 10px;
 }

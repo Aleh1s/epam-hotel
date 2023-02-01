@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="" scope="session"/>
+<fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <fmt:setBundle basename="locale"/>
 <html>
 <head>
@@ -85,6 +85,7 @@
                     </div>
                     <div class="room-card-footer">
                         <p class="room-price-label">100$ <fmt:message key="room.card.price.per-night"/></p>
+                        <a href="#">View</a>
                     </div>
                 </div>
             </div>
