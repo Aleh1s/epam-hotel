@@ -165,3 +165,104 @@
 .error-container.active {
     display: flex;
 }
+
+.main-container {
+    height: 100%;
+    width: 1000px;
+    padding: 10px 30px;
+}
+
+.group {
+    border-bottom: 1px solid #d9d9d9;
+    margin-bottom: 30px;
+}
+
+.sort-control {
+    padding: 10px;
+}
+
+.sort-control-form {
+    display: grid;
+    grid-template: 1fr / repeat(2, 3fr) 1fr;
+    align-items: center;
+}
+
+.sort-control-form > select {
+    margin-right: 15px;
+}
+
+.sort-select-group {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    margin-right: 30px;
+    flex-direction: column;
+}
+
+.sort-select-group > label {
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: #1d3c62;
+}
+
+.room-list {
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.room-card {
+    display: grid;
+    grid-template: 50% 40% 10% / 1fr;
+    height: 400px;
+    width: 280px;
+    padding: 25px 20px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0 6px 24px 0, rgba(0, 0, 0, 0.08) 0 0 0 1px;
+    margin: 0 12px 24px 12px;
+}
+
+.room-card-image > img {
+    max-height: 100%;
+    max-width: 100%;
+    border-radius: 20px;
+}
+
+.room-card-content {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.key-value-list {
+    margin-left: 20px;
+}
+
+.key-value-list > li {
+    margin-bottom: 7px;
+}
+
+.key, .value {
+    display: inline;
+    font-size: 14px;
+}
+
+.key {
+    color: #1d3c62;
+}
+
+.value {
+    color: #676767;
+}
+
+.room-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.room-card-footer > p {
+    font-size: 20px;
+    color: #1d3c62;
+}
