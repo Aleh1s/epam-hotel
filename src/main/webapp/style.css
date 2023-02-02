@@ -87,7 +87,7 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
 }
 
-.register-form {
+.custom-form {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -95,9 +95,11 @@
 }
 
 .input-group {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 32px;
     border-bottom: 1px solid #e5e5e5;
-    width: 80%;
 }
 
 .form-input {
@@ -283,4 +285,9 @@
 .nav-left {
     position: absolute;
     left: 10px;
+}
+
+.input-group > label {
+    font-size: 15px;
+    color: #1d3c62;
 }

@@ -13,7 +13,7 @@
 <div class="container">
     <div class="main">
         <div class="form-container">
-            <form class="register-form" action="controller?command=signup" method="post">
+            <form class="custom-form" action="controller?command=signup" method="post">
                 <h1 class="form-header"><fmt:message key="form.header.signup_info"/></h1>
                 <div id="error-container" class="error-container">
                     <p id="error-message">${requestScope.get("errorMessage")}</p>
