@@ -3,6 +3,7 @@ package ua.aleh1s.hotelepam.controller.command.impl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.mindrot.jbcrypt.BCrypt;
 import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.controller.Page;
 import ua.aleh1s.hotelepam.controller.command.Command;
@@ -33,7 +34,8 @@ public class LoginCommand implements Command {
         }
 
         UserEntity userEntity = userEntityOptional.get();
-        if (!userEntity.getPassword().equals(password)) {
+        boolean isPasswordValid = BCrypt.checkpw(password, userEntity.getPassword());
+        if (!isPasswordValid) {
             errorMessage = "Password or email is incorrect";
             request.setAttribute("errorMessage", errorMessage);
             return Result.of(path, false);
@@ -54,7 +56,7 @@ public class LoginCommand implements Command {
 
         boolean isRedirect;
         try {
-            response.sendRedirect("/test.jsp"); //todo: redirect to valid path
+            response.sendRedirect("/roomList.jsp"); //todo: redirect to valid path
             isRedirect = true;
         } catch (IOException e) {
             path = Page.ERROR_PAGE.getPath();

@@ -3,6 +3,7 @@ package ua.aleh1s.hotelepam.controller.command.impl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.mindrot.jbcrypt.BCrypt;
 import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.controller.Page;
 import ua.aleh1s.hotelepam.controller.command.Command;
@@ -51,9 +52,11 @@ public class SignupCommand implements Command {
         Locale defaultLocale = Locale.ENGLISH;
         UserRole userRole = UserRole.CUSTOMER;
 
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
         UserEntity user = UserEntity.Builder.newBuilder()
                 .email(email).firstName(firstName).lastName(lastName)
-                .phoneNumber(phoneNumber).password(password).timezone(timezone)
+                .phoneNumber(phoneNumber).password(hashedPassword).timezone(timezone)
                 .locale(defaultLocale).role(userRole).build();
 
         userRepository.create(user);
@@ -73,7 +76,7 @@ public class SignupCommand implements Command {
 
         boolean isRedirect;
         try {
-            response.sendRedirect("/test.jsp"); //todo: redirect to valid page
+            response.sendRedirect("/roomList.jsp"); //todo: redirect to valid page
             isRedirect = true;
         } catch (IOException e) {
             page = Page.ERROR_PAGE.getPath();
