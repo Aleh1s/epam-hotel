@@ -2,13 +2,11 @@ package ua.aleh1s.hotelepam.controller.command.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
 import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.controller.Page;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.command.Result;
-import ua.aleh1s.hotelepam.controller.dto.UserEntityDto;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.model.entity.UserRole;
 import ua.aleh1s.hotelepam.model.repository.UserRepository;
@@ -54,29 +52,17 @@ public class SignupCommand implements Command {
 
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-        UserEntity user = UserEntity.Builder.newBuilder()
+        UserEntity userEntity = UserEntity.Builder.newBuilder()
                 .email(email).firstName(firstName).lastName(lastName)
                 .phoneNumber(phoneNumber).password(hashedPassword).timezone(timezone)
-                .locale(defaultLocale).role(userRole).build();
-
-        userRepository.create(user);
-
-        UserEntityDto userEntityDto = UserEntityDto.Builder.newBuilder()
-                .email(email)
-                .firstName(firstName)
-                .lastName(lastName)
-                .timezone(timezone)
-                .phoneNumber(phoneNumber)
-                .locale(defaultLocale)
-                .role(userRole)
+                .locale(defaultLocale).role(userRole)
                 .build();
 
-        HttpSession session = request.getSession();
-        session.setAttribute("userDto", userEntityDto);
+        userRepository.create(userEntity);
 
         boolean isRedirect;
         try {
-            response.sendRedirect("/roomList.jsp"); //todo: redirect to valid page
+            response.sendRedirect("/login.jsp");
             isRedirect = true;
         } catch (IOException e) {
             page = Page.ERROR_PAGE.getPath();

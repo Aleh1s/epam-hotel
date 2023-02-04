@@ -42,13 +42,10 @@ public class LoginCommand implements Command {
         }
 
         UserEntityDto dto = UserEntityDto.Builder.newBuilder()
-                .email(userEntity.getEmail())
-                .firstName(userEntity.getFirstName())
-                .lastName(userEntity.getLastName())
-                .phoneNumber(userEntity.getPhoneNumber())
-                .timezone(userEntity.getTimezone())
-                .locale(userEntity.getLocale())
-                .role(userEntity.getRole())
+                .id(userEntity.getId()).email(userEntity.getEmail())
+                .firstName(userEntity.getFirstName()).lastName(userEntity.getLastName())
+                .phoneNumber(userEntity.getPhoneNumber()).timezone(userEntity.getTimezone())
+                .locale(userEntity.getLocale()).role(userEntity.getRole())
                 .build();
 
         HttpSession session = request.getSession();
@@ -56,7 +53,7 @@ public class LoginCommand implements Command {
 
         boolean isRedirect;
         try {
-            response.sendRedirect("/roomList.jsp"); //todo: redirect to valid path
+            response.sendRedirect("/roomList.jsp");
             isRedirect = true;
         } catch (IOException e) {
             path = Page.ERROR_PAGE.getPath();

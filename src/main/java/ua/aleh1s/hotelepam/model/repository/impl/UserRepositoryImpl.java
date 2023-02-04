@@ -16,7 +16,7 @@ public class UserRepositoryImpl implements UserRepository {
     private static final Logger LOGGER = LogManager.getLogger(UserRepositoryImpl.class);
 
     @Override
-    public UserEntity create(UserEntity userEntity) {
+    public void create(UserEntity userEntity) {
         UserSimpleDao dao = new UserSimpleDao();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
@@ -27,12 +27,11 @@ public class UserRepositoryImpl implements UserRepository {
                 LOGGER.error(e.getMessage(), e);
             }
         }
-        return userEntity;
     }
 
     @Override
     public Optional<UserEntity> findByEmail(String email) {
-        UserEntity userEntity = null;
+        Optional<UserEntity> userEntity = Optional.empty();
         UserSimpleDao dao = new UserSimpleDao();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
@@ -43,12 +42,12 @@ public class UserRepositoryImpl implements UserRepository {
                 LOGGER.error(e.getMessage(), e);
             }
         }
-        return Optional.ofNullable(userEntity);
+        return userEntity;
     }
 
     @Override
     public Optional<UserEntity> findByPhoneNumber(String phoneNumber) {
-        UserEntity userEntity = null;
+        Optional<UserEntity> userEntity = Optional.empty();
         UserSimpleDao dao = new UserSimpleDao();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
@@ -59,6 +58,6 @@ public class UserRepositoryImpl implements UserRepository {
                 LOGGER.error(e.getMessage(), e);
             }
         }
-        return Optional.ofNullable(userEntity);
+        return userEntity;
     }
 }

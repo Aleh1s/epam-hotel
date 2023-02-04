@@ -18,14 +18,19 @@ import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
 import static ua.aleh1s.hotelepam.model.constant.SqlQuery.*;
 
 public class UserSimpleDao extends SimpleDao<String, UserEntity> {
-    private static final Logger log = LogManager.getLogger(UserSimpleDao.class);
-
     @Override
-    public UserEntity findBy(String email) throws DaoException {
+    public Optional<UserEntity> findBy(String email) throws DaoException {
+        return findAndMap(USER_SELECT_BY_EMAIL, email);
+    }
+
+    public Optional<UserEntity> findByPhoneNumber(String phoneNumber) throws DaoException {
+        return findAndMap(USER_SELECT_BY_PHONE_NUMBER, phoneNumber);
+    }
+
+    public Optional<UserEntity> findAndMap(String query, String parameter) throws DaoException {
         UserEntity userEntity = null;
-        log.trace("Find user entity by email {}", email);
-        try (PreparedStatement statement = connection.prepareStatement(USER_SELECT_BY_EMAIL)) {
-            statement.setString(1, email);
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, parameter);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     SqlUserEntityMapper userMapper = new SqlUserEntityMapper();
@@ -35,42 +40,21 @@ public class UserSimpleDao extends SimpleDao<String, UserEntity> {
         } catch (SQLException | SqlEntityMapperException e) {
             throw new DaoException(e);
         }
-        return userEntity;
-    }
-
-    public UserEntity findByPhoneNumber(String phoneNumber) throws DaoException {
-        UserEntity userEntity = null;
-        log.trace("Find user entity by phone number {}", phoneNumber);
-        try (PreparedStatement statement = connection.prepareStatement(USER_FIND_BY_PHONE_NUMBER)) {
-            statement.setString(1, phoneNumber);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    SqlUserEntityMapper userMapper = new SqlUserEntityMapper();
-                    userEntity = userMapper.map(resultSet);
-                }
-            }
-        } catch (SQLException | SqlEntityMapperException e) {
-            throw new DaoException(e);
-        }
-        return userEntity;
+        return Optional.ofNullable(userEntity);
     }
 
     @Override
-    public int delete(UserEntity entity) throws DaoException {
-        log.trace("Delete user entity with email {}", entity.getEmail());
+    public void delete(UserEntity entity) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(USER_DELETE_BY_ID)) {
             statement.setLong(1, entity.getId());
-            int number = statement.executeUpdate();
-            log.trace("Number of deleted user entities is {}", number);
-            return number;
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);
         }
     }
 
     @Override
-    public int update(UserEntity entity) throws DaoException {
-        log.trace("Update user entity with email {}", entity.getEmail());
+    public void update(UserEntity entity) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(USER_SELECT_BY_ID,
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             statement.setLong(1, entity.getId());
@@ -86,22 +70,16 @@ public class UserSimpleDao extends SimpleDao<String, UserEntity> {
                     resultSet.updateString(USER_LOCALE, entity.getLocale().getLanguage());
                     resultSet.updateString(USER_ROLE, entity.getRole().name());
                     resultSet.updateRow();
-                    log.trace("User with email {} is updated", entity.getEmail());
-                    return 1;
                 }
             }
         } catch (SQLException e) {
             throw new DaoException(e);
         }
-        log.trace("User entity with email {} does not exist", entity.getEmail());
-        return 0;
     }
 
     @Override
-    public UserEntity save(UserEntity entity) throws DaoException {
-        log.trace("Create user with email {}", entity.getEmail());
-        try (PreparedStatement statement = connection.prepareStatement(USER_INSERT,
-                Statement.RETURN_GENERATED_KEYS)) {
+    public void save(UserEntity entity) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(USER_INSERT)) {
             statement.setString(1, entity.getEmail());
             statement.setString(2, entity.getFirstName());
             statement.setString(3, entity.getLastName());
@@ -111,10 +89,8 @@ public class UserSimpleDao extends SimpleDao<String, UserEntity> {
             statement.setString(7, entity.getLocale().getLanguage());
             statement.setString(8, entity.getRole().name());
             statement.executeUpdate();
-            log.trace("User with email {} was created", entity.getEmail());
         } catch (SQLException e) {
             throw new DaoException(e);
         }
-        return entity;
     }
 }

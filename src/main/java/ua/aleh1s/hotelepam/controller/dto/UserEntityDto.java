@@ -7,6 +7,7 @@ import java.util.Locale;
 
 public class UserEntityDto {
 
+    private Long id;
     private String email;
     private String firstName;
     private String lastName;
@@ -16,6 +17,7 @@ public class UserEntityDto {
     private UserRole role;
 
     public UserEntityDto (
+            Long id,
             String email,
             String firstName,
             String lastName,
@@ -23,6 +25,7 @@ public class UserEntityDto {
             ZoneId timezone,
             Locale locale,
             UserRole role) {
+        this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -33,6 +36,7 @@ public class UserEntityDto {
     }
 
     public static class Builder {
+        private Long id;
         private String email;
         private String firstName;
         private String lastName;
@@ -48,6 +52,10 @@ public class UserEntityDto {
             return new Builder();
         }
 
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
         public Builder email(String email) {
             this.email = email;
             return this;
@@ -84,10 +92,11 @@ public class UserEntityDto {
         }
 
         public UserEntityDto build() {
-            return new UserEntityDto(email, firstName, lastName, phoneNumber, timezone, locale, role);
+            return new UserEntityDto(id, email, firstName, lastName, phoneNumber, timezone, locale, role);
         }
     }
 
+    public Long getId() {return id;}
     public String getEmail() {
         return email;
     }
