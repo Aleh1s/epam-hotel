@@ -30,6 +30,20 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public void update(UserEntity userEntity) {
+        UserSimpleDao dao = new UserSimpleDao();
+        try (Transaction transaction = Transaction.start(dao)) {
+            try {
+                dao.update(userEntity);
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                logger.error(e.getMessage(), e);
+            }
+        }
+    }
+
+    @Override
     public Optional<UserEntity> findById(Long id) {
         Optional<UserEntity> userEntity = Optional.empty();
         UserSimpleDao dao = new UserSimpleDao();
