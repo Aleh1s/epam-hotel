@@ -51,6 +51,7 @@ public class I18NCommand implements Command {
         Optional<UserEntity> userEntityOptional = userRepository.findById(userId);
         if (userEntityOptional.isPresent()) {
             UserEntity userEntity = userEntityOptional.get();
+            if (lang.equals("en")) lang = "";
             userEntity.setLocale(new Locale(lang));
             userRepository.update(userEntity);
         }

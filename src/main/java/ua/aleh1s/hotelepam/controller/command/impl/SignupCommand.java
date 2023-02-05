@@ -47,7 +47,7 @@ public class SignupCommand implements Command {
         String password = request.getParameter("password");
         String zoneOffsetStr = request.getParameter("timezoneOffset");
         ZoneId timezone = ZoneId.ofOffset("UTC", ZoneOffset.of(zoneOffsetStr));
-        Locale defaultLocale = Locale.ENGLISH;
+        Locale defaultLocale = new Locale("");
         UserRole userRole = UserRole.CUSTOMER;
 
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
