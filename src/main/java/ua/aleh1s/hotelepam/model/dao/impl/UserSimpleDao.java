@@ -17,9 +17,13 @@ import java.util.Optional;
 import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
 import static ua.aleh1s.hotelepam.model.constant.SqlQuery.*;
 
-public class UserSimpleDao extends SimpleDao<String, UserEntity> {
+public class UserSimpleDao extends SimpleDao<Long, UserEntity> {
     @Override
-    public Optional<UserEntity> findBy(String email) throws DaoException {
+    public Optional<UserEntity> findById(Long id) throws DaoException {
+        return findAndMap(USER_SELECT_BY_ID, id);
+    }
+
+    public Optional<UserEntity> findByEmail(String email) throws DaoException {
         return findAndMap(USER_SELECT_BY_EMAIL, email);
     }
 
@@ -27,10 +31,14 @@ public class UserSimpleDao extends SimpleDao<String, UserEntity> {
         return findAndMap(USER_SELECT_BY_PHONE_NUMBER, phoneNumber);
     }
 
-    public Optional<UserEntity> findAndMap(String query, String parameter) throws DaoException {
+    public Optional<UserEntity> findAndMap(String query, Object parameter) throws DaoException {
         UserEntity userEntity = null;
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, parameter);
+            if (parameter instanceof String) {
+                statement.setString(1, (String) parameter);
+            } else if (parameter instanceof Long) {
+                statement.setLong(1, (Long) parameter);
+            }
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     SqlUserEntityMapper userMapper = new SqlUserEntityMapper();

@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class UserRepositoryImpl implements UserRepository {
 
-    private static final Logger LOGGER = LogManager.getLogger(UserRepositoryImpl.class);
+    private static final Logger logger = LogManager.getLogger(UserRepositoryImpl.class);
 
     @Override
     public void create(UserEntity userEntity) {
@@ -24,9 +24,25 @@ public class UserRepositoryImpl implements UserRepository {
                 transaction.commit();
             } catch (DaoException e) {
                 transaction.rollback();
-                LOGGER.error(e.getMessage(), e);
+                logger.error(e.getMessage(), e);
             }
         }
+    }
+
+    @Override
+    public Optional<UserEntity> findById(Long id) {
+        Optional<UserEntity> userEntity = Optional.empty();
+        UserSimpleDao dao = new UserSimpleDao();
+        try (Transaction transaction = Transaction.start(dao)) {
+            try {
+                userEntity = dao.findById(id);
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                logger.error(e.getMessage(), e);
+            }
+        }
+        return userEntity;
     }
 
     @Override
@@ -35,11 +51,11 @@ public class UserRepositoryImpl implements UserRepository {
         UserSimpleDao dao = new UserSimpleDao();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
-                userEntity = dao.findBy(email);
+                userEntity = dao.findByEmail(email);
                 transaction.commit();
             } catch (DaoException e) {
                 transaction.rollback();
-                LOGGER.error(e.getMessage(), e);
+                logger.error(e.getMessage(), e);
             }
         }
         return userEntity;
@@ -55,7 +71,7 @@ public class UserRepositoryImpl implements UserRepository {
                 transaction.commit();
             } catch (DaoException e) {
                 transaction.rollback();
-                LOGGER.error(e.getMessage(), e);
+                logger.error(e.getMessage(), e);
             }
         }
         return userEntity;

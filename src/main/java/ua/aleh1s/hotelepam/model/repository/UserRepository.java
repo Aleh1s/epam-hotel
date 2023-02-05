@@ -7,6 +7,7 @@ import java.util.Optional;
 public interface UserRepository {
 
     void create(UserEntity userEntity);
+    Optional<UserEntity> findById(Long id);
     Optional<UserEntity> findByEmail(String email);
     Optional<UserEntity> findByPhoneNumber(String phoneNumber);
 }
