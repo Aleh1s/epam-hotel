@@ -4,7 +4,8 @@ public enum Page {
 
     ERROR_PAGE("error.jsp"),
     SIGNUP("signup.jsp"),
-    LOGIN("login.jsp");
+    LOGIN("login.jsp"),
+    APPLICATION("application.jsp");
 
     private final String path;
 

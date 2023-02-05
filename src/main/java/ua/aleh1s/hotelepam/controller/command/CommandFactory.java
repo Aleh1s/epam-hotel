@@ -1,9 +1,6 @@
 package ua.aleh1s.hotelepam.controller.command;
 
-import ua.aleh1s.hotelepam.controller.command.impl.I18NCommand;
-import ua.aleh1s.hotelepam.controller.command.impl.LoginCommand;
-import ua.aleh1s.hotelepam.controller.command.impl.RedirectToErrorPage;
-import ua.aleh1s.hotelepam.controller.command.impl.SignupCommand;
+import ua.aleh1s.hotelepam.controller.command.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +29,7 @@ public final class CommandFactory {
         commandMap.put("login", new LoginCommand());
         commandMap.put("signup", new SignupCommand());
         commandMap.put("i18n", new I18NCommand());
+        commandMap.put("application", new ApplicationCommand());
         commandMap.put("redirectToErrorPage", new RedirectToErrorPage());
     }
 }

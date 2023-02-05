@@ -30,11 +30,11 @@
                     <label for="apartmentClass">
                         <fmt:message key="form.label.class"/>
                         <select class="form-input" name="apartmentClass" id="apartmentClass">
-                            <option value="standard"><fmt:message key="form.select.standard"/></option>
-                            <option value="superior"><fmt:message key="form.select.superior"/></option>
-                            <option value="familyRoom"><fmt:message key="form.select.family-room"/></option>
-                            <option value="business"><fmt:message key="form.select.business"/></option>
-                            <option value="president"><fmt:message key="form.select.president"/></option>
+                            <option value="STANDARD"><fmt:message key="form.select.standard"/></option>
+                            <option value="SUPERIOR"><fmt:message key="form.select.superior"/></option>
+                            <option value="FAMILY"><fmt:message key="form.select.family-room"/></option>
+                            <option value="BUSINESS"><fmt:message key="form.select.business"/></option>
+                            <option value="PRESIDENT"><fmt:message key="form.select.president"/></option>
                         </select>
                     </label>
                 </div>
