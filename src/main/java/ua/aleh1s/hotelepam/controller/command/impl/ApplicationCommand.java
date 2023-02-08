@@ -7,7 +7,7 @@ import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.controller.Page;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.command.Result;
-import ua.aleh1s.hotelepam.model.entity.ApartmentClass;
+import ua.aleh1s.hotelepam.model.entity.RoomClass;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
 import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
@@ -28,13 +28,13 @@ public class ApplicationCommand implements Command {
         Integer numberOfGuests = Integer.parseInt(numberOfGuestsStr);
         LocalDate dateOfEntry = LocalDate.parse(dateOfEntryStr);
         LocalDate dateOfLeaving = LocalDate.parse(dateOfLeavingStr);
-        ApartmentClass apartmentClass = ApartmentClass.valueOf(apartmentClassStr);
+        RoomClass roomClass = RoomClass.valueOf(apartmentClassStr);
 
         HttpSession session = request.getSession();
         Long id = (Long) session.getAttribute("id");
 
         ApplicationEntity applicationEntry = ApplicationEntity.Builder.newBuilder()
-                .guestsNumber(numberOfGuests).apartmentClass(apartmentClass)
+                .guestsNumber(numberOfGuests).apartmentClass(roomClass)
                 .entryDate(dateOfEntry).leavingDate(dateOfLeaving)
                 .status(ApplicationStatus.NEW).customerId(id)
                 .build();
