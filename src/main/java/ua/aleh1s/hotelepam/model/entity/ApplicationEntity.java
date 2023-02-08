@@ -6,7 +6,7 @@ public class ApplicationEntity {
 
     private Long id;
     private Integer guestsNumber;
-    private ApartmentClass apartmentClass;
+    private RoomClass roomClass;
     private LocalDate entryDate;
     private LocalDate leavingDate;
     private ApplicationStatus status;
@@ -15,14 +15,14 @@ public class ApplicationEntity {
     public ApplicationEntity(
             Long id,
             Integer guestsNumber,
-            ApartmentClass apartmentClass,
+            RoomClass roomClass,
             LocalDate entryDate,
             LocalDate leavingDate,
             ApplicationStatus status,
             Long customerId) {
         this.id = id;
         this.guestsNumber = guestsNumber;
-        this.apartmentClass = apartmentClass;
+        this.roomClass = roomClass;
         this.entryDate = entryDate;
         this.leavingDate = leavingDate;
         this.status = status;
@@ -32,7 +32,7 @@ public class ApplicationEntity {
     public static class Builder {
         private Long id;
         private Integer guestsNumber;
-        private ApartmentClass apartmentClass;
+        private RoomClass roomClass;
         private LocalDate entryDate;
         private LocalDate leavingDate;
         private ApplicationStatus status;
@@ -54,8 +54,8 @@ public class ApplicationEntity {
             return this;
         }
 
-        public Builder apartmentClass(ApartmentClass apartmentClass) {
-            this.apartmentClass = apartmentClass;
+        public Builder apartmentClass(RoomClass roomClass) {
+            this.roomClass = roomClass;
             return this;
         }
 
@@ -81,7 +81,7 @@ public class ApplicationEntity {
 
         public ApplicationEntity build() {
             return new ApplicationEntity(
-                    id, guestsNumber, apartmentClass, entryDate, leavingDate, status, customerId
+                    id, guestsNumber, roomClass, entryDate, leavingDate, status, customerId
             );
         }
     }
@@ -94,8 +94,8 @@ public class ApplicationEntity {
         return guestsNumber;
     }
 
-    public ApartmentClass getApartmentClass() {
-        return apartmentClass;
+    public RoomClass getApartmentClass() {
+        return roomClass;
     }
 
     public LocalDate getEntryDate() {
@@ -122,8 +122,8 @@ public class ApplicationEntity {
         this.guestsNumber = guestsNumber;
     }
 
-    public void setApartmentClass(ApartmentClass apartmentClass) {
-        this.apartmentClass = apartmentClass;
+    public void setApartmentClass(RoomClass roomClass) {
+        this.roomClass = roomClass;
     }
 
     public void setEntryDate(LocalDate entryDate) {
