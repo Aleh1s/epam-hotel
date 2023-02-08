@@ -31,5 +31,6 @@ public final class CommandFactory {
         commandMap.put("i18n", new I18NCommand());
         commandMap.put("application", new ApplicationCommand());
         commandMap.put("redirectToErrorPage", new RedirectToErrorPage());
+        commandMap.put("roomList", new RoomListCommand());
     }
 }

@@ -18,7 +18,8 @@
         </ul>
         <ul class="nav-center">
             <li class="nav-item"><a href="#"><b><fmt:message key="nav.label.home"/></b></a></li>
-            <li class="nav-item"><a href="roomList.jsp"><fmt:message key="nav.label.room_list"/></a></li>
+            <li class="nav-item"><a href="controller?command=roomList&priceFrom=20&priceTo=500&personsFrom=1&personsTo=10">
+                <fmt:message key="nav.label.room_list"/></a></li>
             <li class="nav-item"><a href="application.jsp"><fmt:message key="nav.label.application"/></a></li>
         </ul>
         <ul class="nav-right">

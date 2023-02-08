@@ -27,9 +27,9 @@
                            name="numberOfGuests" type="number" placeholder="${numberOfGuests}">
                 </div>
                 <div class="input-group">
-                    <label for="apartmentClass">
+                    <label for="roomClass">
                         <fmt:message key="form.label.class"/>
-                        <select class="form-input" name="apartmentClass" id="apartmentClass">
+                        <select class="form-input" name="roomClass" id="roomClass">
                             <option value="STANDARD"><fmt:message key="form.select.standard"/></option>
                             <option value="SUPERIOR"><fmt:message key="form.select.superior"/></option>
                             <option value="FAMILY"><fmt:message key="form.select.family-room"/></option>
