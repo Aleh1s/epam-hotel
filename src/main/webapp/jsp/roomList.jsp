@@ -26,13 +26,15 @@
                                     <label for="price-from" class="form-text">
                                         From
                                         <input id="price-from" name="priceFrom" type="number" min="20" max="500"
-                                               value="20"
-                                               placeholder="From" class="form-input w100 h30 grey-border ml10 p5">
+                                               value="${requestScope.params.priceFrom}"
+                                               class="form-input w100 h30 grey-border ml10 p5">
                                     </label>
                                     <label for="price-to" class="ml20 form-text">
                                         To
-                                        <input id="price-to" name="priceTo" type="number" min="20" max="500" value="500"
-                                               placeholder="To" class="form-input w100 w100 h30 grey-border ml10 p5">
+                                        <input id="price-to" name="priceTo" type="number"
+                                               min="20"
+                                               max="500" value="${requestScope.params.priceTo}"
+                                               class="form-input w100 w100 h30 grey-border ml10 p5">
                                     </label>
                                 </div>
                             </div>
@@ -44,13 +46,13 @@
                                     <label for="persons-from" class="form-text">
                                         From
                                         <input id="persons-from" name="personsFrom" type="number" min="1" max="10"
-                                               value="1"
+                                               value="${requestScope.params.personsFrom}"
                                                placeholder="From" class="form-input w100 h30 grey-border ml10 p5">
                                     </label>
                                     <label for="persons-to" class="ml20 form-text">
                                         To
                                         <input id="persons-to" name="personsTo" type="number" min="1" max="10"
-                                               value="10"
+                                               value="${requestScope.params.personsTo}"
                                                placeholder="To" class="form-input w100 w100 h30 grey-border ml10 p5">
                                     </label>
                                 </div>
@@ -62,27 +64,32 @@
                                 <div class="class-checkbox">
                                     <div>
                                         <div>
-                                            <input id="standard" type="checkbox" name="standard">
+                                            <input id="standard" type="checkbox" name="standard"
+                                            ${requestScope.params.standard ? "checked" : ""}>
                                             <label for="standard" class="checkbox-label">Standard</label>
                                         </div>
                                         <div>
-                                            <input id="superior" type="checkbox" name="superior">
+                                            <input id="superior" type="checkbox" name="superior"
+                                            ${requestScope.params.superior ? "checked" : ""}>
                                             <label for="superior" class="checkbox-label">Superior</label>
                                         </div>
                                     </div>
                                     <div class="ml20">
                                         <div>
-                                            <input id="family" type="checkbox" name="family">
+                                            <input id="family" type="checkbox" name="family"
+                                            ${requestScope.params.family ? "checked" : ""}>
                                             <label for="family" class="checkbox-label">Family room</label>
                                         </div>
                                         <div>
-                                            <input id="business" type="checkbox" name="business">
+                                            <input id="business" type="checkbox" name="business"
+                                            ${requestScope.params.business ? "checked" : ""}>
                                             <label for="business" class="checkbox-label">Business</label>
                                         </div>
                                     </div>
                                     <div class="ml20">
                                         <div>
-                                            <input id="president" type="checkbox" name="president">
+                                            <input id="president" type="checkbox" name="president"
+                                            ${requestScope.params.president ? "checked" : ""}>
                                             <label for="president" class="checkbox-label">President</label>
                                         </div>
                                     </div>
@@ -95,21 +102,25 @@
                                 <div class="status-checkbox">
                                     <div>
                                         <div>
-                                            <input id="free" type="checkbox" name="free">
+                                            <input id="free" type="checkbox" name="free"
+                                            ${requestScope.params.free ? "checked" : ""}>
                                             <label for="free" class="checkbox-label">Free</label>
                                         </div>
                                         <div>
-                                            <input id="booked" type="checkbox" name="booked">
+                                            <input id="booked" type="checkbox" name="booked"
+                                            ${requestScope.params.booked ? "checked" : ""}>
                                             <label for="booked" class="checkbox-label">booked</label>
                                         </div>
                                     </div>
                                     <div class="ml20">
                                         <div>
-                                            <input id="busy" type="checkbox" name="busy">
+                                            <input id="busy" type="checkbox"
+                                                   name="busy" ${requestScope.params.busy ? "checked" : ""}>
                                             <label for="busy" class="checkbox-label">Busy</label>
                                         </div>
                                         <div>
-                                            <input id="unavailable" type="checkbox" name="unavailable">
+                                            <input id="unavailable" type="checkbox" name="unavailable"
+                                            ${requestScope.params.unavailable ? "checked" : ""}>
                                             <label for="unavailable" class="checkbox-label">Unavailable</label>
                                         </div>
                                     </div>
@@ -117,7 +128,7 @@
                             </div>
                         </div>
                         <div class="form-button-aligner">
-                            <button type="submit" class="form-button"><fmt:message key="form.button.sort"/></button>
+                            <button type="submit" class="form-button"><fmt:message key="form.button.search"/></button>
                         </div>
                     </form>
                 </div>
@@ -154,10 +165,28 @@
                             </ul>
                         </div>
                         <div class="room-card-footer">
-                            <p class="room-price-label">${room.price}$ <fmt:message key="room.card.price.per-night"/></p>
+                            <p class="room-price-label">${room.price}$ <fmt:message
+                                    key="room.card.price.per-night"/></p>
                             <a href="#">View</a>
                         </div>
                     </div>
+                </c:forEach>
+            </div>
+
+            <div class="pagination">
+                <c:forEach var="i" begin="1" end="${requestScope.pagesNumber}">
+                    <c:choose>
+                        <c:when test="${requestScope.currPage eq i}">
+                            <div class="pagination-elem active">
+                                <a href="#">${i}</a>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="pagination-elem">
+                                <a href="<c:url value="/controller?command=roomList&pageNumber=${i}&${requestScope.paramString}"/>">${i}</a>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
                 </c:forEach>
             </div>
         </div>

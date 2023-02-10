@@ -6,7 +6,7 @@
 <html>
 <head>
     <title>Sign up</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 <c:import url="header.jsp"/>
@@ -90,6 +90,6 @@
     </div>
     <c:import url="footer.jsp"/>
 </div>
-<script src="script.js"></script>
+<script src="../js/script.js"></script>
 </body>
 </html>

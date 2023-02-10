@@ -347,3 +347,42 @@
     justify-content: end;
     align-items: center;
 }
+
+.pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination-elem {
+    height: 36px;
+    width: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.05) 0 6px 24px 0, rgba(0, 0, 0, 0.08) 0 0 0 1px;
+    border-radius: 18px;
+    margin-right: 10px;
+    transition: all 0.2s ease 0s;
+    cursor: context-menu;
+}
+
+.pagination-elem > a {
+    text-decoration: none;
+    color: #1d3c62;
+}
+
+.pagination-elem:hover {
+    transition: all 0.2s ease 0s;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+}
+
+.pagination-elem.active {
+    transition: all 0.2s ease 0s;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+}
+
+
