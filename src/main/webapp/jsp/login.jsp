@@ -14,19 +14,19 @@
     <div class="main">
         <div class="form-container">
             <form class="custom-form" action="controller?command=login" method="post">
-                <h1 class="form-header"><fmt:message key="form.header.login_info"/></h1>
+                <h1 class="form-header"><fmt:message key="login.info"/></h1>
                 <div id="error-container" class="error-container">
                     <p id="error-message">${requestScope.get("errorMessage")}</p>
                 </div>
                 <div class="input-group">
-                    <fmt:message var="email" key="form.input.email"/>
+                    <fmt:message var="email" key="email"/>
                     <input class="form-input" id="email" name="email" type="email" placeholder="${email}">
                 </div>
                 <div class="input-group">
-                    <fmt:message var="password" key="form.input.password"/>
+                    <fmt:message var="password" key="password"/>
                     <input class="form-input" id="password" name="password" type="password" placeholder="${password}">
                 </div>
-                <button class="form-button" type="submit"><fmt:message key="form.button.log_in"/></button>
+                <button class="form-button" type="submit"><fmt:message key="log.in"/></button>
             </form>
         </div>
     </div>

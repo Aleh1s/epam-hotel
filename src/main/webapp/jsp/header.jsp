@@ -31,20 +31,19 @@
 <div class="header">
     <div class="nav">
         <ul class="nav-left">
-            <li class="nav-item"><a href="controller?command=i18n&lang=en">EN</a></li>
+            <li class="nav-item"><a href="<c:url value="/controller?command=i18n&lang=en"/>">EN</a></li>
             <span class="vertical-delimiter"></span>
-            <li class="nav-item"><a href="controller?command=i18n&lang=ua">UA</a></li>
+            <li class="nav-item"><a href="<c:url value="/controller?command=i18n&lang=ua"/>">UA</a></li>
         </ul>
         <ul class="nav-center">
-            <li class="nav-item"><a href="#"><b><fmt:message key="nav.label.home"/></b></a></li>
-            <li class="nav-item"><a href="${roomList}">
-                <fmt:message key="nav.label.room_list"/></a></li>
-            <li class="nav-item"><a href="application.jsp"><fmt:message key="nav.label.application"/></a></li>
+            <li class="nav-item"><a href="#"><b><fmt:message key="home"/></b></a></li>
+            <li class="nav-item"><a href="${roomList}"><fmt:message key="room.list"/></a></li>
+            <li class="nav-item"><a href="<c:url value="/jsp/application.jsp"/>"><fmt:message key="application"/></a></li>
         </ul>
         <ul class="nav-right">
-            <li class="nav-item"><a href="signup.jsp"><fmt:message key="nav.label.sign_up"/></a></li>
-            <li class="nav-item"><a href="login.jsp"><fmt:message key="nav.label.log_in"/></a></li>
-            <li class="nav-item"><a href="#"><fmt:message key="nav.label.profile"/></a></li>
+            <li class="nav-item"><a href="<c:url value="/jsp/signup.jsp"/>"><fmt:message key="sign.up"/></a></li>
+            <li class="nav-item"><a href="<c:url value="/jsp/login.jsp"/>"><fmt:message key="log.in"/></a></li>
+            <li class="nav-item"><a href="#"><fmt:message key="profile"/></a></li>
         </ul>
     </div>
 </div>

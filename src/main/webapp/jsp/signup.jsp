@@ -14,28 +14,28 @@
     <div class="main">
         <div class="form-container">
             <form class="custom-form" action="controller?command=signup" method="post">
-                <h1 class="form-header"><fmt:message key="form.header.signup_info"/></h1>
+                <h1 class="form-header"><fmt:message key="signup.info"/></h1>
                 <div id="error-container" class="error-container">
                     <p id="error-message">${requestScope.get("errorMessage")}</p>
                 </div>
                 <div class="input-group">
-                    <fmt:message var="email" key="form.input.email"/>
+                    <fmt:message var="email" key="email"/>
                     <input class="form-input" id="email" name="email" type="email" placeholder="${email}">
                 </div>
                 <div class="input-group">
-                    <fmt:message var="password" key="form.input.password"/>
+                    <fmt:message var="password" key="password"/>
                     <input class="form-input" id="password" name="password" type="password" placeholder="${password}">
                 </div>
                 <div class="input-group">
-                    <fmt:message var="firstName" key="form.input.first_name"/>
+                    <fmt:message var="firstName" key="first.name"/>
                     <input class="form-input" id="firstName" name="firstName" type="text" placeholder="${firstName}">
                 </div>
                 <div class="input-group">
-                    <fmt:message var="lastName" key="form.input.last_name"/>
+                    <fmt:message var="lastName" key="last.name"/>
                     <input class="form-input" id="lastName" name="lastName" type="text" placeholder="${lastName}">
                 </div>
                 <div class="input-group">
-                    <fmt:message var="phoneNumber" key="form.input.phone_number"/>
+                    <fmt:message var="phoneNumber" key="phone.number"/>
                     <input class="form-input" id="phoneNumber" name="phoneNumber" type="tel" placeholder="${phoneNumber}">
                 </div>
                 <div class="input-group">
@@ -84,7 +84,7 @@
                         <option value="+14:00">(GMT +14:00) Line Islands, Tokelau</option>
                     </select>
                 </div>
-                <button class="form-button" type="submit"><fmt:message key="form.button.sign_up"/></button>
+                <button class="form-button" type="submit"><fmt:message key="sign.up"/></button>
             </form>
         </div>
     </div>
