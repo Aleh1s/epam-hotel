@@ -1,6 +1,7 @@
 package ua.aleh1s.hotelepam;
 
 import ua.aleh1s.hotelepam.controller.mapper.RoomCardDtoMapper;
+import ua.aleh1s.hotelepam.controller.mapper.RoomDtoMapper;
 import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 import ua.aleh1s.hotelepam.model.repository.UserRepository;
@@ -17,12 +18,14 @@ public class AppContext {
     private final RoomRepository roomRepository;
     private final ApplicationRepository applicationRepository;
     private final RoomCardDtoMapper roomCardDtoMapper;
+    private final RoomDtoMapper roomDtoMapper;
 
     {
         this.userRepository = new UserRepositoryImpl();
         this.applicationRepository = new ApplicationRepositoryImpl();
         this.roomRepository = new RoomRepositoryImpl();
         this.roomCardDtoMapper = new RoomCardDtoMapper();
+        this.roomDtoMapper = new RoomDtoMapper();
     }
 
     public static synchronized AppContext getInstance() {
@@ -39,4 +42,8 @@ public class AppContext {
     }
     public RoomRepository getRoomRepository() {return roomRepository;}
     public RoomCardDtoMapper getRoomCardDtoMapper() {return roomCardDtoMapper;}
+
+    public RoomDtoMapper getRoomDtoMapper() {
+        return roomDtoMapper;
+    }
 }

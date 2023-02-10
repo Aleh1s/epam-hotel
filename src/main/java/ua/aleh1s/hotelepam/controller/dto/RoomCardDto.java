@@ -2,6 +2,7 @@ package ua.aleh1s.hotelepam.controller.dto;
 
 public class RoomCardDto {
 
+    private final Integer roomNumber;
     private final String roomStatus;
     private final String roomClass;
     private final Integer personsNumber;
@@ -9,12 +10,14 @@ public class RoomCardDto {
     private final Integer area;
     private final Double price;
 
-    private RoomCardDto(String roomStatus,
-                       String roomClass,
-                       Integer personsNumber,
-                       Integer bedsNumber,
-                       Integer area,
-                       Double price) {
+    private RoomCardDto(Integer roomNumber,
+                        String roomStatus,
+                        String roomClass,
+                        Integer personsNumber,
+                        Integer bedsNumber,
+                        Integer area,
+                        Double price) {
+        this.roomNumber = roomNumber;
         this.roomStatus = roomStatus;
         this.roomClass = roomClass;
         this.personsNumber = personsNumber;
@@ -24,6 +27,7 @@ public class RoomCardDto {
     }
 
     public static class Builder {
+        private Integer roomNumber;
         private String roomStatus;
         private String roomClass;
         private Integer personsNumber;
@@ -31,10 +35,16 @@ public class RoomCardDto {
         private Integer area;
         private Double price;
 
-        private Builder() {}
+        private Builder() {
+        }
 
         public static Builder newBuilder() {
             return new Builder();
+        }
+
+        public Builder roomNumber(Integer roomNumber) {
+            this.roomNumber = roomNumber;
+            return this;
         }
 
         public Builder roomStatus(String roomStatus) {
@@ -69,11 +79,12 @@ public class RoomCardDto {
 
         public RoomCardDto build() {
             return new RoomCardDto(
-                    roomStatus, roomClass, personsNumber, bedsNumber, area, price
+                    roomNumber, roomStatus, roomClass, personsNumber, bedsNumber, area, price
             );
         }
     }
 
+    public Integer getRoomNumber() {return roomNumber;}
     public String getRoomStatus() {
         return roomStatus;
     }

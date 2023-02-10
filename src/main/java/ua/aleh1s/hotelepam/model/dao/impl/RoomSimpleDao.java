@@ -1,5 +1,6 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
+import ua.aleh1s.hotelepam.model.constant.SqlQuery;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.criteria.RoomListCriteria;
 import ua.aleh1s.hotelepam.model.dao.SimpleDao;
@@ -16,10 +17,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static ua.aleh1s.hotelepam.model.constant.SqlQuery.ROOM_SELECT_BY_ROOM_NUMBER;
+
 public class RoomSimpleDao extends SimpleDao<Integer, RoomEntity> {
     @Override
-    public Optional<RoomEntity> findById(Integer id) throws DaoException {
-        return Optional.empty();
+    public Optional<RoomEntity> findById(Integer roomNumber) throws DaoException {
+        RoomEntity roomEntity = null;
+        try (PreparedStatement statement = connection.prepareStatement(ROOM_SELECT_BY_ROOM_NUMBER)) {
+            statement.setInt(1, roomNumber);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                SqlRoomEntityMapper mapper = new SqlRoomEntityMapper();
+                if (resultSet.next()) {
+                    roomEntity = mapper.map(resultSet);
+                }
+            }
+        } catch (SQLException | SqlEntityMapperException e) {
+            throw new DaoException(e);
+        }
+        return Optional.ofNullable(roomEntity);
     }
 
     @Override

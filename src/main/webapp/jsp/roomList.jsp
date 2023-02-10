@@ -167,9 +167,9 @@
                             </ul>
                         </div>
                         <div class="room-card-footer">
-                            <p class="room-price-label">${room.price}$ <fmt:message
-                                    key="per.night"/></p>
-                            <a href="#">View</a>
+                            <p class="room-price-label">${room.price}$/<fmt:message
+                                    key="night"/></p>
+                            <a href="<c:url value="/controller?command=viewRoom&roomNumber=${room.roomNumber}"/>"><fmt:message key="view"/></a>
                         </div>
                     </div>
                 </c:forEach>

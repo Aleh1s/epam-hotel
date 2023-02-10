@@ -10,6 +10,10 @@ public class Utils {
         return Optional.ofNullable(request.getParameter(name)).orElse(def);
     }
 
+    public static Integer getIntValue(HttpServletRequest request, String name) {
+        return Integer.parseInt(request.getParameter(name));
+    }
+
     public static Integer getIntValueOrDefault(HttpServletRequest request, String name, Integer def) {
         return Optional.ofNullable(request.getParameter(name))
                 .map(Integer::parseInt).orElse(def);

@@ -16,4 +16,7 @@ public class SqlQuery {
     // ApplicationEntity
     public static final String APPLICATION_INSERT = "insert into \"application\" (number_of_guests, apartment_class, date_of_entry, date_of_leaving, status, customer_id) values (?, ?, ?, ?, ?, ?)";
 
+    // RoomEntity
+    public static final String ROOM_SELECT_BY_ROOM_NUMBER = "select * from \"room\" where room_number = ?";
+
 }

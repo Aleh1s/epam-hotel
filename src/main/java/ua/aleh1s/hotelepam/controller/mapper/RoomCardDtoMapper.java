@@ -10,6 +10,7 @@ public class RoomCardDtoMapper implements Function<RoomEntity, RoomCardDto> {
     @Override
     public RoomCardDto apply(RoomEntity room) {
         return RoomCardDto.Builder.newBuilder()
+                .roomNumber(room.getRoomNumber())
                 .roomStatus(room.getStatus().name().toLowerCase(Locale.ROOT))
                 .roomClass(room.getRoomClass().name().toLowerCase(Locale.ROOT))
                 .personsNumber(room.getPersonsNumber())

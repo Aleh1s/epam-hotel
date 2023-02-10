@@ -13,10 +13,27 @@ import ua.aleh1s.hotelepam.transaction.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RoomRepositoryImpl implements RoomRepository {
 
     private static final Logger logger = LogManager.getLogger(RoomRepositoryImpl.class);
+
+    @Override
+    public Optional<RoomEntity> getByRoomNumber(Integer roomNumber) {
+        Optional<RoomEntity> roomEntity = Optional.empty();
+        RoomSimpleDao dao = new RoomSimpleDao();
+        try (Transaction transaction = Transaction.start(dao)) {
+            try {
+                roomEntity = dao.findById(roomNumber);
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                logger.error(e.getMessage(), e);
+            }
+        }
+        return roomEntity;
+    }
 
     @Override
     public List<RoomEntity> getAll(Criteria criteria, Pagination pagination) {
