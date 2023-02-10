@@ -1,11 +1,13 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
+import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.criteria.RoomListCriteria;
 import ua.aleh1s.hotelepam.model.dao.SimpleDao;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
 import ua.aleh1s.hotelepam.model.mapper.impl.SqlRoomEntityMapper;
+import ua.aleh1s.hotelepam.model.pagination.Pagination;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,10 +37,9 @@ public class RoomSimpleDao extends SimpleDao<Integer, RoomEntity> {
 
     }
 
-    public List<RoomEntity> getAll(RoomListCriteria criteria) throws DaoException {
+    public List<RoomEntity> getAll(Criteria criteria, Pagination pagination) throws DaoException {
         List<RoomEntity> roomEntities = new ArrayList<>();
-        String query = "select * from room " + criteria.build();
-        System.out.println(query);
+        String query = "select * from room " + criteria.build() + " " + pagination.build();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 SqlRoomEntityMapper mapper = new SqlRoomEntityMapper();
@@ -56,7 +57,6 @@ public class RoomSimpleDao extends SimpleDao<Integer, RoomEntity> {
     public Integer count(RoomListCriteria criteria) throws DaoException {
         int count = 0;
         String query = "select count(*) from room " + criteria.build();
-        System.out.println(query);
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
