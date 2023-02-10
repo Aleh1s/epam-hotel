@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.command.CommandFactory;
-import ua.aleh1s.hotelepam.controller.command.Result;
 import ua.aleh1s.hotelepam.controller.command.impl.RedirectToErrorPage;
 import ua.aleh1s.hotelepam.jdbc.DBManager;
 
@@ -50,9 +49,9 @@ public class Controller extends HttpServlet {
                 .orElse("redirectToErrorPage");
         Command command = commandFactory.getCommand(commandStr)
                 .orElse(new RedirectToErrorPage());
-        Result result = command.execute(request, response);
-        if (!result.isRedirect()) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(result.getPage());
+        String path = command.execute(request, response);
+        if (!path.equals("redirect")) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(path);
             dispatcher.forward(request, response);
         }
     }

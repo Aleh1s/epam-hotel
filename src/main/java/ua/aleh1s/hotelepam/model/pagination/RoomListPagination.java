@@ -1,7 +1,7 @@
 package ua.aleh1s.hotelepam.model.pagination;
 
 import jakarta.servlet.http.HttpServletRequest;
-import ua.aleh1s.hotelepam.controller.constant.Constant;
+import ua.aleh1s.hotelepam.Utils;
 import ua.aleh1s.hotelepam.model.constant.PaginationParam;
 
 import static ua.aleh1s.hotelepam.Utils.*;
@@ -20,8 +20,9 @@ public class RoomListPagination implements Pagination {
 
     @Override
     public String build() {
+        Integer roomCardsPerPage = Utils.getIntContextParamValue(request, "roomCardsPerPage");
         Integer pageNumber = getIntValueOrDefault(request, PaginationParam.PAGE_NUMBER.getValue(), 1);
-        return "offset " + (pageNumber - 1) * Constant.ELEMENTS_PER_PAGE +
-                " limit " + Constant.ELEMENTS_PER_PAGE;
+        return "offset " + (pageNumber - 1) * roomCardsPerPage +
+                " limit " + roomCardsPerPage;
     }
 }

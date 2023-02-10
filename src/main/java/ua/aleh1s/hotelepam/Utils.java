@@ -14,4 +14,9 @@ public class Utils {
         return Optional.ofNullable(request.getParameter(name))
                 .map(Integer::parseInt).orElse(def);
     }
+
+    public static Integer getIntContextParamValue(HttpServletRequest request, String key) {
+        String initParameter = request.getServletContext().getInitParameter(key);
+        return Integer.parseInt(initParameter);
+    }
 }

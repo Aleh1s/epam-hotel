@@ -4,9 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.mindrot.jbcrypt.BCrypt;
 import ua.aleh1s.hotelepam.AppContext;
-import ua.aleh1s.hotelepam.controller.Page;
+import ua.aleh1s.hotelepam.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.command.Result;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.model.entity.UserRole;
 import ua.aleh1s.hotelepam.model.repository.UserRepository;
@@ -21,13 +20,13 @@ import java.util.Optional;
 public class SignupCommand implements Command {
 
     @Override
-    public Result execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
         UserRepository userRepository = AppContext.getInstance().getUserRepository();
 
         String errorMessage = null;
-        String page = Page.SIGNUP.getPath();
+        String path = ResourcesManager.getInstance().getValue("path.page.signup");
 
         Optional<UserEntity> userEntityByEmail = userRepository.findByEmail(email);
         if (userEntityByEmail.isPresent())
@@ -39,7 +38,7 @@ public class SignupCommand implements Command {
 
         if (Objects.nonNull(errorMessage)) {
             request.setAttribute("errorMessage", errorMessage);
-            return Result.of(page, false);
+            return path;
         }
 
         String firstName = request.getParameter("firstName");
@@ -60,14 +59,13 @@ public class SignupCommand implements Command {
 
         userRepository.create(userEntity);
 
-        boolean isRedirect;
+        path = ResourcesManager.getInstance().getValue("path.page.login");
         try {
-            response.sendRedirect("/login.jsp");
-            isRedirect = true;
+            response.sendRedirect(path);
+            path = "redirect";
         } catch (IOException e) {
-            page = Page.ERROR_PAGE.getPath();
-            isRedirect = false;
+            path = ResourcesManager.getInstance().getValue("path.page.error");
         }
-        return Result.of(page, isRedirect);
+        return path;
     }
 }

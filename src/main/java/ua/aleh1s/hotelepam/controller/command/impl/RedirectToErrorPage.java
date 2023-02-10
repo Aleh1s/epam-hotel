@@ -2,24 +2,21 @@ package ua.aleh1s.hotelepam.controller.command.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import ua.aleh1s.hotelepam.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.command.Result;
 
 import java.io.IOException;
 
-import static ua.aleh1s.hotelepam.controller.Page.ERROR_PAGE;
-
 public class RedirectToErrorPage implements Command {
     @Override
-    public Result execute(HttpServletRequest request, HttpServletResponse response) {
-        String path = ERROR_PAGE.getPath();
-        Result result;
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+        String path = ResourcesManager.getInstance().getValue("path.page.error");
         try {
             response.sendRedirect(path);
-            result = Result.of(path, true);
+            path = "redirect";
         } catch (IOException e) {
-            result = Result.of(path, false);
+            e.printStackTrace();
         }
-        return result;
+        return path;
     }
 }

@@ -4,12 +4,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.AppContext;
-import ua.aleh1s.hotelepam.controller.Page;
+import ua.aleh1s.hotelepam.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.command.Result;
-import ua.aleh1s.hotelepam.model.entity.RoomClass;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
+import ua.aleh1s.hotelepam.model.entity.RoomClass;
 import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
 
 import java.io.IOException;
@@ -17,7 +16,7 @@ import java.time.LocalDate;
 
 public class ApplicationCommand implements Command {
     @Override
-    public Result execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         ApplicationRepository applicationRepository = AppContext.getInstance().getApplicationRepository();
 
         String numberOfGuestsStr = request.getParameter("numberOfGuests");
@@ -41,16 +40,14 @@ public class ApplicationCommand implements Command {
 
         applicationRepository.create(applicationEntry);
 
-        String path = Page.APPLICATION.getPath();
-        boolean isRedirect;
+        String path = ResourcesManager.getInstance().getValue("path.page.application");
         try {
             response.sendRedirect(path);
-            isRedirect = true;
+            path = "redirect";
         } catch (IOException e) {
-            path = Page.ERROR_PAGE.getPath();
-            isRedirect = false;
+            path = ResourcesManager.getInstance().getValue("path.page.error");
         }
 
-        return Result.of(path, isRedirect);
+        return path;
     }
 }

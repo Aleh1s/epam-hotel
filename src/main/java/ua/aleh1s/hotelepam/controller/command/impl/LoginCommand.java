@@ -5,9 +5,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
 import ua.aleh1s.hotelepam.AppContext;
-import ua.aleh1s.hotelepam.controller.Page;
+import ua.aleh1s.hotelepam.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.command.Result;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.model.repository.UserRepository;
 
@@ -16,7 +15,7 @@ import java.util.Optional;
 
 public class LoginCommand implements Command {
     @Override
-    public Result execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
@@ -24,18 +23,18 @@ public class LoginCommand implements Command {
         Optional<UserEntity> userEntityOptional = userRepository.findByEmail(email);
 
         String errorMessage = "Password or email is incorrect";
-        String path = Page.LOGIN.getPath();
+        String path = ResourcesManager.getInstance().getValue("path.page.login");
 
         if (userEntityOptional.isEmpty()) {
             request.setAttribute("errorMessage", errorMessage);
-            return Result.of(path, false);
+            return path;
         }
 
         UserEntity userEntity = userEntityOptional.get();
         boolean isPasswordValid = BCrypt.checkpw(password, userEntity.getPassword());
         if (!isPasswordValid) {
             request.setAttribute("errorMessage", errorMessage);
-            return Result.of(path, false);
+            return path;
         }
 
         HttpSession session = request.getSession();
@@ -44,14 +43,12 @@ public class LoginCommand implements Command {
         session.setAttribute("lang", userEntity.getLocale().getLanguage());
         session.setAttribute("role", userEntity.getRole().name());
 
-        boolean isRedirect;
         try {
             response.sendRedirect("/roomList.jsp");
-            isRedirect = true;
+            path = "redirect";
         } catch (IOException e) {
-            path = Page.ERROR_PAGE.getPath();
-            isRedirect = false;
+            path = ResourcesManager.getInstance().getValue("path.page.error");
         }
-        return Result.of(path, isRedirect);
+        return path;
     }
 }

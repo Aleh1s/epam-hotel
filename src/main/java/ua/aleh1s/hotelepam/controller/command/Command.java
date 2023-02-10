@@ -4,5 +4,5 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public interface Command {
-    Result execute(HttpServletRequest request, HttpServletResponse response);
+    String execute(HttpServletRequest request, HttpServletResponse response);
 }

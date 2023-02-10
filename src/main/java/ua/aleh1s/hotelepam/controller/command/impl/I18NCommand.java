@@ -4,8 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.AppContext;
+import ua.aleh1s.hotelepam.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.command.Result;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.model.repository.UserRepository;
 
@@ -14,10 +14,10 @@ import java.util.Optional;
 
 public class I18NCommand implements Command {
     @Override
-    public Result execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         Optional<String> langOptional = Optional.ofNullable(request.getParameter("lang"));
         langOptional.ifPresent(s -> setLang(request, s));
-        return Result.of("roomList.jsp", false);
+        return ResourcesManager.getInstance().getValue("path.page.room.list");
     }
 
     private void setLang(HttpServletRequest request, String lang) {
