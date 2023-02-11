@@ -2,7 +2,10 @@ package ua.aleh1s.hotelepam;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Objects;
 import java.util.Optional;
+
+import static java.util.Objects.*;
 
 public class Utils {
 
@@ -15,8 +18,10 @@ public class Utils {
     }
 
     public static Integer getIntValueOrDefault(HttpServletRequest request, String name, Integer def) {
-        return Optional.ofNullable(request.getParameter(name))
-                .map(Integer::parseInt).orElse(def);
+        String intParameterStr = request.getParameter(name);
+        if (nonNull(intParameterStr) && !intParameterStr.isBlank())
+            return Integer.parseInt(intParameterStr);
+        return def;
     }
 
     public static Integer getIntContextParamValue(HttpServletRequest request, String key) {
