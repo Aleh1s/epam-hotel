@@ -1,7 +1,5 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import ua.aleh1s.hotelepam.model.dao.SimpleDao;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
@@ -11,7 +9,6 @@ import ua.aleh1s.hotelepam.model.mapper.impl.SqlUserEntityMapper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Optional;
 
 import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
@@ -74,7 +71,6 @@ public class UserSimpleDao extends SimpleDao<Long, UserEntity> {
                     resultSet.updateString(USER_LAST_NAME, entity.getLastName());
                     resultSet.updateString(USER_PHONE_NUMBER, entity.getPhoneNumber());
                     resultSet.updateString(USER_PASSWORD, entity.getPassword());
-                    resultSet.updateString(USER_TIMEZONE, entity.getTimezone().getId());
                     resultSet.updateString(USER_LOCALE, entity.getLocale().getLanguage());
                     resultSet.updateString(USER_ROLE, entity.getRole().name());
                     resultSet.updateRow();
@@ -93,9 +89,8 @@ public class UserSimpleDao extends SimpleDao<Long, UserEntity> {
             statement.setString(3, entity.getLastName());
             statement.setString(4, entity.getPhoneNumber());
             statement.setString(5, entity.getPassword());
-            statement.setString(6, entity.getTimezone().getId());
-            statement.setString(7, entity.getLocale().getLanguage());
-            statement.setString(8, entity.getRole().name());
+            statement.setString(6, entity.getLocale().getLanguage());
+            statement.setString(7, entity.getRole().name());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);

@@ -11,7 +11,6 @@ public class UserEntity {
     private String lastName;
     private String phoneNumber;
     private String password;
-    private ZoneId timezone;
     private Locale locale;
     private UserRole role;
 
@@ -22,7 +21,6 @@ public class UserEntity {
             String lastName,
             String phoneNumber,
             String password,
-            ZoneId timezone,
             Locale locale,
             UserRole role) {
         this.id = id;
@@ -31,7 +29,6 @@ public class UserEntity {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.password = password;
-        this.timezone = timezone;
         this.locale = locale;
         this.role = role;
     }
@@ -43,7 +40,6 @@ public class UserEntity {
         private String lastName;
         private String phoneNumber;
         private String password;
-        private ZoneId timezone;
         private Locale locale;
         private UserRole role;
 
@@ -84,11 +80,6 @@ public class UserEntity {
             return this;
         }
 
-        public Builder timezone(ZoneId timezone) {
-            this.timezone = timezone;
-            return this;
-        }
-
         public Builder locale(Locale locale) {
             this.locale = locale;
             return this;
@@ -100,7 +91,7 @@ public class UserEntity {
         }
 
         public UserEntity build() {
-            return new UserEntity(id, email, firstName, lastName, phoneNumber, password, timezone, locale, role);
+            return new UserEntity(id, email, firstName, lastName, phoneNumber, password, locale, role);
         }
     }
 
@@ -150,14 +141,6 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public ZoneId getTimezone() {
-        return timezone;
-    }
-
-    public void setTimezone(ZoneId timezone) {
-        this.timezone = timezone;
     }
 
     public Locale getLocale() {

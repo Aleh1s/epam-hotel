@@ -31,7 +31,6 @@ public class SqlUserEntityMapper implements SqlEntityMapper<UserEntity> {
                 .lastName(resultSet.getString(USER_LAST_NAME))
                 .phoneNumber(resultSet.getString(USER_PHONE_NUMBER))
                 .password(resultSet.getString(USER_PASSWORD))
-                .timezone(ZoneId.of(resultSet.getString(USER_TIMEZONE)))
                 .locale(new Locale(resultSet.getString(USER_LOCALE)))
                 .role(UserRole.valueOf(resultSet.getString(USER_ROLE)))
                 .build();
