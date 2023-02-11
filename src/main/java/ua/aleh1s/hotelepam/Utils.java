@@ -2,7 +2,7 @@ package ua.aleh1s.hotelepam;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Objects;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import static java.util.Objects.*;
@@ -17,6 +17,10 @@ public class Utils {
         return Integer.parseInt(request.getParameter(name));
     }
 
+    public static LocalDate getLocalDateValue(HttpServletRequest request, String name) {
+        return LocalDate.parse(request.getParameter(name));
+    }
+
     public static Integer getIntValueOrDefault(HttpServletRequest request, String name, Integer def) {
         String intParameterStr = request.getParameter(name);
         if (nonNull(intParameterStr) && !intParameterStr.isBlank())
@@ -28,4 +32,5 @@ public class Utils {
         String initParameter = request.getServletContext().getInitParameter(key);
         return Integer.parseInt(initParameter);
     }
+
 }
