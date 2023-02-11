@@ -28,7 +28,7 @@
                                         <input id="price-from" name="priceFrom" type="number" min="20" max="500"
                                                value="${requestScope.params.priceFrom}"
                                                class="form-input w100 h30 grey-border ml10 p5"
-                                               placeholder="From">
+                                               placeholder="From" required>
                                     </label>
                                     <label for="price-to" class="ml20 form-text">
                                         <fmt:message key="to"/>
@@ -36,7 +36,7 @@
                                                min="20"
                                                max="500" value="${requestScope.params.priceTo}"
                                                class="form-input w100 w100 h30 grey-border ml10 p5"
-                                               placeholder="To">
+                                               placeholder="To" required>
                                     </label>
                                 </div>
                             </div>
@@ -49,13 +49,13 @@
                                         <fmt:message key="from"/>
                                         <input id="persons-from" name="personsFrom" type="number" min="1" max="10"
                                                value="${requestScope.params.personsFrom}"
-                                               placeholder="From" class="form-input w100 h30 grey-border ml10 p5">
+                                               placeholder="From" class="form-input w100 h30 grey-border ml10 p5" required>
                                     </label>
                                     <label for="persons-to" class="ml20 form-text">
                                         <fmt:message key="to"/>
                                         <input id="persons-to" name="personsTo" type="number" min="1" max="10"
                                                value="${requestScope.params.personsTo}"
-                                               placeholder="To" class="form-input w100 w100 h30 grey-border ml10 p5">
+                                               placeholder="To" class="form-input w100 w100 h30 grey-border ml10 p5" required>
                                     </label>
                                 </div>
                             </div>

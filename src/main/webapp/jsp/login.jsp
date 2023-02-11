@@ -13,11 +13,15 @@
 <div class="container">
     <div class="main">
         <div class="form-container">
-            <form class="custom-form" action="controller?command=login" method="post">
+            <form class="custom-form" action="<c:url value="/controller?command=login"/>" method="post">
                 <h1 class="form-header"><fmt:message key="login.info"/></h1>
-                <div id="error-container" class="error-container">
-                    <p id="error-message">${requestScope.get("errorMessage")}</p>
-                </div>
+
+                <c:if test="${requestScope.errorMessage != null}">
+                    <div class="error-container">
+                        <p>${requestScope.errorMessage}</p>
+                    </div>
+                </c:if>
+
                 <div class="input-group">
                     <fmt:message var="email" key="email"/>
                     <input class="form-input" id="email" name="email" type="email" placeholder="${email}">
