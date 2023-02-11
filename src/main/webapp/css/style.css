@@ -368,17 +368,16 @@
     border-radius: 18px;
     margin-right: 10px;
     transition: all 0.2s ease 0s;
-    cursor: context-menu;
 }
 
 .pagination-elem > a {
     text-decoration: none;
     color: #1d3c62;
+    font-size: 20px;
 }
 
 .pagination-elem:hover {
     transition: all 0.2s ease 0s;
-    cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
 }
 
