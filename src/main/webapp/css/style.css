@@ -504,3 +504,16 @@
     justify-content: space-around;
     align-items: center;
 }
+
+.disabled-button {
+    width: 120px;
+    height: 35px;
+    font-size: 12px;
+    border-radius: 15px;
+    background-color: #9b9b9b;
+    color: white;
+    border: 1px solid #efefef;
+    text-transform: uppercase;
+    transition: all 0.3s ease 0s;
+    cursor: context-menu;
+}

@@ -47,9 +47,17 @@
                         <div class="room-price">
                             ${requestScope.roomDto.price}$/<fmt:message key="night"/>
                         </div>
-                        <form action="">
-                            <button type="submit" class="form-button">Book</button>
-                        </form>
+                        <c:choose>
+                            <c:when test="${requestScope.roomDto.roomStatus == 'free'}">
+                                <form action="">
+                                    <button type="submit" class="form-button">Book</button>
+                                </form>
+                            </c:when>
+                            <c:otherwise>
+                                <button disabled class="disabled-button">Book</button>
+                            </c:otherwise>
+                        </c:choose>
+
                     </div>
                 </div>
                 <div class="room-description-container">
