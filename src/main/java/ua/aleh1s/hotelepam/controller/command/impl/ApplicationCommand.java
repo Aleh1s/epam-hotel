@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.ResourcesManager;
+import ua.aleh1s.hotelepam.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
@@ -19,28 +20,36 @@ public class ApplicationCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         ApplicationRepository applicationRepository = AppContext.getInstance().getApplicationRepository();
 
-        String numberOfGuestsStr = request.getParameter("numberOfGuests");
-        String apartmentClassStr = request.getParameter("apartmentClass");
-        String dateOfEntryStr = request.getParameter("dateOfEntry");
-        String dateOfLeavingStr = request.getParameter("dateOfLeaving");
+        Integer guestsNumber = Utils.getIntValue(request, "guestsNumber");
+        Integer roomClassIdx = Utils.getIntValue(request, "roomClass");
+        LocalDate entryDate = Utils.getLocalDateValue(request, "entryDate");
+        LocalDate leavingDate = Utils.getLocalDateValue(request, "leavingDate");
+        RoomClass roomClass = RoomClass.atIndex(roomClassIdx);
 
-        Integer numberOfGuests = Integer.parseInt(numberOfGuestsStr);
-        LocalDate dateOfEntry = LocalDate.parse(dateOfEntryStr);
-        LocalDate dateOfLeaving = LocalDate.parse(dateOfLeavingStr);
-        RoomClass roomClass = RoomClass.valueOf(apartmentClassStr);
+        String errorMessage, path = ResourcesManager.getInstance().getValue("path.page.application");
+        if (entryDate.isBefore(LocalDate.now())) {
+            errorMessage = "Entry date cannot be before now";
+            request.setAttribute("errorMessage", errorMessage);
+            return path;
+        }
+
+        if (leavingDate.isBefore(entryDate) || leavingDate.isEqual(entryDate)) {
+            errorMessage = "Entry date must be before leaving date";
+            request.setAttribute("errorMessage", errorMessage);
+            return path;
+        }
 
         HttpSession session = request.getSession();
         Long id = (Long) session.getAttribute("id");
 
         ApplicationEntity applicationEntry = ApplicationEntity.Builder.newBuilder()
-                .guestsNumber(numberOfGuests).apartmentClass(roomClass)
-                .entryDate(dateOfEntry).leavingDate(dateOfLeaving)
+                .guestsNumber(guestsNumber).apartmentClass(roomClass)
+                .entryDate(entryDate).leavingDate(leavingDate)
                 .status(ApplicationStatus.NEW).customerId(id)
                 .build();
 
         applicationRepository.create(applicationEntry);
 
-        String path = ResourcesManager.getInstance().getValue("path.page.application");
         try {
             response.sendRedirect(path);
             path = "redirect";
