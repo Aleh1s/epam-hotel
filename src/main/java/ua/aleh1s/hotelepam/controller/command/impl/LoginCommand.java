@@ -39,12 +39,12 @@ public class LoginCommand implements Command {
 
         HttpSession session = request.getSession();
         session.setAttribute("id", userEntity.getId());
-        session.setAttribute("timezone", userEntity.getTimezone().getId());
         session.setAttribute("lang", userEntity.getLocale().getLanguage());
         session.setAttribute("role", userEntity.getRole().name());
 
+        path = ResourcesManager.getInstance().getValue("path.page.room.list");
         try {
-            response.sendRedirect("/roomList.jsp");
+            response.sendRedirect(path);
             path = "redirect";
         } catch (IOException e) {
             path = ResourcesManager.getInstance().getValue("path.page.error");
