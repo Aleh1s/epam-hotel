@@ -33,5 +33,7 @@ public final class CommandFactory {
         commandMap.put("redirectToErrorPage", new RedirectToErrorPage());
         commandMap.put("roomList", new RoomListCommand());
         commandMap.put("viewRoom", new ViewRoomCommand());
+        commandMap.put("book", new BookCommand());
+        commandMap.put("bookPage", new BookPageCommand());
     }
 }

@@ -13,4 +13,5 @@ public interface RoomRepository {
     Optional<RoomEntity> getByRoomNumber(Integer roomNumber);
     List<RoomEntity> getAll(Criteria criteria, Pagination pagination);
     Integer count(RoomListCriteria criteria);
+    void update(RoomEntity entity);
 }

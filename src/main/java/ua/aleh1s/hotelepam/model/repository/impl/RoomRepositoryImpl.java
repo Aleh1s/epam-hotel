@@ -5,7 +5,9 @@ import org.apache.logging.log4j.Logger;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.criteria.RoomListCriteria;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
+import ua.aleh1s.hotelepam.model.dao.impl.ReservationSimpleDao;
 import ua.aleh1s.hotelepam.model.dao.impl.RoomSimpleDao;
+import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.pagination.Pagination;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;
@@ -65,5 +67,19 @@ public class RoomRepositoryImpl implements RoomRepository {
             }
         }
         return count;
+    }
+
+    @Override
+    public void update(RoomEntity entity) {
+        RoomSimpleDao dao = new RoomSimpleDao();
+        try (Transaction transaction = Transaction.start(dao)) {
+            try {
+                dao.update(entity);
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                logger.error(e.getMessage(), e);
+            }
+        }
     }
 }

@@ -3,9 +3,11 @@ package ua.aleh1s.hotelepam;
 import ua.aleh1s.hotelepam.controller.mapper.RoomCardDtoMapper;
 import ua.aleh1s.hotelepam.controller.mapper.RoomDtoMapper;
 import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
+import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 import ua.aleh1s.hotelepam.model.repository.UserRepository;
 import ua.aleh1s.hotelepam.model.repository.impl.ApplicationRepositoryImpl;
+import ua.aleh1s.hotelepam.model.repository.impl.ReservationRepositoryImpl;
 import ua.aleh1s.hotelepam.model.repository.impl.RoomRepositoryImpl;
 import ua.aleh1s.hotelepam.model.repository.impl.UserRepositoryImpl;
 
@@ -17,6 +19,7 @@ public class AppContext {
     private final UserRepository userRepository;
     private final RoomRepository roomRepository;
     private final ApplicationRepository applicationRepository;
+    private final ReservationRepository reservationRepository;
     private final RoomCardDtoMapper roomCardDtoMapper;
     private final RoomDtoMapper roomDtoMapper;
 
@@ -26,6 +29,7 @@ public class AppContext {
         this.roomRepository = new RoomRepositoryImpl();
         this.roomCardDtoMapper = new RoomCardDtoMapper();
         this.roomDtoMapper = new RoomDtoMapper();
+        this.reservationRepository = new ReservationRepositoryImpl();
     }
 
     public static synchronized AppContext getInstance() {
@@ -46,4 +50,6 @@ public class AppContext {
     public RoomDtoMapper getRoomDtoMapper() {
         return roomDtoMapper;
     }
+
+    public ReservationRepository getReservationRepository() {return reservationRepository;}
 }

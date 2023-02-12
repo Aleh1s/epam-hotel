@@ -19,4 +19,7 @@ public class SqlQuery {
     // RoomEntity
     public static final String ROOM_SELECT_BY_ROOM_NUMBER = "select * from \"room\" where room_number = ?";
 
+    // ReservationEntity
+    public static final String RESERVATION_INSERT = "insert into \"reservation\" (room_number, customer_id, date_of_entry, date_of_leaving, created_at, expiration_date, payed_at, total_amount) values (?, ?, ?, ?, ?, ?, ?, ?)";
+
 }
