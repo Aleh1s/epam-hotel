@@ -21,7 +21,7 @@
         <div class="main-container">
             <div class="book-container">
                 <form method="post" class="book-form" action="<c:url value="/controller"/>">
-                    <h1 class="form-header">Booking info</h1>
+                    <h1 class="form-header"><fmt:message key="booking.info"/></h1>
                     <input type="hidden" name="command" value="book"/>
                     <div class="book-form-center">
                         <div class="input-group">
@@ -38,7 +38,7 @@
                                        max="2024-01-01" required>
                             </label>
                         </div>
-                        <button type="submit" class="book-button">Book</button>
+                        <button type="submit" class="book-button"><fmt:message key="book"/></button>
                     </div>
                 </form>
             </div>

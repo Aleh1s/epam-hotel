@@ -1,8 +1,9 @@
-package ua.aleh1s.hotelepam.model.pagination;
+package ua.aleh1s.hotelepam.model.pagination.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import ua.aleh1s.hotelepam.Utils;
 import ua.aleh1s.hotelepam.model.constant.PaginationParam;
+import ua.aleh1s.hotelepam.model.pagination.Pagination;
 
 import static ua.aleh1s.hotelepam.Utils.*;
 

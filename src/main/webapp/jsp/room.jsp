@@ -52,11 +52,11 @@
                                 <form method="get" action="<c:url value="/controller"/>">
                                     <input type="hidden" name="command" value="bookPage">
                                     <input type="hidden" name="roomNumber" value="${requestScope.roomDto.roomNumber}">
-                                    <button type="submit" class="form-button">Book</button>
+                                    <button type="submit" class="form-button"><fmt:message key="book"/></button>
                                 </form>
                             </c:when>
                             <c:otherwise>
-                                <button disabled class="disabled-button">Book</button>
+                                <button disabled class="disabled-button"><fmt:message key="book"/></button>
                             </c:otherwise>
                         </c:choose>
 

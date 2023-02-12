@@ -1,7 +1,8 @@
-package ua.aleh1s.hotelepam.model.criteria;
+package ua.aleh1s.hotelepam.model.criteria.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import ua.aleh1s.hotelepam.model.constant.RoomListParam;
+import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.entity.RoomClass;
 import ua.aleh1s.hotelepam.model.entity.RoomStatus;
 

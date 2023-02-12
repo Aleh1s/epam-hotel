@@ -68,31 +68,31 @@
                                         <div>
                                             <input id="standard" type="checkbox" name="standard"
                                             ${requestScope.params.standard ? "checked" : ""}>
-                                            <label for="standard" class="checkbox-label">Standard</label>
+                                            <label for="standard" class="checkbox-label"><fmt:message key="standard"/></label>
                                         </div>
                                         <div>
                                             <input id="superior" type="checkbox" name="superior"
                                             ${requestScope.params.superior ? "checked" : ""}>
-                                            <label for="superior" class="checkbox-label">Superior</label>
+                                            <label for="superior" class="checkbox-label"><fmt:message key="superior"/></label>
                                         </div>
                                     </div>
                                     <div class="ml20">
                                         <div>
                                             <input id="family" type="checkbox" name="family"
                                             ${requestScope.params.family ? "checked" : ""}>
-                                            <label for="family" class="checkbox-label">Family room</label>
+                                            <label for="family" class="checkbox-label"><fmt:message key="family"/></label>
                                         </div>
                                         <div>
                                             <input id="business" type="checkbox" name="business"
                                             ${requestScope.params.business ? "checked" : ""}>
-                                            <label for="business" class="checkbox-label">Business</label>
+                                            <label for="business" class="checkbox-label"><fmt:message key="business"/></label>
                                         </div>
                                     </div>
                                     <div class="ml20">
                                         <div>
                                             <input id="president" type="checkbox" name="president"
                                             ${requestScope.params.president ? "checked" : ""}>
-                                            <label for="president" class="checkbox-label">President</label>
+                                            <label for="president" class="checkbox-label"><fmt:message key="president"/></label>
                                         </div>
                                     </div>
                                 </div>
@@ -106,24 +106,24 @@
                                         <div>
                                             <input id="free" type="checkbox" name="free"
                                             ${requestScope.params.free ? "checked" : ""}>
-                                            <label for="free" class="checkbox-label">Free</label>
+                                            <label for="free" class="checkbox-label"><fmt:message key="free"/></label>
                                         </div>
                                         <div>
                                             <input id="booked" type="checkbox" name="booked"
                                             ${requestScope.params.booked ? "checked" : ""}>
-                                            <label for="booked" class="checkbox-label">Booked</label>
+                                            <label for="booked" class="checkbox-label"><fmt:message key="booked"/></label>
                                         </div>
                                     </div>
                                     <div class="ml20">
                                         <div>
                                             <input id="busy" type="checkbox"
                                                    name="busy" ${requestScope.params.busy ? "checked" : ""}>
-                                            <label for="busy" class="checkbox-label">Busy</label>
+                                            <label for="busy" class="checkbox-label"><fmt:message key="busy"/></label>
                                         </div>
                                         <div>
                                             <input id="unavailable" type="checkbox" name="unavailable"
                                             ${requestScope.params.unavailable ? "checked" : ""}>
-                                            <label for="unavailable" class="checkbox-label">Unavailable</label>
+                                            <label for="unavailable" class="checkbox-label"><fmt:message key="unavailable"/></label>
                                         </div>
                                     </div>
                                 </div>
@@ -174,7 +174,6 @@
                     </div>
                 </c:forEach>
             </div>
-
             <div class="pagination">
                 <c:forEach var="i" begin="1" end="${requestScope.pagesNumber}">
                     <c:choose>
