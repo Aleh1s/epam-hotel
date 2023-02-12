@@ -9,17 +9,18 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
+
+<c:if test="${not empty requestScope.errorMessage}">
+    <div class="error-container">
+        <p>${requestScope.errorMessage}</p>
+    </div>
+</c:if>
+
 <div class="container">
     <div class="main">
         <div class="form-container">
             <form class="custom-form" action="<c:url value="/controller?command=application"/>" method="post">
                 <h1 class="form-header"><fmt:message key="application.info"/></h1>
-
-                <c:if test="${not empty requestScope.errorMessage}">
-                    <div class="error-container">
-                        <p>${requestScope.errorMessage}</p>
-                    </div>
-                </c:if>
 
                 <div class="input-group">
                     <fmt:message var="numberOfGuests" key="number.of.guests"/>

@@ -16,12 +16,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlQuery.APPLICATION_INSERT;
+import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlQuery.*;
 
 public class ApplicationSimpleDao extends SimpleDao<Long, ApplicationEntity> {
     @Override
     public Optional<ApplicationEntity> findById(Long id) throws DaoException {
-        return Optional.empty();
+        ApplicationEntity application = null;
+        try (PreparedStatement statement = connection.prepareStatement(APPLICATION_SELECT_BY_ID)) {
+            statement.setLong(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    SqlApplicationEntityMapper mapper = new SqlApplicationEntityMapper();
+                    application = mapper.map(resultSet);
+                }
+            }
+        } catch (SQLException | SqlEntityMapperException e) {
+            throw new DaoException(e);
+        }
+        return Optional.ofNullable(application);
     }
 
     @Override
@@ -31,7 +44,24 @@ public class ApplicationSimpleDao extends SimpleDao<Long, ApplicationEntity> {
 
     @Override
     public void update(ApplicationEntity entity) throws DaoException {
-
+        try (PreparedStatement statement = connection.prepareStatement(APPLICATION_SELECT_BY_ID,
+                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+            statement.setLong(1, entity.getId());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    resultSet.updateLong(APPLICATION_ID, entity.getId());
+                    resultSet.updateInt(APPLICATION_NUMBER_OF_GUESTS, entity.getGuestsNumber());
+                    resultSet.updateInt(APPLICATION_ROOM_CLASS, entity.getRoomClass().getIndex());
+                    resultSet.updateDate(APPLICATION_LEAVING_DATE, Date.valueOf(entity.getLeavingDate()));
+                    resultSet.updateDate(APPLICATION_ENTRY_DATE, Date.valueOf(entity.getEntryDate()));
+                    resultSet.updateInt(APPLICATION_STATUS, entity.getStatus().getIndex());
+                    resultSet.updateLong(APPLICATION_CUSTOMER_ID, entity.getCustomerId());
+                    resultSet.updateRow();
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override

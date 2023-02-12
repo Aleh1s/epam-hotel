@@ -79,7 +79,7 @@ public class BookCommand implements Command {
         ReservationRepository reservationRepository = AppContext.getInstance().getReservationRepository();
         reservationRepository.create(reservation);
 
-        path = ResourcesManager.getInstance().getValue("path.page.successful.booking");
+        path = ResourcesManager.getInstance().getValue("path.page.success.booking");
         try {
             response.sendRedirect(path);
             path = "redirect";

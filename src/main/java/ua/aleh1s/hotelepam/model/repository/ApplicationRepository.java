@@ -7,6 +7,7 @@ import ua.aleh1s.hotelepam.model.pagination.Pagination;
 import ua.aleh1s.hotelepam.model.pagination.impl.ApplicationListPagination;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ApplicationRepository {
 
@@ -15,4 +16,8 @@ public interface ApplicationRepository {
     List<ApplicationEntity> getAll(Criteria criteria, Pagination pagination);
 
     Integer count(Criteria criteria);
+
+    Optional<ApplicationEntity> getById(Long id);
+
+    void update(ApplicationEntity application);
 }

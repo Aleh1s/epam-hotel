@@ -17,6 +17,10 @@ public class Utils {
         return Integer.parseInt(request.getParameter(name));
     }
 
+    public static Long getLongValue(HttpServletRequest request, String name) {
+        return Long.parseLong(request.getParameter(name));
+    }
+
     public static LocalDate getLocalDateValue(HttpServletRequest request, String name) {
         return LocalDate.parse(request.getParameter(name));
     }

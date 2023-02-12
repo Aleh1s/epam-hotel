@@ -13,6 +13,7 @@ import ua.aleh1s.hotelepam.transaction.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ApplicationRepositoryImpl implements ApplicationRepository {
 
@@ -62,5 +63,35 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
             }
         }
         return count;
+    }
+
+    @Override
+    public Optional<ApplicationEntity> getById(Long id) {
+        Optional<ApplicationEntity> application = Optional.empty();
+        ApplicationSimpleDao dao = new ApplicationSimpleDao();
+        try (Transaction transaction = Transaction.start(dao)) {
+            try {
+                application = dao.findById(id);
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                logger.error(e.getMessage(), e);
+            }
+        }
+        return application;
+    }
+
+    @Override
+    public void update(ApplicationEntity application) {
+        ApplicationSimpleDao dao = new ApplicationSimpleDao();
+        try (Transaction transaction = Transaction.start(dao)) {
+            try {
+                dao.update(application);
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                logger.error(e.getMessage(), e);
+            }
+        }
     }
 }

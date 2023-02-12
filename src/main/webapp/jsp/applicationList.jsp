@@ -33,7 +33,7 @@
                         <td>${application.leavingDate}</td>
                         <td>${application.status}</td>
                         <td>${application.customerId}</td>
-                        <td><a href=""><fmt:message key="take"/></a></td>
+                        <td><a href="<c:url value="/controller?command=takeApplication&applicationId=${application.id}"/>"><fmt:message key="take"/></a></td>
                     </tr>
                 </c:forEach>
                 </tbody>

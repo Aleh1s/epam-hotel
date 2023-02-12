@@ -498,14 +498,14 @@
     cursor: context-menu;
 }
 
-.book-container {
+.book-container, .request-container {
     display: flex;
     height: 100%;
     justify-content: center;
     align-items: center;
 }
 
-.book-form {
+.book-form, .request-form {
     width: 400px;
     height: fit-content;
     border: 1px solid #eeeeee;
@@ -514,14 +514,14 @@
     padding: 20px 30px;
 }
 
-.book-form-center {
+.book-form-center, .request-form-center {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-.book-button {
+.book-button, .request-button {
     width: 80%;
     height: 35px;
     font-size: 12px;
@@ -534,7 +534,7 @@
     cursor: context-menu;
 }
 
-.book-button:hover {
+.book-button:hover, .request-button:hover {
     background-color: #3f98ff;
     transition: all 0.3s ease 0s;
     cursor: pointer;
@@ -601,8 +601,3 @@
 .styled-table tbody tr:last-of-type {
     border-bottom: 2px solid #3f98ff;
 }
-
-/*.styled-table tbody tr.active-row {*/
-/*    font-weight: bold;*/
-/*    color: #009879;*/
-/*}*/

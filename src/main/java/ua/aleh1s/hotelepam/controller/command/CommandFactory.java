@@ -36,5 +36,7 @@ public final class CommandFactory {
         commandMap.put("book", new BookCommand());
         commandMap.put("bookPage", new BookPageCommand());
         commandMap.put("applicationList", new ApplicationListCommand());
+        commandMap.put("takeApplication", new TakeApplicationCommand());
+        commandMap.put("makeRequest", new MakeRequestCommand());
     }
 }
