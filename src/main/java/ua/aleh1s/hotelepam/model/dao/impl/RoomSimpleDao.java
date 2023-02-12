@@ -1,7 +1,7 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
-import ua.aleh1s.hotelepam.model.criteria.RoomListCriteria;
+import ua.aleh1s.hotelepam.model.criteria.impl.RoomListCriteria;
 import ua.aleh1s.hotelepam.model.dao.SimpleDao;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;

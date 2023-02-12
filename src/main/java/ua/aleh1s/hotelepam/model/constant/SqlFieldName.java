@@ -28,4 +28,13 @@ public class SqlFieldName {
     public static final String ROOM_PERSONS_NUMBER = "persons_number";
     public static final String ROOM_AREA = "area";
 
+    //ApplicationEntity
+    public static final String APPLICATION_ID = "id";
+    public static final String APPLICATION_NUMBER_OF_GUESTS = "number_of_guests";
+    public static final String APPLICATION_ROOM_CLASS = "room_class";
+    public static final String APPLICATION_ENTRY_DATE = "date_of_entry";
+    public static final String APPLICATION_LEAVING_DATE = "date_of_leaving";
+    public static final String APPLICATION_STATUS = "status";
+    public static final String APPLICATION_CUSTOMER_ID = "customer_id";
+
 }

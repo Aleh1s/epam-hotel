@@ -7,9 +7,9 @@ import ua.aleh1s.hotelepam.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.RoomCardDto;
 import ua.aleh1s.hotelepam.controller.mapper.RoomCardDtoMapper;
-import ua.aleh1s.hotelepam.model.criteria.RoomListCriteria;
+import ua.aleh1s.hotelepam.model.criteria.impl.RoomListCriteria;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
-import ua.aleh1s.hotelepam.model.pagination.RoomListPagination;
+import ua.aleh1s.hotelepam.model.pagination.impl.RoomListPagination;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 
 import java.util.HashMap;

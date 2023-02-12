@@ -43,7 +43,7 @@ public class ApplicationCommand implements Command {
         Long id = (Long) session.getAttribute("id");
 
         ApplicationEntity applicationEntry = ApplicationEntity.Builder.newBuilder()
-                .guestsNumber(guestsNumber).apartmentClass(roomClass)
+                .guestsNumber(guestsNumber).roomClass(roomClass)
                 .entryDate(entryDate).leavingDate(leavingDate)
                 .status(ApplicationStatus.NEW).customerId(id)
                 .build();

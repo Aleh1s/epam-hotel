@@ -1,18 +1,21 @@
-package ua.aleh1s.hotelepam.model.entity;
+package ua.aleh1s.hotelepam.controller.dto;
+
+import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
+import ua.aleh1s.hotelepam.model.entity.RoomClass;
 
 import java.time.LocalDate;
 
-public class ApplicationEntity {
+public class ApplicationDto {
 
-    private Long id;
-    private Integer guestsNumber;
-    private RoomClass roomClass;
-    private LocalDate entryDate;
-    private LocalDate leavingDate;
-    private ApplicationStatus status;
-    private Long customerId;
+    private final Long id;
+    private final Integer guestsNumber;
+    private final RoomClass roomClass;
+    private final LocalDate entryDate;
+    private final LocalDate leavingDate;
+    private final ApplicationStatus status;
+    private final Long customerId;
 
-    public ApplicationEntity(
+    public ApplicationDto (
             Long id,
             Integer guestsNumber,
             RoomClass roomClass,
@@ -79,8 +82,8 @@ public class ApplicationEntity {
             return this;
         }
 
-        public ApplicationEntity build() {
-            return new ApplicationEntity(
+        public ApplicationDto build() {
+            return new ApplicationDto(
                     id, guestsNumber, roomClass, entryDate, leavingDate, status, customerId
             );
         }
@@ -112,33 +115,5 @@ public class ApplicationEntity {
 
     public Long getCustomerId() {
         return customerId;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setGuestsNumber(Integer guestsNumber) {
-        this.guestsNumber = guestsNumber;
-    }
-
-    public void setApartmentClass(RoomClass roomClass) {
-        this.roomClass = roomClass;
-    }
-
-    public void setEntryDate(LocalDate entryDate) {
-        this.entryDate = entryDate;
-    }
-
-    public void setLeavingDate(LocalDate leavingDate) {
-        this.leavingDate = leavingDate;
-    }
-
-    public void setStatus(ApplicationStatus status) {
-        this.status = status;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
     }
 }

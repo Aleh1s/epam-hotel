@@ -8,5 +8,9 @@
         <param-name>roomCardsPerPage</param-name>
         <param-value>9</param-value>
     </context-param>
+    <context-param>
+        <param-name>applicationsPerPage</param-name>
+        <param-value>10</param-value>
+    </context-param>
 
 </web-app>
