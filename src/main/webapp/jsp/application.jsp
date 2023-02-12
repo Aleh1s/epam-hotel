@@ -15,7 +15,7 @@
             <form class="custom-form" action="<c:url value="/controller?command=application"/>" method="post">
                 <h1 class="form-header"><fmt:message key="application.info"/></h1>
 
-                <c:if test="${requestScope.errorMessage != null}">
+                <c:if test="${not empty requestScope.errorMessage}">
                     <div class="error-container">
                         <p>${requestScope.errorMessage}</p>
                     </div>

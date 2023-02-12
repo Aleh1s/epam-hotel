@@ -10,17 +10,18 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
+
+<c:if test="${not empty requestScope.errorMessage}">
+    <div class="error-container">
+        <p>${requestScope.errorMessage}</p>
+    </div>
+</c:if>
+
 <div class="container">
     <div class="main">
         <div class="form-container">
             <form class="custom-form" action="<c:url value="/controller?command=signup"/>" method="post">
                 <h1 class="form-header"><fmt:message key="signup.info"/></h1>
-
-                <c:if test="${requestScope.errorMessage != null}">
-                    <div class="error-container">
-                        <p>${requestScope.errorMessage}</p>
-                    </div>
-                </c:if>
 
                 <div class="input-group">
                     <fmt:message var="email" key="email"/>
@@ -52,6 +53,5 @@
     </div>
     <c:import url="footer.jsp"/>
 </div>
-<script src="../js/script.js"></script>
 </body>
 </html>

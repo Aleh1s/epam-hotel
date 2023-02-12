@@ -9,26 +9,28 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+
 <c:import url="header.jsp"/>
+
+<c:if test="${not empty requestScope.errorMessage}">
+    <div class="error-container">
+        <p>${requestScope.errorMessage}</p>
+    </div>
+</c:if>
+
 <div class="container">
     <div class="main">
         <div class="form-container">
             <form class="custom-form" action="<c:url value="/controller?command=login"/>" method="post">
                 <h1 class="form-header"><fmt:message key="login.info"/></h1>
 
-                <c:if test="${requestScope.errorMessage != null}">
-                    <div class="error-container">
-                        <p>${requestScope.errorMessage}</p>
-                    </div>
-                </c:if>
-
                 <div class="input-group">
                     <fmt:message var="email" key="email"/>
-                    <input class="form-input" id="email" name="email" type="email" placeholder="${email}">
+                    <input class="form-input" id="email" name="email" type="email" placeholder="${email}" required>
                 </div>
                 <div class="input-group">
                     <fmt:message var="password" key="password"/>
-                    <input class="form-input" id="password" name="password" type="password" placeholder="${password}">
+                    <input class="form-input" id="password" name="password" type="password" placeholder="${password}" required>
                 </div>
                 <button class="form-button" type="submit"><fmt:message key="log.in"/></button>
             </form>
@@ -36,6 +38,5 @@
     </div>
     <c:import url="footer.jsp"/>
 </div>
-<script src="../js/script.js"></script>
 </body>
 </html>
