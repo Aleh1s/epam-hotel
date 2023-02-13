@@ -30,11 +30,6 @@
 
 <div class="header">
     <div class="nav">
-        <ul class="nav-left">
-            <li class="nav-item"><a href="<c:url value="/controller?command=i18n&lang=en"/>">EN</a></li>
-            <span class="vertical-delimiter"></span>
-            <li class="nav-item"><a href="<c:url value="/controller?command=i18n&lang=ua"/>">UA</a></li>
-        </ul>
         <ul class="nav-center">
             <li class="nav-item"><a href="#"><b><fmt:message key="home"/></b></a></li>
             <li class="nav-item"><a href="${roomList}"><fmt:message key="room.list"/></a></li>
