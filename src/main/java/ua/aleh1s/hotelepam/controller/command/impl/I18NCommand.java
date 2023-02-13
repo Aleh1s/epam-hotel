@@ -9,6 +9,7 @@ import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.model.repository.UserRepository;
 
+import java.io.IOException;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -17,7 +18,15 @@ public class I18NCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         Optional<String> langOptional = Optional.ofNullable(request.getParameter("lang"));
         langOptional.ifPresent(s -> setLang(request, s));
-        return ResourcesManager.getInstance().getValue("path.page.room.list");
+
+        String path = "redirect";
+        try {
+            response.sendRedirect("/controller?command=profile");
+        } catch (IOException e) {
+            path = ResourcesManager.getInstance().getValue("path.page.error");
+        }
+
+        return path;
     }
 
     private void setLang(HttpServletRequest request, String lang) {
