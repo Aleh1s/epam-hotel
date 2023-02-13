@@ -5,7 +5,7 @@ import ua.aleh1s.hotelepam.model.entity.UserRole;
 import java.time.ZoneId;
 import java.util.Locale;
 
-public class UserEntityDto {
+public class UserDto {
 
     private Long id;
     private String email;
@@ -16,7 +16,7 @@ public class UserEntityDto {
     private Locale locale;
     private UserRole role;
 
-    public UserEntityDto (
+    public UserDto(
             Long id,
             String email,
             String firstName,
@@ -91,8 +91,8 @@ public class UserEntityDto {
             return this;
         }
 
-        public UserEntityDto build() {
-            return new UserEntityDto(id, email, firstName, lastName, phoneNumber, timezone, locale, role);
+        public UserDto build() {
+            return new UserDto(id, email, firstName, lastName, phoneNumber, timezone, locale, role);
         }
     }
 
