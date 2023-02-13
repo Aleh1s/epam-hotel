@@ -26,6 +26,6 @@ public class SqlQuery {
     public static final String RESERVATION_INSERT = "insert into \"reservation\" (room_number, customer_id, date_of_entry, date_of_leaving, created_at, expiration_date, payed_at, total_amount) values (?, ?, ?, ?, ?, ?, ?, ?)";
 
     // RequestEntity
-    public static final String REQUEST_INSERT = "insert into \"request\" (room_number, manager_id, customer_id, status) values (?, ?, ?, ?)";
+    public static final String REQUEST_INSERT = "insert into \"request\" (room_number, customer_id, status, entry_date, leaving_date, total_amount) values (?, ?, ?, ?, ?, ?)";
 
 }

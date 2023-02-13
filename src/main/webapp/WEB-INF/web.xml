@@ -12,5 +12,9 @@
         <param-name>applicationsPerPage</param-name>
         <param-value>10</param-value>
     </context-param>
+    <context-param>
+        <param-name>requestsPerPage</param-name>
+        <param-value>5</param-value>
+    </context-param>
 
 </web-app>

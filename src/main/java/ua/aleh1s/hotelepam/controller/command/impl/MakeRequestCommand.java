@@ -12,9 +12,14 @@ import ua.aleh1s.hotelepam.model.repository.RequestRepository;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 import static ua.aleh1s.hotelepam.Utils.getIntValue;
+import static ua.aleh1s.hotelepam.Utils.getLocalDateValue;
+import static ua.aleh1s.hotelepam.model.entity.RoomStatus.FREE;
 
 public class MakeRequestCommand implements Command {
 
@@ -24,6 +29,8 @@ public class MakeRequestCommand implements Command {
 
         Long applicationId = (Long) session.getAttribute("applicationId");
         Integer roomNumber = getIntValue(request, "roomNumber");
+        LocalDate entryDate = getLocalDateValue(request, "entryDate");
+        LocalDate leavingDate = getLocalDateValue(request, "leavingDate");
 
         RoomRepository roomRepository = AppContext.getInstance().getRoomRepository();
         Optional<RoomEntity> roomOptional = roomRepository.getByRoomNumber(roomNumber);
@@ -35,11 +42,19 @@ public class MakeRequestCommand implements Command {
             return path;
         }
 
+        RoomEntity room = roomOptional.get();
+        if (!room.getStatus().equals(FREE)) {
+            errorMessage = "Room is already taken";
+            request.setAttribute("errorMessage", errorMessage);
+            return path;
+        }
+
         ApplicationRepository applicationRepository = AppContext.getInstance().getApplicationRepository();
         Optional<ApplicationEntity> applicationOptional = applicationRepository.getById(applicationId);
 
         if (applicationOptional.isEmpty()) {
-            //todo: handle
+            errorMessage = "There is no application with such id";
+            request.setAttribute("errorMessage", errorMessage);
             return path;
         }
 
@@ -53,12 +68,16 @@ public class MakeRequestCommand implements Command {
         application.setStatus(ApplicationStatus.CLOSED);
         applicationRepository.update(application);
 
-        Long managerId = (Long) session.getAttribute("id");
+        Long daysBetween = ChronoUnit.DAYS.between(entryDate, leavingDate);
+        BigDecimal totalAmount = room.getPrice().multiply(BigDecimal.valueOf(daysBetween));
+
         RequestEntity requestEntity = RequestEntity.Builder.newBuilder()
                 .roomNumber(roomNumber)
-                .managerId(managerId)
                 .customerId(application.getCustomerId())
                 .status(RequestStatus.NEW)
+                .entryDate(entryDate)
+                .leavingDate(leavingDate)
+                .totalAmount(totalAmount)
                 .build();
 
         RequestRepository requestRepository = AppContext.getInstance().getRequestRepository();

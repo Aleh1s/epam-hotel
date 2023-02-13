@@ -1,19 +1,21 @@
-package ua.aleh1s.hotelepam.model.entity;
+package ua.aleh1s.hotelepam.controller.dto;
+
+import ua.aleh1s.hotelepam.model.entity.RequestStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class RequestEntity {
+public class RequestDto {
 
-    private Long id;
-    private Integer roomNumber;
-    private Long customerId;
-    private RequestStatus status;
-    private LocalDate entryDate;
-    private LocalDate leavingDate;
-    private BigDecimal totalAmount;
+    private final Long id;
+    private final Integer roomNumber;
+    private final Long customerId;
+    private final RequestStatus status;
+    private final LocalDate entryDate;
+    private final LocalDate leavingDate;
+    private final BigDecimal totalAmount;
 
-    private RequestEntity(
+    private RequestDto(
             Long id,
             Integer roomNumber,
             Long customerId,
@@ -39,8 +41,7 @@ public class RequestEntity {
         private LocalDate leavingDate;
         private BigDecimal totalAmount;
 
-        private Builder() {
-        }
+        private Builder() {}
 
         public static Builder newBuilder() {
             return new Builder();
@@ -81,8 +82,8 @@ public class RequestEntity {
             return this;
         }
 
-        public RequestEntity build() {
-            return new RequestEntity(
+        public RequestDto build() {
+            return new RequestDto(
                     id, roomNumber, customerId, status, entryDate, leavingDate, totalAmount
             );
         }
@@ -92,55 +93,27 @@ public class RequestEntity {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Integer getRoomNumber() {
         return roomNumber;
-    }
-
-    public void setRoomNumber(Integer roomNumber) {
-        this.roomNumber = roomNumber;
     }
 
     public Long getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
     public RequestStatus getStatus() {
         return status;
-    }
-
-    public void setStatus(RequestStatus status) {
-        this.status = status;
     }
 
     public LocalDate getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(LocalDate entryDate) {
-        this.entryDate = entryDate;
-    }
-
     public LocalDate getLeavingDate() {
         return leavingDate;
     }
 
-    public void setLeavingDate(LocalDate leavingDate) {
-        this.leavingDate = leavingDate;
-    }
-
     public BigDecimal getTotalAmount() {
         return totalAmount;
-    }
-
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
     }
 }

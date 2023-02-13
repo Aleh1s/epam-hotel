@@ -12,7 +12,6 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    private ZoneId timezone;
     private Locale locale;
     private UserRole role;
 
@@ -22,7 +21,6 @@ public class UserDto {
             String firstName,
             String lastName,
             String phoneNumber,
-            ZoneId timezone,
             Locale locale,
             UserRole role) {
         this.id = id;
@@ -30,7 +28,6 @@ public class UserDto {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        this.timezone = timezone;
         this.locale = locale;
         this.role = role;
     }
@@ -41,7 +38,6 @@ public class UserDto {
         private String firstName;
         private String lastName;
         private String phoneNumber;
-        private ZoneId timezone;
         private Locale locale;
         private UserRole role;
 
@@ -76,11 +72,6 @@ public class UserDto {
             return this;
         }
 
-        public Builder timezone(ZoneId timezone) {
-            this.timezone = timezone;
-            return this;
-        }
-
         public Builder locale(Locale locale) {
             this.locale = locale;
             return this;
@@ -92,7 +83,7 @@ public class UserDto {
         }
 
         public UserDto build() {
-            return new UserDto(id, email, firstName, lastName, phoneNumber, timezone, locale, role);
+            return new UserDto(id, email, firstName, lastName, phoneNumber, locale, role);
         }
     }
 
@@ -127,14 +118,6 @@ public class UserDto {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public ZoneId getTimezone() {
-        return timezone;
-    }
-
-    public void setTimezone(ZoneId timezone) {
-        this.timezone = timezone;
     }
 
     public Locale getLocale() {

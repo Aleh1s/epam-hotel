@@ -3,8 +3,8 @@ package ua.aleh1s.hotelepam.model.entity;
 public enum RequestStatus {
 
     NEW(1),
-    VIEWED(2),
-    CLOSED(3);
+    REJECTED(2),
+    CONFIRMED(3);
 
     private final int index;
 
@@ -19,8 +19,7 @@ public enum RequestStatus {
     public static RequestStatus atIndex(int index) {
         return switch (index) {
             case 1 -> NEW;
-            case 2 -> VIEWED;
-            case 3 -> CLOSED;
+            case 2 -> REJECTED;
             default -> throw new IllegalStateException("Unexpected value: " + index);
         };
     }

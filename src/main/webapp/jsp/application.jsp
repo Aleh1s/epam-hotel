@@ -23,9 +23,14 @@
                 <h1 class="form-header"><fmt:message key="application.info"/></h1>
 
                 <div class="input-group">
-                    <fmt:message var="numberOfGuests" key="number.of.guests"/>
-                    <input min="1" max="10" class="form-input" id="number-of-guests" value="1"
-                           name="guestsNumber" type="number" placeholder="${numberOfGuests}" required>
+                    <label for="number-of-guests">
+                        <fmt:message var="numberOfGuests" key="number.of.guests"/>
+                        ${numberOfGuests}
+                        <input min="1" max="10" class="form-input" id="number-of-guests"
+                               value="1"
+                               name="guestsNumber" type="number"
+                               placeholder="${numberOfGuests}" required>
+                    </label>
                 </div>
                 <div class="input-group">
                     <label for="roomClass">

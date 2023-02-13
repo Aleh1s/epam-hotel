@@ -38,5 +38,6 @@ public final class CommandFactory {
         commandMap.put("applicationList", new ApplicationListCommand());
         commandMap.put("takeApplication", new TakeApplicationCommand());
         commandMap.put("makeRequest", new MakeRequestCommand());
+        commandMap.put("profile", new ProfileCommand());
     }
 }

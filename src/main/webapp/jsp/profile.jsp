@@ -31,8 +31,8 @@
                     </form>
                 </div>
                 <div class="header-user-info">
-                    <h2>Oleksandr Palamarchuk</h2>
-                    <p>Customer</p>
+                    <h2>${requestScope.userDto.firstName} ${requestScope.userDto.lastName}</h2>
+                    <p>${requestScope.userDto.role}</p>
                 </div>
                 <div class="profile-bookings">
                     <p><fmt:message key="number.of.booking"/></p>
@@ -47,22 +47,22 @@
                     </div>
                     <table class="profile-info-table">
                         <tbody>
-                            <tr class="active">
-                                <td class="table-key"><fmt:message key="email"/>:</td>
-                                <td class="table-value">sashap740@gmail.com</td>
-                            </tr>
-                            <tr>
-                                <td class="table-key"><fmt:message key="first.name"/>:</td>
-                                <td class="table-value">Oleksandr</td>
-                            </tr>
-                            <tr>
-                                <td class="table-key"><fmt:message key="last.name"/>:</td>
-                                <td class="table-value">Palamarchuk</td>
-                            </tr>
-                            <tr class="active">
-                                <td class="table-key"><fmt:message key="phone"/>:</td>
-                                <td class="table-value">+38 (068) 663-2241</td>
-                            </tr>
+                        <tr class="active">
+                            <td class="table-key"><fmt:message key="email"/>:</td>
+                            <td class="table-value">${requestScope.userDto.email}</td>
+                        </tr>
+                        <tr>
+                            <td class="table-key"><fmt:message key="first.name"/>:</td>
+                            <td class="table-value">${requestScope.userDto.firstName}</td>
+                        </tr>
+                        <tr>
+                            <td class="table-key"><fmt:message key="last.name"/>:</td>
+                            <td class="table-value">${requestScope.userDto.lastName}</td>
+                        </tr>
+                        <tr class="active">
+                            <td class="table-key"><fmt:message key="phone"/>:</td>
+                            <td class="table-value">${requestScope.userDto.phoneNumber}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -74,23 +74,27 @@
                     <table class="styled-table">
                         <thead>
                         <tr>
-                            <th><fmt:message key="room.class"/></th>
-                            <th><fmt:message key="room.price"/></th>
-                            <th><fmt:message key="beds.number"/></th>
-                            <th><fmt:message key="persons.number"/></th>
+                            <th><fmt:message key="room.number"/></th>
+                            <th><fmt:message key="entry.date"/></th>
+                            <th><fmt:message key="leaving.date"/></th>
+                            <th><fmt:message key="total.amount"/></th>
                             <th><fmt:message key="view"/></th>
                             <th><fmt:message key="reject"/></th>
+                            <th><fmt:message key="confirm"/></th>
                         </tr>
                         </thead>
                         <tbody>
+                        <c:forEach var="request" items="${requestScope.requestDtoList}">
                             <tr>
-                                <td>Superior</td>
-                                <td>34$/night</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td><a href="#"><fmt:message key="view"/></a></td>
-                                <td><a href="#"><fmt:message key="reject"/></a></td>
+                                <td>${request.roomNumber}</td>
+                                <td>${request.entryDate}</td>
+                                <td>${request.leavingDate}</td>
+                                <td>${request.totalAmount}$/<fmt:message key="night"/></td>
+                                <td><a href="<c:url value="/controller?command=viewRoom&roomNumber=${request.roomNumber}"/>"><fmt:message key="view"/></a></td>
+                                <td><a href="<c:url value="#"/>"><fmt:message key="reject"/></a></td>
+                                <td><a href="<c:url value="/controller?command=bookPage&roomNumber=${request.roomNumber}"/>"><fmt:message key="confirm"/></a></td>
                             </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>

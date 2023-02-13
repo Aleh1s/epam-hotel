@@ -38,7 +38,7 @@
         <ul class="nav-right">
             <li class="nav-item"><a href="<c:url value="/jsp/signup.jsp"/>"><fmt:message key="sign.up"/></a></li>
             <li class="nav-item"><a href="<c:url value="/jsp/login.jsp"/>"><fmt:message key="log.in"/></a></li>
-            <li class="nav-item"><a href="#"><fmt:message key="profile"/></a></li>
+            <li class="nav-item"><a href="<c:url value="/controller?command=profile"/>"><fmt:message key="profile"/></a></li>
         </ul>
     </div>
 </div>

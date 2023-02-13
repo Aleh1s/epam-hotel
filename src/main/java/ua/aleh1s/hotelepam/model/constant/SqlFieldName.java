@@ -37,4 +37,14 @@ public class SqlFieldName {
     public static final String APPLICATION_STATUS = "status";
     public static final String APPLICATION_CUSTOMER_ID = "customer_id";
 
+    //RequestEntity
+    public static final String REQUEST_ID = "id";
+    public static final String REQUEST_CUSTOMER_ID = "customer_id";
+    public static final String REQUEST_ROOM_NUMBER = "room_number";
+    public static final String REQUEST_STATUS = "status";
+    public static final String REQUEST_ENTRY_DATE = "entry_date";
+    public static final String REQUEST_LEAVING_DATE = "leaving_date";
+    public static final String REQUEST_TOTAL_AMOUNT = "total_amount";
+
+
 }
