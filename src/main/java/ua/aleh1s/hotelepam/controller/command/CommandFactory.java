@@ -39,5 +39,7 @@ public final class CommandFactory {
         commandMap.put("takeApplication", new TakeApplicationCommand());
         commandMap.put("makeRequest", new MakeRequestCommand());
         commandMap.put("profile", new ProfileCommand());
+        commandMap.put("confirmBooking", new ConfirmBookingCommand());
+        commandMap.put("reservationList", new ReservationListCommand());
     }
 }

@@ -10,6 +10,13 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
+
+<c:if test="${not empty requestScope.errorMessage}">
+    <div class="error-container">
+        <p>${requestScope.errorMessage}</p>
+    </div>
+</c:if>
+
 <div class="container">
     <div class="main">
         <div class="main-container">
@@ -45,21 +52,8 @@
                     </div>
                     <div class="room-props-control">
                         <div class="room-price">
-                            ${requestScope.roomDto.price}$/<fmt:message key="night"/>
+                            Price: ${requestScope.roomDto.price}$/<fmt:message key="night"/>
                         </div>
-                        <c:choose>
-                            <c:when test="${requestScope.roomDto.roomStatus == 'free'}">
-                                <form method="get" action="<c:url value="/controller"/>">
-                                    <input type="hidden" name="command" value="bookPage">
-                                    <input type="hidden" name="roomNumber" value="${requestScope.roomDto.roomNumber}">
-                                    <button type="submit" class="form-button"><fmt:message key="book"/></button>
-                                </form>
-                            </c:when>
-                            <c:otherwise>
-                                <button disabled class="disabled-button"><fmt:message key="book"/></button>
-                            </c:otherwise>
-                        </c:choose>
-
                     </div>
                 </div>
                 <div class="room-description-container">
@@ -74,6 +68,23 @@
                             <p>${attribute}</p>
                         </div>
                     </c:forEach>
+                </div>
+                <div class="room-control-container">
+                    <form action="<c:url value="/controller"/>" method="get">
+                        <input type="hidden" name="command" value="book">
+                        <input type="hidden" name="roomNumber" value="${requestScope.roomDto.roomNumber}">
+                        <label for="date-of-entry">
+                            <fmt:message key="from"/>
+                            <input id="date-of-entry" class="form-input" name="entryDate" type="date"
+                                   max="2024-01-01" required>
+                        </label>
+                        <label for="date-of-leaving">
+                            <fmt:message key="to"/>
+                            <input id="date-of-leaving" class="form-input" name="leavingDate" type="date"
+                                   max="2024-01-01" required>
+                        </label>
+                        <button type="submit" class="form-button">Book</button>
+                    </form>
                 </div>
             </div>
         </div>

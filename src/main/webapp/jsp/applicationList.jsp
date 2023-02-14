@@ -5,7 +5,7 @@
 <fmt:setBundle basename="locale"/>
 <html>
 <head>
-    <title>Manager</title>
+    <title>Application list</title>
 </head>
 <body>
 <c:import url="header.jsp"/>

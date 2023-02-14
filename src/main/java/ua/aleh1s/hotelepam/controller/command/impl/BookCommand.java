@@ -2,35 +2,31 @@ package ua.aleh1s.hotelepam.controller.command.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
+import ua.aleh1s.hotelepam.controller.dto.BookInfoDto;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
-import ua.aleh1s.hotelepam.model.entity.RoomStatus;
-import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
+import static java.lang.Math.*;
+import static ua.aleh1s.hotelepam.Utils.getIntValue;
 import static ua.aleh1s.hotelepam.Utils.getLocalDateValue;
 
 public class BookCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession(false);
-        Integer roomNumber = (Integer) session.getAttribute("roomNumber");
+        Integer roomNumber = getIntValue(request, "roomNumber");
         LocalDate entryDate = getLocalDateValue(request, "entryDate");
         LocalDate leavingDate = getLocalDateValue(request, "leavingDate");
 
-        String errorMessage, path = ResourcesManager.getInstance().getValue("path.page.book");
+        String errorMessage, path = "/controller?command=viewRoom";
         if (entryDate.isBefore(LocalDate.now())) {
             errorMessage = "Entry date cannot be before now";
             request.setAttribute("errorMessage", errorMessage);
@@ -44,49 +40,31 @@ public class BookCommand implements Command {
         }
 
         RoomRepository roomRepository = AppContext.getInstance().getRoomRepository();
-        Optional<RoomEntity> roomEntityOptional = roomRepository.getByRoomNumber(roomNumber);
+        Optional<RoomEntity> roomOptional = roomRepository.getByRoomNumber(roomNumber);
 
-        if (roomEntityOptional.isEmpty()) {
-            //todo: handle
-            return ResourcesManager.getInstance().getValue("path.page.error");
-        }
-
-        RoomEntity roomEntity = roomEntityOptional.get();
-        if (!roomEntity.getStatus().equals(RoomStatus.FREE)) {
-            errorMessage = "Room isn't free";
+        if (roomOptional.isEmpty()) {
+            errorMessage = "There is no room with such number";
             request.setAttribute("errorMessage", errorMessage);
             return path;
         }
-        roomEntity.setStatus(RoomStatus.BOOKED);
-        roomRepository.update(roomEntity);
 
-        Long customerId = (Long) session.getAttribute("id");
-        Long daysBetween = ChronoUnit.DAYS.between(entryDate, leavingDate);
-        BigDecimal pricePerNight = roomEntity.getPrice();
-        BigDecimal totalAmount = pricePerNight.multiply(BigDecimal.valueOf(daysBetween));
+        RoomEntity room = roomOptional.get();
+        BigDecimal roomPrice = room.getPrice();
+        Integer nights = toIntExact(ChronoUnit.DAYS.between(entryDate, leavingDate));
+        BigDecimal totalAmount = roomPrice.multiply(BigDecimal.valueOf(nights));
 
-        LocalDateTime now = LocalDateTime.now();
-        ReservationEntity reservation = ReservationEntity.Builder.newBuilder()
+        BookInfoDto bookInfoDto = BookInfoDto.Builder.newBuilder()
                 .roomNumber(roomNumber)
-                .customerId(customerId)
+                .roomName(room.getName())
+                .roomClass(room.getRoomClass())
                 .entryDate(entryDate)
                 .leavingDate(leavingDate)
-                .createdAt(now)
-                .expiredAt(now.plusDays(2))
+                .bedsNumber(room.getBedsNumber())
+                .personsNumber(room.getPersonsNumber())
                 .totalAmount(totalAmount)
                 .build();
 
-        ReservationRepository reservationRepository = AppContext.getInstance().getReservationRepository();
-        reservationRepository.create(reservation);
-
-        path = ResourcesManager.getInstance().getValue("path.page.success.booking");
-        try {
-            response.sendRedirect(path);
-            path = "redirect";
-        } catch (IOException e) {
-            path = ResourcesManager.getInstance().getValue("path.page.error");
-        }
-
-        return path;
+        request.setAttribute("bookInfo", bookInfoDto);
+        return ResourcesManager.getInstance().getValue("path.page.confirm.booking");
     }
 }

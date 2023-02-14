@@ -25,7 +25,7 @@
                     <h1 class="form-header"><fmt:message key="request.info"/></h1>
                     <input type="hidden" name="applicationId" value="${sessionScope.applicationId}">
                     <input type="hidden" name="command" value="makeRequest">
-                    <div class="request-form-center">
+                    <div class="form-center">
                         <div class="input-group">
                             <label for="room-number">
                                 <fmt:message key="room.number"/>

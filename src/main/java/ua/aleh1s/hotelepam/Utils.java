@@ -2,6 +2,7 @@ package ua.aleh1s.hotelepam;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -23,6 +24,10 @@ public class Utils {
 
     public static LocalDate getLocalDateValue(HttpServletRequest request, String name) {
         return LocalDate.parse(request.getParameter(name));
+    }
+
+    public static BigDecimal getBigDecimalValue(HttpServletRequest request, String name) {
+        return BigDecimal.valueOf(Double.parseDouble(request.getParameter(name)));
     }
 
     public static Integer getIntValueOrDefault(HttpServletRequest request, String name, Integer def) {

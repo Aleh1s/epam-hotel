@@ -45,7 +45,7 @@
                         <p><fmt:message key="contact.info"/></p>
                         <div></div>
                     </div>
-                    <table class="profile-info-table">
+                    <table class="key-value-table">
                         <tbody>
                         <tr class="active">
                             <td class="table-key"><fmt:message key="email"/>:</td>

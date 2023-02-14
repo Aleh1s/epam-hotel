@@ -2,6 +2,7 @@ package ua.aleh1s.hotelepam.model.constant;
 
 public class SqlFieldName {
 
+
     private SqlFieldName() {throw new RuntimeException("Can't instantiate object of this class");}
 
     // UserEntity
@@ -45,6 +46,17 @@ public class SqlFieldName {
     public static final String REQUEST_ENTRY_DATE = "entry_date";
     public static final String REQUEST_LEAVING_DATE = "leaving_date";
     public static final String REQUEST_TOTAL_AMOUNT = "total_amount";
+
+    public static final String RESERVATION_ID = "id";
+    public static final String RESERVATION_ROOM_NUMBER = "room_number";
+    public static final String RESERVATION_CUSTOMER_ID = "customer_id";
+    public static final String RESERVATION_ENTRY_DATE = "date_of_entry";
+    public static final String RESERVATION_LEAVING_DATE = "date_of_leaving";
+    public static final String RESERVATION_CREATED_AT = "created_at";
+    public static final String RESERVATION_EXPIRED_AT = "expiration_date";
+    public static final String RESERVATION_PAYED_AT = "payed_at";
+    public static final String RESERVATION_TOTAL_AMOUNT = "total_amount";
+    public static final String RESERVATION_STATUS = "status";
 
 
 }

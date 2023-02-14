@@ -1,23 +1,25 @@
-package ua.aleh1s.hotelepam.model.entity;
+package ua.aleh1s.hotelepam.controller.dto;
+
+import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class ReservationEntity {
+public class ReservationDto {
 
-    private Long id;
-    private Integer roomNumber;
-    private Long customerId;
-    private LocalDate entryDate;
-    private LocalDate leavingDate;
-    private LocalDateTime createdAt;
-    private LocalDateTime expiredAt;
-    private LocalDateTime payedAt;
-    private BigDecimal totalAmount;
-    private ReservationStatus status;
+    private final Long id;
+    private final Integer roomNumber;
+    private final Long customerId;
+    private final LocalDate entryDate;
+    private final LocalDate leavingDate;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime expiredAt;
+    private final LocalDateTime payedAt;
+    private final BigDecimal totalAmount;
+    private final ReservationStatus status;
 
-    private ReservationEntity(
+    private ReservationDto(
             Long id,
             Integer roomNumber,
             Long customerId,
@@ -52,7 +54,8 @@ public class ReservationEntity {
         private BigDecimal totalAmount;
         private ReservationStatus status;
 
-        private Builder() {}
+        private Builder() {
+        }
 
         public static Builder newBuilder() {
             return new Builder();
@@ -108,8 +111,8 @@ public class ReservationEntity {
             return this;
         }
 
-        public ReservationEntity build() {
-            return new ReservationEntity(
+        public ReservationDto build() {
+            return new ReservationDto(
                     id, roomNumber, customerId, entryDate, leavingDate, createdAt, expiredAt, payedAt, totalAmount, status
             );
         }
@@ -119,79 +122,39 @@ public class ReservationEntity {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Integer getRoomNumber() {
         return roomNumber;
-    }
-
-    public void setRoomNumber(Integer roomNumber) {
-        this.roomNumber = roomNumber;
     }
 
     public Long getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
     public LocalDate getEntryDate() {
         return entryDate;
-    }
-
-    public void setEntryDate(LocalDate entryDate) {
-        this.entryDate = entryDate;
     }
 
     public LocalDate getLeavingDate() {
         return leavingDate;
     }
 
-    public void setLeavingDate(LocalDate leavingDate) {
-        this.leavingDate = leavingDate;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     public LocalDateTime getExpiredAt() {
         return expiredAt;
     }
 
-    public void setExpiredAt(LocalDateTime expiredAt) {
-        this.expiredAt = expiredAt;
-    }
-
     public LocalDateTime getPayedAt() {
         return payedAt;
-    }
-
-    public void setPayedAt(LocalDateTime payedAt) {
-        this.payedAt = payedAt;
     }
 
     public BigDecimal getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
     public ReservationStatus getStatus() {
         return status;
-    }
-
-    public void setStatus(ReservationStatus status) {
-        this.status = status;
     }
 }

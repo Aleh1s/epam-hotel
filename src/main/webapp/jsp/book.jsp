@@ -23,7 +23,7 @@
                 <form method="post" class="book-form" action="<c:url value="/controller"/>">
                     <h1 class="form-header"><fmt:message key="booking.info"/></h1>
                     <input type="hidden" name="command" value="book"/>
-                    <div class="book-form-center">
+                    <div class="form-center">
                         <div class="input-group">
                             <label for="date-of-entry">
                                 <fmt:message key="entry.date"/>

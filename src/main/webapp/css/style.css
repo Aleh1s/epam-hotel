@@ -125,7 +125,9 @@
 }
 
 .form-button {
-    width: 120px;
+    padding: 5px 10px;
+    min-width: 120px;
+    max-width: fit-content;
     height: 35px;
     font-size: 12px;
     border-radius: 15px;
@@ -361,9 +363,34 @@
     grid-template-areas:
             "image props"
             "description description"
+            "control control"
             "attributes attributes";
-    grid-template-rows: 400px minmax(80px, auto) minmax(200px, auto);
+    grid-template-rows: 400px minmax(80px, auto) minmax(70px, auto) minmax(200px, auto);
     grid-template-columns: 60% 40%;
+}
+
+.room-control-container {
+    margin-top: 50px;
+    grid-area: control;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.room-control-container .form-input {
+    width: 200px;
+    margin-left: 7px;
+    border-bottom: 1px solid #1d3c62;
+}
+
+.room-control-container label {
+    color: #1d3c62;
+}
+
+.room-control-container form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .room-image-container {
@@ -372,6 +399,7 @@
     justify-content: center;
     padding: 10px;
 }
+
 
 .room-image-container > img {
     max-height: 100%;
@@ -400,7 +428,7 @@
 
 .room-attributes-container {
     grid-area: attributes;
-    margin-top: 30px;
+    margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
     justify-content: start;
@@ -469,7 +497,7 @@
 
 .room-props-control {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }
 
@@ -502,7 +530,7 @@
     padding: 20px 30px;
 }
 
-.book-form-center, .request-form-center {
+.form-center {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -721,11 +749,11 @@
     height: 7px;
 }
 
-.profile-info-table {
+.key-value-table {
     width: 100%;
 }
 
-.profile-info-table td {
+.key-value-table td {
     padding: 5px 0;
 }
 
@@ -734,10 +762,58 @@
     font-size: 13px;
 }
 
-.profile-info-table tr.active > td.table-value {
+.key-value-table tr.active > td.table-value {
     color: #3f98ff;
 }
 
 .profile-request-list .styled-table {
     box-shadow: none;
+}
+
+.confirm-booking-form-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm-booking-form {
+    width: 300px;
+    height: fit-content;
+    padding: 20px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+}
+
+.booking-info-table {
+    width: fit-content;
+    padding-bottom: 30px;
+}
+
+.booking-info-table tr {
+    text-align: left;
+}
+
+.booking-info-table td {
+    padding: 12px 15px;
+    color: #1d3c62;
+    font-size: 15px;
+}
+
+.reservation-list-form {
+    width: 100%;
+    height: 80px;
+    border: 1px solid #d9d9d9;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 20px;
+}
+
+.reservation-list-form label {
+    color: #1d3c62;
 }

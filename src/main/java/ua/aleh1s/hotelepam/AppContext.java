@@ -19,6 +19,7 @@ public class AppContext {
     private final ApplicationDtoMapper applicationDtoMapper;
     private final RequestDtoMapper requestDtoMapper;
     private final UserDtoMapper userDtoMapper;
+    private final ReservationDtoMapper reservationDtoMapper;
 
     {
         this.userRepository = new UserRepositoryImpl();
@@ -31,6 +32,7 @@ public class AppContext {
         this.requestRepository = new RequestRepositoryImpl();
         this.requestDtoMapper = new RequestDtoMapper();
         this.userDtoMapper = new UserDtoMapper();
+        this.reservationDtoMapper = new ReservationDtoMapper();
     }
 
     public static synchronized AppContext getInstance() {
@@ -63,5 +65,9 @@ public class AppContext {
 
     public UserDtoMapper getUserDtoMapper() {
         return userDtoMapper;
+    }
+
+    public ReservationDtoMapper getReservationDtoMapper() {
+        return reservationDtoMapper;
     }
 }
