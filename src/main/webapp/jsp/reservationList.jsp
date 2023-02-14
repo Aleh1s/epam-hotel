@@ -58,9 +58,18 @@
                             <td>${reservation.status}</td>
                             <td>${reservation.totalAmount}$</td>
                             <td>
-                                <button>Con</button>
-                                <button>Can</button>
-                                <button>Vie</button>
+                                <form action="<c:url value="/controller"/>" method="post">
+                                    <input type="hidden" name="command" value="changeReservationStatus">
+                                    <input type="hidden" name="reservationStatus" value="2">
+                                    <input type="hidden" name="reservationId" value="${reservation.id}">
+                                    <button type="submit">Con</button>
+                                </form>
+                                <form action="<c:url value="/controller"/>" method="post">
+                                    <input type="hidden" name="command" value="changeReservationStatus">
+                                    <input type="hidden" name="reservationStatus" value="3">
+                                    <input type="hidden" name="reservationId" value="${reservation.id}">
+                                    <button type="submit">Can</button>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>

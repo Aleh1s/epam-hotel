@@ -23,14 +23,12 @@ public class ReservationListCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         Integer pageNumber = Utils.getIntValueOrDefault(request, "pageNumber", 1);
-        System.out.println(pageNumber);
 
         ReservationCriteria criteria = ReservationCriteria.valueOf(request);
         ReservationListPagination pagination = ReservationListPagination.valueOf(request);
         ReservationRepository reservationRepository = AppContext.getInstance().getReservationRepository();
         List<ReservationEntity> reservationEntitieList = reservationRepository.getAll(criteria, pagination);
         Integer count = reservationRepository.count(criteria);
-        System.out.println(count);
 
         ReservationDtoMapper reservationDtoMapper = AppContext.getInstance().getReservationDtoMapper();
         List<ReservationDto> reservationDtoList = reservationEntitieList.stream()
@@ -39,7 +37,6 @@ public class ReservationListCommand implements Command {
 
         Integer reservationsPerPage = getIntContextParamValue(request, "reservationsPerPage");
         Integer pagesNumber = (int) Math.ceil(count / (double) reservationsPerPage);
-        System.out.println(pagesNumber);
         Map<String, Boolean> params = criteria.getParams();
 
         request.setAttribute("pagesNumber", pagesNumber);

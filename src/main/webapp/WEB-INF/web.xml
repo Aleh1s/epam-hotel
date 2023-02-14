@@ -18,7 +18,7 @@
     </context-param>
     <context-param>
         <param-name>reservationsPerPage</param-name>
-        <param-value>2</param-value>
+        <param-value>10</param-value>
     </context-param>
 
 </web-app>

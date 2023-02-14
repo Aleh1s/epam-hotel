@@ -25,6 +25,7 @@ public class SqlQuery {
     // ReservationEntity
     public static final String RESERVATION_INSERT = "insert into \"reservation\" (room_number, customer_id, date_of_entry, date_of_leaving, created_at, expiration_date, payed_at, total_amount, status) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     public static final String RESERVATION_SELECT_BY_ROOM_NUMBER_AND_STATUS = "select * from \"reservation\" where room_number = ? and status = ?";
+    public static final String RESERVATION_SELECT_BY_ID = "select * from \"reservation\" where id = ?";
 
 
     // RequestEntity

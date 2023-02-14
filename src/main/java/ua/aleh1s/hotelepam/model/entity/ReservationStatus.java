@@ -19,7 +19,8 @@ public enum ReservationStatus {
             case 1 -> PENDING;
             case 2 -> CONFIRMED;
             case 3 -> CANCELLED;
-            case 4 -> EXPIRED;
+            case 4 -> PAYED;
+            case 5 -> EXPIRED;
             default -> throw new IllegalStateException("Unexpected value: " + index);
         };
     }

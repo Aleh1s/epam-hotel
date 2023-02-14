@@ -13,6 +13,7 @@ import ua.aleh1s.hotelepam.transaction.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ReservationRepositoryImpl implements ReservationRepository {
 
@@ -30,22 +31,6 @@ public class ReservationRepositoryImpl implements ReservationRepository {
                 logger.error(e.getMessage(), e);
             }
         }
-    }
-
-    @Override
-    public List<ReservationEntity> getAllByRoomNumberAndStatus(Integer roomNumber, ReservationStatus status) {
-        List<ReservationEntity> reservationEntities = new ArrayList<>();
-        ReservationSimpleDao dao = new ReservationSimpleDao();
-        try (Transaction transaction = Transaction.start(dao)) {
-            try {
-                reservationEntities = dao.getAllByRoomNumberAndStatus(roomNumber, status);
-                transaction.commit();
-            } catch (DaoException e) {
-                transaction.rollback();
-                logger.error(e.getMessage(), e);
-            }
-        }
-        return reservationEntities;
     }
 
     @Override
@@ -78,5 +63,35 @@ public class ReservationRepositoryImpl implements ReservationRepository {
             }
         }
         return count;
+    }
+
+    @Override
+    public Optional<ReservationEntity> getById(Long reservationId) {
+        Optional<ReservationEntity> reservationEntity = Optional.empty();
+        ReservationSimpleDao dao = new ReservationSimpleDao();
+        try (Transaction transaction = Transaction.start(dao)) {
+            try {
+                reservationEntity = dao.findById(reservationId);
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                logger.error(e.getMessage(), e);
+            }
+        }
+        return reservationEntity;
+    }
+
+    @Override
+    public void update(ReservationEntity reservation) {
+        ReservationSimpleDao dao = new ReservationSimpleDao();
+        try (Transaction transaction = Transaction.start(dao)) {
+            try {
+                dao.update(reservation);
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                logger.error(e.getMessage(), e);
+            }
+        }
     }
 }
