@@ -12,9 +12,9 @@ public class SqlFieldName {
     public static final String USER_LAST_NAME = "last_name";
     public static final String USER_PHONE_NUMBER = "phone_number";
     public static final String USER_PASSWORD = "password";
-    public static final String USER_TIMEZONE = "timezone";
     public static final String USER_LOCALE = "locale";
     public static final String USER_ROLE = "role";
+    public static final String USER_ACCOUNT = "account";
 
     // RoomEntity
     public static final String ROOM_ROOM_NUMBER = "room_number";

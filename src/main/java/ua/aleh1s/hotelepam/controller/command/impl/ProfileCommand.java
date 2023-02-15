@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.ResourcesManager;
-import ua.aleh1s.hotelepam.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.RequestDto;
 import ua.aleh1s.hotelepam.controller.dto.UserDto;
@@ -68,6 +67,6 @@ public class ProfileCommand implements Command {
         request.setAttribute("currPage", pageNumber);
         request.setAttribute("pagesNumber", pagesNumber);
 
-        return ResourcesManager.getInstance().getValue("page.path.profile");
+        return ResourcesManager.getInstance().getValue("path.page.profile");
     }
 }

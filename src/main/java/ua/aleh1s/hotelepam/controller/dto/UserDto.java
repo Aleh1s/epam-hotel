@@ -2,6 +2,7 @@ package ua.aleh1s.hotelepam.controller.dto;
 
 import ua.aleh1s.hotelepam.model.entity.UserRole;
 
+import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.util.Locale;
 
@@ -14,6 +15,7 @@ public class UserDto {
     private String phoneNumber;
     private Locale locale;
     private UserRole role;
+    private BigDecimal account;
 
     public UserDto(
             Long id,
@@ -22,7 +24,8 @@ public class UserDto {
             String lastName,
             String phoneNumber,
             Locale locale,
-            UserRole role) {
+            UserRole role,
+            BigDecimal account) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -30,6 +33,7 @@ public class UserDto {
         this.phoneNumber = phoneNumber;
         this.locale = locale;
         this.role = role;
+        this.account = account;
     }
 
     public static class Builder {
@@ -40,6 +44,7 @@ public class UserDto {
         private String phoneNumber;
         private Locale locale;
         private UserRole role;
+        private BigDecimal account;
 
         private Builder() {
         }
@@ -82,8 +87,13 @@ public class UserDto {
             return this;
         }
 
+        public Builder account(BigDecimal account) {
+            this.account = account;
+            return this;
+        }
+
         public UserDto build() {
-            return new UserDto(id, email, firstName, lastName, phoneNumber, locale, role);
+            return new UserDto(id, email, firstName, lastName, phoneNumber, locale, role, account);
         }
     }
 
@@ -136,4 +146,15 @@ public class UserDto {
         this.role = role;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public BigDecimal getAccount() {
+        return account;
+    }
+
+    public void setAccount(BigDecimal account) {
+        this.account = account;
+    }
 }

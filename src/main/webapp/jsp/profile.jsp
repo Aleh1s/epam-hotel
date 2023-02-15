@@ -10,6 +10,13 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
+
+<c:if test="${not empty requestScope.errorMessage}">
+    <div class="error-container">
+        <p>${requestScope.errorMessage}</p>
+    </div>
+</c:if>
+
 <div class="container">
     <div class="main">
         <div class="main-container">
@@ -17,26 +24,33 @@
                 <div class="profile-image">
                     <img src="https://www.w3schools.com/howto/img_avatar.png" alt="profile image">
                 </div>
-                <div class="i18n">
-                    <form action="<c:url value="/controller"/>" method="post" class="i18n-ua">
-                        <input type="hidden" name="command" value="i18n">
-                        <input type="hidden" name="lang" value="ua">
-                        <button class="i18n-ua-button" type="submit"></button>
-                    </form>
-                    <span class="vertical-delimiter"></span>
-                    <form action="<c:url value="/controller"/>" method="post" class="i18n-en">
-                        <input type="hidden" name="command" value="i18n">
-                        <input type="hidden" name="lang" value="en">
-                        <button class="i18n-en-button" type="submit"></button>
+                <div class="profile-up-bar">
+                    <div class="i18n">
+                        <form action="<c:url value="/controller"/>" method="post" class="i18n-ua">
+                            <input type="hidden" name="command" value="i18n">
+                            <input type="hidden" name="lang" value="ua">
+                            <button class="i18n-ua-button" type="submit"></button>
+                        </form>
+                        <span class="vertical-delimiter"></span>
+                        <form action="<c:url value="/controller"/>" method="post" class="i18n-en">
+                            <input type="hidden" name="command" value="i18n">
+                            <input type="hidden" name="lang" value="en">
+                            <button class="i18n-en-button" type="submit"></button>
+                        </form>
+                    </div>
+                    <form action="<c:url value="/controller"/>" method="post">
+                        <input type="hidden" name="command" value="topUpAccount"/>
+                        <input class="profile-amount" type="number" min="0" max="10000" name="amount" value="0" required/>
+                        <button type="submit" class="profile-top-up-button">Top up</button>
                     </form>
                 </div>
                 <div class="header-user-info">
                     <h2>${requestScope.userDto.firstName} ${requestScope.userDto.lastName}</h2>
                     <p>${requestScope.userDto.role}</p>
                 </div>
-                <div class="profile-bookings">
-                    <p><fmt:message key="number.of.booking"/></p>
-                    <h2>12</h2>
+                <div class="profile-account">
+                    <p><fmt:message key="account"/></p>
+                    <h2>${requestScope.userDto.account}$</h2>
                 </div>
             </div>
             <div class="profile-body">
@@ -90,9 +104,13 @@
                                 <td>${request.entryDate}</td>
                                 <td>${request.leavingDate}</td>
                                 <td>${request.totalAmount}$/<fmt:message key="night"/></td>
-                                <td><a href="<c:url value="/controller?command=viewRoom&roomNumber=${request.roomNumber}"/>"><fmt:message key="view"/></a></td>
+                                <td>
+                                    <a href="<c:url value="/controller?command=viewRoom&roomNumber=${request.roomNumber}"/>"><fmt:message
+                                            key="view"/></a></td>
                                 <td><a href="<c:url value="#"/>"><fmt:message key="reject"/></a></td>
-                                <td><a href="<c:url value="/controller?command=bookPage&roomNumber=${request.roomNumber}"/>"><fmt:message key="confirm"/></a></td>
+                                <td>
+                                    <a href="<c:url value="/controller?command=bookPage&roomNumber=${request.roomNumber}"/>"><fmt:message
+                                            key="confirm"/></a></td>
                             </tr>
                         </c:forEach>
                         </tbody>

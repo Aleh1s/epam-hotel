@@ -1,8 +1,7 @@
 package ua.aleh1s.hotelepam.model.entity;
 
-import java.time.ZoneId;
+import java.math.BigDecimal;
 import java.util.Locale;
-import java.util.Objects;
 
 public class UserEntity {
     private Long id;
@@ -13,6 +12,7 @@ public class UserEntity {
     private String password;
     private Locale locale;
     private UserRole role;
+    private BigDecimal account;
 
     public UserEntity(
             Long id,
@@ -22,7 +22,8 @@ public class UserEntity {
             String phoneNumber,
             String password,
             Locale locale,
-            UserRole role) {
+            UserRole role,
+            BigDecimal account) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -31,6 +32,7 @@ public class UserEntity {
         this.password = password;
         this.locale = locale;
         this.role = role;
+        this.account = account;
     }
 
     public static class Builder {
@@ -42,6 +44,7 @@ public class UserEntity {
         private String password;
         private Locale locale;
         private UserRole role;
+        private BigDecimal account;
 
         private Builder() {
         }
@@ -90,8 +93,13 @@ public class UserEntity {
             return this;
         }
 
+        public Builder account(BigDecimal account) {
+            this.account = account;
+            return this;
+        }
+
         public UserEntity build() {
-            return new UserEntity(id, email, firstName, lastName, phoneNumber, password, locale, role);
+            return new UserEntity(id, email, firstName, lastName, phoneNumber, password, locale, role, account);
         }
     }
 
@@ -157,5 +165,13 @@ public class UserEntity {
 
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    public BigDecimal getAccount() {
+        return account;
+    }
+
+    public void setAccount(BigDecimal account) {
+        this.account = account;
     }
 }

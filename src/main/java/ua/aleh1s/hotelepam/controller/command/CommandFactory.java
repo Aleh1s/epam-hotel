@@ -43,5 +43,8 @@ public final class CommandFactory {
         commandMap.put("reservationList", new ReservationListCommand());
         commandMap.put("changeReservationStatus", new ChangeReservationStatusCommand());
         commandMap.put("myBookings", new MyBookingsCommand());
+        commandMap.put("paymentPage", new PaymentPageCommand());
+        commandMap.put("confirmPayment", new ConfirmPaymentCommand());
+        commandMap.put("topUpAccount", new TopUpAccountCommand());
     }
 }

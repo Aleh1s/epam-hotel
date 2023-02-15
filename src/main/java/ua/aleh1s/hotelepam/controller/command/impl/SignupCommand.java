@@ -11,6 +11,7 @@ import ua.aleh1s.hotelepam.model.entity.UserRole;
 import ua.aleh1s.hotelepam.model.repository.UserRepository;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -46,9 +47,14 @@ public class SignupCommand implements Command {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
         UserEntity userEntity = UserEntity.Builder.newBuilder()
-                .email(email).firstName(firstName).lastName(lastName)
-                .phoneNumber(phoneNumber).password(hashedPassword)
-                .locale(defaultLocale).role(userRole)
+                .email(email)
+                .firstName(firstName)
+                .lastName(lastName)
+                .phoneNumber(phoneNumber)
+                .password(hashedPassword)
+                .locale(defaultLocale)
+                .role(userRole)
+                .account(BigDecimal.ZERO)
                 .build();
 
         userRepository.create(userEntity);

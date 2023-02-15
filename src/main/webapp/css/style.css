@@ -626,9 +626,17 @@
     grid-template-rows: 50px repeat(2, 1fr);
     grid-template-columns: 220px 1fr;
     grid-template-areas:
-            "image i18n"
+            "image up-bar"
             "image user-info"
             "image booking-info";
+}
+
+
+.profile-up-bar {
+    grid-area: up-bar;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .profile-image {
@@ -645,7 +653,8 @@
 }
 
 .i18n {
-    grid-area: i18n;
+    height: 100%;
+    width: fit-content;
     display: flex;
     align-items: center;
 }
@@ -698,21 +707,21 @@
     font-size: 14px;
 }
 
-.profile-bookings {
+.profile-account {
     grid-area: booking-info;
     display: flex;
     flex-direction: column;
     justify-content: end;
 }
 
-.profile-bookings > p {
+.profile-account > p {
     color: #bdbdbd;
     text-transform: uppercase;
     font-size: 10px;
     margin-bottom: 5px;
 }
 
-.profile-bookings > h2 {
+.profile-account > h2 {
     color: #1d3c62;
     letter-spacing: 1px;
 }
@@ -770,7 +779,7 @@
     box-shadow: none;
 }
 
-.confirm-booking-form-container {
+.form-aligner {
     height: 100%;
     width: 100%;
     display: flex;
@@ -788,16 +797,16 @@
     border-radius: 20px;
 }
 
-.booking-info-table {
+.info-table {
     width: fit-content;
     padding-bottom: 30px;
 }
 
-.booking-info-table tr {
+.info-table tr {
     text-align: left;
 }
 
-.booking-info-table td {
+.info-table td {
     padding: 12px 15px;
     color: #1d3c62;
     font-size: 15px;
@@ -816,4 +825,57 @@
 
 .reservation-list-form label {
     color: #1d3c62;
+}
+
+.payment-form {
+    width: 400px;
+    height: fit-content;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
+}
+
+.payment-button {
+    width: 80%;
+    height: 35px;
+    font-size: 12px;
+    border-radius: 15px;
+    background-color: #238bff;
+    color: white;
+    border: 1px solid #efefef;
+    text-transform: uppercase;
+    transition: all 0.3s ease 0s;
+    cursor: context-menu;
+}
+
+.profile-amount {
+    width: 100px;
+    height: 34px;
+    border: 0;
+    padding: 5px 7px;
+    color: #1d3c62;
+    font-size: 14px;
+    margin-right: 7px;
+    border-bottom: 1px solid #1d3c62;
+    outline: none;
+}
+
+.profile-top-up-button {
+    border-radius: 17px;
+    width: fit-content;
+    height: 34px;
+    border: 1px solid #1d3c62;
+    color: #1d3c62;
+    background-color: white;
+    font-size: 14px;
+    padding: 5px 10px;
+    transition: all 0.3s ease 0s;
+}
+
+.profile-top-up-button:hover {
+    border: 1px solid #1d3c62;
+    color: white;
+    background-color: #1d3c62;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
 }

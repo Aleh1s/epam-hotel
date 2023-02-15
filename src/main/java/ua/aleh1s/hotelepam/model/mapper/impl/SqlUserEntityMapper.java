@@ -33,6 +33,7 @@ public class SqlUserEntityMapper implements SqlEntityMapper<UserEntity> {
                 .password(resultSet.getString(USER_PASSWORD))
                 .locale(new Locale(resultSet.getString(USER_LOCALE)))
                 .role(UserRole.valueOf(resultSet.getString(USER_ROLE)))
+                .account(resultSet.getBigDecimal(USER_ACCOUNT))
                 .build();
     }
 }

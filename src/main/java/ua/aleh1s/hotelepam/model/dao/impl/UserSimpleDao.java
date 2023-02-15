@@ -73,6 +73,7 @@ public class UserSimpleDao extends SimpleDao<Long, UserEntity> {
                     resultSet.updateString(USER_PASSWORD, entity.getPassword());
                     resultSet.updateString(USER_LOCALE, entity.getLocale().getLanguage());
                     resultSet.updateString(USER_ROLE, entity.getRole().name());
+                    resultSet.updateBigDecimal(USER_ACCOUNT, entity.getAccount());
                     resultSet.updateRow();
                 }
             }
@@ -91,6 +92,7 @@ public class UserSimpleDao extends SimpleDao<Long, UserEntity> {
             statement.setString(5, entity.getPassword());
             statement.setString(6, entity.getLocale().getLanguage());
             statement.setString(7, entity.getRole().name());
+            statement.setBigDecimal(8, entity.getAccount());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);

@@ -16,6 +16,7 @@ public class UserDtoMapper implements Function<UserEntity, UserDto> {
                 .lastName(userEntity.getLastName())
                 .locale(userEntity.getLocale())
                 .role(userEntity.getRole())
+                .account(userEntity.getAccount())
                 .build();
     }
 }
