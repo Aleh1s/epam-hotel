@@ -1,7 +1,6 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
 import ua.aleh1s.hotelepam.controller.page.PageRequest;
-import ua.aleh1s.hotelepam.model.constant.SqlQuery;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.dao.SimpleDao;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
@@ -138,7 +137,7 @@ public class ReservationSimpleDao extends SimpleDao<Long, ReservationEntity> {
 
     public List<ReservationEntity> getAllByCustomerId(Long userId, PageRequest pageRequest) throws DaoException {
         List<ReservationEntity> reservationEntities = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_BY_CUSTOMER_ID_PAGEABLE)) {
+        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_BY_CUSTOMER_ID_PAGEABLE_SORT_BY_CREATED_AT)) {
             statement.setLong(1, userId);
             statement.setInt(2, pageRequest.getOffset());
             statement.setInt(3, pageRequest.getLimit());

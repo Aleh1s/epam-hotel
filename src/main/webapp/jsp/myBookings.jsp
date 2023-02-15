@@ -7,6 +7,13 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
+
+<c:if test="${not empty requestScope.errorMessage}">
+    <div class="error-container">
+        <p>${requestScope.errorMessage}</p>
+    </div>
+</c:if>
+
 <div class="container">
     <div class="main">
         <div class="main-container">
@@ -55,7 +62,9 @@
                                 <c:choose>
                                     <c:when test="${reservation.status.index eq 2}">
                                         <form action="<c:url value="/controller"/>" method="get">
-                                            <button>Pay</button>
+                                            <input type="hidden" name="reservationId" value="${reservation.id}">
+                                            <input type="hidden" name="command" value="paymentPage"/>
+                                            <button type="submit">Pay</button>
                                         </form>
                                     </c:when>
                                     <c:otherwise>

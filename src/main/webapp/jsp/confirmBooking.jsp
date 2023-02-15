@@ -12,11 +12,11 @@
 <div class="container">
     <div class="main">
         <div class="main-container">
-            <div class="confirm-booking-form-container">
+            <div class="form-aligner">
                 <form method="post" action="<c:url value="/controller"/>" class="confirm-booking-form">
                     <h1 class="form-header">Booking info</h1>
                     <div class="form-center">
-                        <table class="booking-info-table">
+                        <table class="info-table">
                             <tr>
                                 <td>Entry date:</td>
                                 <td>${requestScope.bookInfo.entryDate}</td>

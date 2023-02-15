@@ -17,9 +17,7 @@ public class ReservationCriteria implements Criteria {
     }
 
     public static ReservationCriteria valueOf(HttpServletRequest request) {
-        EnumSet<ReservationStatus> statuses = EnumSet.range(ReservationStatus.PENDING, ReservationStatus.EXPIRED);
-
-        Map<ReservationStatus, Boolean> collect = statuses.stream()
+        Map<ReservationStatus, Boolean> collect = Arrays.stream(ReservationStatus.values())
                 .collect(Collectors.toMap(Function.identity(),
                         status -> Objects.nonNull(request.getParameter(status.name().toLowerCase()))));
 
@@ -32,7 +30,6 @@ public class ReservationCriteria implements Criteria {
 
         if (isNothingOn)
             return "";
-
         StringJoiner statusJoiner = new StringJoiner(",", "(", ")");
         for (ReservationStatus status : ReservationStatus.values()) {
             boolean isOn = statusMap.get(status);
