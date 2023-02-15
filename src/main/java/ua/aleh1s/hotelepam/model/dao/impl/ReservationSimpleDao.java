@@ -1,6 +1,7 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
-import ua.aleh1s.hotelepam.model.constant.SqlFieldName;
+import ua.aleh1s.hotelepam.controller.page.PageRequest;
+import ua.aleh1s.hotelepam.model.constant.SqlQuery;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.dao.SimpleDao;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
@@ -121,9 +122,42 @@ public class ReservationSimpleDao extends SimpleDao<Long, ReservationEntity> {
     }
 
     public Integer count(Criteria criteria) throws DaoException {
-        Integer count = 0;
+        int count = 0;
         String query = "select count(*) from \"reservation\" " + criteria.build();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    count = resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return count;
+    }
+
+    public List<ReservationEntity> getAllByCustomerId(Long userId, PageRequest pageRequest) throws DaoException {
+        List<ReservationEntity> reservationEntities = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_BY_CUSTOMER_ID_PAGEABLE)) {
+            statement.setLong(1, userId);
+            statement.setInt(2, pageRequest.getOffset());
+            statement.setInt(3, pageRequest.getLimit());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                SqlReservationEntityMapper mapper = new SqlReservationEntityMapper();
+                while (resultSet.next()) {
+                    reservationEntities.add(mapper.map(resultSet));
+                }
+            }
+        } catch (SQLException | SqlEntityMapperException e) {
+            throw new DaoException(e);
+        }
+        return reservationEntities;
+    }
+
+    public Integer countByUserId(Long userId) throws DaoException {
+        int count = 0;
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_COUNT_BY_CUSTOMER_ID)) {
+            statement.setLong(1, userId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     count = resultSet.getInt(1);

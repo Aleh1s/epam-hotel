@@ -34,6 +34,7 @@
             <li class="nav-item"><a href="#"><b><fmt:message key="home"/></b></a></li>
             <li class="nav-item"><a href="${roomList}"><fmt:message key="room.list"/></a></li>
             <li class="nav-item"><a href="<c:url value="/jsp/application.jsp"/>"><fmt:message key="application"/></a></li>
+            <li class="nav-item"><a href="<c:url value="/controller?command=myBookings"/>">My bookings</a></li>
         </ul>
         <ul class="nav-right">
             <li class="nav-item"><a href="<c:url value="/jsp/signup.jsp"/>"><fmt:message key="sign.up"/></a></li>

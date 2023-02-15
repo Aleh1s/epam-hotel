@@ -2,11 +2,12 @@ package ua.aleh1s.hotelepam.model.repository.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.aleh1s.hotelepam.controller.page.Page;
+import ua.aleh1s.hotelepam.controller.page.PageRequest;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.dao.impl.ReservationSimpleDao;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
-import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.model.pagination.Pagination;
 import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
 import ua.aleh1s.hotelepam.transaction.Transaction;
@@ -93,5 +94,23 @@ public class ReservationRepositoryImpl implements ReservationRepository {
                 logger.error(e.getMessage(), e);
             }
         }
+    }
+
+    @Override
+    public Page<ReservationEntity> getAllByCustomerId(Long userId, PageRequest pageRequest) {
+        ReservationSimpleDao dao = new ReservationSimpleDao();
+        List<ReservationEntity> result = new ArrayList<>();
+        Integer count = 0;
+        try (Transaction transaction = Transaction.start(dao)) {
+            try {
+                result = dao.getAllByCustomerId(userId, pageRequest);
+                count = dao.countByUserId(userId);
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                logger.error(e.getMessage(), e);
+            }
+        }
+        return Page.of(result, count);
     }
 }

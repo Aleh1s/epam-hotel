@@ -4,6 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Optional;
 
 import static java.util.Objects.*;
@@ -40,6 +43,14 @@ public class Utils {
     public static Integer getIntContextParamValue(HttpServletRequest request, String key) {
         String initParameter = request.getServletContext().getInitParameter(key);
         return Integer.parseInt(initParameter);
+    }
+
+    public static Date toDate(LocalDateTime localDateTime) {
+        return localDateTime != null ? Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()) : null;
+    }
+
+    public static int getNumberOfPages(int totalCount, int pageSize) {
+        return (int) Math.ceil(totalCount / (double) pageSize);
     }
 
 }

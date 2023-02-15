@@ -26,7 +26,8 @@ public class SqlQuery {
     public static final String RESERVATION_INSERT = "insert into \"reservation\" (room_number, customer_id, date_of_entry, date_of_leaving, created_at, expiration_date, payed_at, total_amount, status) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     public static final String RESERVATION_SELECT_BY_ROOM_NUMBER_AND_STATUS = "select * from \"reservation\" where room_number = ? and status = ?";
     public static final String RESERVATION_SELECT_BY_ID = "select * from \"reservation\" where id = ?";
-
+    public static final String RESERVATION_SELECT_BY_CUSTOMER_ID_PAGEABLE = "select * from \"reservation\" where customer_id = ? and status != 6 offset ? limit ?";
+    public static final String SELECT_COUNT_BY_CUSTOMER_ID = "select count(*) from \"reservation\" where customer_id = ?";
 
     // RequestEntity
     public static final String REQUEST_INSERT = "insert into \"request\" (room_number, customer_id, status, entry_date, leaving_date, total_amount) values (?, ?, ?, ?, ?, ?)";

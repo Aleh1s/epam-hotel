@@ -42,5 +42,6 @@ public final class CommandFactory {
         commandMap.put("confirmBooking", new ConfirmBookingCommand());
         commandMap.put("reservationList", new ReservationListCommand());
         commandMap.put("changeReservationStatus", new ChangeReservationStatusCommand());
+        commandMap.put("myBookings", new MyBookingsCommand());
     }
 }

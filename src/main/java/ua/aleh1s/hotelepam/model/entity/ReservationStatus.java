@@ -6,7 +6,8 @@ public enum ReservationStatus {
     CONFIRMED(2),
     CANCELLED(3),
     PAYED(4),
-    EXPIRED(5);
+    EXPIRED(5),
+    REMOVED(6);
 
     private final int index;
 
@@ -21,6 +22,7 @@ public enum ReservationStatus {
             case 3 -> CANCELLED;
             case 4 -> PAYED;
             case 5 -> EXPIRED;
+            case 6 -> REMOVED;
             default -> throw new IllegalStateException("Unexpected value: " + index);
         };
     }

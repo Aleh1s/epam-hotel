@@ -40,7 +40,7 @@ public class LoginCommand implements Command {
         HttpSession session = request.getSession();
         session.setAttribute("id", userEntity.getId());
         session.setAttribute("lang", userEntity.getLocale().getLanguage());
-        session.setAttribute("role", userEntity.getRole().name());
+        session.setAttribute("role", userEntity.getRole());
 
         path = ResourcesManager.getInstance().getValue("path.page.room.list");
         try {
