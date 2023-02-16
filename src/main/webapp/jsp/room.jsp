@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<c:import url="header.jsp"/>
+<c:import url="component/header.jsp"/>
 <tags:errorhandler message="${requestScope.errorMessage}"/>
 <div class="container">
     <div class="main">
@@ -68,27 +68,29 @@
                         </div>
                     </c:forEach>
                 </div>
-                <div class="room-control-container">
-                    <form action="<c:url value="/controller"/>" method="get">
-                        <input type="hidden" name="command" value="book">
-                        <input type="hidden" name="roomNumber" value="${requestScope.roomDto.roomNumber}">
-                        <label for="date-of-entry">
-                            <fmt:message key="from"/>
-                            <input id="date-of-entry" class="form-input" name="entryDate" type="date"
-                                   max="2024-01-01" required>
-                        </label>
-                        <label for="date-of-leaving">
-                            <fmt:message key="to"/>
-                            <input id="date-of-leaving" class="form-input" name="leavingDate" type="date"
-                                   max="2024-01-01" required>
-                        </label>
-                        <button type="submit" class="form-button">Book</button>
-                    </form>
-                </div>
+                <c:if test="${not empty sessionScope.role and role eq 'CUSTOMER'}">
+                    <div class="room-control-container">
+                        <form action="<c:url value="/controller"/>" method="get">
+                            <input type="hidden" name="command" value="book">
+                            <input type="hidden" name="roomNumber" value="${requestScope.roomDto.roomNumber}">
+                            <label for="date-of-entry">
+                                <fmt:message key="from"/>
+                                <input id="date-of-entry" class="form-input" name="entryDate" type="date"
+                                       max="2024-01-01" required>
+                            </label>
+                            <label for="date-of-leaving">
+                                <fmt:message key="to"/>
+                                <input id="date-of-leaving" class="form-input" name="leavingDate" type="date"
+                                       max="2024-01-01" required>
+                            </label>
+                            <button type="submit" class="form-button">Book</button>
+                        </form>
+                    </div>
+                </c:if>
             </div>
         </div>
     </div>
-    <c:import url="footer.jsp"/>
+    <c:import url="component/footer.jsp"/>
 </div>
 </body>
 </html>

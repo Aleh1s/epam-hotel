@@ -1,14 +1,15 @@
-<%@ include file="/WEB-INF/jspf/encoding.jspf"%>
-<%@ include file="/WEB-INF/jspf/taglibs.jspf"%>
+<%@ include file="/WEB-INF/jspf/encoding.jspf" %>
+<%@ include file="/WEB-INF/jspf/taglibs.jspf" %>
 <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <fmt:setBundle basename="locale"/>
 
 <html>
 <head>
     <title>Application</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<c:import url="header.jsp"/>
+<c:import url="component/header.jsp"/>
 <tags:errorhandler message="${requestScope.errorMessage}"/>
 <div class="container">
     <div class="main">
@@ -44,17 +45,19 @@
                         <input id="date-of-entry" class="form-input" name="entryDate" type="date"
                                max="2024-01-01" required>
                     </label>
+                </div>
+                <div class="input-group">
                     <label for="date-of-leaving">
                         <fmt:message key="leaving.date"/>
                         <input id="date-of-leaving" class="form-input" name="leavingDate" type="date"
                                max="2024-01-01" required>
                     </label>
                 </div>
-                <button class="form-button" type="submit"><fmt:message key="make.an.application"/></button>
+                <button class="btn-primary" type="submit"><fmt:message key="make.an.application"/></button>
             </form>
         </div>
     </div>
-    <c:import url="footer.jsp"/>
+    <c:import url="component/footer.jsp"/>
 </div>
 </body>
 </html>

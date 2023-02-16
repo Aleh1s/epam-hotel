@@ -2,6 +2,7 @@ package ua.aleh1s.hotelepam.controller.command.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
@@ -40,6 +41,11 @@ public class ConfirmBookingCommand implements Command {
 
         ReservationRepository reservationRepository = AppContext.getInstance().getReservationRepository();
         reservationRepository.create(reservation);
+
+        HttpSession session = request.getSession(false);
+        session.setAttribute("reservationTotalAmount", totalAmount);
+        session.setAttribute("reservationEntryDate", entryDate);
+        session.setAttribute("reservationLeavingDate", leavingDate);
 
         String path = ResourcesManager.getInstance().getValue("path.page.success.booking");
         try {

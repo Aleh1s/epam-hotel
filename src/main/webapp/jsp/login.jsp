@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<c:import url="header.jsp"/>
+<c:import url="component/header.jsp"/>
 <tags:errorhandler message="${requestScope.errorMessage}"/>
 <div class="container">
     <div class="main">
@@ -25,11 +25,11 @@
                     <fmt:message var="password" key="password"/>
                     <input class="form-input" id="password" name="password" type="password" placeholder="${password}" required>
                 </div>
-                <button class="form-button" type="submit"><fmt:message key="log.in"/></button>
+                <button class="btn-primary" type="submit"><fmt:message key="log.in"/></button>
             </form>
         </div>
     </div>
-    <c:import url="footer.jsp"/>
+    <c:import url="component/footer.jsp"/>
 </div>
 </body>
 </html>

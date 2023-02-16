@@ -5,9 +5,10 @@
 <html>
 <head>
     <title>Confirm booking</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<c:import url="header.jsp"/>
+<c:import url="component/header.jsp"/>
 <div class="container">
     <div class="main">
         <div class="main-container">
@@ -42,7 +43,7 @@
             </div>
         </div>
     </div>
-    <c:import url="footer.jsp"/>
+    <c:import url="component/footer.jsp"/>
 </div>
 </body>
 </html>

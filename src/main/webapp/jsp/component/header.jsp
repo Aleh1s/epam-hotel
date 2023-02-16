@@ -3,16 +3,7 @@
 <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <fmt:setBundle basename="locale"/>
 
-<html>
-<head>
-    <title>Header</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-
-<tags:errorhandler message="${sessionScope.errorMessage}"/>
-
-<div class="header">
+<header class="header">
     <div class="nav">
         <div class="nav-left">
             <div class="i18n">
@@ -37,7 +28,8 @@
                         key="application"/></a></li>
             </c:if>
             <c:if test="${not empty sessionScope.role and sessionScope.role eq 'MANAGER'}">
-                <li class="nav-item"><a href="<c:url value="/controller?command=reservationList&default=on"/>"><fmt:message
+                <li class="nav-item"><a
+                        href="<c:url value="/controller?command=reservationList&default=on"/>"><fmt:message
                         key="reservations"/></a></li>
                 <li class="nav-item"><a href="<c:url value="/controller?command=applicationList"/>"><fmt:message
                         key="applications"/></a></li>
@@ -53,6 +45,4 @@
             </c:if>
         </ul>
     </div>
-</div>
-</body>
-</html>
+</header>

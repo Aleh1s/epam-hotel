@@ -63,12 +63,16 @@ public class ConfirmPaymentCommand implements Command {
             return path;
         }
 
+        LocalDateTime payedAt = LocalDateTime.now();
         user.setAccount(userAccount.subtract(totalAmount));
         reservation.setStatus(ReservationStatus.PAYED);
-        reservation.setPayedAt(LocalDateTime.now());
+        reservation.setPayedAt(payedAt);
 
         userRepository.update(user);
         reservationRepository.update(reservation);
+
+        session.setAttribute("paymentPayedAt", payedAt);
+        session.setAttribute("paymentTotalAmount", totalAmount);
 
         path = ResourcesManager.getInstance().getValue("path.page.success.payment");
         try {

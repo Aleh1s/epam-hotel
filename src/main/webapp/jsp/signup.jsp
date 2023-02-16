@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<c:import url="header.jsp"/>
+<c:import url="component/header.jsp"/>
 <tags:errorhandler message="${requestScope.errorMessage}"/>
 <div class="container">
     <div class="main">
@@ -41,11 +41,11 @@
                     <input class="form-input" id="phoneNumber" name="phoneNumber" type="tel"
                            placeholder="${phoneNumber}" required>
                 </div>
-                <button class="form-button" type="submit"><fmt:message key="sign.up"/></button>
+                <button class="btn-primary" type="submit"><fmt:message key="sign.up"/></button>
             </form>
         </div>
     </div>
-    <c:import url="footer.jsp"/>
+    <c:import url="component/footer.jsp"/>
 </div>
 </body>
 </html>

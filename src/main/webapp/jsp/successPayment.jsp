@@ -3,7 +3,7 @@
 <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <html>
 <head>
-    <title>Success request</title>
+    <title>Success Payment</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -17,29 +17,28 @@
                         <img src="../img/success_mark.png" alt="Success mark">
                     </div>
                     <div class="congratulation-container">
-                        <h1>Booking Successful!</h1>
-                        <p>Your booking will be processed by manager! Details of booking are included below.</p>
+                        <h1>Payment Successful!</h1>
+                        <p>Your payment has been processed! Details of transaction are included below.</p>
                     </div>
                     <div class="horizontal-delimiter-with-text">
-                        <p>Booking info</p>
+                        <p>Transaction info</p>
                         <div></div>
                     </div>
                     <div class="transaction-info-container">
                         <table>
                             <tr class="active">
                                 <td>Total Amount</td>
-                                <td>$ ${sessionScope.reservationTotalAmount}</td>
-                                <c:remove var="reservationTotalAmount" scope="session"/>
+                                <td>$ ${sessionScope.paymentTotalAmount}</td>
+                                <c:remove var="paymentTotalAmount" scope="session"/>
                             </tr>
                             <tr>
-                                <td>Entry Date</td>
-                                <td>${sessionScope.reservationEntryDate}</td>
-                                <c:remove var="reservationEntryDate" scope="session"/>
+                                <td>Payment Type</td>
+                                <td>Net Banking</td>
                             </tr>
                             <tr>
-                                <td>Leaving Date</td>
-                                <td>${sessionScope.reservationLeavingDate}</td>
-                                <c:remove var="reservationLeavingDate" scope="session"/>
+                                <td>Payment Time</td>
+                                <td>${sessionScope.paymentPayedAt}</td>
+                                <c:remove var="paymentPayedAt" scope="session"/>
                             </tr>
                         </table>
                     </div>

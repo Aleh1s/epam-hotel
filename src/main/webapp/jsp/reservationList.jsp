@@ -5,9 +5,10 @@
 <html>
 <head>
     <title>Reservation list</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<c:import url="header.jsp"/>
+<c:import url="component/header.jsp"/>
 <div class="container">
     <div class="main">
         <div class="main-container">
@@ -108,7 +109,7 @@
                              command="reservationList"/>
         </div>
     </div>
-    <c:import url="footer.jsp"/>
+    <c:import url="component/footer.jsp"/>
 </div>
 </body>
 </html>

@@ -94,6 +94,8 @@
 }
 
 .custom-form {
+    width: 300px;
+    height: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1034,6 +1036,102 @@
     color: #1d3c62;
 }
 
-.bookings-form select{
+.bookings-form select {
     margin-right: 20px;
+}
+
+.success-grid-container {
+    width: 80%;
+    height: fit-content;
+    display: grid;
+    padding: 30px;
+    grid-template: minmax(100px, auto) 20px minmax(100px, auto) / 100px 1fr;
+    grid-template-areas:
+        "image congratulation"
+        "delimiter delimiter"
+        "transaction-info transaction-info";
+    gap: 30px 20px;
+    border-radius: 30px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
+    border: 1px solid #d9d9d9;
+    background-color: white;
+}
+
+.success-image-container {
+    grid-area: image;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.success-image-container img {
+    width: 100%;
+    height: 100%;
+}
+
+.congratulation-container {
+    grid-area: congratulation;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+}
+
+.congratulation-container h1 {
+    color: rgb(75,174,79);
+    font-size: 26px;
+    letter-spacing: 1px;
+    font-weight: normal;
+}
+
+.congratulation-container p {
+    color: #1d3c62;
+    font-size: 14px;
+    font-weight: lighter;
+}
+
+.success-grid-container .horizontal-delimiter-with-text {
+    grid-area: delimiter;
+    margin: 0;
+    padding: 0;
+}
+
+.transaction-info-container {
+    grid-area: transaction-info;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    margin-bottom: 30px;
+
+}
+
+.transaction-info-container table {
+    width: 60%;
+    color: #1d3c62;
+}
+
+.transaction-info-container td {
+    padding: 8px 10px;
+    font-weight: lighter;
+}
+
+.transaction-info-container tr.active > td {
+    font-weight: normal;
+}
+
+.go-home-form {
+    margin-top: 30px;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.align-center {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
