@@ -8,7 +8,7 @@ import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.dao.impl.ReservationSimpleDao;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
-import ua.aleh1s.hotelepam.model.pagination.Pagination;
+import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
 import ua.aleh1s.hotelepam.transaction.Transaction;
 
@@ -35,19 +35,21 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     @Override
-    public List<ReservationEntity> getAll(Criteria criteria, Pagination pagination) {
-        List<ReservationEntity> reservationEntities = new ArrayList<>();
+    public Page<ReservationEntity> getAllByStatus(ReservationStatus status, PageRequest pageRequest) {
+        List<ReservationEntity> result = new ArrayList<>();
+        Integer count = 0;
         ReservationSimpleDao dao = new ReservationSimpleDao();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
-                reservationEntities = dao.getAll(criteria, pagination);
+                result = dao.getAllByStatus(status, pageRequest);
+                count = dao.countByStatus(status);
                 transaction.commit();
             } catch (DaoException e) {
                 transaction.rollback();
                 logger.error(e.getMessage(), e);
             }
         }
-        return reservationEntities;
+        return Page.of(result, count);
     }
 
     @Override
@@ -97,14 +99,30 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     @Override
-    public Page<ReservationEntity> getAllByCustomerId(Long userId, PageRequest pageRequest) {
+    public List<ReservationEntity> getAllByCustomerId(Long userId) {
         ReservationSimpleDao dao = new ReservationSimpleDao();
         List<ReservationEntity> result = new ArrayList<>();
-        Integer count = 0;
         try (Transaction transaction = Transaction.start(dao)) {
             try {
-                result = dao.getAllByCustomerId(userId, pageRequest);
-                count = dao.countByUserId(userId);
+                result = dao.getAllByCustomerId(userId);
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                logger.error(e.getMessage(), e);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Page<ReservationEntity> getAll(PageRequest pageRequest) {
+        ReservationSimpleDao dao = new ReservationSimpleDao();
+        Integer count = 0;
+        List<ReservationEntity> result = new ArrayList<>();
+        try (Transaction transaction = Transaction.start(dao)) {
+            try {
+                result = dao.getAll(pageRequest);
+                count = dao.count();
                 transaction.commit();
             } catch (DaoException e) {
                 transaction.rollback();

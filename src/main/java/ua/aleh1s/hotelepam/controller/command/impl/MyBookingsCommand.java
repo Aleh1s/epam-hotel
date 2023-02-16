@@ -5,18 +5,23 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.ResourcesManager;
-import ua.aleh1s.hotelepam.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.ReservationDto;
 import ua.aleh1s.hotelepam.controller.mapper.ReservationDtoMapper;
 import ua.aleh1s.hotelepam.controller.page.Page;
 import ua.aleh1s.hotelepam.controller.page.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
+import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static java.util.Objects.*;
+import static ua.aleh1s.hotelepam.Utils.getIntValueOrDefault;
 import static ua.aleh1s.hotelepam.Utils.getNumberOfPages;
+import static ua.aleh1s.hotelepam.model.entity.ReservationStatus.REMOVED;
 
 public class MyBookingsCommand implements Command {
 
@@ -27,18 +32,46 @@ public class MyBookingsCommand implements Command {
         HttpSession session = request.getSession(false);
         Long userId = (Long) session.getAttribute("id");
 
-        Integer pageNumber = Utils.getIntValueOrDefault(request, "pageNumber", 1);
+        if (nonNull(request.getParameter("default")))
+            session.setAttribute("reservationStatus", null);
+
+        Integer pageNumber = getIntValueOrDefault(request, "pageNumber", 1);
 
         ReservationRepository reservationRepository = AppContext.getInstance().getReservationRepository();
-        Page<ReservationEntity> reservationPage = reservationRepository.getAllByCustomerId(userId, PageRequest.of(pageNumber, PAGE_SIZE));
+        List<ReservationEntity> reservationList = reservationRepository.getAllByCustomerId(userId);
 
+        Integer statusIndex = getIntValueOrDefault(request, "status", 0);
+
+        ReservationStatus status;
+        if (statusIndex == 0) {
+            status = (ReservationStatus) session.getAttribute("reservationStatus");
+        } else {
+            status = ReservationStatus.atIndex(statusIndex);
+        }
+
+        if (nonNull(status))
+            reservationList = reservationList.stream()
+                    .filter(reservation -> reservation.getStatus().equals(status))
+                    .collect(Collectors.toList());
+
+        session.setAttribute("reservationStatus", status);
+
+        reservationList = reservationList.stream()
+                .filter(reservation -> !reservation.getStatus().equals(REMOVED))
+                .collect(Collectors.toList());
+        reservationList.sort(Comparator.comparing(ReservationEntity::getCreatedAt).reversed());
+
+
+        PageRequest pageRequest = PageRequest.of(pageNumber, PAGE_SIZE);
         ReservationDtoMapper reservationDtoMapper = AppContext.getInstance().getReservationDtoMapper();
-        List<ReservationDto> reservationDtoList = reservationPage.getResult().stream()
+
+        List<ReservationDto> reservationDtoList = reservationList.stream()
+                .skip(pageRequest.getOffset())
+                .limit(pageRequest.getLimit())
                 .map(reservationDtoMapper)
                 .toList();
 
-        Page<ReservationDto> reservationDtoPage = Page.of(reservationDtoList, reservationPage.getCount());
-
+        Page<ReservationDto> reservationDtoPage = Page.of(reservationDtoList, reservationList.size());
         Integer pagesNumber = getNumberOfPages(reservationDtoPage.getCount(), PAGE_SIZE);
 
         request.setAttribute("currPage", pageNumber);

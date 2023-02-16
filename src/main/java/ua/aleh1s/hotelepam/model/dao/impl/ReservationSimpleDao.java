@@ -1,6 +1,7 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
 import ua.aleh1s.hotelepam.controller.page.PageRequest;
+import ua.aleh1s.hotelepam.model.constant.SqlQuery;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.dao.SimpleDao;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
@@ -8,7 +9,6 @@ import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
 import ua.aleh1s.hotelepam.model.mapper.impl.SqlReservationEntityMapper;
-import ua.aleh1s.hotelepam.model.pagination.Pagination;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -104,10 +104,12 @@ public class ReservationSimpleDao extends SimpleDao<Long, ReservationEntity> {
         return reservationEntities;
     }
 
-    public List<ReservationEntity> getAll(Criteria criteria, Pagination pagination) throws DaoException {
+    public List<ReservationEntity> getAllByStatus(ReservationStatus status, PageRequest pageRequest) throws DaoException {
         List<ReservationEntity> reservationEntities = new ArrayList<>();
-        String query = "select * from \"reservation\" " + criteria.build() + " " + pagination.build();
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_PAGE_BY_STATUS_ORDER_BY_CREATED_AT)) {
+            statement.setInt(1, status.getIndex());
+            statement.setInt(2, pageRequest.getOffset());
+            statement.setInt(3, pageRequest.getLimit());
             try (ResultSet resultSet = statement.executeQuery()) {
                 SqlReservationEntityMapper mapper = new SqlReservationEntityMapper();
                 while (resultSet.next()) {
@@ -135,12 +137,10 @@ public class ReservationSimpleDao extends SimpleDao<Long, ReservationEntity> {
         return count;
     }
 
-    public List<ReservationEntity> getAllByCustomerId(Long userId, PageRequest pageRequest) throws DaoException {
+    public List<ReservationEntity> getAllByCustomerId(Long userId) throws DaoException {
         List<ReservationEntity> reservationEntities = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_BY_CUSTOMER_ID_PAGEABLE_SORT_BY_CREATED_AT)) {
+        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_ALL_BY_CUSTOMER_ID)) {
             statement.setLong(1, userId);
-            statement.setInt(2, pageRequest.getOffset());
-            statement.setInt(3, pageRequest.getLimit());
             try (ResultSet resultSet = statement.executeQuery()) {
                 SqlReservationEntityMapper mapper = new SqlReservationEntityMapper();
                 while (resultSet.next()) {
@@ -157,6 +157,52 @@ public class ReservationSimpleDao extends SimpleDao<Long, ReservationEntity> {
         int count = 0;
         try (PreparedStatement statement = connection.prepareStatement(SELECT_COUNT_BY_CUSTOMER_ID)) {
             statement.setLong(1, userId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    count = resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return count;
+    }
+
+    public Integer countByStatus(ReservationStatus status) throws DaoException {
+        int count = 0;
+        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_COUNT_BY_STATUS)) {
+            statement.setInt(1, status.getIndex());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    count = resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return count;
+    }
+
+    public List<ReservationEntity> getAll(PageRequest pageRequest) throws DaoException {
+        List<ReservationEntity> result = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_PAGE_ORDER_BY_CREATED_AT)) {
+            statement.setInt(1, pageRequest.getOffset());
+            statement.setInt(2, pageRequest.getLimit());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                SqlReservationEntityMapper mapper = new SqlReservationEntityMapper();
+                while (resultSet.next()) {
+                    result.add(mapper.map(resultSet));
+                }
+            }
+        } catch (SQLException | SqlEntityMapperException e) {
+            throw new DaoException(e);
+        }
+        return result;
+    }
+
+    public Integer count() throws DaoException {
+        int count = 0;
+        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_COUNT_ALL)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     count = resultSet.getInt(1);
