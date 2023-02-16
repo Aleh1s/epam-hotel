@@ -51,7 +51,7 @@
                     </div>
                     <div class="room-props-control">
                         <div class="room-price">
-                            Price: ${requestScope.roomDto.price}$/<fmt:message key="night"/>
+                            <fmt:message key="price"/>: ${requestScope.roomDto.price}$/<fmt:message key="night"/>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         </div>
                     </c:forEach>
                 </div>
-                <c:if test="${not empty sessionScope.role and role eq 'CUSTOMER'}">
+                <c:if test="${not empty sessionScope.role and sessionScope.role eq 'CUSTOMER'}">
                     <div class="room-control-container">
                         <form action="<c:url value="/controller"/>" method="get">
                             <input type="hidden" name="command" value="book">
@@ -83,7 +83,7 @@
                                 <input id="date-of-leaving" class="form-input" name="leavingDate" type="date"
                                        max="2024-01-01" required>
                             </label>
-                            <button type="submit" class="form-button">Book</button>
+                            <button type="submit" class="form-button"><fmt:message key="book"/></button>
                         </form>
                     </div>
                 </c:if>

@@ -46,5 +46,6 @@ public final class CommandFactory {
         commandMap.put("paymentPage", new PaymentPageCommand());
         commandMap.put("confirmPayment", new ConfirmPaymentCommand());
         commandMap.put("topUpAccount", new TopUpAccountCommand());
+        commandMap.put("logOut", new LogOutCommand());
     }
 }
