@@ -26,6 +26,10 @@
                                    required/>
                             <button type="submit" class="btn-primary"><fmt:message key="top.up"/></button>
                         </form>
+                        <form action="<c:url value="/controller"/>" method="post">
+                            <input type="hidden" name="command" value="logOut"/>
+                            <button type="submit" class="btn-danger"><fmt:message key="log.out"/></button>
+                        </form>
                     </c:if>
                 </div>
                 <div class="header-user-info">
