@@ -1,17 +1,18 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Index</title>
 </head>
 <body>
-<form action="hello-servlet" method="post">
-    <input name="login" type="text"/>
-    <input name="password" type="password"/>
-    <input name="timezone" type="text"/>
-    <input name="locale" type="text"/>
-    <input name="role" type="text">
-    <input type="submit" value="Go!">
-</form>
+
+<c:url var="roomList" value="/controller">
+    <c:param name="command" value="roomList"/>
+    <c:param name="default" value="on"/>
+</c:url>
+
+<c:redirect url="${roomList}"/>
+
 </body>
 </html>

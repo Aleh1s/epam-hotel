@@ -1,5 +1,7 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
+import ua.aleh1s.hotelepam.controller.page.PageRequest;
+import ua.aleh1s.hotelepam.model.constant.SqlQuery;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.criteria.impl.RoomListCriteria;
 import ua.aleh1s.hotelepam.model.dao.SimpleDao;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlQuery.*;
 import static ua.aleh1s.hotelepam.model.constant.SqlQuery.ROOM_SELECT_BY_ROOM_NUMBER;
 
 public class RoomSimpleDao extends SimpleDao<Integer, RoomEntity> {
@@ -104,5 +107,51 @@ public class RoomSimpleDao extends SimpleDao<Integer, RoomEntity> {
             throw new DaoException(e);
         }
         return count;
+    }
+
+    public List<RoomEntity> getAll(PageRequest pageRequest) throws DaoException {
+        List<RoomEntity> roomEntityList = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(ROOM_SELECT_ALL_PAGEABLE)) {
+            statement.setInt(1, pageRequest.getOffset());
+            statement.setInt(2, pageRequest.getLimit());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                SqlRoomEntityMapper mapper = new SqlRoomEntityMapper();
+                while (resultSet.next()) {
+                    roomEntityList.add(mapper.map(resultSet));
+                }
+            }
+        } catch (SQLException | SqlEntityMapperException e) {
+            throw new DaoException(e);
+        }
+        return roomEntityList;
+    }
+
+    public Integer count() throws DaoException {
+        int count = 0;
+        try (PreparedStatement statement = connection.prepareStatement(ROOM_COUNT_ALL)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    count = resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return count;
+    }
+
+    public List<RoomEntity> getAll() throws DaoException {
+        List<RoomEntity> roomEntityList = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(ROOM_SELECT_ALL)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                SqlRoomEntityMapper mapper = new SqlRoomEntityMapper();
+                while (resultSet.next()) {
+                    roomEntityList.add(mapper.map(resultSet));
+                }
+            }
+        } catch (SQLException | SqlEntityMapperException e) {
+            throw new DaoException(e);
+        }
+        return roomEntityList;
     }
 }
