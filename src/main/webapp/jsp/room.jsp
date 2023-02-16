@@ -28,6 +28,12 @@
                 <div class="room-properties-container">
                     <div class="room-property-list">
                         <div class="room-key-value-list">
+                            <c:if test="${not empty sessionScope.role and sessionScope.role eq 'MANAGER'}">
+                                <div>
+                                    <div class="key"><fmt:message key="room.number"/>:</div>
+                                    <div class="value">${requestScope.roomDto.roomNumber}</div>
+                                </div>
+                            </c:if>
                             <div>
                                 <div class="key"><fmt:message key="status"/>:</div>
                                 <div class="value">${requestScope.roomDto.roomStatus}</div>

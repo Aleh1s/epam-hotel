@@ -25,33 +25,26 @@
                     <img src="https://www.w3schools.com/howto/img_avatar.png" alt="profile image">
                 </div>
                 <div class="profile-up-bar">
-                    <div class="i18n">
-                        <form action="<c:url value="/controller"/>" method="post" class="i18n-ua">
-                            <input type="hidden" name="command" value="i18n">
-                            <input type="hidden" name="lang" value="ua">
-                            <button class="i18n-ua-button" type="submit"></button>
+                    <c:if test="${sessionScope.role eq 'CUSTOMER'}">
+                        <a class="profile-link" href="<c:url value="/controller?command=myBookings&default=on"/>"><fmt:message key="my.bookings"/></a>
+                        <form action="<c:url value="/controller"/>" method="post">
+                            <input type="hidden" name="command" value="topUpAccount"/>
+                            <input class="profile-amount" type="number" min="0" max="10000" name="amount" value="0"
+                                   required/>
+                            <button type="submit" class="btn-primary"><fmt:message key="top.up"/></button>
                         </form>
-                        <span class="vertical-delimiter"></span>
-                        <form action="<c:url value="/controller"/>" method="post" class="i18n-en">
-                            <input type="hidden" name="command" value="i18n">
-                            <input type="hidden" name="lang" value="en">
-                            <button class="i18n-en-button" type="submit"></button>
-                        </form>
-                    </div>
-                    <form action="<c:url value="/controller"/>" method="post">
-                        <input type="hidden" name="command" value="topUpAccount"/>
-                        <input class="profile-amount" type="number" min="0" max="10000" name="amount" value="0" required/>
-                        <button type="submit" class="profile-top-up-button">Top up</button>
-                    </form>
+                    </c:if>
                 </div>
                 <div class="header-user-info">
                     <h2>${requestScope.userDto.firstName} ${requestScope.userDto.lastName}</h2>
                     <p>${requestScope.userDto.role}</p>
                 </div>
-                <div class="profile-account">
-                    <p><fmt:message key="account"/></p>
-                    <h2>${requestScope.userDto.account}$</h2>
-                </div>
+                <c:if test="${sessionScope.role eq 'CUSTOMER'}">
+                    <div class="profile-account">
+                        <p><fmt:message key="account"/></p>
+                        <h2>${requestScope.userDto.account}$</h2>
+                    </div>
+                </c:if>
             </div>
             <div class="profile-body">
                 <div class="body-user-info">
@@ -80,42 +73,44 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="profile-request-list">
-                    <div class="horizontal-delimiter-with-text">
-                        <p><fmt:message key="request.list"/></p>
-                        <div></div>
-                    </div>
-                    <table class="styled-table">
-                        <thead>
-                        <tr>
-                            <th><fmt:message key="room.number"/></th>
-                            <th><fmt:message key="entry.date"/></th>
-                            <th><fmt:message key="leaving.date"/></th>
-                            <th><fmt:message key="total.amount"/></th>
-                            <th><fmt:message key="view"/></th>
-                            <th><fmt:message key="reject"/></th>
-                            <th><fmt:message key="confirm"/></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="request" items="${requestScope.requestDtoList}">
+                <c:if test="${sessionScope.role eq 'CUSTOMER'}">
+                    <div class="profile-request-list">
+                        <div class="horizontal-delimiter-with-text">
+                            <p><fmt:message key="request.list"/></p>
+                            <div></div>
+                        </div>
+                        <table class="styled-table">
+                            <thead>
                             <tr>
-                                <td>${request.roomNumber}</td>
-                                <td>${request.entryDate}</td>
-                                <td>${request.leavingDate}</td>
-                                <td>${request.totalAmount}$/<fmt:message key="night"/></td>
-                                <td>
-                                    <a href="<c:url value="/controller?command=viewRoom&roomNumber=${request.roomNumber}"/>"><fmt:message
-                                            key="view"/></a></td>
-                                <td><a href="<c:url value="#"/>"><fmt:message key="reject"/></a></td>
-                                <td>
-                                    <a href="<c:url value="/controller?command=bookPage&roomNumber=${request.roomNumber}"/>"><fmt:message
-                                            key="confirm"/></a></td>
+                                <th><fmt:message key="room.number"/></th>
+                                <th><fmt:message key="entry.date"/></th>
+                                <th><fmt:message key="leaving.date"/></th>
+                                <th><fmt:message key="total.amount"/></th>
+                                <th><fmt:message key="view"/></th>
+                                <th><fmt:message key="reject"/></th>
+                                <th><fmt:message key="confirm"/></th>
                             </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                            <c:forEach var="request" items="${requestScope.requestDtoList}">
+                                <tr>
+                                    <td>${request.roomNumber}</td>
+                                    <td>${request.entryDate}</td>
+                                    <td>${request.leavingDate}</td>
+                                    <td>${request.totalAmount}$/<fmt:message key="night"/></td>
+                                    <td>
+                                        <a href="<c:url value="/controller?command=viewRoom&roomNumber=${request.roomNumber}"/>"><fmt:message
+                                                key="view"/></a></td>
+                                    <td><a href="<c:url value="#"/>"><fmt:message key="reject"/></a></td>
+                                    <td>
+                                        <a href="<c:url value="/controller?command=bookPage&roomNumber=${request.roomNumber}"/>"><fmt:message
+                                                key="confirm"/></a></td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </c:if>
             </div>
         </div>
     </div>
