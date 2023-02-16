@@ -12,36 +12,47 @@
 <div class="container">
     <div class="main">
         <div class="main-container">
-            <form class="reservation-list-form" method="get" action="<c:url value="/controller"/>">
-                <input type="hidden" name="command" value="reservationList">
-                <label>
-                    Pending
-                    <input type="checkbox" name="pending" ${requestScope.params.pending ? "checked" : ""}>
-                </label>
-                <label>
-                    Confirmed
-                    <input type="checkbox" name="confirmed" ${requestScope.params.confirmed ? "checked" : ""}>
-                </label>
-                <label>
-                    Cancelled
-                    <input type="checkbox" name="cancelled" ${requestScope.params.cancelled ? "checked" : ""}>
-                </label>
-                <label>
-                    Payed
-                    <input type="checkbox" name="payed" ${requestScope.params.payed ? "checked" : ""}>
-                </label>
-                <label>
-                    Expired
-                    <input type="checkbox" name="expired" ${requestScope.params.expired ? "checked" : ""}>
-                </label>
-                <button class="form-button" type="submit">Search</button>
+            <div class="horizontal-delimiter-with-text">
+                <p>Filter</p>
+                <div></div>
+            </div>
+            <form method="get" action="<c:url value="/controller"/>" class="bookings-form">
+                <input type="hidden" name="command" value="reservationList"/>
+                <div>
+                    <label for="filter">
+                        Booking status
+                    </label>
+                    <select id="filter" name="status" class="select-primary">
+                        <option value="" disabled ${empty sessionScope.reservationStatus ? 'selected' : ''}>
+                            Booking status
+                        </option>
+                        <option value="1" ${sessionScope.reservationStatus.index eq 1 ? 'selected' : ''}>
+                            Pending
+                        </option>
+                        <option value="2" ${sessionScope.reservationStatus.index eq 2 ? 'selected' : ''}>
+                            Confirmed
+                        </option>
+                        <option value="3" ${sessionScope.reservationStatus.index eq 3 ? 'selected' : ''}>
+                            Cancelled
+                        </option>
+                        <option value="4" ${sessionScope.reservationStatus.index eq 4 ? 'selected' : ''}>
+                            Payed
+                        </option>
+                        <option value="5" ${sessionScope.reservationStatus.index eq 5 ? 'selected' : ''}>
+                            Expired
+                        </option>
+                    </select>
+                </div>
+                <button class="btn-primary" type="submit">Search</button>
             </form>
-
-            <c:if test="${not empty requestScope.reservationList}">
+            <div class="horizontal-delimiter-with-text">
+                <p>Reservations</p>
+                <div></div>
+            </div>
+            <c:if test="${not empty requestScope.reservationPage.result}">
                 <table class="styled-table">
                     <thead>
                     <tr>
-                        <th>Room number</th>
                         <th>Entry date</th>
                         <th>Leaving date</th>
                         <th>Status</th>
@@ -50,25 +61,43 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="reservation" items="${requestScope.reservationList}">
+                    <c:forEach var="reservation" items="${requestScope.reservationPage.result}">
                         <tr>
-                            <td>${reservation.roomNumber}</td>
                             <td>${reservation.entryDate}</td>
                             <td>${reservation.leavingDate}</td>
                             <td>${reservation.status}</td>
                             <td>${reservation.totalAmount}$</td>
-                            <td>
-                                <form action="<c:url value="/controller"/>" method="post">
-                                    <input type="hidden" name="command" value="changeReservationStatus">
-                                    <input type="hidden" name="reservationStatus" value="2">
-                                    <input type="hidden" name="reservationId" value="${reservation.id}">
-                                    <button type="submit">Con</button>
-                                </form>
-                                <form action="<c:url value="/controller"/>" method="post">
-                                    <input type="hidden" name="command" value="changeReservationStatus">
-                                    <input type="hidden" name="reservationStatus" value="3">
-                                    <input type="hidden" name="reservationId" value="${reservation.id}">
-                                    <button type="submit">Can</button>
+                            <td class="control">
+                                <c:choose>
+                                    <c:when test="${reservation.status.index eq 1}">
+                                        <form action="<c:url value="/controller"/>" method="post">
+                                            <input type="hidden" name="command" value="changeReservationStatus">
+                                            <input type="hidden" name="reservationStatus" value="2">
+                                            <input type="hidden" name="reservationId" value="${reservation.id}">
+                                            <button type="submit" class="btn-accept">Confirm</button>
+                                        </form>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button type="submit" class="btn-accept disabled">Confirm</button>
+                                    </c:otherwise>
+                                </c:choose>
+                                <c:choose>
+                                    <c:when test="${reservation.status.index eq 1}">
+                                        <form action="<c:url value="/controller"/>" method="post">
+                                            <input type="hidden" name="command" value="changeReservationStatus">
+                                            <input type="hidden" name="reservationStatus" value="3">
+                                            <input type="hidden" name="reservationId" value="${reservation.id}">
+                                            <button type="submit" class="btn-trash">Cancel</button>
+                                        </form>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button type="submit" class="btn-trash disabled" disabled>Cancel</button>
+                                    </c:otherwise>
+                                </c:choose>
+                                <form action="<c:url value="/controller"/>" method="get">
+                                    <input type="hidden" name="command" value="viewRoom">
+                                    <input type="hidden" name="roomNumber" value="${reservation.roomNumber}">
+                                    <button type="submit" class="btn-view">View room</button>
                                 </form>
                             </td>
                         </tr>
