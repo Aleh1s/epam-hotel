@@ -50,8 +50,13 @@ public class ApplicationCommand implements Command {
 
         applicationRepository.create(applicationEntry);
 
+        session.setAttribute("guestsNumber", guestsNumber);
+        session.setAttribute("roomClass", roomClass);
+        session.setAttribute("entryDate", entryDate);
+        session.setAttribute("leavingDate", leavingDate);
+
         try {
-            response.sendRedirect(path);
+            response.sendRedirect(ResourcesManager.getInstance().getValue("path.page.success.application"));
             path = "redirect";
         } catch (IOException e) {
             path = ResourcesManager.getInstance().getValue("path.page.error");
