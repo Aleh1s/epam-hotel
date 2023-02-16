@@ -575,14 +575,14 @@
     cursor: context-menu;
 }
 
-.book-container, .request-container {
+.book-container {
     display: flex;
     height: 100%;
     justify-content: center;
     align-items: center;
 }
 
-.book-form, .request-form {
+.book-form {
     width: 400px;
     height: fit-content;
     border: 1px solid #eeeeee;
@@ -1094,7 +1094,7 @@
     padding: 0;
 }
 
-.transaction-info-container {
+.primary-info-container {
     grid-area: transaction-info;
     display: flex;
     justify-content: start;
@@ -1103,17 +1103,17 @@
 
 }
 
-.transaction-info-container table {
+.primary-info-container table {
     width: 60%;
     color: #1d3c62;
 }
 
-.transaction-info-container td {
+.primary-info-container td {
     padding: 8px 10px;
     font-weight: lighter;
 }
 
-.transaction-info-container tr.active > td {
+.primary-info-container tr.active > td {
     font-weight: normal;
 }
 
@@ -1180,4 +1180,47 @@
     letter-spacing: 1px;
     font-weight: lighter;
     font-size: 14px;
+}
+
+.request-container {
+    width: 80%;
+    height: fit-content;
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
+    padding: 50px;
+    border-radius: 30px;
+    border: 1px solid #d9d9d9;
+}
+
+.request-form {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: space-between;
+}
+
+.request-form .form-input {
+    border-bottom: 1px solid #1d3c62;
+    min-width: 120px;
+    max-width: fit-content;
+}
+
+.request-form .btn-primary {
+    min-width: 140px;
+    max-width: fit-content;
+}
+
+.request-container .primary-info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    width: 100%;
+}
+
+.primary-info-container > div {
+    width: 49%;
+}
+
+.request-container table {
+    width: 100%;
+    height: 100%;
 }

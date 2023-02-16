@@ -24,7 +24,7 @@
                         <p>Transaction info</p>
                         <div></div>
                     </div>
-                    <div class="transaction-info-container">
+                    <div class="primary-info-container">
                         <table>
                             <tr class="active">
                                 <td>Total Amount</td>

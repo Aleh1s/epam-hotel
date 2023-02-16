@@ -6,46 +6,43 @@ import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
+import ua.aleh1s.hotelepam.controller.dto.BookInfoDto;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static ua.aleh1s.hotelepam.Utils.*;
 import static ua.aleh1s.hotelepam.model.entity.ReservationStatus.PENDING;
 
 public class ConfirmBookingCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        Long customerId = (Long) request.getSession(false).getAttribute("id");
-        Integer roomNumber = getIntValue(request, "roomNumber");
-        LocalDate entryDate = getLocalDateValue(request, "entryDate");
-        LocalDate leavingDate = getLocalDateValue(request, "leavingDate");
-        BigDecimal totalAmount = getBigDecimalValue(request, "totalAmount");
+        HttpSession session = request.getSession(false);
+        Long customerId = (Long) session.getAttribute("id");
+
+        BookInfoDto bookingInfo = (BookInfoDto) session.getAttribute("bookInfo");
+        session.removeAttribute("bookInfo");
 
         LocalDateTime now = LocalDateTime.now();
         ReservationEntity reservation = ReservationEntity.Builder.newBuilder()
-                .roomNumber(roomNumber)
+                .roomNumber(bookingInfo.getRoomNumber())
                 .customerId(customerId)
-                .entryDate(entryDate)
-                .leavingDate(leavingDate)
+                .entryDate(bookingInfo.getEntryDate())
+                .leavingDate(bookingInfo.getLeavingDate())
                 .createdAt(now)
                 .expiredAt(now.plusDays(2))
-                .totalAmount(totalAmount)
+                .totalAmount(bookingInfo.getTotalAmount())
                 .status(PENDING)
                 .build();
 
         ReservationRepository reservationRepository = AppContext.getInstance().getReservationRepository();
         reservationRepository.create(reservation);
 
-        HttpSession session = request.getSession(false);
-        session.setAttribute("reservationTotalAmount", totalAmount);
-        session.setAttribute("reservationEntryDate", entryDate);
-        session.setAttribute("reservationLeavingDate", leavingDate);
+        session.setAttribute("reservationTotalAmount", bookingInfo.getTotalAmount());
+        session.setAttribute("reservationEntryDate", bookingInfo.getEntryDate());
+        session.setAttribute("reservationLeavingDate", bookingInfo.getLeavingDate());
 
         String path = ResourcesManager.getInstance().getValue("path.page.success.booking");
         try {

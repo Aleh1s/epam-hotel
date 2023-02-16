@@ -20,6 +20,7 @@ public enum RequestStatus {
         return switch (index) {
             case 1 -> NEW;
             case 2 -> REJECTED;
+            case 3 -> CONFIRMED;
             default -> throw new IllegalStateException("Unexpected value: " + index);
         };
     }

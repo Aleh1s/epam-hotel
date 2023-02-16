@@ -19,24 +19,19 @@
                         <table class="info-table">
                             <tr>
                                 <td>Entry date:</td>
-                                <td>${requestScope.bookInfo.entryDate}</td>
+                                <td>${sessionScope.bookInfo.entryDate}</td>
                             </tr>
                             <tr>
                                 <td>Leaving date:</td>
-                                <td>${requestScope.bookInfo.leavingDate}</td>
+                                <td>${sessionScope.bookInfo.leavingDate}</td>
                             </tr>
                             <tr>
                                 <td>Total amount:</td>
-                                <td>${requestScope.bookInfo.totalAmount}$</td>
+                                <td>${sessionScope.bookInfo.totalAmount}$</td>
                             </tr>
                         </table>
 
                         <input type="hidden" name="command" value="confirmBooking">
-                        <input type="hidden" name="roomNumber" value="${requestScope.bookInfo.roomNumber}">
-                        <input type="hidden" name="entryDate" value="${requestScope.bookInfo.entryDate}">
-                        <input type="hidden" name="leavingDate" value="${requestScope.bookInfo.leavingDate}">
-                        <input type="hidden" name="totalAmount" value="${requestScope.bookInfo.totalAmount}">
-
                         <button type="submit" class="form-button">Confirm</button>
                     </div>
                 </form>

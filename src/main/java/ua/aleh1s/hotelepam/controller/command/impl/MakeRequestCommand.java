@@ -28,6 +28,7 @@ public class MakeRequestCommand implements Command {
         HttpSession session = request.getSession(false);
 
         Long applicationId = (Long) session.getAttribute("applicationId");
+
         Integer roomNumber = getIntValue(request, "roomNumber");
         LocalDate entryDate = getLocalDateValue(request, "entryDate");
         LocalDate leavingDate = getLocalDateValue(request, "leavingDate");
@@ -43,24 +44,18 @@ public class MakeRequestCommand implements Command {
         }
 
         RoomEntity room = roomOptional.get();
-        if (!room.getStatus().equals(FREE)) {
-            errorMessage = "Room is already taken";
-            request.setAttribute("errorMessage", errorMessage);
-            return path;
-        }
 
         ApplicationRepository applicationRepository = AppContext.getInstance().getApplicationRepository();
         Optional<ApplicationEntity> applicationOptional = applicationRepository.getById(applicationId);
 
         if (applicationOptional.isEmpty()) {
-            errorMessage = "There is no application with such id";
-            request.setAttribute("errorMessage", errorMessage);
+            //todo:
             return path;
         }
 
         ApplicationEntity application = applicationOptional.get();
         if (application.getStatus().equals(ApplicationStatus.PROCESSED)) {
-            errorMessage = "Application is already closed";
+            errorMessage = "Application is already processed";
             request.setAttribute("errorMessage", errorMessage);
             return path;
         }
@@ -83,9 +78,8 @@ public class MakeRequestCommand implements Command {
         RequestRepository requestRepository = AppContext.getInstance().getRequestRepository();
         requestRepository.create(requestEntity);
 
-        path = ResourcesManager.getInstance().getValue("path.page.success.request");
         try {
-            response.sendRedirect(path);
+            response.sendRedirect("/controller?command=applicationList");
             path = "redirect";
         } catch (IOException e) {
             path = ResourcesManager.getInstance().getValue("path.page.error");

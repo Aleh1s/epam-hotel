@@ -36,7 +36,7 @@ public final class CommandFactory {
         commandMap.put("book", new BookCommand());
         commandMap.put("bookPage", new BookPageCommand());
         commandMap.put("applicationList", new ApplicationListCommand());
-        commandMap.put("takeApplication", new TakeApplicationCommand());
+        commandMap.put("viewApplicationDetails", new ViewApplicationDetailsCommand());
         commandMap.put("makeRequest", new MakeRequestCommand());
         commandMap.put("profile", new ProfileCommand());
         commandMap.put("confirmBooking", new ConfirmBookingCommand());
@@ -47,5 +47,6 @@ public final class CommandFactory {
         commandMap.put("confirmPayment", new ConfirmPaymentCommand());
         commandMap.put("topUpAccount", new TopUpAccountCommand());
         commandMap.put("logOut", new LogOutCommand());
+        commandMap.put("changeRequestStatus", new ChangeRequestStatusCommand());
     }
 }

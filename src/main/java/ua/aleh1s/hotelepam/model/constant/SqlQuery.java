@@ -19,7 +19,7 @@ public class SqlQuery {
     public static final String APPLICATION_INSERT = "insert into \"application\" (number_of_guests, room_class, date_of_entry, date_of_leaving, status, customer_id) values (?, ?, ?, ?, ?, ?)";
     public static final String APPLICATION_SELECT_BY_ID = "select * from \"application\" where id = ?";
     public static final String APPLICATION_SELECT_PAGE_BY_STATUS = "select * from \"application\" where status = ? offset ? limit ?";
-    public static final String APPLICATION_COUNT_BY_STATUS = "select * from \"application\" where status = ?";
+    public static final String APPLICATION_COUNT_BY_STATUS = "select count(*) from \"application\" where status = ?";
 
 
     // RoomEntity
@@ -44,5 +44,6 @@ public class SqlQuery {
 
     // RequestEntity
     public static final String REQUEST_INSERT = "insert into \"request\" (room_number, customer_id, status, entry_date, leaving_date, total_amount) values (?, ?, ?, ?, ?, ?)";
+    public static final String REQUEST_SELECT_BY_ID = "select * from \"request\" where id = ?";
 
 }

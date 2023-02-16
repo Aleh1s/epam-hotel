@@ -58,7 +58,7 @@
                             </tr>
                         </table>
 
-                        <button type="submit" class="payment-button">Pay</button>
+                        <button type="submit" class="btn-primary">Pay</button>
                     </div>
                 </form>
             </div>

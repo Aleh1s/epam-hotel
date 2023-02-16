@@ -12,6 +12,7 @@ import ua.aleh1s.hotelepam.transaction.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RequestRepositoryImpl implements RequestRepository {
 
@@ -61,5 +62,35 @@ public class RequestRepositoryImpl implements RequestRepository {
             }
         }
         return count;
+    }
+
+    @Override
+    public Optional<RequestEntity> getById(Long requestId) {
+        Optional<RequestEntity> requestEntity = Optional.empty();
+        RequestSimpleDao dao = new RequestSimpleDao();
+        try (Transaction transaction = Transaction.start(dao)) {
+            try {
+                requestEntity = dao.findById(requestId);
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                logger.error(e.getMessage(), e);
+            }
+        }
+        return requestEntity;
+    }
+
+    @Override
+    public void update(RequestEntity requestEntity) {
+        RequestSimpleDao dao = new RequestSimpleDao();
+        try (Transaction transaction = Transaction.start(dao)) {
+            try {
+                dao.update(requestEntity);
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                logger.error(e.getMessage(), e);
+            }
+        }
     }
 }

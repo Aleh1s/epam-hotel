@@ -64,7 +64,7 @@ public class BookCommand implements Command {
                 .totalAmount(totalAmount)
                 .build();
 
-        request.setAttribute("bookInfo", bookInfoDto);
+        request.getSession(false).setAttribute("bookInfo", bookInfoDto);
         return ResourcesManager.getInstance().getValue("path.page.confirm.booking");
     }
 }

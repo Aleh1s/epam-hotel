@@ -22,8 +22,6 @@
                             <th><fmt:message key="room.class"/></th>
                             <th><fmt:message key="entry.date"/></th>
                             <th><fmt:message key="leaving.date"/></th>
-                            <th><fmt:message key="status"/></th>
-                            <th><fmt:message key="customer.id"/></th>
                             <th><fmt:message key="control"/></th>
                         </tr>
                         </thead>
@@ -34,11 +32,13 @@
                                 <td>${application.roomClass}</td>
                                 <td>${application.entryDate}</td>
                                 <td>${application.leavingDate}</td>
-                                <td>${application.status}</td>
-                                <td>${application.customerId}</td>
                                 <td>
-                                    <a href="<c:url value="/controller?command=takeApplication&applicationId=${application.id}"/>"><fmt:message
-                                            key="take"/></a></td>
+                                    <form method="get" action="<c:url value="/controller"/>">
+                                        <input type="hidden" name="command" value="viewApplicationDetails">
+                                        <input type="hidden" name="applicationId" value="${application.id}">
+                                        <button type="submit" class="btn-view">Show details</button>
+                                    </form>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>

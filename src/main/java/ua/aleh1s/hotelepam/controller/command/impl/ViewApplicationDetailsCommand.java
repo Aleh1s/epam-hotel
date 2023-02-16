@@ -6,13 +6,16 @@ import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.ResourcesManager;
 import ua.aleh1s.hotelepam.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
+import ua.aleh1s.hotelepam.controller.mapper.ApplicationDtoMapper;
+import ua.aleh1s.hotelepam.controller.mapper.UserDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
-import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
+import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
+import ua.aleh1s.hotelepam.model.repository.UserRepository;
 
 import java.util.Optional;
 
-public class TakeApplicationCommand implements Command {
+public class ViewApplicationDetailsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -29,12 +32,20 @@ public class TakeApplicationCommand implements Command {
 
         ApplicationEntity application = applicationOptional.get();
 
-        String errorMessage;
-        if (application.getStatus().equals(ApplicationStatus.PROCESSED)) {
-            errorMessage = "Application is already closed";
-            request.setAttribute("errorMessage", errorMessage);
+        UserRepository userRepository = AppContext.getInstance().getUserRepository();
+        Optional<UserEntity> userOptional = userRepository.findById(application.getCustomerId());
+
+        if (userOptional.isEmpty()) {
+            //todo: handle
             return path;
         }
+        UserEntity user = userOptional.get();
+
+        UserDtoMapper userDtoMapper = AppContext.getInstance().getUserDtoMapper();
+        ApplicationDtoMapper applicationDtoMapper = AppContext.getInstance().getApplicationDtoMapper();
+
+        request.setAttribute("application", applicationDtoMapper.apply(application));
+        request.setAttribute("user", userDtoMapper.apply(user));
 
         request.getSession(false).setAttribute("applicationId", applicationId);
         return ResourcesManager.getInstance().getValue("path.page.request");
