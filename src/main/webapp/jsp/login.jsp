@@ -1,6 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags"%>
+
 <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <fmt:setBundle basename="locale"/>
 <html>
@@ -12,11 +14,7 @@
 
 <c:import url="header.jsp"/>
 
-<c:if test="${not empty requestScope.errorMessage}">
-    <div class="error-container">
-        <p>${requestScope.errorMessage}</p>
-    </div>
-</c:if>
+<tags:errorhandler message="${requestScope.errorMessage}"/>
 
 <div class="container">
     <div class="main">

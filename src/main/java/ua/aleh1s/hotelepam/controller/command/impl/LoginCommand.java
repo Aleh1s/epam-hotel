@@ -42,7 +42,7 @@ public class LoginCommand implements Command {
         session.setAttribute("lang", userEntity.getLocale().getLanguage());
         session.setAttribute("role", userEntity.getRole());
 
-        path = ResourcesManager.getInstance().getValue("path.page.room.list");
+        path = "/controller?command=roomList";
         try {
             response.sendRedirect(path);
             path = "redirect";
