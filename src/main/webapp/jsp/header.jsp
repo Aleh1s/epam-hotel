@@ -1,9 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<%@ include file="/WEB-INF/jspf/encoding.jspf" %>
+<%@ include file="/WEB-INF/jspf/taglibs.jspf" %>
 <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <fmt:setBundle basename="locale"/>
+
 <html>
 <head>
     <title>Header</title>

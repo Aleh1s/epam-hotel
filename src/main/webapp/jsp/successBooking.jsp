@@ -11,6 +11,6 @@
     <title>Successful booking</title>
 </head>
 <body>
-Successful booking
+    Successful booking
 </body>
 </html>

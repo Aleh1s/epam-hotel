@@ -1,7 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${requestScope.lang}"/>
+<%@ include file="/WEB-INF/jspf/encoding.jspf" %>
+<%@ include file="/WEB-INF/jspf/taglibs.jspf" %>
+<fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <fmt:setBundle basename="locale"/>
 <html>
 <head>
@@ -105,22 +104,8 @@
                     </tbody>
                 </table>
             </c:if>
-            <div class="pagination">
-                <c:forEach var="i" begin="1" end="${requestScope.pagesNumber}">
-                    <c:choose>
-                        <c:when test="${requestScope.currPage eq i}">
-                            <div class="pagination-elem active">
-                                <a href="#">${i}</a>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <div class="pagination-elem">
-                                <a href="<c:url value="/controller?command=reservationList&pageNumber=${i}&${requestScope.paramString}"/>">${i}</a>
-                            </div>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-            </div>
+            <tags:pagination pagesNumber="${requestScope.pagesNumber}" currPage="${requestScope.currPage}"
+                             command="reservationList"/>
         </div>
     </div>
     <c:import url="footer.jsp"/>

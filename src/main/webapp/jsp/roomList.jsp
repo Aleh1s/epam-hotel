@@ -1,10 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="tags" tagdir="/WEB-INF/tags"%>
+<%@ include file="/WEB-INF/jspf/encoding.jspf" %>
+<%@ include file="/WEB-INF/jspf/taglibs.jspf" %>
 
 <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <fmt:setBundle basename="locale"/>
+
 <html>
 <head>
     <title>Room list</title>
@@ -27,7 +26,8 @@
                             <fmt:message key="by.price"/>
                         </label>
                         <select id="price-sort" name="sort" class="select-primary">
-                            <option value="" disabled ${empty sessionScope.roomListSortParamMap.price ? 'selected' : ''}>
+                            <option value=""
+                                    disabled ${empty sessionScope.roomListSortParamMap.price ? 'selected' : ''}>
                                 <fmt:message key="by.price"/>
                             </option>
                             <option value="price,asc" ${sessionScope.roomListSortParamMap.price eq 'asc' ? 'selected' : ''}>
@@ -43,7 +43,8 @@
                             <fmt:message key="by.persons.number"/>
                         </label>
                         <select id="guests-sort" name="sort" class="select-primary">
-                            <option value="" disabled ${empty sessionScope.roomListSortParamMap.guests ? 'selected' : ''}>
+                            <option value=""
+                                    disabled ${empty sessionScope.roomListSortParamMap.guests ? 'selected' : ''}>
                                 <fmt:message key="by.persons.number"/>
                             </option>
                             <option value="guests,asc" ${sessionScope.roomListSortParamMap.guests eq 'asc' ? 'selected' : ''}>
@@ -59,7 +60,8 @@
                             <fmt:message key="by.class"/>
                         </label>
                         <select id="class-sort" name="sort" class="select-primary">
-                            <option value="" disabled ${empty sessionScope.roomListSortParamMap['class'] ? 'selected' : ''}>
+                            <option value=""
+                                    disabled ${empty sessionScope.roomListSortParamMap['class'] ? 'selected' : ''}>
                                 <fmt:message key="by.class"/>
                             </option>
                             <option value="class,asc" ${sessionScope.roomListSortParamMap['class'] eq 'asc' ? 'selected' : ''}>
@@ -75,7 +77,8 @@
                             <fmt:message key="by.status"/>
                         </label>
                         <select id="status-sort" name="sort" class="select-primary">
-                            <option value="" disabled ${empty sessionScope.roomListSortParamMap.status ? 'selected' : ''}>
+                            <option value=""
+                                    disabled ${empty sessionScope.roomListSortParamMap.status ? 'selected' : ''}>
                                 <fmt:message key="by.status"/>
                             </option>
                             <option value="status,asc" ${sessionScope.roomListSortParamMap.status eq 'asc' ? 'selected' : ''}>
@@ -133,23 +136,8 @@
                     </div>
                 </c:forEach>
             </div>
-            <tags:pagination pagesNumber="${requestScope.pagesNumber}" currPage="${requestScope.currPage}" command="roomList"/>
-<%--            <div class="pagination">--%>
-<%--                <c:forEach var="i" begin="1" end="${requestScope.pagesNumber}">--%>
-<%--                    <c:choose>--%>
-<%--                        <c:when test="${requestScope.currPage eq i}">--%>
-<%--                            <div class="pagination-elem active">--%>
-<%--                                <a href="#">${i}</a>--%>
-<%--                            </div>--%>
-<%--                        </c:when>--%>
-<%--                        <c:otherwise>--%>
-<%--                            <div class="pagination-elem">--%>
-<%--                                <a href="<c:url value="/controller?command=roomList&pageNumber=${i}&${requestScope.paramString}"/>">${i}</a>--%>
-<%--                            </div>--%>
-<%--                        </c:otherwise>--%>
-<%--                    </c:choose>--%>
-<%--                </c:forEach>--%>
-<%--            </div>--%>
+            <tags:pagination pagesNumber="${requestScope.pagesNumber}" currPage="${requestScope.currPage}"
+                             command="roomList"/>
         </div>
     </div>
     <c:import url="footer.jsp"/>

@@ -1,4 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="/WEB-INF/jspf/encoding.jspf" %>
+<%@ include file="/WEB-INF/jspf/taglibs.jspf" %>
+<fmt:setLocale value="${sessionScope.lang}" scope="session"/>
+<fmt:setBundle basename="locale"/>
+
 <html>
 <head>
     <title>Footer</title>

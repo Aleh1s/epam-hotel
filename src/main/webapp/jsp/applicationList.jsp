@@ -1,8 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${requestScope.lang}"/>
+<%@ include file="/WEB-INF/jspf/encoding.jspf" %>
+<%@ include file="/WEB-INF/jspf/taglibs.jspf" %>
+<fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <fmt:setBundle basename="locale"/>
+
 <html>
 <head>
     <title>Application list</title>
@@ -33,27 +33,15 @@
                         <td>${application.leavingDate}</td>
                         <td>${application.status}</td>
                         <td>${application.customerId}</td>
-                        <td><a href="<c:url value="/controller?command=takeApplication&applicationId=${application.id}"/>"><fmt:message key="take"/></a></td>
+                        <td>
+                            <a href="<c:url value="/controller?command=takeApplication&applicationId=${application.id}"/>"><fmt:message
+                                    key="take"/></a></td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
-            <div class="pagination">
-                <c:forEach var="i" begin="1" end="${requestScope.pagesNumber}">
-                    <c:choose>
-                        <c:when test="${requestScope.currPage eq i}">
-                            <div class="pagination-elem active">
-                                <a href="#">${i}</a>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <div class="pagination-elem">
-                                <a href="<c:url value="/controller?command=applicationList&pageNumber=${i}"/>">${i}</a>
-                            </div>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-            </div>
+            <tags:pagination pagesNumber="${requestScope.pagesNumber}" currPage="${requestScope.currPage}"
+                             command="applicationList"/>
         </div>
     </div>
     <c:import url="footer.jsp"/>
