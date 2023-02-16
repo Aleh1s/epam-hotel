@@ -59,13 +59,13 @@ public class MakeRequestCommand implements Command {
         }
 
         ApplicationEntity application = applicationOptional.get();
-        if (application.getStatus().equals(ApplicationStatus.CLOSED)) {
+        if (application.getStatus().equals(ApplicationStatus.PROCESSED)) {
             errorMessage = "Application is already closed";
             request.setAttribute("errorMessage", errorMessage);
             return path;
         }
 
-        application.setStatus(ApplicationStatus.CLOSED);
+        application.setStatus(ApplicationStatus.PROCESSED);
         applicationRepository.update(application);
 
         Long daysBetween = ChronoUnit.DAYS.between(entryDate, leavingDate);

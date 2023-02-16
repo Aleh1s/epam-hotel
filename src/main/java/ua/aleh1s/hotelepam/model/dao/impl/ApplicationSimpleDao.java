@@ -1,9 +1,13 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
+import ua.aleh1s.hotelepam.controller.page.PageRequest;
+import ua.aleh1s.hotelepam.model.constant.SqlQuery;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.dao.SimpleDao;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
+import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
+import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
 import ua.aleh1s.hotelepam.model.mapper.impl.SqlApplicationEntityMapper;
 import ua.aleh1s.hotelepam.model.pagination.Pagination;
@@ -79,15 +83,16 @@ public class ApplicationSimpleDao extends SimpleDao<Long, ApplicationEntity> {
         }
     }
 
-    public List<ApplicationEntity> getAll(Criteria criteria, Pagination pagination) throws DaoException {
+    public List<ApplicationEntity> getAllByStatus(ApplicationStatus status, PageRequest pageRequest) throws DaoException {
         List<ApplicationEntity> applicationList = new ArrayList<>();
-        String query = "select * from \"application\" " + criteria.build() + " " + pagination.build();
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            SqlApplicationEntityMapper mapper = new SqlApplicationEntityMapper();
+        try (PreparedStatement statement = connection.prepareStatement(APPLICATION_SELECT_PAGE_BY_STATUS)) {
+            statement.setInt(1, status.getIndex());
+            statement.setInt(2, pageRequest.getOffset());
+            statement.setInt(3, pageRequest.getLimit());
             try (ResultSet resultSet = statement.executeQuery()) {
+            SqlApplicationEntityMapper mapper = new SqlApplicationEntityMapper();
                 while (resultSet.next()) {
-                    ApplicationEntity map = mapper.map(resultSet);
-                    applicationList.add(map);
+                    applicationList.add(mapper.map(resultSet));
                 }
             }
         } catch (SQLException | SqlEntityMapperException e) {
@@ -96,10 +101,12 @@ public class ApplicationSimpleDao extends SimpleDao<Long, ApplicationEntity> {
         return applicationList;
     }
 
-    public Integer count(Criteria criteria) throws DaoException {
-        Integer count = 0;
-        String query = "select count(*) from \"application\" " + criteria.build();
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+
+
+    public Integer countByStatus(ApplicationStatus status) throws DaoException {
+        int count = 0;
+        try (PreparedStatement statement = connection.prepareStatement(APPLICATION_COUNT_BY_STATUS)) {
+            statement.setInt(1, status.getIndex());
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     count = resultSet.getInt(1);

@@ -1152,3 +1152,32 @@
     transition: all 0.3s ease 0s;
     cursor: pointer;
 }
+
+.not-found-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.not-found-container img {
+    width: auto;
+    height: 250px;
+}
+
+.not-found-container h1 {
+    color: #1d3c62;
+    letter-spacing: 1px;
+    font-weight: normal;
+    font-size: 26px;
+    margin-bottom: 7px;
+}
+
+.not-found-container p {
+    color: #1d3c62;
+    letter-spacing: 1px;
+    font-weight: lighter;
+    font-size: 14px;
+}

@@ -30,7 +30,7 @@ public class TakeApplicationCommand implements Command {
         ApplicationEntity application = applicationOptional.get();
 
         String errorMessage;
-        if (application.getStatus().equals(ApplicationStatus.CLOSED)) {
+        if (application.getStatus().equals(ApplicationStatus.PROCESSED)) {
             errorMessage = "Application is already closed";
             request.setAttribute("errorMessage", errorMessage);
             return path;

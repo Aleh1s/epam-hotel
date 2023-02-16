@@ -2,9 +2,10 @@ package ua.aleh1s.hotelepam.model.repository.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.aleh1s.hotelepam.controller.page.Page;
+import ua.aleh1s.hotelepam.controller.page.PageRequest;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
-import ua.aleh1s.hotelepam.model.pagination.Pagination;
-import ua.aleh1s.hotelepam.model.pagination.impl.ApplicationListPagination;
+import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
 import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.dao.impl.ApplicationSimpleDao;
@@ -34,36 +35,23 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
     }
 
     @Override
-    public List<ApplicationEntity> getAll(Criteria criteria, Pagination pagination) {
+    public Page<ApplicationEntity> getAllByStatus(ApplicationStatus status, PageRequest pageRequest) {
+        Integer count = 0;
         List<ApplicationEntity> applicationList = new ArrayList<>();
         ApplicationSimpleDao dao = new ApplicationSimpleDao();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
-                applicationList = dao.getAll(criteria, pagination);
+                applicationList = dao.getAllByStatus(status, pageRequest);
+                count = dao.countByStatus(status);
                 transaction.commit();
             } catch (DaoException e) {
                 transaction.rollback();
                 logger.error(e.getMessage(), e);
             }
         }
-        return applicationList;
+        return Page.of(applicationList, count);
     }
 
-    @Override
-    public Integer count(Criteria criteria) {
-        Integer count = 0;
-        ApplicationSimpleDao dao = new ApplicationSimpleDao();
-        try (Transaction transaction = Transaction.start(dao)) {
-            try {
-                count = dao.count(criteria);
-                transaction.commit();
-            } catch (DaoException e) {
-                transaction.rollback();
-                logger.error(e.getMessage(), e);
-            }
-        }
-        return count;
-    }
 
     @Override
     public Optional<ApplicationEntity> getById(Long id) {

@@ -3,7 +3,7 @@ package ua.aleh1s.hotelepam.model.entity;
 public enum ApplicationStatus {
 
     NEW(1),
-    CLOSED(2);
+    PROCESSED(2);
 
     private final int index;
 
@@ -14,7 +14,7 @@ public enum ApplicationStatus {
     public static ApplicationStatus atIndex(int index) {
         return switch (index) {
             case 1 -> NEW;
-            case 2 -> CLOSED;
+            case 2 -> PROCESSED;
             default -> throw new IllegalStateException("Unexpected value: " + index);
         };
     }

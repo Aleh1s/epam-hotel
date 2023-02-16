@@ -49,62 +49,67 @@
                 <p>Reservations</p>
                 <div></div>
             </div>
-            <c:if test="${not empty requestScope.reservationPage.result}">
-                <table class="styled-table">
-                    <thead>
-                    <tr>
-                        <th>Entry date</th>
-                        <th>Leaving date</th>
-                        <th>Status</th>
-                        <th>Total amount</th>
-                        <th>Control</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="reservation" items="${requestScope.reservationPage.result}">
+            <c:choose>
+                <c:when test="${not empty requestScope.reservationPage.result}">
+                    <table class="styled-table">
+                        <thead>
                         <tr>
-                            <td>${reservation.entryDate}</td>
-                            <td>${reservation.leavingDate}</td>
-                            <td>${reservation.status}</td>
-                            <td>${reservation.totalAmount}$</td>
-                            <td class="control">
-                                <c:choose>
-                                    <c:when test="${reservation.status.index eq 1}">
-                                        <form action="<c:url value="/controller"/>" method="post">
-                                            <input type="hidden" name="command" value="changeReservationStatus">
-                                            <input type="hidden" name="reservationStatus" value="2">
-                                            <input type="hidden" name="reservationId" value="${reservation.id}">
-                                            <button type="submit" class="btn-accept">Confirm</button>
-                                        </form>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <button type="submit" class="btn-accept disabled">Confirm</button>
-                                    </c:otherwise>
-                                </c:choose>
-                                <c:choose>
-                                    <c:when test="${reservation.status.index eq 1}">
-                                        <form action="<c:url value="/controller"/>" method="post">
-                                            <input type="hidden" name="command" value="changeReservationStatus">
-                                            <input type="hidden" name="reservationStatus" value="3">
-                                            <input type="hidden" name="reservationId" value="${reservation.id}">
-                                            <button type="submit" class="btn-trash">Cancel</button>
-                                        </form>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <button type="submit" class="btn-trash disabled" disabled>Cancel</button>
-                                    </c:otherwise>
-                                </c:choose>
-                                <form action="<c:url value="/controller"/>" method="get">
-                                    <input type="hidden" name="command" value="viewRoom">
-                                    <input type="hidden" name="roomNumber" value="${reservation.roomNumber}">
-                                    <button type="submit" class="btn-view">View room</button>
-                                </form>
-                            </td>
+                            <th>Entry date</th>
+                            <th>Leaving date</th>
+                            <th>Status</th>
+                            <th>Total amount</th>
+                            <th>Control</th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-            </c:if>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="reservation" items="${requestScope.reservationPage.result}">
+                            <tr>
+                                <td>${reservation.entryDate}</td>
+                                <td>${reservation.leavingDate}</td>
+                                <td>${reservation.status}</td>
+                                <td>${reservation.totalAmount}$</td>
+                                <td class="control">
+                                    <c:choose>
+                                        <c:when test="${reservation.status.index eq 1}">
+                                            <form action="<c:url value="/controller"/>" method="post">
+                                                <input type="hidden" name="command" value="changeReservationStatus">
+                                                <input type="hidden" name="reservationStatus" value="2">
+                                                <input type="hidden" name="reservationId" value="${reservation.id}">
+                                                <button type="submit" class="btn-accept">Confirm</button>
+                                            </form>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button type="submit" class="btn-accept disabled">Confirm</button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:choose>
+                                        <c:when test="${reservation.status.index eq 1}">
+                                            <form action="<c:url value="/controller"/>" method="post">
+                                                <input type="hidden" name="command" value="changeReservationStatus">
+                                                <input type="hidden" name="reservationStatus" value="3">
+                                                <input type="hidden" name="reservationId" value="${reservation.id}">
+                                                <button type="submit" class="btn-trash">Cancel</button>
+                                            </form>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button type="submit" class="btn-trash disabled" disabled>Cancel</button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <form action="<c:url value="/controller"/>" method="get">
+                                        <input type="hidden" name="command" value="viewRoom">
+                                        <input type="hidden" name="roomNumber" value="${reservation.roomNumber}">
+                                        <button type="submit" class="btn-view">View room</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:when>
+                <c:otherwise>
+                    <tags:notfount/>
+                </c:otherwise>
+            </c:choose>
             <tags:pagination pagesNumber="${requestScope.pagesNumber}" currPage="${requestScope.currPage}"
                              command="reservationList"/>
         </div>
