@@ -3,8 +3,8 @@ package ua.aleh1s.hotelepam.controller.command.impl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ua.aleh1s.hotelepam.AppContext;
-import ua.aleh1s.hotelepam.ResourcesManager;
+import ua.aleh1s.hotelepam.appcontext.AppContext;
+import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.entity.*;
 import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
@@ -17,9 +17,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.Utils.getIntValue;
-import static ua.aleh1s.hotelepam.Utils.getLocalDateValue;
-import static ua.aleh1s.hotelepam.model.entity.RoomStatus.FREE;
+import static ua.aleh1s.hotelepam.appcontext.Utils.getIntValue;
+import static ua.aleh1s.hotelepam.appcontext.Utils.getLocalDateValue;
 
 public class MakeRequestCommand implements Command {
 

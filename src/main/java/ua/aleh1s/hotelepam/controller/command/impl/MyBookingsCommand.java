@@ -3,8 +3,8 @@ package ua.aleh1s.hotelepam.controller.command.impl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ua.aleh1s.hotelepam.AppContext;
-import ua.aleh1s.hotelepam.ResourcesManager;
+import ua.aleh1s.hotelepam.appcontext.AppContext;
+import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.ReservationDto;
 import ua.aleh1s.hotelepam.controller.dtomapper.ReservationDtoMapper;
@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.*;
-import static ua.aleh1s.hotelepam.Utils.getIntValueOrDefault;
-import static ua.aleh1s.hotelepam.Utils.getNumberOfPages;
+import static ua.aleh1s.hotelepam.appcontext.Utils.getIntValueOrDefault;
+import static ua.aleh1s.hotelepam.appcontext.Utils.getNumberOfPages;
 import static ua.aleh1s.hotelepam.model.entity.ReservationStatus.REMOVED;
 
 public class MyBookingsCommand implements Command {

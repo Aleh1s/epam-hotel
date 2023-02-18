@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.aleh1s.hotelepam.model.pagination.Page;
 import ua.aleh1s.hotelepam.model.pagination.PageRequest;
-import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
+import ua.aleh1s.hotelepam.model.dao.DaoException;
 import ua.aleh1s.hotelepam.model.dao.impl.ReservationDAO;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;

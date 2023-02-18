@@ -1,7 +1,5 @@
 package ua.aleh1s.hotelepam.model.dao;
 
-import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

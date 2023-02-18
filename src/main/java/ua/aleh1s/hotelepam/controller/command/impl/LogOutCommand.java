@@ -3,7 +3,7 @@ package ua.aleh1s.hotelepam.controller.command.impl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ua.aleh1s.hotelepam.ResourcesManager;
+import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 
 import java.io.IOException;

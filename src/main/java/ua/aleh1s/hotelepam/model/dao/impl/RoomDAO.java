@@ -1,8 +1,8 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
-import ua.aleh1s.hotelepam.AppContext;
+import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.model.dao.DAO;
-import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
+import ua.aleh1s.hotelepam.model.dao.DaoException;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.sqlmapper.SqlRoomEntityMapper;
 
@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlField.RoomTable.*;
-import static ua.aleh1s.hotelepam.model.constant.SqlQuery.RoomTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlField.RoomTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlQuery.RoomTable.*;
 
 public class RoomDAO extends DAO {
 

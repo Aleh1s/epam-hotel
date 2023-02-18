@@ -3,8 +3,8 @@ package ua.aleh1s.hotelepam.controller.command.impl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ua.aleh1s.hotelepam.AppContext;
-import ua.aleh1s.hotelepam.ResourcesManager;
+import ua.aleh1s.hotelepam.appcontext.AppContext;
+import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.RequestDto;
 import ua.aleh1s.hotelepam.controller.dto.UserDto;
@@ -22,8 +22,8 @@ import ua.aleh1s.hotelepam.model.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.Utils.getIntContextParamValue;
-import static ua.aleh1s.hotelepam.Utils.getIntValueOrDefault;
+import static ua.aleh1s.hotelepam.appcontext.Utils.getIntContextParamValue;
+import static ua.aleh1s.hotelepam.appcontext.Utils.getIntValueOrDefault;
 
 public class ProfileCommand implements Command {
     @Override

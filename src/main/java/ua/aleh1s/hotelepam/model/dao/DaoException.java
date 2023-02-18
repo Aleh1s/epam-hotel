@@ -1,4 +1,4 @@
-package ua.aleh1s.hotelepam.model.dao.exception;
+package ua.aleh1s.hotelepam.model.dao;
 
 public class DaoException extends Exception {
     public DaoException() {

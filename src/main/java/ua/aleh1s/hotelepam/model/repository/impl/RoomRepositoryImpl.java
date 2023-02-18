@@ -2,7 +2,7 @@ package ua.aleh1s.hotelepam.model.repository.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
+import ua.aleh1s.hotelepam.model.dao.DaoException;
 import ua.aleh1s.hotelepam.model.dao.impl.RoomDAO;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;

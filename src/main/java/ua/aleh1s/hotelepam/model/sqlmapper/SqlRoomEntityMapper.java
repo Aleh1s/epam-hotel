@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlField.RoomTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlField.RoomTable.*;
 
 public class SqlRoomEntityMapper {
     public RoomEntity map(ResultSet source) throws SQLException {

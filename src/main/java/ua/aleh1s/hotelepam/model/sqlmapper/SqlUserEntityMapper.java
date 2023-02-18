@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Locale;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlField.UserTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlField.UserTable.*;
 
 public class SqlUserEntityMapper {
 

@@ -2,8 +2,8 @@ package ua.aleh1s.hotelepam.controller.command.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ua.aleh1s.hotelepam.AppContext;
-import ua.aleh1s.hotelepam.ResourcesManager;
+import ua.aleh1s.hotelepam.appcontext.AppContext;
+import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.BookInfoDto;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
@@ -15,8 +15,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 import static java.lang.Math.*;
-import static ua.aleh1s.hotelepam.Utils.getIntValue;
-import static ua.aleh1s.hotelepam.Utils.getLocalDateValue;
+import static ua.aleh1s.hotelepam.appcontext.Utils.getIntValue;
+import static ua.aleh1s.hotelepam.appcontext.Utils.getLocalDateValue;
 
 public class BookCommand implements Command {
 

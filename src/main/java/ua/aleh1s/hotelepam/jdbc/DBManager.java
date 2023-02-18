@@ -4,7 +4,6 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.aleh1s.hotelepam.jdbc.exception.JdbcException;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -14,7 +13,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Properties;
 
-import static ua.aleh1s.hotelepam.Constant.DATABASE_PROPERTIES;
+import static ua.aleh1s.hotelepam.constant.Application.DATABASE_PROPERTIES;
 
 public class DBManager {
     private static final Logger LOGGER = LogManager.getLogger(DBManager.class);

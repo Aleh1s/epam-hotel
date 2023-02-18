@@ -7,7 +7,7 @@ import ua.aleh1s.hotelepam.model.entity.RoomClass;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlField.ApplicationTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlField.ApplicationTable.*;
 
 public class SqlApplicationEntityMapper {
     public ApplicationEntity map(ResultSet source) throws SQLException {

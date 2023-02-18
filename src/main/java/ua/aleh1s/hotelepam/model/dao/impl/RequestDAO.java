@@ -1,9 +1,9 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
-import ua.aleh1s.hotelepam.AppContext;
+import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.dao.DAO;
-import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
+import ua.aleh1s.hotelepam.model.dao.DaoException;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.pagination.Pagination;
 import ua.aleh1s.hotelepam.model.sqlmapper.SqlRequestEntityMapper;
@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlField.RequestTable.*;
-import static ua.aleh1s.hotelepam.model.constant.SqlQuery.RequestTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlField.RequestTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlQuery.RequestTable.*;
 
 public class RequestDAO extends DAO {
 

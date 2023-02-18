@@ -1,10 +1,10 @@
-package ua.aleh1s.hotelepam;
+package ua.aleh1s.hotelepam.appcontext;
 
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
 
-import static ua.aleh1s.hotelepam.Constant.RESOURCES_PROPERTIES;
+import static ua.aleh1s.hotelepam.constant.Application.RESOURCES_PROPERTIES;
 
 public class ResourcesManager {
     private static ResourcesManager INSTANCE;

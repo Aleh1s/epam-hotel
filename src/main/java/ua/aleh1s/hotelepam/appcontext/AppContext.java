@@ -1,4 +1,4 @@
-package ua.aleh1s.hotelepam;
+package ua.aleh1s.hotelepam.appcontext;
 
 import ua.aleh1s.hotelepam.controller.dtomapper.*;
 import ua.aleh1s.hotelepam.model.repository.*;

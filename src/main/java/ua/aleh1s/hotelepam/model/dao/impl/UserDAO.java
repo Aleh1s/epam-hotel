@@ -1,8 +1,8 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
-import ua.aleh1s.hotelepam.AppContext;
+import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.model.dao.DAO;
-import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
+import ua.aleh1s.hotelepam.model.dao.DaoException;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.model.sqlmapper.SqlUserEntityMapper;
 
@@ -11,8 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlField.UserTable.*;
-import static ua.aleh1s.hotelepam.model.constant.SqlQuery.UserTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlField.UserTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlQuery.UserTable.*;
 
 public class UserDAO extends DAO {
 

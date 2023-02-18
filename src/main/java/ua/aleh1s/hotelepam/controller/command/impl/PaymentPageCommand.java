@@ -3,8 +3,8 @@ package ua.aleh1s.hotelepam.controller.command.impl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ua.aleh1s.hotelepam.AppContext;
-import ua.aleh1s.hotelepam.ResourcesManager;
+import ua.aleh1s.hotelepam.appcontext.AppContext;
+import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.ReservationDto;
 import ua.aleh1s.hotelepam.controller.dto.RoomDto;
@@ -18,7 +18,7 @@ import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.Utils.getLongValue;
+import static ua.aleh1s.hotelepam.appcontext.Utils.getLongValue;
 
 public class PaymentPageCommand implements Command {
 

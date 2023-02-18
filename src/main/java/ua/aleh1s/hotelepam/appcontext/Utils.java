@@ -1,4 +1,4 @@
-package ua.aleh1s.hotelepam;
+package ua.aleh1s.hotelepam.appcontext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -12,10 +12,6 @@ import java.util.Optional;
 import static java.util.Objects.*;
 
 public class Utils {
-
-    public static String getValueOrDefault(HttpServletRequest request, String name, String def) {
-        return Optional.ofNullable(request.getParameter(name)).orElse(def);
-    }
 
     public static Integer getIntValue(HttpServletRequest request, String name) {
         return Integer.parseInt(request.getParameter(name));

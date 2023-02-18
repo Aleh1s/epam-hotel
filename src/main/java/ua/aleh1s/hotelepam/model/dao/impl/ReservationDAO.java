@@ -1,8 +1,8 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
-import ua.aleh1s.hotelepam.AppContext;
+import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.model.dao.DAO;
-import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
+import ua.aleh1s.hotelepam.model.dao.DaoException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.model.pagination.PageRequest;
@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlField.ReservationTable.*;
-import static ua.aleh1s.hotelepam.model.constant.SqlQuery.ReservationTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlField.ReservationTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlQuery.ReservationTable.*;
 
 public class ReservationDAO extends DAO {
 

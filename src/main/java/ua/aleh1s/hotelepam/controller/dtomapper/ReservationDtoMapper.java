@@ -6,7 +6,7 @@ import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import java.sql.Date;
 import java.util.function.Function;
 
-import static ua.aleh1s.hotelepam.Utils.toDate;
+import static ua.aleh1s.hotelepam.appcontext.Utils.toDate;
 
 public class ReservationDtoMapper implements Function<ReservationEntity, ReservationDto> {
 

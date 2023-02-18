@@ -3,8 +3,8 @@ package ua.aleh1s.hotelepam.controller.command.impl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ua.aleh1s.hotelepam.AppContext;
-import ua.aleh1s.hotelepam.ResourcesManager;
+import ua.aleh1s.hotelepam.appcontext.AppContext;
+import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.RoomCardDto;
 import ua.aleh1s.hotelepam.controller.dtomapper.RoomCardDtoMapper;
@@ -18,8 +18,8 @@ import java.util.*;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.toMap;
-import static ua.aleh1s.hotelepam.Utils.getIntValueOrDefault;
-import static ua.aleh1s.hotelepam.Utils.getNumberOfPages;
+import static ua.aleh1s.hotelepam.appcontext.Utils.getIntValueOrDefault;
+import static ua.aleh1s.hotelepam.appcontext.Utils.getNumberOfPages;
 
 public class RoomListCommand implements Command {
 

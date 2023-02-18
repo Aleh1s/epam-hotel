@@ -1,4 +1,4 @@
-package ua.aleh1s.hotelepam.jdbc.exception;
+package ua.aleh1s.hotelepam.jdbc;
 
 public class JdbcException extends Exception {
 

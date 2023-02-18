@@ -1,7 +1,7 @@
 package ua.aleh1s.hotelepam.transaction;
 
 import ua.aleh1s.hotelepam.jdbc.DBManager;
-import ua.aleh1s.hotelepam.jdbc.exception.JdbcException;
+import ua.aleh1s.hotelepam.jdbc.JdbcException;
 import ua.aleh1s.hotelepam.model.dao.DAO;
 
 import java.sql.Connection;
