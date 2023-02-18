@@ -1,11 +1,9 @@
 package ua.aleh1s.hotelepam.model.repository;
 
-import ua.aleh1s.hotelepam.controller.page.Page;
-import ua.aleh1s.hotelepam.controller.page.PageRequest;
-import ua.aleh1s.hotelepam.model.criteria.Criteria;
+import ua.aleh1s.hotelepam.model.pagination.Page;
+import ua.aleh1s.hotelepam.model.pagination.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
-import ua.aleh1s.hotelepam.model.pagination.Pagination;
 
 import java.util.List;
 import java.util.Optional;

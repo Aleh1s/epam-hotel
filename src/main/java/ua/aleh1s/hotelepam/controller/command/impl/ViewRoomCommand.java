@@ -2,13 +2,11 @@ package ua.aleh1s.hotelepam.controller.command.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.ResourcesManager;
-import ua.aleh1s.hotelepam.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.RoomDto;
-import ua.aleh1s.hotelepam.controller.mapper.RoomDtoMapper;
+import ua.aleh1s.hotelepam.controller.dtomapper.RoomDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 

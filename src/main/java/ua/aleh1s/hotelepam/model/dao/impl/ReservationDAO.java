@@ -1,13 +1,12 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
-import ua.aleh1s.hotelepam.controller.page.PageRequest;
-import ua.aleh1s.hotelepam.model.criteria.Criteria;
+import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.model.dao.DAO;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
-import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
-import ua.aleh1s.hotelepam.model.mapper.impl.SqlReservationEntityMapper;
+import ua.aleh1s.hotelepam.model.pagination.PageRequest;
+import ua.aleh1s.hotelepam.model.sqlmapper.SqlReservationEntityMapper;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,17 +18,20 @@ import static ua.aleh1s.hotelepam.model.constant.SqlQuery.*;
 
 public class ReservationDAO extends DAO {
 
+
+    private final SqlReservationEntityMapper mapper =
+            AppContext.getInstance().getSqlReservationEntityMapper();
+
     public Optional<ReservationEntity> findById(Long id) throws DaoException {
         ReservationEntity reservationEntity = null;
         try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_BY_ID)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    SqlReservationEntityMapper mapper = new SqlReservationEntityMapper();
                     reservationEntity = mapper.map(resultSet);
                 }
             }
-        } catch (SQLException | SqlEntityMapperException e) {
+        } catch (SQLException e) {
             throw new DaoException(e);
         }
         return Optional.ofNullable(reservationEntity);
@@ -83,12 +85,11 @@ public class ReservationDAO extends DAO {
             statement.setInt(2, pageRequest.getOffset());
             statement.setInt(3, pageRequest.getLimit());
             try (ResultSet resultSet = statement.executeQuery()) {
-                SqlReservationEntityMapper mapper = new SqlReservationEntityMapper();
                 while (resultSet.next()) {
                     reservationEntities.add(mapper.map(resultSet));
                 }
             }
-        } catch (SQLException | SqlEntityMapperException e) {
+        } catch (SQLException e) {
             throw new DaoException(e);
         }
         return reservationEntities;
@@ -99,12 +100,11 @@ public class ReservationDAO extends DAO {
         try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_ALL_BY_CUSTOMER_ID)) {
             statement.setLong(1, userId);
             try (ResultSet resultSet = statement.executeQuery()) {
-                SqlReservationEntityMapper mapper = new SqlReservationEntityMapper();
                 while (resultSet.next()) {
                     reservationEntities.add(mapper.map(resultSet));
                 }
             }
-        } catch (SQLException | SqlEntityMapperException e) {
+        } catch (SQLException e) {
             throw new DaoException(e);
         }
         return reservationEntities;
@@ -131,12 +131,11 @@ public class ReservationDAO extends DAO {
             statement.setInt(1, pageRequest.getOffset());
             statement.setInt(2, pageRequest.getLimit());
             try (ResultSet resultSet = statement.executeQuery()) {
-                SqlReservationEntityMapper mapper = new SqlReservationEntityMapper();
                 while (resultSet.next()) {
                     result.add(mapper.map(resultSet));
                 }
             }
-        } catch (SQLException | SqlEntityMapperException e) {
+        } catch (SQLException e) {
             throw new DaoException(e);
         }
         return result;

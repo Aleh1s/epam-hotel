@@ -5,18 +5,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import ua.aleh1s.hotelepam.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 
-import java.io.IOException;
-
-public class RedirectToErrorPage implements Command {
+public class UnknownCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String path = ResourcesManager.getInstance().getValue("path.page.error");
-        try {
-            response.sendRedirect(path);
-            path = "redirect";
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return path;
+        response.setStatus(404);
+        return ResourcesManager.getInstance().getValue("path.page.error");
     }
 }

@@ -11,22 +11,24 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.command.CommandFactory;
-import ua.aleh1s.hotelepam.controller.command.impl.RedirectToErrorPage;
+import ua.aleh1s.hotelepam.controller.command.impl.UnknownCommand;
 import ua.aleh1s.hotelepam.jdbc.DBManager;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.function.Function;
 
 @WebServlet(name = "Controller", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
 
     private static final Logger log = LogManager.getLogger(Controller.class);
-
+    private CommandFactory commandFactory;
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         log.trace("Controller initialization");
         DBManager.getInstance();
+        commandFactory = CommandFactory.getInstance();
         log.trace("Controller initialized");
     }
 
@@ -44,11 +46,9 @@ public class Controller extends HttpServlet {
 
     private void process(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CommandFactory commandFactory = CommandFactory.getInstance();
-        String commandStr = Optional.ofNullable(request.getParameter("command"))
-                .orElse("redirectToErrorPage");
+        String commandStr = request.getParameter("command");
         Command command = commandFactory.getCommand(commandStr)
-                .orElse(new RedirectToErrorPage());
+                .orElse(new UnknownCommand());
         String path = command.execute(request, response);
         if (!path.equals("redirect")) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(path);

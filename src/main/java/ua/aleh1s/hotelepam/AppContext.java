@@ -1,25 +1,31 @@
 package ua.aleh1s.hotelepam;
 
-import ua.aleh1s.hotelepam.controller.mapper.*;
+import ua.aleh1s.hotelepam.controller.dtomapper.*;
 import ua.aleh1s.hotelepam.model.repository.*;
 import ua.aleh1s.hotelepam.model.repository.impl.*;
+import ua.aleh1s.hotelepam.model.sqlmapper.*;
 
 import java.util.Objects;
 
 public class AppContext {
 
     private static AppContext INSTANCE;
-    private final UserRepository userRepository;
     private final RoomRepository roomRepository;
+    private final UserRepository userRepository;
     private final ApplicationRepository applicationRepository;
     private final ReservationRepository reservationRepository;
     private final RequestRepository requestRepository;
-    private final RoomCardDtoMapper roomCardDtoMapper;
     private final RoomDtoMapper roomDtoMapper;
+    private final RoomCardDtoMapper roomCardDtoMapper;
     private final ApplicationDtoMapper applicationDtoMapper;
     private final RequestDtoMapper requestDtoMapper;
     private final UserDtoMapper userDtoMapper;
     private final ReservationDtoMapper reservationDtoMapper;
+    private final SqlApplicationEntityMapper sqlApplicationEntityMapper;
+    private final SqlRequestEntityMapper sqlRequestEntityMapper;
+    private final SqlReservationEntityMapper sqlReservationEntityMapper;
+    private final SqlRoomEntityMapper sqlRoomEntityMapper;
+    private final SqlUserEntityMapper sqlUserEntityMapper;
 
     {
         this.userRepository = new UserRepositoryImpl();
@@ -33,6 +39,11 @@ public class AppContext {
         this.requestDtoMapper = new RequestDtoMapper();
         this.userDtoMapper = new UserDtoMapper();
         this.reservationDtoMapper = new ReservationDtoMapper();
+        this.sqlApplicationEntityMapper = new SqlApplicationEntityMapper();
+        this.sqlRequestEntityMapper = new SqlRequestEntityMapper();
+        this.sqlReservationEntityMapper = new SqlReservationEntityMapper();
+        this.sqlRoomEntityMapper = new SqlRoomEntityMapper();
+        this.sqlUserEntityMapper = new SqlUserEntityMapper();
     }
 
     public static synchronized AppContext getInstance() {
@@ -44,20 +55,34 @@ public class AppContext {
     public UserRepository getUserRepository() {
         return userRepository;
     }
+
     public ApplicationRepository getApplicationRepository() {
         return applicationRepository;
     }
-    public RoomRepository getRoomRepository() {return roomRepository;}
-    public RoomCardDtoMapper getRoomCardDtoMapper() {return roomCardDtoMapper;}
+
+    public RoomRepository getRoomRepository() {
+        return roomRepository;
+    }
+
+    public RoomCardDtoMapper getRoomCardDtoMapper() {
+        return roomCardDtoMapper;
+    }
 
     public RoomDtoMapper getRoomDtoMapper() {
         return roomDtoMapper;
     }
 
-    public ReservationRepository getReservationRepository() {return reservationRepository;}
-    public ApplicationDtoMapper getApplicationDtoMapper() {return applicationDtoMapper;}
+    public ReservationRepository getReservationRepository() {
+        return reservationRepository;
+    }
 
-    public RequestRepository getRequestRepository() {return requestRepository;}
+    public ApplicationDtoMapper getApplicationDtoMapper() {
+        return applicationDtoMapper;
+    }
+
+    public RequestRepository getRequestRepository() {
+        return requestRepository;
+    }
 
     public RequestDtoMapper getRequestDtoMapper() {
         return requestDtoMapper;
@@ -69,5 +94,25 @@ public class AppContext {
 
     public ReservationDtoMapper getReservationDtoMapper() {
         return reservationDtoMapper;
+    }
+
+    public SqlApplicationEntityMapper getSqlApplicationEntityMapper() {
+        return sqlApplicationEntityMapper;
+    }
+
+    public SqlRequestEntityMapper getSqlRequestEntityMapper() {
+        return sqlRequestEntityMapper;
+    }
+
+    public SqlReservationEntityMapper getSqlReservationEntityMapper() {
+        return sqlReservationEntityMapper;
+    }
+
+    public SqlRoomEntityMapper getSqlRoomEntityMapper() {
+        return sqlRoomEntityMapper;
+    }
+
+    public SqlUserEntityMapper getSqlUserEntityMapper() {
+        return sqlUserEntityMapper;
     }
 }

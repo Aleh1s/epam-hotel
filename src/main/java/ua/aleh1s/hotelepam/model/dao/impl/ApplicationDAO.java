@@ -1,12 +1,12 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
-import ua.aleh1s.hotelepam.controller.page.PageRequest;
+import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.model.dao.DAO;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
-import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
-import ua.aleh1s.hotelepam.model.mapper.impl.SqlApplicationEntityMapper;
+import ua.aleh1s.hotelepam.model.pagination.PageRequest;
+import ua.aleh1s.hotelepam.model.sqlmapper.SqlApplicationEntityMapper;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -21,17 +21,19 @@ import static ua.aleh1s.hotelepam.model.constant.SqlQuery.*;
 
 public class ApplicationDAO extends DAO {
 
+    private final SqlApplicationEntityMapper mapper =
+            AppContext.getInstance().getSqlApplicationEntityMapper();
+
     public Optional<ApplicationEntity> findById(Long id) throws DaoException {
         ApplicationEntity application = null;
         try (PreparedStatement statement = connection.prepareStatement(APPLICATION_SELECT_BY_ID)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    SqlApplicationEntityMapper mapper = new SqlApplicationEntityMapper();
                     application = mapper.map(resultSet);
                 }
             }
-        } catch (SQLException | SqlEntityMapperException e) {
+        } catch (SQLException e) {
             throw new DaoException(e);
         }
         return Optional.ofNullable(application);
@@ -79,12 +81,11 @@ public class ApplicationDAO extends DAO {
             statement.setInt(2, pageRequest.getOffset());
             statement.setInt(3, pageRequest.getLimit());
             try (ResultSet resultSet = statement.executeQuery()) {
-            SqlApplicationEntityMapper mapper = new SqlApplicationEntityMapper();
                 while (resultSet.next()) {
                     applicationList.add(mapper.map(resultSet));
                 }
             }
-        } catch (SQLException | SqlEntityMapperException e) {
+        } catch (SQLException e) {
             throw new DaoException(e);
         }
         return applicationList;

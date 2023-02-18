@@ -1,9 +1,7 @@
-package ua.aleh1s.hotelepam.model.mapper.impl;
+package ua.aleh1s.hotelepam.model.sqlmapper;
 
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
-import ua.aleh1s.hotelepam.model.mapper.SqlEntityMapper;
-import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,17 +9,8 @@ import java.sql.Timestamp;
 
 import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
 
-public class SqlReservationEntityMapper implements SqlEntityMapper<ReservationEntity> {
-    @Override
-    public ReservationEntity map(ResultSet source) throws SqlEntityMapperException {
-        try {
-            return buildEntity(source);
-        } catch (SQLException e) {
-            throw new SqlEntityMapperException(e);
-        }
-    }
-
-    private ReservationEntity buildEntity(ResultSet source) throws SQLException {
+public class SqlReservationEntityMapper {
+    public ReservationEntity map(ResultSet source) throws SQLException {
         Timestamp payedAt = source.getTimestamp(RESERVATION_PAYED_AT);
         return ReservationEntity.Builder.newBuilder()
                 .id(source.getLong(RESERVATION_ID))

@@ -30,7 +30,7 @@ public final class CommandFactory {
         commandMap.put("signup", new SignupCommand());
         commandMap.put("i18n", new I18NCommand());
         commandMap.put("application", new ApplicationCommand());
-        commandMap.put("redirectToErrorPage", new RedirectToErrorPage());
+        commandMap.put("redirectToErrorPage", new UnknownCommand());
         commandMap.put("roomList", new RoomListCommand());
         commandMap.put("viewRoom", new ViewRoomCommand());
         commandMap.put("book", new BookCommand());

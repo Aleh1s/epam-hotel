@@ -11,12 +11,12 @@ import static java.util.Objects.nonNull;
 public abstract class DAO {
     protected Connection connection;
 
-    public void close(Statement statement) throws DaoException {
+    public void close(Statement statement) {
         if (nonNull(statement)) {
             try {
                 statement.close();
             } catch (SQLException e) {
-                throw new DaoException(e);
+                e.printStackTrace();
             }
         }
     }

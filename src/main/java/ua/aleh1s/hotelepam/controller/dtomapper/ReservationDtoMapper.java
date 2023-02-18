@@ -1,6 +1,5 @@
-package ua.aleh1s.hotelepam.controller.mapper;
+package ua.aleh1s.hotelepam.controller.dtomapper;
 
-import ua.aleh1s.hotelepam.Utils;
 import ua.aleh1s.hotelepam.controller.dto.ReservationDto;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 

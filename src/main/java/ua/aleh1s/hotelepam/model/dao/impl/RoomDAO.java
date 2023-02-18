@@ -1,10 +1,10 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
+import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.model.dao.DAO;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
-import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
-import ua.aleh1s.hotelepam.model.mapper.impl.SqlRoomEntityMapper;
+import ua.aleh1s.hotelepam.model.sqlmapper.SqlRoomEntityMapper;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -19,17 +19,20 @@ import static ua.aleh1s.hotelepam.model.constant.SqlQuery.ROOM_SELECT_ALL;
 import static ua.aleh1s.hotelepam.model.constant.SqlQuery.ROOM_SELECT_BY_ROOM_NUMBER;
 
 public class RoomDAO extends DAO {
+
+    private final SqlRoomEntityMapper mapper =
+            AppContext.getInstance().getSqlRoomEntityMapper();
+
     public Optional<RoomEntity> findById(Integer roomNumber) throws DaoException {
         RoomEntity roomEntity = null;
         try (PreparedStatement statement = connection.prepareStatement(ROOM_SELECT_BY_ROOM_NUMBER)) {
             statement.setInt(1, roomNumber);
             try (ResultSet resultSet = statement.executeQuery()) {
-                SqlRoomEntityMapper mapper = new SqlRoomEntityMapper();
                 if (resultSet.next()) {
                     roomEntity = mapper.map(resultSet);
                 }
             }
-        } catch (SQLException | SqlEntityMapperException e) {
+        } catch (SQLException e) {
             throw new DaoException(e);
         }
         return Optional.ofNullable(roomEntity);
@@ -64,12 +67,11 @@ public class RoomDAO extends DAO {
         List<RoomEntity> roomEntityList = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(ROOM_SELECT_ALL)) {
             try (ResultSet resultSet = statement.executeQuery()) {
-                SqlRoomEntityMapper mapper = new SqlRoomEntityMapper();
                 while (resultSet.next()) {
                     roomEntityList.add(mapper.map(resultSet));
                 }
             }
-        } catch (SQLException | SqlEntityMapperException e) {
+        } catch (SQLException e) {
             throw new DaoException(e);
         }
         return roomEntityList;

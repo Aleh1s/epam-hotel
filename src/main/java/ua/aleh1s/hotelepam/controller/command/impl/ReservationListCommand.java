@@ -8,20 +8,17 @@ import ua.aleh1s.hotelepam.ResourcesManager;
 import ua.aleh1s.hotelepam.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.ReservationDto;
-import ua.aleh1s.hotelepam.controller.mapper.ReservationDtoMapper;
-import ua.aleh1s.hotelepam.controller.page.Page;
-import ua.aleh1s.hotelepam.controller.page.PageRequest;
+import ua.aleh1s.hotelepam.controller.dtomapper.ReservationDtoMapper;
+import ua.aleh1s.hotelepam.model.pagination.Page;
+import ua.aleh1s.hotelepam.model.pagination.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
 
 import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
 
 import static java.util.Objects.*;
 import static ua.aleh1s.hotelepam.Utils.*;
-import static ua.aleh1s.hotelepam.Utils.getIntContextParamValue;
 
 public class ReservationListCommand implements Command {
     @Override

@@ -3,7 +3,6 @@ package ua.aleh1s.hotelepam.transaction;
 import ua.aleh1s.hotelepam.jdbc.DBManager;
 import ua.aleh1s.hotelepam.jdbc.exception.JdbcException;
 import ua.aleh1s.hotelepam.model.dao.DAO;
-import ua.aleh1s.hotelepam.transaction.exception.TransactionException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -25,23 +24,15 @@ public class Transaction implements AutoCloseable {
     }
 
     private void initDaos(DAO dao, DAO... daos) {
-        try {
-            openConnection();
-            setAutoCommit(false);
-            injectConnections(dao, daos);
-        } catch (TransactionException e) {
-            e.printStackTrace();
-        }
+        openConnection();
+        setAutoCommit(false);
+        injectConnections(dao, daos);
     }
 
     @Override
     public void close() {
-        try {
-            setAutoCommit(true);
-            closeConnection();
-        } catch (TransactionException e) {
-            e.printStackTrace();
-        }
+        setAutoCommit(true);
+        closeConnection();
     }
 
     public void commit() {
@@ -52,7 +43,7 @@ public class Transaction implements AutoCloseable {
         }
     }
 
-    public void rollback()  {
+    public void rollback() {
         try {
             connection.rollback();
         } catch (SQLException e) {
@@ -60,30 +51,32 @@ public class Transaction implements AutoCloseable {
         }
     }
 
-    private void closeConnection() throws TransactionException {
+    private void closeConnection() {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new TransactionException(e);
+            e.printStackTrace();
         }
         this.connection = null;
     }
 
-    private void openConnection() throws TransactionException {
+    private void openConnection() {
         if (isNull(connection)) {
             try {
                 this.connection = dbManager.getConnection();
             } catch (JdbcException e) {
-                throw new TransactionException(e);
+                e.printStackTrace();
             }
         }
     }
 
-    private void setAutoCommit(boolean value) throws TransactionException {
+    private void setAutoCommit(boolean value) {
         try {
-            connection.setAutoCommit(value);
+            if (connection != null) {
+                connection.setAutoCommit(value);
+            }
         } catch (SQLException e) {
-            throw new TransactionException(e);
+            e.printStackTrace();
         }
     }
 

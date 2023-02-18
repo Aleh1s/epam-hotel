@@ -1,29 +1,17 @@
-package ua.aleh1s.hotelepam.model.mapper.impl;
+package ua.aleh1s.hotelepam.model.sqlmapper;
 
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.model.entity.UserRole;
-import ua.aleh1s.hotelepam.model.mapper.SqlEntityMapper;
-import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.ZoneId;
 import java.util.Locale;
 
 import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
 
-public class SqlUserEntityMapper implements SqlEntityMapper<UserEntity> {
+public class SqlUserEntityMapper {
 
-    @Override
-    public UserEntity map(ResultSet resultSet) throws SqlEntityMapperException {
-        try {
-            return buildUserEntity(resultSet);
-        } catch (SQLException e) {
-            throw new SqlEntityMapperException(e);
-        }
-    }
-
-    private UserEntity buildUserEntity(ResultSet resultSet) throws SQLException {
+    public UserEntity map(ResultSet resultSet) throws SQLException {
         return UserEntity.Builder.newBuilder()
                 .id(resultSet.getLong(USER_ID))
                 .email(resultSet.getString(USER_EMAIL))

@@ -1,10 +1,8 @@
-package ua.aleh1s.hotelepam.model.mapper.impl;
+package ua.aleh1s.hotelepam.model.sqlmapper;
 
 import ua.aleh1s.hotelepam.model.entity.RoomClass;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.entity.RoomStatus;
-import ua.aleh1s.hotelepam.model.mapper.SqlEntityMapper;
-import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -13,17 +11,8 @@ import java.sql.SQLException;
 
 import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
 
-public class SqlRoomEntityMapper implements SqlEntityMapper<RoomEntity> {
-    @Override
-    public RoomEntity map(ResultSet source) throws SqlEntityMapperException {
-        try {
-            return buildRoomEntity(source);
-        } catch (SQLException e) {
-            throw new SqlEntityMapperException(e);
-        }
-    }
-
-    private RoomEntity buildRoomEntity(ResultSet source) throws SQLException {
+public class SqlRoomEntityMapper {
+    public RoomEntity map(ResultSet source) throws SQLException {
         Date date = source.getDate(ROOM_BUSY_UNTIL);
         return RoomEntity.Builder.newBuilder()
                 .roomNumber(source.getInt(ROOM_ROOM_NUMBER))

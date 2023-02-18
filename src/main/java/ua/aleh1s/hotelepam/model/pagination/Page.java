@@ -1,4 +1,4 @@
-package ua.aleh1s.hotelepam.controller.page;
+package ua.aleh1s.hotelepam.model.pagination;
 
 import java.util.List;
 

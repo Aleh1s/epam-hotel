@@ -2,8 +2,8 @@ package ua.aleh1s.hotelepam.model.repository.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.aleh1s.hotelepam.controller.page.Page;
-import ua.aleh1s.hotelepam.controller.page.PageRequest;
+import ua.aleh1s.hotelepam.model.pagination.Page;
+import ua.aleh1s.hotelepam.model.pagination.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
 import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;

@@ -1,4 +1,4 @@
-package ua.aleh1s.hotelepam.controller.mapper;
+package ua.aleh1s.hotelepam.controller.dtomapper;
 
 import ua.aleh1s.hotelepam.controller.dto.UserDto;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;

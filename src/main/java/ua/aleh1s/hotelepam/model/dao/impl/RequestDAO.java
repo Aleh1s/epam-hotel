@@ -1,14 +1,15 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
+import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.model.constant.SqlFieldName;
 import ua.aleh1s.hotelepam.model.constant.SqlQuery;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.dao.DAO;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
-import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
-import ua.aleh1s.hotelepam.model.mapper.impl.SqlRequestEntityMapper;
 import ua.aleh1s.hotelepam.model.pagination.Pagination;
+import ua.aleh1s.hotelepam.model.sqlmapper.SqlRequestEntityMapper;
+import ua.aleh1s.hotelepam.model.sqlmapper.exception.SqlEntityMapperException;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -21,17 +22,20 @@ import java.util.Optional;
 import static ua.aleh1s.hotelepam.model.constant.SqlQuery.REQUEST_SELECT_BY_ID;
 
 public class RequestDAO extends DAO {
+
+    private final SqlRequestEntityMapper mapper =
+            AppContext.getInstance().getSqlRequestEntityMapper();
+
     public Optional<RequestEntity> findById(Long id) throws DaoException {
         RequestEntity request = null;
         try (PreparedStatement statement = connection.prepareStatement(REQUEST_SELECT_BY_ID)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    SqlRequestEntityMapper mapper = new SqlRequestEntityMapper();
                     request = mapper.map(resultSet);
                 }
             }
-        } catch (SQLException | SqlEntityMapperException e) {
+        } catch (SQLException e) {
             throw new DaoException(e);
         }
         return Optional.ofNullable(request);
@@ -77,12 +81,11 @@ public class RequestDAO extends DAO {
         String query = "select * from \"request\" " + criteria.build() + " " + pagination.build();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             try (ResultSet resultSet = statement.executeQuery()) {
-                SqlRequestEntityMapper mapper = new SqlRequestEntityMapper();
                 while (resultSet.next()) {
                     requestEntityList.add(mapper.map(resultSet));
                 }
             }
-        } catch (SQLException | SqlEntityMapperException e) {
+        } catch (SQLException  e) {
             throw new DaoException(e);
         }
         return requestEntityList;

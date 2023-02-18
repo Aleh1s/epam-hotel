@@ -8,8 +8,8 @@ import ua.aleh1s.hotelepam.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.RequestDto;
 import ua.aleh1s.hotelepam.controller.dto.UserDto;
-import ua.aleh1s.hotelepam.controller.mapper.RequestDtoMapper;
-import ua.aleh1s.hotelepam.controller.mapper.UserDtoMapper;
+import ua.aleh1s.hotelepam.controller.dtomapper.RequestDtoMapper;
+import ua.aleh1s.hotelepam.controller.dtomapper.UserDtoMapper;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.criteria.impl.RequestCriteria;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
@@ -47,7 +47,7 @@ public class ProfileCommand implements Command {
         Criteria criteria = new RequestCriteria(user);
         Pagination pagination = new RequsetPagination(request);
 
-        List<RequestEntity> requestEntityList = requestRepository.getAll(criteria, pagination);
+        List<RequestEntity> requestEntityList = requestRepository.getAll(criteria, pagination); //todo: remove criteria and pagination
         Integer requestsCount = requestRepository.count(criteria);
 
         RequestDtoMapper requestDtoMapper = AppContext.getInstance().getRequestDtoMapper();

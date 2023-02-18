@@ -1,27 +1,15 @@
-package ua.aleh1s.hotelepam.model.mapper.impl;
+package ua.aleh1s.hotelepam.model.sqlmapper;
 
-import ua.aleh1s.hotelepam.model.constant.SqlFieldName;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.entity.RequestStatus;
-import ua.aleh1s.hotelepam.model.mapper.SqlEntityMapper;
-import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
 
-public class SqlRequestEntityMapper implements SqlEntityMapper<RequestEntity> {
-    @Override
-    public RequestEntity map(ResultSet source) throws SqlEntityMapperException {
-        try {
-            return buildEntity(source);
-        } catch (SQLException e) {
-            throw new SqlEntityMapperException(e);
-        }
-    }
-
-    private RequestEntity buildEntity(ResultSet source) throws SQLException {
+public class SqlRequestEntityMapper {
+    public RequestEntity map(ResultSet source) throws SQLException {
         return RequestEntity.Builder.newBuilder()
                 .id(source.getLong(REQUEST_ID))
                 .customerId(source.getLong(REQUEST_CUSTOMER_ID))

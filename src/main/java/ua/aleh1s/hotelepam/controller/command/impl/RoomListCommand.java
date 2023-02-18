@@ -7,9 +7,9 @@ import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.RoomCardDto;
-import ua.aleh1s.hotelepam.controller.mapper.RoomCardDtoMapper;
-import ua.aleh1s.hotelepam.controller.page.Page;
-import ua.aleh1s.hotelepam.controller.page.PageRequest;
+import ua.aleh1s.hotelepam.controller.dtomapper.RoomCardDtoMapper;
+import ua.aleh1s.hotelepam.model.pagination.Page;
+import ua.aleh1s.hotelepam.model.pagination.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 

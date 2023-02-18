@@ -1,10 +1,10 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
+import ua.aleh1s.hotelepam.AppContext;
 import ua.aleh1s.hotelepam.model.dao.DAO;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
-import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
-import ua.aleh1s.hotelepam.model.mapper.impl.SqlUserEntityMapper;
+import ua.aleh1s.hotelepam.model.sqlmapper.SqlUserEntityMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +15,10 @@ import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
 import static ua.aleh1s.hotelepam.model.constant.SqlQuery.*;
 
 public class UserDAO extends DAO {
+
+    private final SqlUserEntityMapper mapper =
+            AppContext.getInstance().getSqlUserEntityMapper();
+
     public Optional<UserEntity> findById(Long id) throws DaoException {
         return findAndMap(USER_SELECT_BY_ID, id);
     }
@@ -37,11 +41,10 @@ public class UserDAO extends DAO {
             }
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    SqlUserEntityMapper userMapper = new SqlUserEntityMapper();
-                    userEntity = userMapper.map(resultSet);
+                    userEntity = mapper.map(resultSet);
                 }
             }
-        } catch (SQLException | SqlEntityMapperException e) {
+        } catch (SQLException  e) {
             throw new DaoException(e);
         }
         return Optional.ofNullable(userEntity);
