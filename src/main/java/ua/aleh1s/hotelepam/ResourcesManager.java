@@ -1,24 +1,36 @@
 package ua.aleh1s.hotelepam;
 
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Properties;
+import org.yaml.snakeyaml.Yaml;
 
-import static ua.aleh1s.hotelepam.Constant.RESOURCES_PROPERTIES;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+import java.util.Objects;
+
+import static ua.aleh1s.hotelepam.constant.Property.RESOURCES_PROPERTIES;
 
 public class ResourcesManager {
     private static ResourcesManager INSTANCE;
-    private final Properties properties;
+    private Map<String, Object> root;
 
     {
-        Properties properties = new Properties();
+        Yaml yaml = new Yaml();
+        InputStream inputStream = null;
         try {
-            properties.load(
-                    ResourcesManager.class.getClassLoader().getResourceAsStream(RESOURCES_PROPERTIES));
-        } catch (IOException e) {
-            e.printStackTrace();
+            inputStream = ResourcesManager.class.getClassLoader()
+                    .getResourceAsStream(RESOURCES_PROPERTIES);
+            if (inputStream != null) {
+                root = yaml.load(inputStream);
+            }
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        this.properties = properties;
     }
 
     public static synchronized ResourcesManager getInstance() {
@@ -28,7 +40,16 @@ public class ResourcesManager {
         return INSTANCE;
     }
 
+    @SuppressWarnings("unchecked")
     public String getValue(String key) {
-        return properties.getProperty(key);
+        String[] split = key.split("\\.");
+        Map<String, Object> map = root;
+        for (int i = 0; i < split.length; i++) {
+            if (i == (split.length - 1)) {
+                return (String) map.get(split[i]);
+            }
+            map = (Map<String, Object>) map.get(split[i]);
+        }
+        return "";
     }
 }

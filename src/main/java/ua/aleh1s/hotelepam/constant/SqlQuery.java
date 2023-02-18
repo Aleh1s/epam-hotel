@@ -1,4 +1,4 @@
-package ua.aleh1s.hotelepam.model.constant;
+package ua.aleh1s.hotelepam.constant;
 
 public class SqlQuery {
 

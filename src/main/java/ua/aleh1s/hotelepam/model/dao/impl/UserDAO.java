@@ -11,8 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlField.UserTable.*;
-import static ua.aleh1s.hotelepam.model.constant.SqlQuery.UserTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlField.UserTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlQuery.UserTable.*;
 
 public class UserDAO extends DAO {
 

@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlField.ReservationTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlField.ReservationTable.*;
 
 public class SqlReservationEntityMapper {
     public ReservationEntity map(ResultSet source) throws SQLException {

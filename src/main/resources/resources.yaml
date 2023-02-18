@@ -1,0 +1,23 @@
+path:
+  page:
+    login: /jsp/login.jsp
+    signup: /jsp/signup.jsp
+    myBookings: /jsp/myBookings.jsp
+    application: /jsp/application.jsp
+    request: /jsp/request.jsp
+    profile: /jsp/profile.jsp
+    error: /jsp/error.jsp
+    room: /jsp/room.jsp
+    book: /jsp/book.jsp
+    list:
+      application: /jsp/applicationList.jsp
+      reservation: /jsp/reservationList.jsp
+      room: /jsp/roomList.jsp
+    confirm:
+      booking: /jsp/confirmBooking.jsp
+      payment: /jsp/confirmPayment.jsp
+    success:
+      payment: /jsp/successPayment.jsp
+      application: /jsp/successApplication.jsp
+      booking: /jsp/successBooking.jsp
+  controller:

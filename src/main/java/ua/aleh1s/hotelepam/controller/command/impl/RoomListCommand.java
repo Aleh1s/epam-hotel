@@ -100,6 +100,6 @@ public class RoomListCommand implements Command {
         request.setAttribute("currPage", pageNumber);
         request.setAttribute("pagesNumber", pagesNumber);
 
-        return ResourcesManager.getInstance().getValue("path.page.room.list");
+        return ResourcesManager.getInstance().getValue("path.page.list.room");
     }
 }
