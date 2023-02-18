@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.constant.SqlField.RequestTable.*;
-import static ua.aleh1s.hotelepam.constant.SqlQuery.RequestTable.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlField.RequestTable.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlQuery.RequestTable.*;
 
 public class RequestDAO extends DAO {
 

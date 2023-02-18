@@ -40,6 +40,6 @@ public class ApplicationListCommand implements Command {
         request.setAttribute("pagesNumber", pagesNumber);
         request.setAttribute("currPage", pageNumber);
 
-        return ResourcesManager.getInstance().getValue("path.page.list.application");
+        return ResourcesManager.getInstance().getValue("path.page.application.list");
     }
 }

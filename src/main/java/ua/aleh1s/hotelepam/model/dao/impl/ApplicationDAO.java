@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.constant.SqlField.ApplicationTable.*;
-import static ua.aleh1s.hotelepam.constant.SqlQuery.ApplicationTable.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlField.ApplicationTable.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlQuery.ApplicationTable.*;
 
 public class ApplicationDAO extends DAO {
 

@@ -64,7 +64,7 @@ public class ReservationListCommand implements Command {
         request.setAttribute("pagesNumber", pagesNumber);
         request.setAttribute("currPage", pageNumber);
 
-        return ResourcesManager.getInstance().getValue("path.page.list.reservation");
+        return ResourcesManager.getInstance().getValue("path.page.reservation.list");
     }
 
 }

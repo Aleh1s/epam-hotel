@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Properties;
 
-import static ua.aleh1s.hotelepam.constant.Property.DATABASE_PROPERTIES;
+import static ua.aleh1s.hotelepam.Constant.DATABASE_PROPERTIES;
 
 public class DBManager {
     private static final Logger LOGGER = LogManager.getLogger(DBManager.class);

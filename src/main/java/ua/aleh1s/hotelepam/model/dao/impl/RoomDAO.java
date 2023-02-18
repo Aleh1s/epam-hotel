@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.constant.SqlField.RoomTable.*;
-import static ua.aleh1s.hotelepam.constant.SqlQuery.RoomTable.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlField.RoomTable.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlQuery.RoomTable.*;
 
 public class RoomDAO extends DAO {
 

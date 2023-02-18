@@ -78,6 +78,6 @@ public class MyBookingsCommand implements Command {
         request.setAttribute("pagesNumber", pagesNumber);
         request.setAttribute("reservationPage", reservationDtoPage);
 
-        return ResourcesManager.getInstance().getValue("path.page.myBookings");
+        return ResourcesManager.getInstance().getValue("path.page.my.bookings");
     }
 }

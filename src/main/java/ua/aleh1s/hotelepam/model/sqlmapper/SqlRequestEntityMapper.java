@@ -6,7 +6,7 @@ import ua.aleh1s.hotelepam.model.entity.RequestStatus;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static ua.aleh1s.hotelepam.constant.SqlField.RequestTable.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlField.RequestTable.*;
 
 public class SqlRequestEntityMapper {
     public RequestEntity map(ResultSet source) throws SQLException {

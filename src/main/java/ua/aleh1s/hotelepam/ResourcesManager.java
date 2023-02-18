@@ -1,36 +1,24 @@
 package ua.aleh1s.hotelepam;
 
-import org.yaml.snakeyaml.Yaml;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 
-import static ua.aleh1s.hotelepam.constant.Property.RESOURCES_PROPERTIES;
+import static ua.aleh1s.hotelepam.Constant.RESOURCES_PROPERTIES;
 
 public class ResourcesManager {
     private static ResourcesManager INSTANCE;
-    private Map<String, Object> root;
+    private final Properties properties;
 
     {
-        Yaml yaml = new Yaml();
-        InputStream inputStream = null;
+        Properties properties = new Properties();
         try {
-            inputStream = ResourcesManager.class.getClassLoader()
-                    .getResourceAsStream(RESOURCES_PROPERTIES);
-            if (inputStream != null) {
-                root = yaml.load(inputStream);
-            }
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            properties.load(
+                    ResourcesManager.class.getClassLoader().getResourceAsStream(RESOURCES_PROPERTIES));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        this.properties = properties;
     }
 
     public static synchronized ResourcesManager getInstance() {
@@ -40,16 +28,7 @@ public class ResourcesManager {
         return INSTANCE;
     }
 
-    @SuppressWarnings("unchecked")
     public String getValue(String key) {
-        String[] split = key.split("\\.");
-        Map<String, Object> map = root;
-        for (int i = 0; i < split.length; i++) {
-            if (i == (split.length - 1)) {
-                return (String) map.get(split[i]);
-            }
-            map = (Map<String, Object>) map.get(split[i]);
-        }
-        return "";
+        return properties.getProperty(key);
     }
 }

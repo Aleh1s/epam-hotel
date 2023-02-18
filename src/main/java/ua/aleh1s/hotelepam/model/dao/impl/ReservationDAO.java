@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.constant.SqlField.ReservationTable.*;
-import static ua.aleh1s.hotelepam.constant.SqlQuery.ReservationTable.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlField.ReservationTable.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlQuery.ReservationTable.*;
 
 public class ReservationDAO extends DAO {
 
