@@ -26,7 +26,7 @@ public class BookCommand implements Command {
         LocalDate entryDate = getLocalDateValue(request, "entryDate");
         LocalDate leavingDate = getLocalDateValue(request, "leavingDate");
 
-        String errorMessage, path = "/controller?command=viewRoom";
+        String errorMessage, path = ResourcesManager.getInstance().getValue("path.command.view.room");
         if (entryDate.isBefore(LocalDate.now())) {
             errorMessage = "Entry date cannot be before now";
             request.setAttribute("errorMessage", errorMessage);

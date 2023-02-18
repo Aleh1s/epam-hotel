@@ -35,9 +35,9 @@ public class ChangeReservationStatusCommand implements Command {
         String path;
 
         if (userRole.equals(UserRole.CUSTOMER)) {
-            path = "/controller?command=myBookings";
+            path = ResourcesManager.getInstance().getValue("path.command.my.bookings");
         } else {
-            path = "/controller?command=reservationList";
+            path = ResourcesManager.getInstance().getValue("path.command.reservation.list");
         }
 
         if (reservationOptional.isEmpty()) {

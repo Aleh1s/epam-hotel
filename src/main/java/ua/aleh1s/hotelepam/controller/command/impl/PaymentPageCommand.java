@@ -32,7 +32,7 @@ public class PaymentPageCommand implements Command {
         ReservationRepository reservationRepository = AppContext.getInstance().getReservationRepository();
         Optional<ReservationEntity> reservationOptional = reservationRepository.getById(reservationId);
 
-        String errorMessage, path = "/controller?command=myBookings";
+        String errorMessage, path = ResourcesManager.getInstance().getValue("path.command.my.bookings");
         if (reservationOptional.isEmpty()) {
             errorMessage = "There is no reservation with such id";
             request.setAttribute("errorMessage", errorMessage);

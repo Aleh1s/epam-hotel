@@ -21,7 +21,7 @@ public class I18NCommand implements Command {
 
         String path = "redirect";
         try {
-            response.sendRedirect("/controller?command=roomList&default=on");
+            response.sendRedirect(ResourcesManager.getInstance().getValue("path.command.room.list"));
         } catch (IOException e) {
             path = ResourcesManager.getInstance().getValue("path.page.error");
         }

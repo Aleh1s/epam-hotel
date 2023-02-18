@@ -53,9 +53,9 @@ public class ChangeRequestStatusCommand implements Command {
             HttpSession session = request.getSession(false);
             session.setAttribute("bookInfo", bookInfoDto);
 
-            path = "/controller?command=confirmBooking";
+            path = ResourcesManager.getInstance().getValue("path.command.confirm.booking");
         } else {
-            path = "/controller?command=profile";
+            path = ResourcesManager.getInstance().getValue("path.command.profile");
         }
 
         try {

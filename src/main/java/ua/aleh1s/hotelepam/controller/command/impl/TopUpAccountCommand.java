@@ -25,7 +25,7 @@ public class TopUpAccountCommand implements Command {
         UserRepository userRepository = AppContext.getInstance().getUserRepository();
         Optional<UserEntity> userOptional = userRepository.findById(userId);
 
-        String errorMessage, path = "/controller?command=profile";
+        String errorMessage, path = ResourcesManager.getInstance().getValue("path.command.profile");
         if (userOptional.isEmpty()) {
             errorMessage = "There is no user with such id";
             request.setAttribute("errorMessage", errorMessage);

@@ -52,7 +52,7 @@ public class ConfirmPaymentCommand implements Command {
         UserRepository userRepository = AppContext.getInstance().getUserRepository();
         Optional<UserEntity> userOptional = userRepository.findById(userId);
 
-        path = "/controller?command=profile";
+        path = ResourcesManager.getInstance().getValue("path.command.profile");
         if (userOptional.isEmpty()) {
             errorMessage = "There is no user with such id";
             request.setAttribute("errorMessage", errorMessage);

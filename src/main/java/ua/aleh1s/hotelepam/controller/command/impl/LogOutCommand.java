@@ -17,7 +17,7 @@ public class LogOutCommand implements Command {
         session.removeAttribute("id");
         session.removeAttribute("role");
 
-        String path = "/controller?command=roomList&default=on";
+        String path = ResourcesManager.getInstance().getValue("path.command.room.list");
         try {
             response.sendRedirect(path);
             path = "redirect";

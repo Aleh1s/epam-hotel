@@ -79,7 +79,7 @@ public class MakeRequestCommand implements Command {
         requestRepository.create(requestEntity);
 
         try {
-            response.sendRedirect("/controller?command=applicationList");
+            response.sendRedirect(ResourcesManager.getInstance().getValue("path.command.application.list"));
             path = "redirect";
         } catch (IOException e) {
             path = ResourcesManager.getInstance().getValue("path.page.error");
