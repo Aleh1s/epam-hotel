@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
-import static ua.aleh1s.hotelepam.model.constant.SqlQuery.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlField.ApplicationTable.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlQuery.ApplicationTable.*;
 
 public class ApplicationDAO extends DAO {
 
@@ -26,7 +26,7 @@ public class ApplicationDAO extends DAO {
 
     public Optional<ApplicationEntity> findById(Long id) throws DaoException {
         ApplicationEntity application = null;
-        try (PreparedStatement statement = connection.prepareStatement(APPLICATION_SELECT_BY_ID)) {
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_BY_ID)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -40,18 +40,18 @@ public class ApplicationDAO extends DAO {
     }
 
     public void update(ApplicationEntity entity) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(APPLICATION_SELECT_BY_ID,
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_BY_ID,
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             statement.setLong(1, entity.getId());
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    resultSet.updateLong(APPLICATION_ID, entity.getId());
-                    resultSet.updateInt(APPLICATION_NUMBER_OF_GUESTS, entity.getGuestsNumber());
-                    resultSet.updateInt(APPLICATION_ROOM_CLASS, entity.getRoomClass().getIndex());
-                    resultSet.updateDate(APPLICATION_LEAVING_DATE, Date.valueOf(entity.getLeavingDate()));
-                    resultSet.updateDate(APPLICATION_ENTRY_DATE, Date.valueOf(entity.getEntryDate()));
-                    resultSet.updateInt(APPLICATION_STATUS, entity.getStatus().getIndex());
-                    resultSet.updateLong(APPLICATION_CUSTOMER_ID, entity.getCustomerId());
+                    resultSet.updateLong(ID, entity.getId());
+                    resultSet.updateInt(NUMBER_OF_GUESTS, entity.getGuestsNumber());
+                    resultSet.updateInt(ROOM_CLASS, entity.getRoomClass().getIndex());
+                    resultSet.updateDate(LEAVING_DATE, Date.valueOf(entity.getLeavingDate()));
+                    resultSet.updateDate(ENTRY_DATE, Date.valueOf(entity.getEntryDate()));
+                    resultSet.updateInt(STATUS, entity.getStatus().getIndex());
+                    resultSet.updateLong(CUSTOMER_ID, entity.getCustomerId());
                     resultSet.updateRow();
                 }
             }
@@ -61,7 +61,7 @@ public class ApplicationDAO extends DAO {
     }
 
     public void save(ApplicationEntity entity) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(APPLICATION_INSERT)) {
+        try (PreparedStatement statement = connection.prepareStatement(INSERT)) {
             statement.setInt(1, entity.getGuestsNumber());
             statement.setInt(2, entity.getRoomClass().getIndex());
             statement.setDate(3, Date.valueOf(entity.getEntryDate()));
@@ -76,7 +76,7 @@ public class ApplicationDAO extends DAO {
 
     public List<ApplicationEntity> getAllByStatus(ApplicationStatus status, PageRequest pageRequest) throws DaoException {
         List<ApplicationEntity> applicationList = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(APPLICATION_SELECT_PAGE_BY_STATUS)) {
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_PAGE_BY_STATUS)) {
             statement.setInt(1, status.getIndex());
             statement.setInt(2, pageRequest.getOffset());
             statement.setInt(3, pageRequest.getLimit());
@@ -95,7 +95,7 @@ public class ApplicationDAO extends DAO {
 
     public Integer countByStatus(ApplicationStatus status) throws DaoException {
         int count = 0;
-        try (PreparedStatement statement = connection.prepareStatement(APPLICATION_COUNT_BY_STATUS)) {
+        try (PreparedStatement statement = connection.prepareStatement(COUNT_ALL_BY_STATUS)) {
             statement.setInt(1, status.getIndex());
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

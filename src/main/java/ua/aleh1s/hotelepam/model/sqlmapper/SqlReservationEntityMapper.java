@@ -7,22 +7,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlField.ReservationTable.*;
 
 public class SqlReservationEntityMapper {
     public ReservationEntity map(ResultSet source) throws SQLException {
-        Timestamp payedAt = source.getTimestamp(RESERVATION_PAYED_AT);
+        Timestamp payedAt = source.getTimestamp(PAYED_AT);
         return ReservationEntity.Builder.newBuilder()
-                .id(source.getLong(RESERVATION_ID))
-                .roomNumber(source.getInt(RESERVATION_ROOM_NUMBER))
-                .customerId(source.getLong(RESERVATION_CUSTOMER_ID))
-                .entryDate(source.getDate(RESERVATION_ENTRY_DATE).toLocalDate())
-                .leavingDate(source.getDate(RESERVATION_LEAVING_DATE).toLocalDate())
-                .createdAt(source.getTimestamp(RESERVATION_CREATED_AT).toLocalDateTime())
-                .expiredAt(source.getTimestamp(RESERVATION_EXPIRED_AT).toLocalDateTime())
+                .id(source.getLong(ID))
+                .roomNumber(source.getInt(ROOM_NUMBER))
+                .customerId(source.getLong(CUSTOMER_ID))
+                .entryDate(source.getDate(ENTRY_DATE).toLocalDate())
+                .leavingDate(source.getDate(LEAVING_DATE).toLocalDate())
+                .createdAt(source.getTimestamp(CREATED_AT).toLocalDateTime())
+                .expiredAt(source.getTimestamp(EXPIRED_AT).toLocalDateTime())
                 .payedAt(payedAt != null ? payedAt.toLocalDateTime() : null)
-                .totalAmount(source.getBigDecimal(RESERVATION_TOTAL_AMOUNT))
-                .status(ReservationStatus.atIndex(source.getInt(RESERVATION_STATUS)))
+                .totalAmount(source.getBigDecimal(TOTAL_AMOUNT))
+                .status(ReservationStatus.atIndex(source.getInt(STATUS)))
                 .build();
     }
 }

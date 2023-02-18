@@ -14,9 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
-import static ua.aleh1s.hotelepam.model.constant.SqlQuery.ROOM_SELECT_ALL;
-import static ua.aleh1s.hotelepam.model.constant.SqlQuery.ROOM_SELECT_BY_ROOM_NUMBER;
+import static ua.aleh1s.hotelepam.model.constant.SqlField.RoomTable.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlQuery.RoomTable.*;
 
 public class RoomDAO extends DAO {
 
@@ -25,7 +24,7 @@ public class RoomDAO extends DAO {
 
     public Optional<RoomEntity> findById(Integer roomNumber) throws DaoException {
         RoomEntity roomEntity = null;
-        try (PreparedStatement statement = connection.prepareStatement(ROOM_SELECT_BY_ROOM_NUMBER)) {
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_BY_ROOM_NUMBER)) {
             statement.setInt(1, roomNumber);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -39,22 +38,22 @@ public class RoomDAO extends DAO {
     }
 
     public void update(RoomEntity entity) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(ROOM_SELECT_BY_ROOM_NUMBER,
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_BY_ROOM_NUMBER,
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             statement.setLong(1, entity.getRoomNumber());
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    resultSet.updateInt(ROOM_ROOM_NUMBER, entity.getRoomNumber());
-                    resultSet.updateInt(ROOM_CLASS, entity.getRoomClass().getIndex());
-                    resultSet.updateInt(ROOM_STATUS, entity.getStatus().getIndex());
-                    resultSet.updateString(ROOM_DESCRIPTION, entity.getDescription());
-                    resultSet.updateDate(ROOM_BUSY_UNTIL, entity.getBusyUntil() != null ? Date.valueOf(entity.getBusyUntil()) : null);
-                    resultSet.updateBigDecimal(ROOM_PRICE, entity.getPrice());
-                    resultSet.updateString(ROOM_NAME, entity.getName());
-                    resultSet.updateString(ROOM_ATTRIBUTES, String.join(",", entity.getAttributes()));
-                    resultSet.updateInt(ROOM_BEDS_NUMBER, entity.getBedsNumber());
-                    resultSet.updateInt(ROOM_PERSONS_NUMBER, entity.getPersonsNumber());
-                    resultSet.updateInt(ROOM_AREA, entity.getArea());
+                    resultSet.updateInt(ROOM_NUMBER, entity.getRoomNumber());
+                    resultSet.updateInt(CLASS, entity.getRoomClass().getIndex());
+                    resultSet.updateInt(STATUS, entity.getStatus().getIndex());
+                    resultSet.updateString(DESCRIPTION, entity.getDescription());
+                    resultSet.updateDate(BUSY_UNTIL, entity.getBusyUntil() != null ? Date.valueOf(entity.getBusyUntil()) : null);
+                    resultSet.updateBigDecimal(PRICE, entity.getPrice());
+                    resultSet.updateString(NAME, entity.getName());
+                    resultSet.updateString(ATTRIBUTES, String.join(",", entity.getAttributes()));
+                    resultSet.updateInt(BEDS_NUMBER, entity.getBedsNumber());
+                    resultSet.updateInt(PERSONS_NUMBER, entity.getPersonsNumber());
+                    resultSet.updateInt(AREA, entity.getArea());
                     resultSet.updateRow();
                 }
             }
@@ -65,7 +64,7 @@ public class RoomDAO extends DAO {
 
     public List<RoomEntity> getAll() throws DaoException {
         List<RoomEntity> roomEntityList = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(ROOM_SELECT_ALL)) {
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     roomEntityList.add(mapper.map(resultSet));

@@ -52,5 +52,4 @@ public class Utils {
     public static int getNumberOfPages(int totalCount, int pageSize) {
         return (int) Math.ceil(totalCount / (double) pageSize);
     }
-
 }

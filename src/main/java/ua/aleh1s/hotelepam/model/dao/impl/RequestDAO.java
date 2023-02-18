@@ -1,15 +1,12 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
 import ua.aleh1s.hotelepam.AppContext;
-import ua.aleh1s.hotelepam.model.constant.SqlFieldName;
-import ua.aleh1s.hotelepam.model.constant.SqlQuery;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.dao.DAO;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.pagination.Pagination;
 import ua.aleh1s.hotelepam.model.sqlmapper.SqlRequestEntityMapper;
-import ua.aleh1s.hotelepam.model.sqlmapper.exception.SqlEntityMapperException;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -19,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlQuery.REQUEST_SELECT_BY_ID;
+import static ua.aleh1s.hotelepam.model.constant.SqlField.RequestTable.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlQuery.RequestTable.*;
 
 public class RequestDAO extends DAO {
 
@@ -28,7 +26,7 @@ public class RequestDAO extends DAO {
 
     public Optional<RequestEntity> findById(Long id) throws DaoException {
         RequestEntity request = null;
-        try (PreparedStatement statement = connection.prepareStatement(REQUEST_SELECT_BY_ID)) {
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_BY_ID)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -42,18 +40,18 @@ public class RequestDAO extends DAO {
     }
 
     public void update(RequestEntity entity) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(REQUEST_SELECT_BY_ID,
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_BY_ID,
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             statement.setLong(1, entity.getId());
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    resultSet.updateLong(SqlFieldName.REQUEST_ID, entity.getId());
-                    resultSet.updateInt(SqlFieldName.REQUEST_ROOM_NUMBER, entity.getRoomNumber());
-                    resultSet.updateLong(SqlFieldName.REQUEST_CUSTOMER_ID, entity.getCustomerId());
-                    resultSet.updateInt(SqlFieldName.REQUEST_STATUS, entity.getStatus().getIndex());
-                    resultSet.updateDate(SqlFieldName.REQUEST_ENTRY_DATE, Date.valueOf(entity.getEntryDate()));
-                    resultSet.updateDate(SqlFieldName.REQUEST_LEAVING_DATE, Date.valueOf(entity.getLeavingDate()));
-                    resultSet.updateBigDecimal(SqlFieldName.REQUEST_TOTAL_AMOUNT, entity.getTotalAmount());
+                    resultSet.updateLong(ID, entity.getId());
+                    resultSet.updateInt(ROOM_NUMBER, entity.getRoomNumber());
+                    resultSet.updateLong(CUSTOMER_ID, entity.getCustomerId());
+                    resultSet.updateInt(STATUS, entity.getStatus().getIndex());
+                    resultSet.updateDate(ENTRY_DATE, Date.valueOf(entity.getEntryDate()));
+                    resultSet.updateDate(LEAVING_DATE, Date.valueOf(entity.getLeavingDate()));
+                    resultSet.updateBigDecimal(TOTAL_AMOUNT, entity.getTotalAmount());
                     resultSet.updateRow();
                 }
             }
@@ -63,7 +61,7 @@ public class RequestDAO extends DAO {
     }
 
     public void save(RequestEntity entity) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(SqlQuery.REQUEST_INSERT)) {
+        try (PreparedStatement statement = connection.prepareStatement(INSERT)) {
             statement.setInt(1, entity.getRoomNumber());
             statement.setLong(2, entity.getCustomerId());
             statement.setInt(3, entity.getStatus().getIndex());

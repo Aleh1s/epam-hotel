@@ -11,8 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
-import static ua.aleh1s.hotelepam.model.constant.SqlQuery.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlField.UserTable.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlQuery.UserTable.*;
 
 public class UserDAO extends DAO {
 
@@ -20,15 +20,15 @@ public class UserDAO extends DAO {
             AppContext.getInstance().getSqlUserEntityMapper();
 
     public Optional<UserEntity> findById(Long id) throws DaoException {
-        return findAndMap(USER_SELECT_BY_ID, id);
+        return findAndMap(SELECT_ALL_BY_ID, id);
     }
 
     public Optional<UserEntity> findByEmail(String email) throws DaoException {
-        return findAndMap(USER_SELECT_BY_EMAIL, email);
+        return findAndMap(SELECT_ALL_BY_EMAIL, email);
     }
 
     public Optional<UserEntity> findByPhoneNumber(String phoneNumber) throws DaoException {
-        return findAndMap(USER_SELECT_BY_PHONE_NUMBER, phoneNumber);
+        return findAndMap(SELECT_ALL_BY_PHONE_NUMBER, phoneNumber);
     }
 
     public Optional<UserEntity> findAndMap(String query, Object parameter) throws DaoException {
@@ -51,20 +51,20 @@ public class UserDAO extends DAO {
     }
 
     public void update(UserEntity entity) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(USER_SELECT_BY_ID,
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_BY_ID,
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             statement.setLong(1, entity.getId());
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    resultSet.updateLong(USER_ID, entity.getId());
-                    resultSet.updateString(USER_EMAIL, entity.getEmail());
-                    resultSet.updateString(USER_FIRST_NAME, entity.getFirstName());
-                    resultSet.updateString(USER_LAST_NAME, entity.getLastName());
-                    resultSet.updateString(USER_PHONE_NUMBER, entity.getPhoneNumber());
-                    resultSet.updateString(USER_PASSWORD, entity.getPassword());
-                    resultSet.updateString(USER_LOCALE, entity.getLocale().getLanguage());
-                    resultSet.updateString(USER_ROLE, entity.getRole().name());
-                    resultSet.updateBigDecimal(USER_ACCOUNT, entity.getAccount());
+                    resultSet.updateLong(ID, entity.getId());
+                    resultSet.updateString(EMAIL, entity.getEmail());
+                    resultSet.updateString(FIRST_NAME, entity.getFirstName());
+                    resultSet.updateString(LAST_NAME, entity.getLastName());
+                    resultSet.updateString(PHONE_NUMBER, entity.getPhoneNumber());
+                    resultSet.updateString(PASSWORD, entity.getPassword());
+                    resultSet.updateString(LOCALE, entity.getLocale().getLanguage());
+                    resultSet.updateString(ROLE, entity.getRole().name());
+                    resultSet.updateBigDecimal(ACCOUNT, entity.getAccount());
                     resultSet.updateRow();
                 }
             }
@@ -74,7 +74,7 @@ public class UserDAO extends DAO {
     }
 
     public void save(UserEntity entity) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(USER_INSERT)) {
+        try (PreparedStatement statement = connection.prepareStatement(INSERT)) {
             statement.setString(1, entity.getEmail());
             statement.setString(2, entity.getFirstName());
             statement.setString(3, entity.getLastName());

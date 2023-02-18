@@ -9,23 +9,23 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlField.RoomTable.*;
 
 public class SqlRoomEntityMapper {
     public RoomEntity map(ResultSet source) throws SQLException {
-        Date date = source.getDate(ROOM_BUSY_UNTIL);
+        Date date = source.getDate(BUSY_UNTIL);
         return RoomEntity.Builder.newBuilder()
-                .roomNumber(source.getInt(ROOM_ROOM_NUMBER))
-                .roomClass(RoomClass.atIndex(source.getInt(ROOM_CLASS)))
-                .status(RoomStatus.atIndex(source.getInt(ROOM_STATUS)))
-                .description(source.getString(ROOM_DESCRIPTION))
+                .roomNumber(source.getInt(ROOM_NUMBER))
+                .roomClass(RoomClass.atIndex(source.getInt(CLASS)))
+                .status(RoomStatus.atIndex(source.getInt(STATUS)))
+                .description(source.getString(DESCRIPTION))
                 .busyUntil(date != null ? date.toLocalDate() : null)
-                .price(BigDecimal.valueOf(source.getDouble(ROOM_PRICE)))
-                .name(source.getString(ROOM_NAME))
-                .attributes(source.getString(ROOM_ATTRIBUTES).split(","))
-                .bedsNumber(source.getInt(ROOM_BEDS_NUMBER))
-                .personsNumber(source.getInt(ROOM_PERSONS_NUMBER))
-                .area(source.getInt(ROOM_AREA))
+                .price(BigDecimal.valueOf(source.getDouble(PRICE)))
+                .name(source.getString(NAME))
+                .attributes(source.getString(ATTRIBUTES).split(","))
+                .bedsNumber(source.getInt(BEDS_NUMBER))
+                .personsNumber(source.getInt(PERSONS_NUMBER))
+                .area(source.getInt(AREA))
                 .build();
     }
 }

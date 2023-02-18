@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
-import static ua.aleh1s.hotelepam.model.constant.SqlQuery.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlField.ReservationTable.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlQuery.ReservationTable.*;
 
 public class ReservationDAO extends DAO {
 
@@ -24,7 +24,7 @@ public class ReservationDAO extends DAO {
 
     public Optional<ReservationEntity> findById(Long id) throws DaoException {
         ReservationEntity reservationEntity = null;
-        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_BY_ID)) {
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_BY_ID)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -38,21 +38,21 @@ public class ReservationDAO extends DAO {
     }
 
     public void update(ReservationEntity entity) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_BY_ID,
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_BY_ID,
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             statement.setLong(1, entity.getId());
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    resultSet.updateLong(RESERVATION_ID, entity.getId());
-                    resultSet.updateInt(RESERVATION_ROOM_NUMBER, entity.getRoomNumber());
-                    resultSet.updateLong(RESERVATION_CUSTOMER_ID, entity.getCustomerId());
-                    resultSet.updateDate(RESERVATION_ENTRY_DATE, Date.valueOf(entity.getEntryDate()));
-                    resultSet.updateDate(RESERVATION_LEAVING_DATE, Date.valueOf(entity.getLeavingDate()));
-                    resultSet.updateTimestamp(RESERVATION_CREATED_AT, Timestamp.valueOf(entity.getCreatedAt()));
-                    resultSet.updateTimestamp(RESERVATION_EXPIRED_AT, Timestamp.valueOf(entity.getExpiredAt()));
-                    resultSet.updateTimestamp(RESERVATION_PAYED_AT, entity.getPayedAt() != null ? Timestamp.valueOf(entity.getPayedAt()) : null);
-                    resultSet.updateBigDecimal(RESERVATION_TOTAL_AMOUNT, entity.getTotalAmount());
-                    resultSet.updateInt(RESERVATION_STATUS, entity.getStatus().getIndex());
+                    resultSet.updateLong(ID, entity.getId());
+                    resultSet.updateInt(ROOM_NUMBER, entity.getRoomNumber());
+                    resultSet.updateLong(CUSTOMER_ID, entity.getCustomerId());
+                    resultSet.updateDate(ENTRY_DATE, Date.valueOf(entity.getEntryDate()));
+                    resultSet.updateDate(LEAVING_DATE, Date.valueOf(entity.getLeavingDate()));
+                    resultSet.updateTimestamp(CREATED_AT, Timestamp.valueOf(entity.getCreatedAt()));
+                    resultSet.updateTimestamp(EXPIRED_AT, Timestamp.valueOf(entity.getExpiredAt()));
+                    resultSet.updateTimestamp(PAYED_AT, entity.getPayedAt() != null ? Timestamp.valueOf(entity.getPayedAt()) : null);
+                    resultSet.updateBigDecimal(TOTAL_AMOUNT, entity.getTotalAmount());
+                    resultSet.updateInt(STATUS, entity.getStatus().getIndex());
                     resultSet.updateRow();
                 }
             }
@@ -62,7 +62,7 @@ public class ReservationDAO extends DAO {
     }
 
     public void save(ReservationEntity entity) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_INSERT)) {
+        try (PreparedStatement statement = connection.prepareStatement(INSERT)) {
             statement.setInt(1, entity.getRoomNumber());
             statement.setLong(2, entity.getCustomerId());
             statement.setDate(3, Date.valueOf(entity.getEntryDate()));
@@ -80,7 +80,7 @@ public class ReservationDAO extends DAO {
 
     public List<ReservationEntity> getAllByStatus(ReservationStatus status, PageRequest pageRequest) throws DaoException {
         List<ReservationEntity> reservationEntities = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_PAGE_BY_STATUS_ORDER_BY_CREATED_AT)) {
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_PAGE_BY_STATUS_ORDER_BY_CREATED_AT)) {
             statement.setInt(1, status.getIndex());
             statement.setInt(2, pageRequest.getOffset());
             statement.setInt(3, pageRequest.getLimit());
@@ -97,7 +97,7 @@ public class ReservationDAO extends DAO {
 
     public List<ReservationEntity> getAllByCustomerId(Long userId) throws DaoException {
         List<ReservationEntity> reservationEntities = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_ALL_BY_CUSTOMER_ID)) {
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_BY_CUSTOMER_ID)) {
             statement.setLong(1, userId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
@@ -112,7 +112,7 @@ public class ReservationDAO extends DAO {
 
     public Integer countByStatus(ReservationStatus status) throws DaoException {
         int count = 0;
-        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_COUNT_BY_STATUS)) {
+        try (PreparedStatement statement = connection.prepareStatement(COUNT_ALL_BY_STATUS)) {
             statement.setInt(1, status.getIndex());
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -127,7 +127,7 @@ public class ReservationDAO extends DAO {
 
     public List<ReservationEntity> getAll(PageRequest pageRequest) throws DaoException {
         List<ReservationEntity> result = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_PAGE_ORDER_BY_CREATED_AT)) {
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_AVAILABLE_PAGE_ORDER_BY_CREATED_AT)) {
             statement.setInt(1, pageRequest.getOffset());
             statement.setInt(2, pageRequest.getLimit());
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -143,7 +143,7 @@ public class ReservationDAO extends DAO {
 
     public Integer count() throws DaoException {
         int count = 0;
-        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_COUNT_ALL)) {
+        try (PreparedStatement statement = connection.prepareStatement(COUNT_AVAILABLE)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     count = resultSet.getInt(1);

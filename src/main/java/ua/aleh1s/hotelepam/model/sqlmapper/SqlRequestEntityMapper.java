@@ -6,18 +6,18 @@ import ua.aleh1s.hotelepam.model.entity.RequestStatus;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
+import static ua.aleh1s.hotelepam.model.constant.SqlField.RequestTable.*;
 
 public class SqlRequestEntityMapper {
     public RequestEntity map(ResultSet source) throws SQLException {
         return RequestEntity.Builder.newBuilder()
-                .id(source.getLong(REQUEST_ID))
-                .customerId(source.getLong(REQUEST_CUSTOMER_ID))
-                .roomNumber(source.getInt(REQUEST_ROOM_NUMBER))
-                .status(RequestStatus.atIndex(source.getInt(REQUEST_STATUS)))
-                .entryDate(source.getDate(REQUEST_ENTRY_DATE).toLocalDate())
-                .leavingDate(source.getDate(REQUEST_LEAVING_DATE).toLocalDate())
-                .totalAmount(source.getBigDecimal(REQUEST_TOTAL_AMOUNT))
+                .id(source.getLong(ID))
+                .customerId(source.getLong(CUSTOMER_ID))
+                .roomNumber(source.getInt(ROOM_NUMBER))
+                .status(RequestStatus.atIndex(source.getInt(STATUS)))
+                .entryDate(source.getDate(ENTRY_DATE).toLocalDate())
+                .leavingDate(source.getDate(LEAVING_DATE).toLocalDate())
+                .totalAmount(source.getBigDecimal(TOTAL_AMOUNT))
                 .build();
     }
 }
