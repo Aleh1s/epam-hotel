@@ -18,7 +18,9 @@
                     </div>
                     <div class="congratulation-container">
                         <h1>Booking Successful!</h1>
-                        <p>Your booking will be processed by manager! Details of booking are included below.</p>
+                        <p>Your booking will be processed by manager! Details of booking are included below.
+                            Reservation must be paid within two days. If the bill is not paid, the reservation is
+                            automatically withdrawn.</p>
                     </div>
                     <div class="horizontal-delimiter-with-text">
                         <p>Booking info</p>

@@ -19,7 +19,7 @@
                 <div></div>
             </div>
             <form method="get" action="<c:url value="/controller"/>" class="bookings-form">
-                <input type="hidden" name="command" value="reservationList"/>
+                <input type="hidden" name="command" value="myBookings"/>
                 <div>
                     <label for="filter">
                         Booking status
@@ -35,7 +35,7 @@
                             Confirmed
                         </option>
                         <option value="3" ${sessionScope.reservationStatus.index eq 3 ? 'selected' : ''}>
-                            Cancelled
+                            <Cancelled></Cancelled>
                         </option>
                         <option value="4" ${sessionScope.reservationStatus.index eq 4 ? 'selected' : ''}>
                             Payed

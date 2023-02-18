@@ -43,6 +43,12 @@ public class ConfirmPaymentCommand implements Command {
             return path;
         }
 
+        if (reservation.getExpiredAt().isBefore(LocalDateTime.now())) {
+            errorMessage = "Reservation is expired";
+            request.setAttribute("errorMessage", errorMessage);
+            return path;
+        }
+
         UserRepository userRepository = AppContext.getInstance().getUserRepository();
         Optional<UserEntity> userOptional = userRepository.findById(userId);
 
