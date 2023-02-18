@@ -2,7 +2,7 @@ package ua.aleh1s.hotelepam.transaction;
 
 import ua.aleh1s.hotelepam.jdbc.DBManager;
 import ua.aleh1s.hotelepam.jdbc.exception.JdbcException;
-import ua.aleh1s.hotelepam.model.dao.SimpleDao;
+import ua.aleh1s.hotelepam.model.dao.DAO;
 import ua.aleh1s.hotelepam.transaction.exception.TransactionException;
 
 import java.sql.Connection;
@@ -18,13 +18,13 @@ public class Transaction implements AutoCloseable {
         this.dbManager = DBManager.getInstance();
     }
 
-    public static Transaction start(SimpleDao<?, ?> dao, SimpleDao<?, ?>... daos) {
+    public static Transaction start(DAO dao, DAO... daos) {
         Transaction transaction = new Transaction();
         transaction.initDaos(dao, daos);
         return transaction;
     }
 
-    private void initDaos(SimpleDao<?, ?> dao, SimpleDao<?, ?>... daos) {
+    private void initDaos(DAO dao, DAO... daos) {
         try {
             openConnection();
             setAutoCommit(false);
@@ -87,9 +87,9 @@ public class Transaction implements AutoCloseable {
         }
     }
 
-    private void injectConnections(SimpleDao<?, ?> dao, SimpleDao<?, ?>... daos) {
+    private void injectConnections(DAO dao, DAO... daos) {
         dao.setConnection(connection);
-        for (SimpleDao<?, ?> d : daos) {
+        for (DAO d : daos) {
             d.setConnection(connection);
         }
     }

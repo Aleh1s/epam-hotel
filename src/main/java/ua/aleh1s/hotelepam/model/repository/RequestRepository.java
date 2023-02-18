@@ -11,9 +11,9 @@ public interface RequestRepository {
 
     void create(RequestEntity request);
 
-    List<RequestEntity> getAll(Criteria criteria, Pagination pagination);
+    List<RequestEntity> getAll(Criteria criteria, Pagination pagination); //todo: change to page Request
 
-    Integer count(Criteria criteria);
+    Integer count(Criteria criteria); //todo: remove
 
     Optional<RequestEntity> getById(Long requestId);
 

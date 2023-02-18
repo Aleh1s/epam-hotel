@@ -3,10 +3,9 @@ package ua.aleh1s.hotelepam.model.dao.impl;
 import ua.aleh1s.hotelepam.model.constant.SqlFieldName;
 import ua.aleh1s.hotelepam.model.constant.SqlQuery;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
-import ua.aleh1s.hotelepam.model.dao.SimpleDao;
+import ua.aleh1s.hotelepam.model.dao.DAO;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
-import ua.aleh1s.hotelepam.model.entity.RequestStatus;
 import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
 import ua.aleh1s.hotelepam.model.mapper.impl.SqlRequestEntityMapper;
 import ua.aleh1s.hotelepam.model.pagination.Pagination;
@@ -21,8 +20,7 @@ import java.util.Optional;
 
 import static ua.aleh1s.hotelepam.model.constant.SqlQuery.REQUEST_SELECT_BY_ID;
 
-public class RequestSimpleDao extends SimpleDao<Long, RequestEntity> {
-    @Override
+public class RequestDAO extends DAO {
     public Optional<RequestEntity> findById(Long id) throws DaoException {
         RequestEntity request = null;
         try (PreparedStatement statement = connection.prepareStatement(REQUEST_SELECT_BY_ID)) {
@@ -39,12 +37,6 @@ public class RequestSimpleDao extends SimpleDao<Long, RequestEntity> {
         return Optional.ofNullable(request);
     }
 
-    @Override
-    public void delete(RequestEntity entity) throws DaoException {
-
-    }
-
-    @Override
     public void update(RequestEntity entity) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(REQUEST_SELECT_BY_ID,
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
@@ -66,7 +58,6 @@ public class RequestSimpleDao extends SimpleDao<Long, RequestEntity> {
         }
     }
 
-    @Override
     public void save(RequestEntity entity) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SqlQuery.REQUEST_INSERT)) {
             statement.setInt(1, entity.getRoomNumber());

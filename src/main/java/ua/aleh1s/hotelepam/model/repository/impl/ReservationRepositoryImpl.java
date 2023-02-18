@@ -6,7 +6,7 @@ import ua.aleh1s.hotelepam.controller.page.Page;
 import ua.aleh1s.hotelepam.controller.page.PageRequest;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
-import ua.aleh1s.hotelepam.model.dao.impl.ReservationSimpleDao;
+import ua.aleh1s.hotelepam.model.dao.impl.ReservationDAO;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
@@ -22,7 +22,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public void create(ReservationEntity entity) {
-        ReservationSimpleDao dao = new ReservationSimpleDao();
+        ReservationDAO dao = new ReservationDAO();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
                 dao.save(entity);
@@ -38,7 +38,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     public Page<ReservationEntity> getAllByStatus(ReservationStatus status, PageRequest pageRequest) {
         List<ReservationEntity> result = new ArrayList<>();
         Integer count = 0;
-        ReservationSimpleDao dao = new ReservationSimpleDao();
+        ReservationDAO dao = new ReservationDAO();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
                 result = dao.getAllByStatus(status, pageRequest);
@@ -53,25 +53,9 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     @Override
-    public Integer count(Criteria criteria) {
-        Integer count = 0;
-        ReservationSimpleDao dao = new ReservationSimpleDao();
-        try (Transaction transaction = Transaction.start(dao)) {
-            try {
-                count = dao.count(criteria);
-                transaction.commit();
-            } catch (DaoException e) {
-                transaction.rollback();
-                logger.error(e.getMessage(), e);
-            }
-        }
-        return count;
-    }
-
-    @Override
     public Optional<ReservationEntity> getById(Long reservationId) {
         Optional<ReservationEntity> reservationEntity = Optional.empty();
-        ReservationSimpleDao dao = new ReservationSimpleDao();
+        ReservationDAO dao = new ReservationDAO();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
                 reservationEntity = dao.findById(reservationId);
@@ -86,7 +70,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public void update(ReservationEntity reservation) {
-        ReservationSimpleDao dao = new ReservationSimpleDao();
+        ReservationDAO dao = new ReservationDAO();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
                 dao.update(reservation);
@@ -100,7 +84,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public List<ReservationEntity> getAllByCustomerId(Long userId) {
-        ReservationSimpleDao dao = new ReservationSimpleDao();
+        ReservationDAO dao = new ReservationDAO();
         List<ReservationEntity> result = new ArrayList<>();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
@@ -116,7 +100,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public Page<ReservationEntity> getAll(PageRequest pageRequest) {
-        ReservationSimpleDao dao = new ReservationSimpleDao();
+        ReservationDAO dao = new ReservationDAO();
         Integer count = 0;
         List<ReservationEntity> result = new ArrayList<>();
         try (Transaction transaction = Transaction.start(dao)) {

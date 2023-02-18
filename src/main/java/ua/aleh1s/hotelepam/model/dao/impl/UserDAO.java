@@ -1,6 +1,6 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
-import ua.aleh1s.hotelepam.model.dao.SimpleDao;
+import ua.aleh1s.hotelepam.model.dao.DAO;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
@@ -14,8 +14,7 @@ import java.util.Optional;
 import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
 import static ua.aleh1s.hotelepam.model.constant.SqlQuery.*;
 
-public class UserSimpleDao extends SimpleDao<Long, UserEntity> {
-    @Override
+public class UserDAO extends DAO {
     public Optional<UserEntity> findById(Long id) throws DaoException {
         return findAndMap(USER_SELECT_BY_ID, id);
     }
@@ -48,17 +47,6 @@ public class UserSimpleDao extends SimpleDao<Long, UserEntity> {
         return Optional.ofNullable(userEntity);
     }
 
-    @Override
-    public void delete(UserEntity entity) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(USER_DELETE_BY_ID)) {
-            statement.setLong(1, entity.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
     public void update(UserEntity entity) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(USER_SELECT_BY_ID,
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
@@ -82,7 +70,6 @@ public class UserSimpleDao extends SimpleDao<Long, UserEntity> {
         }
     }
 
-    @Override
     public void save(UserEntity entity) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(USER_INSERT)) {
             statement.setString(1, entity.getEmail());

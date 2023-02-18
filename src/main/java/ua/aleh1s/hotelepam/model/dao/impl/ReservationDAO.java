@@ -1,9 +1,8 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
 import ua.aleh1s.hotelepam.controller.page.PageRequest;
-import ua.aleh1s.hotelepam.model.constant.SqlQuery;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
-import ua.aleh1s.hotelepam.model.dao.SimpleDao;
+import ua.aleh1s.hotelepam.model.dao.DAO;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
@@ -18,10 +17,8 @@ import java.util.Optional;
 import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
 import static ua.aleh1s.hotelepam.model.constant.SqlQuery.*;
 
-public class ReservationSimpleDao extends SimpleDao<Long, ReservationEntity> {
+public class ReservationDAO extends DAO {
 
-
-    @Override
     public Optional<ReservationEntity> findById(Long id) throws DaoException {
         ReservationEntity reservationEntity = null;
         try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_BY_ID)) {
@@ -38,12 +35,6 @@ public class ReservationSimpleDao extends SimpleDao<Long, ReservationEntity> {
         return Optional.ofNullable(reservationEntity);
     }
 
-    @Override
-    public void delete(ReservationEntity entity) throws DaoException {
-
-    }
-
-    @Override
     public void update(ReservationEntity entity) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_BY_ID,
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
@@ -68,7 +59,6 @@ public class ReservationSimpleDao extends SimpleDao<Long, ReservationEntity> {
         }
     }
 
-    @Override
     public void save(ReservationEntity entity) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(RESERVATION_INSERT)) {
             statement.setInt(1, entity.getRoomNumber());
@@ -84,24 +74,6 @@ public class ReservationSimpleDao extends SimpleDao<Long, ReservationEntity> {
         } catch (SQLException e) {
             throw new DaoException(e);
         }
-    }
-
-    public List<ReservationEntity> getAllByRoomNumberAndStatus(Integer roomNumber, ReservationStatus status) throws DaoException {
-        List<ReservationEntity> reservationEntities = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_BY_ROOM_NUMBER_AND_STATUS)) {
-            statement.setInt(1, roomNumber);
-            statement.setInt(2, status.getIndex());
-
-            try (ResultSet resultSet = statement.executeQuery()) {
-                SqlReservationEntityMapper mapper = new SqlReservationEntityMapper();
-                while (resultSet.next()) {
-                    reservationEntities.add(mapper.map(resultSet));
-                }
-            }
-        } catch (SQLException | SqlEntityMapperException e) {
-            throw new DaoException(e);
-        }
-        return reservationEntities;
     }
 
     public List<ReservationEntity> getAllByStatus(ReservationStatus status, PageRequest pageRequest) throws DaoException {
@@ -122,21 +94,6 @@ public class ReservationSimpleDao extends SimpleDao<Long, ReservationEntity> {
         return reservationEntities;
     }
 
-    public Integer count(Criteria criteria) throws DaoException {
-        int count = 0;
-        String query = "select count(*) from \"reservation\" " + criteria.build();
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    count = resultSet.getInt(1);
-                }
-            }
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return count;
-    }
-
     public List<ReservationEntity> getAllByCustomerId(Long userId) throws DaoException {
         List<ReservationEntity> reservationEntities = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(RESERVATION_SELECT_ALL_BY_CUSTOMER_ID)) {
@@ -151,21 +108,6 @@ public class ReservationSimpleDao extends SimpleDao<Long, ReservationEntity> {
             throw new DaoException(e);
         }
         return reservationEntities;
-    }
-
-    public Integer countByUserId(Long userId) throws DaoException {
-        int count = 0;
-        try (PreparedStatement statement = connection.prepareStatement(SELECT_COUNT_BY_CUSTOMER_ID)) {
-            statement.setLong(1, userId);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    count = resultSet.getInt(1);
-                }
-            }
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return count;
     }
 
     public Integer countByStatus(ReservationStatus status) throws DaoException {

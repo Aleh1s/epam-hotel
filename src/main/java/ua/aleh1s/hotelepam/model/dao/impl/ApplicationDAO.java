@@ -1,16 +1,12 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
 import ua.aleh1s.hotelepam.controller.page.PageRequest;
-import ua.aleh1s.hotelepam.model.constant.SqlQuery;
-import ua.aleh1s.hotelepam.model.criteria.Criteria;
-import ua.aleh1s.hotelepam.model.dao.SimpleDao;
+import ua.aleh1s.hotelepam.model.dao.DAO;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
-import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.model.mapper.exception.SqlEntityMapperException;
 import ua.aleh1s.hotelepam.model.mapper.impl.SqlApplicationEntityMapper;
-import ua.aleh1s.hotelepam.model.pagination.Pagination;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -23,8 +19,8 @@ import java.util.Optional;
 import static ua.aleh1s.hotelepam.model.constant.SqlFieldName.*;
 import static ua.aleh1s.hotelepam.model.constant.SqlQuery.*;
 
-public class ApplicationSimpleDao extends SimpleDao<Long, ApplicationEntity> {
-    @Override
+public class ApplicationDAO extends DAO {
+
     public Optional<ApplicationEntity> findById(Long id) throws DaoException {
         ApplicationEntity application = null;
         try (PreparedStatement statement = connection.prepareStatement(APPLICATION_SELECT_BY_ID)) {
@@ -41,12 +37,6 @@ public class ApplicationSimpleDao extends SimpleDao<Long, ApplicationEntity> {
         return Optional.ofNullable(application);
     }
 
-    @Override
-    public void delete(ApplicationEntity entity) throws DaoException {
-
-    }
-
-    @Override
     public void update(ApplicationEntity entity) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(APPLICATION_SELECT_BY_ID,
                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
@@ -68,7 +58,6 @@ public class ApplicationSimpleDao extends SimpleDao<Long, ApplicationEntity> {
         }
     }
 
-    @Override
     public void save(ApplicationEntity entity) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(APPLICATION_INSERT)) {
             statement.setInt(1, entity.getGuestsNumber());

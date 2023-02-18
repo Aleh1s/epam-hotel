@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
-import ua.aleh1s.hotelepam.model.dao.impl.RequestSimpleDao;
+import ua.aleh1s.hotelepam.model.dao.impl.RequestDAO;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.pagination.Pagination;
 import ua.aleh1s.hotelepam.model.repository.RequestRepository;
@@ -20,7 +20,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     @Override
     public void create(RequestEntity request) {
-        RequestSimpleDao dao = new RequestSimpleDao();
+        RequestDAO dao = new RequestDAO();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
                 dao.save(request);
@@ -35,7 +35,7 @@ public class RequestRepositoryImpl implements RequestRepository {
     @Override
     public List<RequestEntity> getAll(Criteria criteria, Pagination pagination) {
         List<RequestEntity> requestEntityList = new ArrayList<>();
-        RequestSimpleDao dao = new RequestSimpleDao();
+        RequestDAO dao = new RequestDAO();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
                 requestEntityList = dao.getAll(criteria, pagination);
@@ -51,7 +51,7 @@ public class RequestRepositoryImpl implements RequestRepository {
     @Override
     public Integer count(Criteria criteria) {
         Integer count = 0;
-        RequestSimpleDao dao = new RequestSimpleDao();
+        RequestDAO dao = new RequestDAO();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
                 count = dao.count(criteria);
@@ -67,7 +67,7 @@ public class RequestRepositoryImpl implements RequestRepository {
     @Override
     public Optional<RequestEntity> getById(Long requestId) {
         Optional<RequestEntity> requestEntity = Optional.empty();
-        RequestSimpleDao dao = new RequestSimpleDao();
+        RequestDAO dao = new RequestDAO();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
                 requestEntity = dao.findById(requestId);
@@ -82,7 +82,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     @Override
     public void update(RequestEntity requestEntity) {
-        RequestSimpleDao dao = new RequestSimpleDao();
+        RequestDAO dao = new RequestDAO();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
                 dao.update(requestEntity);

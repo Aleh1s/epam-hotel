@@ -13,17 +13,9 @@ import java.util.Optional;
 public interface ReservationRepository {
 
     void create(ReservationEntity entity);
-
-
     Page<ReservationEntity> getAllByStatus(ReservationStatus status, PageRequest pageRequest);
-
-    Integer count(Criteria criteria);
-
     Optional<ReservationEntity> getById(Long reservationId);
-
     void update(ReservationEntity reservation);
-
     List<ReservationEntity> getAllByCustomerId(Long userId);
-
     Page<ReservationEntity> getAll(PageRequest pageRequest);
 }

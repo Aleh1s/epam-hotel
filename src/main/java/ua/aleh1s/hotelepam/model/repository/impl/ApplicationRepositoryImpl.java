@@ -4,11 +4,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.aleh1s.hotelepam.controller.page.Page;
 import ua.aleh1s.hotelepam.controller.page.PageRequest;
-import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
 import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
 import ua.aleh1s.hotelepam.model.dao.exception.DaoException;
-import ua.aleh1s.hotelepam.model.dao.impl.ApplicationSimpleDao;
+import ua.aleh1s.hotelepam.model.dao.impl.ApplicationDAO;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.transaction.Transaction;
 
@@ -22,7 +21,7 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
 
     @Override
     public void create(ApplicationEntity applicationEntity) {
-        ApplicationSimpleDao applicationSimpleDao = new ApplicationSimpleDao();
+        ApplicationDAO applicationSimpleDao = new ApplicationDAO();
         try (Transaction transaction = Transaction.start(applicationSimpleDao)) {
             try {
                 applicationSimpleDao.save(applicationEntity);
@@ -38,7 +37,7 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
     public Page<ApplicationEntity> getAllByStatus(ApplicationStatus status, PageRequest pageRequest) {
         Integer count = 0;
         List<ApplicationEntity> applicationList = new ArrayList<>();
-        ApplicationSimpleDao dao = new ApplicationSimpleDao();
+        ApplicationDAO dao = new ApplicationDAO();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
                 applicationList = dao.getAllByStatus(status, pageRequest);
@@ -56,7 +55,7 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
     @Override
     public Optional<ApplicationEntity> getById(Long id) {
         Optional<ApplicationEntity> application = Optional.empty();
-        ApplicationSimpleDao dao = new ApplicationSimpleDao();
+        ApplicationDAO dao = new ApplicationDAO();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
                 application = dao.findById(id);
@@ -71,7 +70,7 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
 
     @Override
     public void update(ApplicationEntity application) {
-        ApplicationSimpleDao dao = new ApplicationSimpleDao();
+        ApplicationDAO dao = new ApplicationDAO();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
                 dao.update(application);
