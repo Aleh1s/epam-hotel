@@ -20,17 +20,19 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     private static final Logger logger = LogManager.getLogger(ReservationRepositoryImpl.class);
 
     @Override
-    public void create(ReservationEntity entity) {
+    public Long create(ReservationEntity entity) {
+        long id = 0L;
         ReservationDAO dao = new ReservationDAO();
         try (Transaction transaction = Transaction.start(dao)) {
             try {
-                dao.save(entity);
+                id = dao.save(entity);
                 transaction.commit();
             } catch (DaoException e) {
                 transaction.rollback();
                 logger.error(e.getMessage(), e);
             }
         }
+        return id;
     }
 
     @Override
@@ -145,5 +147,19 @@ public class ReservationRepositoryImpl implements ReservationRepository {
             }
         }
         return actualReservations;
+    }
+
+    @Override
+    public void updateStatus(ReservationEntity reservation) {
+        ReservationDAO dao = new ReservationDAO();
+        try (Transaction transaction = Transaction.start(dao)) {
+            try {
+                dao.updateStatus(reservation);
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                logger.error(e.getMessage(), e);
+            }
+        }
     }
 }

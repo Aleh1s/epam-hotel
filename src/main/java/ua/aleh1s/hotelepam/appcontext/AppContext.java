@@ -1,10 +1,15 @@
 package ua.aleh1s.hotelepam.appcontext;
 
 import ua.aleh1s.hotelepam.controller.dtomapper.*;
+import ua.aleh1s.hotelepam.mail.MailService;
+import ua.aleh1s.hotelepam.mail.MailServiceImpl;
 import ua.aleh1s.hotelepam.model.repository.*;
 import ua.aleh1s.hotelepam.model.repository.impl.*;
 import ua.aleh1s.hotelepam.model.sqlmapper.*;
+import ua.aleh1s.hotelepam.service.ReservationService;
+import ua.aleh1s.hotelepam.service.ReservationTokenService;
 import ua.aleh1s.hotelepam.service.RoomService;
+import ua.aleh1s.hotelepam.service.UserService;
 
 import java.util.Objects;
 
@@ -28,6 +33,12 @@ public class AppContext {
     private final SqlRoomEntityMapper sqlRoomEntityMapper;
     private final SqlUserEntityMapper sqlUserEntityMapper;
     private final RoomService roomService;
+    private final ReservationService reservationService;
+    private final MailService mailService;
+    private ReservationTokenRepository reservationTokenRepository;
+    private ReservationTokenService reservationTokenService;
+    private UserService userService;
+    private SqlReservationTokenEntityMapper sqlReservationTokenEntityMapper;
 
     {
         this.userRepository = new UserRepositoryImpl();
@@ -47,6 +58,12 @@ public class AppContext {
         this.sqlRoomEntityMapper = new SqlRoomEntityMapper();
         this.sqlUserEntityMapper = new SqlUserEntityMapper();
         this.roomService = new RoomService();
+        this.reservationService = new ReservationService();
+        this.mailService = new MailServiceImpl();
+        this.reservationTokenRepository = new ReservationTokenRepositoryImpl();
+        this.reservationTokenService = new ReservationTokenService();
+        this.userService = new UserService();
+        this.sqlReservationTokenEntityMapper = new SqlReservationTokenEntityMapper();
     }
 
     public static synchronized AppContext getInstance() {
@@ -120,4 +137,28 @@ public class AppContext {
     }
 
     public RoomService getRoomService() {return roomService;}
+
+    public ReservationService getReservationService() {
+        return reservationService;
+    }
+
+    public MailService getMailService() {
+        return mailService;
+    }
+
+    public ReservationTokenRepository getReservationTokenRepository() {
+        return reservationTokenRepository;
+    }
+
+    public ReservationTokenService getReservationTokenService() {
+        return reservationTokenService;
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public SqlReservationTokenEntityMapper getSqlReservationTokenEntityMapper() {
+        return sqlReservationTokenEntityMapper;
+    }
 }

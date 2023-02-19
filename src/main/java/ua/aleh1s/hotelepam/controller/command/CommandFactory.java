@@ -48,5 +48,6 @@ public final class CommandFactory {
         commandMap.put("topUpAccount", new TopUpAccountCommand());
         commandMap.put("logOut", new LogOutCommand());
         commandMap.put("changeRequestStatus", new ChangeRequestStatusCommand());
+        commandMap.put("chooseRooms", new ChooseRoomsCommand());
     }
 }

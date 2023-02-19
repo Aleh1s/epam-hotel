@@ -17,10 +17,8 @@
                         <img src="../img/success_mark.png" alt="Success mark">
                     </div>
                     <div class="congratulation-container">
-                        <h1>Booking Successful!</h1>
-                        <p>Your booking will be processed by manager! Details of booking are included below.
-                            Reservation must be paid within two days. If the bill is not paid, the reservation is
-                            automatically withdrawn.</p>
+                        <h1>Reservation needs confirmation!</h1>
+                        <p>You will receive email to confirm your reservation. Confirmation is valid 15 minutes.</p>
                     </div>
                     <div class="horizontal-delimiter-with-text">
                         <p>Booking info</p>
@@ -31,17 +29,14 @@
                             <tr class="active">
                                 <td>Total Amount</td>
                                 <td>$ ${sessionScope.reservationTotalAmount}</td>
-                                <c:remove var="reservationTotalAmount" scope="session"/>
                             </tr>
                             <tr>
-                                <td>Entry Date</td>
-                                <td>${sessionScope.reservationEntryDate}</td>
-                                <c:remove var="reservationEntryDate" scope="session"/>
+                                <td>Check-in</td>
+                                <td>${sessionScope.reservationCheckIn}</td>
                             </tr>
                             <tr>
-                                <td>Leaving Date</td>
-                                <td>${sessionScope.reservationLeavingDate}</td>
-                                <c:remove var="reservationLeavingDate" scope="session"/>
+                                <td>Check-out</td>
+                                <td>${sessionScope.reservationCheckOut}</td>
                             </tr>
                         </table>
                     </div>

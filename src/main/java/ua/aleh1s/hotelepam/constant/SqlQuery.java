@@ -36,10 +36,16 @@ public class SqlQuery {
         public static final String SELECT_PAGE_BY_STATUS_ORDER_BY_CREATED_AT = "select * from \"reservation\" where status = ? order by created_at desc offset ? limit ?";
         public static final String SELECT_ALL_ACTUAL = "select * from \"reservation\" where date_of_entry >= ? or date_of_leaving >= ?";
         public static final String SELECT_ALL_ACTUAL_BY_ROOM_NUMBER = "select * from \"reservation\" where room_number = ? and (date_of_entry >= ? or date_of_leaving >= ?)";
+        public static final String UPDATE_STATUS = "update \"reservation\" set status = ? where id = ?";
     }
 
     public static class RequestTable {
         public static final String INSERT = "insert into \"request\" (room_number, customer_id, status, entry_date, leaving_date, total_amount) values (?, ?, ?, ?, ?, ?)";
         public static final String SELECT_ALL_BY_ID = "select * from \"request\" where id = ?";
+    }
+
+    public static class ReservationTokenTable {
+        public static final String INSERT = "insert into \"reservation_token\" (id, created_at, expired_at, reservation_id) values(?, ?, ?, ?)";
+        public static final String SELECT_BY_ID = "select * from \"reservation_token\" where id = ?";
     }
 }

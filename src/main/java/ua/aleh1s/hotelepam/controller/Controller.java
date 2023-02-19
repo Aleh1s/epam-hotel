@@ -9,7 +9,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
+import ua.aleh1s.hotelepam.controller.command.CommandException;
 import ua.aleh1s.hotelepam.controller.command.CommandFactory;
 import ua.aleh1s.hotelepam.controller.command.impl.UnknownCommand;
 import ua.aleh1s.hotelepam.jdbc.DBManager;
@@ -23,6 +25,7 @@ public class Controller extends HttpServlet {
 
     private static final Logger log = LogManager.getLogger(Controller.class);
     private CommandFactory commandFactory;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -46,10 +49,19 @@ public class Controller extends HttpServlet {
 
     private void process(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String commandStr = request.getParameter("command");
         Command command = commandFactory.getCommand(commandStr)
                 .orElse(new UnknownCommand());
-        String path = command.execute(request, response);
+
+        String path;
+        try {
+            path = command.execute(request, response);
+        } catch (CommandException e) {
+            request.setAttribute("errorMessage", e.getMessage());
+            path = e.getPath();
+        }
+
         if (!path.equals("redirect")) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(path);
             dispatcher.forward(request, response);

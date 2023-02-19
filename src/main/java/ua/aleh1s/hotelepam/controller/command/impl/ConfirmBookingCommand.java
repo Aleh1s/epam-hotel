@@ -2,54 +2,51 @@ package ua.aleh1s.hotelepam.controller.command.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.dto.BookInfoDto;
+import ua.aleh1s.hotelepam.controller.command.CommandException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
-import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
+import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
+import ua.aleh1s.hotelepam.service.ReservationService;
+import ua.aleh1s.hotelepam.service.ReservationTokenService;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-import static ua.aleh1s.hotelepam.model.entity.ReservationStatus.PENDING;
+import static java.util.Objects.*;
+import static ua.aleh1s.hotelepam.model.entity.ReservationStatus.*;
 
 public class ConfirmBookingCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession(false);
-        Long customerId = (Long) session.getAttribute("id");
+        ReservationTokenService reservationTokenService = AppContext.getInstance().getReservationTokenService();
+        ReservationService reservationService = AppContext.getInstance().getReservationService();
 
-        BookInfoDto bookingInfo = (BookInfoDto) session.getAttribute("bookInfo");
-        session.removeAttribute("bookInfo");
+        String tokenId = request.getParameter("tokenId");
+        ReservationTokenEntity token = reservationTokenService.getById(tokenId)
+                .orElseThrow(CommandException::new);
 
-        LocalDateTime now = LocalDateTime.now();
-        ReservationEntity reservation = ReservationEntity.Builder.newBuilder()
-                .roomNumber(bookingInfo.getRoomNumber())
-                .customerId(customerId)
-                .entryDate(bookingInfo.getEntryDate())
-                .leavingDate(bookingInfo.getLeavingDate())
-                .createdAt(now)
-                .expiredAt(now.plusDays(2))
-                .totalAmount(bookingInfo.getTotalAmount())
-                .status(PENDING)
-                .build();
+        LocalDateTime tokenExpiredAt = token.getExpiredAt();
+        if (tokenExpiredAt.isBefore(LocalDateTime.now()))
+            throw new CommandException("Token has already expired!");
 
-        ReservationRepository reservationRepository = AppContext.getInstance().getReservationRepository();
-        reservationRepository.create(reservation);
+        if (nonNull(token.getConfirmedAt()))
+            throw new CommandException("Token has already confirmed!");
 
-        session.setAttribute("reservationTotalAmount", bookingInfo.getTotalAmount());
-        session.setAttribute("reservationEntryDate", bookingInfo.getEntryDate());
-        session.setAttribute("reservationLeavingDate", bookingInfo.getLeavingDate());
+        ReservationEntity reservation = reservationService.getById(token.getReservationId())
+                        .orElseThrow(CommandException::new);
 
-        String path = ResourcesManager.getInstance().getValue("path.page.success.booking");
+        reservationTokenService.confirmToken(token);
+        reservationService.changeStatus(reservation, PENDING_PAYMENT);
+
+        String path = ResourcesManager.getInstance().getValue("path.page.booking.confirmation");
         try {
             response.sendRedirect(path);
             path = "redirect";
         } catch (IOException e) {
-            path = ResourcesManager.getInstance().getValue("path.page.error");
+            throw new CommandException();
         }
 
         return path;

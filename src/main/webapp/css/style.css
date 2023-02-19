@@ -1051,8 +1051,8 @@
     gap: 30px 20px;
     border-radius: 30px;
     box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
-    border: 1px solid #d9d9d9;
-    background-color: white;
+    border: 2px solid #3f98ff;
+    background-color: rgba(245, 245, 245, 0.82);
 }
 
 .success-image-container {
@@ -1076,16 +1076,17 @@
 }
 
 .congratulation-container h1 {
-    color: rgb(75,174,79);
+    color: #1d3c62;
     font-size: 26px;
     letter-spacing: 1px;
     font-weight: normal;
+    font-style: italic;
 }
 
 .congratulation-container p {
-    color: #1d3c62;
+    color: #8d8d8d;
     font-size: 14px;
-    font-weight: lighter;
+    letter-spacing: 1px;
 }
 
 .success-grid-container .horizontal-delimiter-with-text {
@@ -1308,4 +1309,43 @@
     height: 50px;
     width: 120px;
     border-radius: 25px;
+}
+
+.booking-confirmation-container {
+    width: 500px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid #3f98ff;
+    border-radius: 15px;
+    background-color: rgba(245, 245, 245, 0.82);
+    padding: 30px;
+}
+
+.booking-confirmation-container > h1 {
+    color: #1d3c62;
+    font-size: 24px;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    font-style: italic;
+}
+
+.success-mark-container {
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.booking-confirmation-container > p {
+    color: #8d8d8d;
+    letter-spacing: 1px;
+    font-size: 14px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.success-mark-container > img {
+    height: 100%;
+    width: auto;
 }

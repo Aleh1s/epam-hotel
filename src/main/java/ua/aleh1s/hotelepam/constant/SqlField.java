@@ -63,4 +63,13 @@ public class SqlField {
         public static final String TOTAL_AMOUNT = "total_amount";
         public static final String STATUS = "status";
     }
+
+    public static class ReservationTokenTable {
+
+        public static final String ID = "id";
+        public static final String CREATED_AT = "created_at";
+        public static final String EXPIRED_AT = "expired_at";
+        public static final String CONFIRMED_AT = "confirmed_at";
+        public static final String RESERVATION_ID = "reservation_id";
+    }
 }

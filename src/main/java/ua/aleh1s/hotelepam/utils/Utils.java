@@ -1,6 +1,7 @@
 package ua.aleh1s.hotelepam.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
+import ua.aleh1s.hotelepam.controller.command.CommandException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import static java.util.Objects.*;
 
 public class Utils {
+
 
     public static Integer getIntValue(HttpServletRequest request, String name) {
         return Integer.parseInt(request.getParameter(name));
@@ -47,5 +49,16 @@ public class Utils {
 
     public static int getNumberOfPages(int totalCount, int pageSize) {
         return (int) Math.ceil(totalCount / (double) pageSize);
+    }
+
+    public static boolean isReservationPeriodValid(Period period) {
+        LocalDate checkIn = period.getStart();
+        LocalDate checkOut = period.getEnd();
+
+        LocalDate now = LocalDate.now();
+        boolean isCheckInValid = checkIn.isAfter(now) || checkIn.isEqual(now),
+                isDateRangeValid = checkIn.isBefore(checkOut);
+
+        return isCheckInValid && isDateRangeValid;
     }
 }

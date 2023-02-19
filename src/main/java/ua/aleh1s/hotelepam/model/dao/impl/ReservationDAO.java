@@ -63,8 +63,9 @@ public class ReservationDAO extends DAO {
         }
     }
 
-    public void save(ReservationEntity entity) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(INSERT)) {
+    public Long save(ReservationEntity entity) throws DaoException {
+        long id = 0L;
+        try (PreparedStatement statement = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, entity.getRoomNumber());
             statement.setLong(2, entity.getCustomerId());
             statement.setDate(3, Date.valueOf(entity.getEntryDate()));
@@ -74,10 +75,20 @@ public class ReservationDAO extends DAO {
             statement.setTimestamp(7, entity.getPayedAt() != null ? Timestamp.valueOf(entity.getPayedAt()) : null);
             statement.setBigDecimal(8, entity.getTotalAmount());
             statement.setInt(9, entity.getStatus().getIndex());
-            statement.executeUpdate();
+            int rowsInserted = statement.executeUpdate();
+
+            if (rowsInserted > 0) {
+                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        id = generatedKeys.getLong(1);
+                    }
+                }
+            }
         } catch (SQLException e) {
             throw new DaoException(e);
         }
+
+        return id;
     }
 
     public List<ReservationEntity> getAllByStatus(ReservationStatus status, PageRequest pageRequest) throws DaoException {
@@ -190,5 +201,15 @@ public class ReservationDAO extends DAO {
             throw new DaoException(e);
         }
         return actualReservations;
+    }
+
+    public void updateStatus(ReservationEntity reservation) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE_STATUS)) {
+            statement.setInt(1, reservation.getStatus().getIndex());
+            statement.setLong(2, reservation.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 }

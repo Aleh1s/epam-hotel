@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface ReservationRepository {
 
-    void create(ReservationEntity entity);
+    Long create(ReservationEntity entity);
     Page<ReservationEntity> getAllByStatus(ReservationStatus status, PageRequest pageRequest);
     Optional<ReservationEntity> getById(Long reservationId);
     void update(ReservationEntity reservation);
@@ -18,4 +18,5 @@ public interface ReservationRepository {
     Page<ReservationEntity> getAll(PageRequest pageRequest);
     List<ReservationEntity> getActualReservations();
     List<ReservationEntity> getActualReservationsByRoomNumber(Integer number);
+    void updateStatus(ReservationEntity reservation);
 }

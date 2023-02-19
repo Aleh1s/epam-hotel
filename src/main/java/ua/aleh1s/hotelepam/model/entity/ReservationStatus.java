@@ -2,8 +2,8 @@ package ua.aleh1s.hotelepam.model.entity;
 
 public enum ReservationStatus {
 
-    PENDING(1),
-    CONFIRMED(2),
+    PENDING_CONFIRMATION(1),
+    PENDING_PAYMENT(2),
     CANCELLED(3),
     PAYED(4),
     EXPIRED(5),
@@ -17,8 +17,8 @@ public enum ReservationStatus {
 
     public static ReservationStatus atIndex(int index) {
         return switch (index) {
-            case 1 -> PENDING;
-            case 2 -> CONFIRMED;
+            case 1 -> PENDING_CONFIRMATION;
+            case 2 -> PENDING_PAYMENT;
             case 3 -> CANCELLED;
             case 4 -> PAYED;
             case 5 -> EXPIRED;

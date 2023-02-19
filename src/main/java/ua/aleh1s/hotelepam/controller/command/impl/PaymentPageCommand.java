@@ -40,7 +40,7 @@ public class PaymentPageCommand implements Command {
         }
 
         ReservationEntity reservation = reservationOptional.get();
-        if (!reservation.getStatus().equals(ReservationStatus.CONFIRMED)) {
+        if (!reservation.getStatus().equals(ReservationStatus.PENDING_PAYMENT)) {
             errorMessage = "You cannot pay this reservation, because it's not confirmed";
             request.setAttribute("errorMessage", errorMessage);
             return path;
