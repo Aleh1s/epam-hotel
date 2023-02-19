@@ -3,8 +3,8 @@ package ua.aleh1s.hotelepam.model.pagination.impl;
 import jakarta.servlet.http.HttpServletRequest;
 import ua.aleh1s.hotelepam.model.pagination.Pagination;
 
-import static ua.aleh1s.hotelepam.appcontext.Utils.getIntContextParamValue;
-import static ua.aleh1s.hotelepam.appcontext.Utils.getIntValueOrDefault;
+import static ua.aleh1s.hotelepam.utils.Utils.getIntContextParamValue;
+import static ua.aleh1s.hotelepam.utils.Utils.getIntValueOrDefault;
 
 public class RequsetPagination implements Pagination {
 

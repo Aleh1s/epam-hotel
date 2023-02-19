@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.appcontext.Utils.getBigDecimalValue;
+import static ua.aleh1s.hotelepam.utils.Utils.getBigDecimalValue;
 
 public class TopUpAccountCommand implements Command {
     @Override

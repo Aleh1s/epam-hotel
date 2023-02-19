@@ -17,8 +17,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.appcontext.Utils.getIntValue;
-import static ua.aleh1s.hotelepam.appcontext.Utils.getLocalDateValue;
+import static ua.aleh1s.hotelepam.utils.Utils.getIntValue;
+import static ua.aleh1s.hotelepam.utils.Utils.getLocalDateValue;
 
 public class MakeRequestCommand implements Command {
 

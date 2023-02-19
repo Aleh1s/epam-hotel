@@ -1,4 +1,4 @@
-package ua.aleh1s.hotelepam.appcontext;
+package ua.aleh1s.hotelepam.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 

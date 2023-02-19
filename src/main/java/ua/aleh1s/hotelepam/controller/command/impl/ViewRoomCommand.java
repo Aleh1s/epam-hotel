@@ -12,7 +12,7 @@ import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.appcontext.Utils.*;
+import static ua.aleh1s.hotelepam.utils.Utils.*;
 
 public class ViewRoomCommand implements Command {
     @Override

@@ -18,8 +18,8 @@ import java.util.*;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.toMap;
-import static ua.aleh1s.hotelepam.appcontext.Utils.getIntValueOrDefault;
-import static ua.aleh1s.hotelepam.appcontext.Utils.getNumberOfPages;
+import static ua.aleh1s.hotelepam.utils.Utils.getIntValueOrDefault;
+import static ua.aleh1s.hotelepam.utils.Utils.getNumberOfPages;
 
 public class RoomListCommand implements Command {
 

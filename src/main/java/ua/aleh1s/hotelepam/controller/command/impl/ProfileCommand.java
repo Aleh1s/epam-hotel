@@ -22,8 +22,8 @@ import ua.aleh1s.hotelepam.model.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.appcontext.Utils.getIntContextParamValue;
-import static ua.aleh1s.hotelepam.appcontext.Utils.getIntValueOrDefault;
+import static ua.aleh1s.hotelepam.utils.Utils.getIntContextParamValue;
+import static ua.aleh1s.hotelepam.utils.Utils.getIntValueOrDefault;
 
 public class ProfileCommand implements Command {
     @Override

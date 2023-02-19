@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
-import ua.aleh1s.hotelepam.appcontext.Utils;
+import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;

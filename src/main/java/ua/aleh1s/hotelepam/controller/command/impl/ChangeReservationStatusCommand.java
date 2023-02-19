@@ -14,8 +14,8 @@ import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
 import java.io.IOException;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.appcontext.Utils.getIntValue;
-import static ua.aleh1s.hotelepam.appcontext.Utils.getLongValue;
+import static ua.aleh1s.hotelepam.utils.Utils.getIntValue;
+import static ua.aleh1s.hotelepam.utils.Utils.getLongValue;
 
 public class ChangeReservationStatusCommand implements Command {
     @Override
