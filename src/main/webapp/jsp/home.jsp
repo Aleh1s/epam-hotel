@@ -19,25 +19,27 @@
     <div class="search-bar-container">
         <div class="home-search-bar">
             <form method="get" action="<c:url value="/controller"/>">
+                <input type="hidden" name="command" value="chooseRooms">
                 <div class="date-input">
                     <label for="check-in">
                         Check-in
                     </label>
-                    <input id="check-in" name="entryDate" type="date"
+                    <input id="check-in" name="checkIn" type="date"
                            max="2024-01-01" required>
                 </div>
                 <div class="date-input">
                     <label for="check-out">
                         Check-out
                     </label>
-                    <input id="check-out" name="leavingDate" type="date"
+                    <input id="check-out" name="checkOut" type="date"
                            max="2024-01-01" required>
                 </div>
                 <div class="date-input">
                     <label for="guests">
                         Guests
                     </label>
-                    <input id="guests" type="number" min="1" max="10" required placeholder="Guests" value="1">
+                    <input id="guests" name="guests" type="number" min="1" max="10" required
+                           placeholder="Guests" value="1">
                 </div>
                 <button type="submit" class="btn-primary">Search</button>
             </form>
