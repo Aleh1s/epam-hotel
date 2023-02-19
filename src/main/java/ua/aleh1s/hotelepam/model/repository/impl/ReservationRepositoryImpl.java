@@ -114,4 +114,36 @@ public class ReservationRepositoryImpl implements ReservationRepository {
         }
         return Page.of(result, count);
     }
+
+    @Override
+    public List<ReservationEntity> getActualReservations() {
+        List<ReservationEntity> actualReservations = new ArrayList<>();
+        ReservationDAO dao = new ReservationDAO();
+        try (Transaction transaction = Transaction.start(dao)) {
+            try {
+                actualReservations = dao.getActualReservations();
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                logger.error(e.getMessage(), e);
+            }
+        }
+        return actualReservations;
+    }
+
+    @Override
+    public List<ReservationEntity> getActualReservationsByRoomNumber(Integer number) {
+        List<ReservationEntity> actualReservations = new ArrayList<>();
+        ReservationDAO dao = new ReservationDAO();
+        try (Transaction transaction = Transaction.start(dao)) {
+            try {
+                actualReservations = dao.getActualReservationsByRoomNumber(number);
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                logger.error(e.getMessage(), e);
+            }
+        }
+        return actualReservations;
+    }
 }

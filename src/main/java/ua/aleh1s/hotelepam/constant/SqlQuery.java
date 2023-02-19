@@ -34,6 +34,8 @@ public class SqlQuery {
         public static final String SELECT_ALL_BY_CUSTOMER_ID = "select * from \"reservation\" where customer_id = ?";
         public static final String SELECT_AVAILABLE_PAGE_ORDER_BY_CREATED_AT = "select * from \"reservation\" where status != 6 order by created_at desc offset ? limit ?";
         public static final String SELECT_PAGE_BY_STATUS_ORDER_BY_CREATED_AT = "select * from \"reservation\" where status = ? order by created_at desc offset ? limit ?";
+        public static final String SELECT_ALL_ACTUAL = "select * from \"reservation\" where date_of_entry >= ? or date_of_leaving >= ?";
+        public static final String SELECT_ALL_ACTUAL_BY_ROOM_NUMBER = "select * from \"reservation\" where room_number = ? and (date_of_entry >= ? or date_of_leaving >= ?)";
     }
 
     public static class RequestTable {

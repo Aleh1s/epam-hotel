@@ -18,7 +18,7 @@ import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.appcontext.Utils.getLongValue;
+import static ua.aleh1s.hotelepam.utils.Utils.getLongValue;
 
 public class PaymentPageCommand implements Command {
 

@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.*;
-import static ua.aleh1s.hotelepam.appcontext.Utils.getIntValueOrDefault;
-import static ua.aleh1s.hotelepam.appcontext.Utils.getNumberOfPages;
+import static ua.aleh1s.hotelepam.utils.Utils.getIntValueOrDefault;
+import static ua.aleh1s.hotelepam.utils.Utils.getNumberOfPages;
 import static ua.aleh1s.hotelepam.model.entity.ReservationStatus.REMOVED;
 
 public class MyBookingsCommand implements Command {

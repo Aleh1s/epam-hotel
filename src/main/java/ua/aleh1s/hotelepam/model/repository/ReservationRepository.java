@@ -16,4 +16,6 @@ public interface ReservationRepository {
     void update(ReservationEntity reservation);
     List<ReservationEntity> getAllByCustomerId(Long userId);
     Page<ReservationEntity> getAll(PageRequest pageRequest);
+    List<ReservationEntity> getActualReservations();
+    List<ReservationEntity> getActualReservationsByRoomNumber(Integer number);
 }

@@ -1,6 +1,7 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
 import ua.aleh1s.hotelepam.appcontext.AppContext;
+import ua.aleh1s.hotelepam.constant.SqlQuery;
 import ua.aleh1s.hotelepam.model.dao.DAO;
 import ua.aleh1s.hotelepam.model.dao.DaoException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
@@ -9,6 +10,7 @@ import ua.aleh1s.hotelepam.model.pagination.PageRequest;
 import ua.aleh1s.hotelepam.model.sqlmapper.SqlReservationEntityMapper;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -153,5 +155,40 @@ public class ReservationDAO extends DAO {
             throw new DaoException(e);
         }
         return count;
+    }
+
+    public List<ReservationEntity> getActualReservations() throws DaoException {
+        List<ReservationEntity> actualReservations = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_ACTUAL)) {
+            LocalDate now = LocalDate.now();
+            statement.setDate(1, Date.valueOf(now));
+            statement.setDate(2, Date.valueOf(now));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    actualReservations.add(mapper.map(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return actualReservations;
+    }
+
+    public List<ReservationEntity> getActualReservationsByRoomNumber(Integer number) throws DaoException {
+        List<ReservationEntity> actualReservations = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_ACTUAL_BY_ROOM_NUMBER)) {
+            LocalDate now = LocalDate.now();
+            statement.setInt(1, number);
+            statement.setDate(2, Date.valueOf(now));
+            statement.setDate(3, Date.valueOf(now));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    actualReservations.add(mapper.map(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return actualReservations;
     }
 }

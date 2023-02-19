@@ -4,6 +4,7 @@ import ua.aleh1s.hotelepam.controller.dtomapper.*;
 import ua.aleh1s.hotelepam.model.repository.*;
 import ua.aleh1s.hotelepam.model.repository.impl.*;
 import ua.aleh1s.hotelepam.model.sqlmapper.*;
+import ua.aleh1s.hotelepam.service.RoomService;
 
 import java.util.Objects;
 
@@ -26,6 +27,7 @@ public class AppContext {
     private final SqlReservationEntityMapper sqlReservationEntityMapper;
     private final SqlRoomEntityMapper sqlRoomEntityMapper;
     private final SqlUserEntityMapper sqlUserEntityMapper;
+    private final RoomService roomService;
 
     {
         this.userRepository = new UserRepositoryImpl();
@@ -44,6 +46,7 @@ public class AppContext {
         this.sqlReservationEntityMapper = new SqlReservationEntityMapper();
         this.sqlRoomEntityMapper = new SqlRoomEntityMapper();
         this.sqlUserEntityMapper = new SqlUserEntityMapper();
+        this.roomService = new RoomService();
     }
 
     public static synchronized AppContext getInstance() {
@@ -115,4 +118,6 @@ public class AppContext {
     public SqlUserEntityMapper getSqlUserEntityMapper() {
         return sqlUserEntityMapper;
     }
+
+    public RoomService getRoomService() {return roomService;}
 }
