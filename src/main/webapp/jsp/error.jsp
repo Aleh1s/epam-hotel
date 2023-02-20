@@ -5,9 +5,16 @@
 
 <html>
 <head>
-    <title>Error</title>
+    <title>Server Error</title>
 </head>
 <body>
-<h1>Error</h1>
+<c:choose>
+    <c:when test="${not empty requestScope.errorMessage}">
+        <h1>${requestScope.errorMessage}</h1>
+    </c:when>
+    <c:otherwise>
+        <h1>Server Error</h1>
+    </c:otherwise>
+</c:choose>
 </body>
 </html>
