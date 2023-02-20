@@ -4,12 +4,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 public class MailServiceImpl implements MailService {
@@ -44,14 +42,10 @@ public class MailServiceImpl implements MailService {
             MimeMessage email = new MimeMessage(session);
             email.setFrom(new InternetAddress(username));
             email.setRecipient(Message.RecipientType.TO, new InternetAddress(mail.getToAddress()));
-            email.setSubject(mail.getSubject());
-            Multipart multipart = new MimeMultipart();
-            BodyPart htmlPart = new MimeBodyPart();
-            htmlPart.setContent(mail.getMessage(), "text/html");
-            multipart.addBodyPart(htmlPart);
-            email.setContent(multipart);
+            email.setSubject(MimeUtility.encodeText(mail.getSubject(), "utf-8", "B"));
+            email.setText(mail.getMessage(), "utf-8", "html");
             Transport.send(email);
-        } catch (MessagingException e) {
+        } catch (MessagingException | UnsupportedEncodingException e) {
             logger.error(e.getMessage(), e);
         }
     }
