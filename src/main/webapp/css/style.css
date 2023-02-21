@@ -1261,6 +1261,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 3px solid #3f98ff;
 }
 
 .search-bar-container {
