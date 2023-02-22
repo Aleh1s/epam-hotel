@@ -1,14 +1,12 @@
 package ua.aleh1s.hotelepam.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
-import ua.aleh1s.hotelepam.controller.command.CommandException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.Optional;
 
 import static java.util.Objects.*;
 

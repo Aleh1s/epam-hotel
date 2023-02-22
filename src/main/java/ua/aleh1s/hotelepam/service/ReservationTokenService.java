@@ -1,6 +1,7 @@
 package ua.aleh1s.hotelepam.service;
 
 import ua.aleh1s.hotelepam.appcontext.AppContext;
+import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
 import ua.aleh1s.hotelepam.model.repository.ReservationTokenRepository;
 
@@ -24,10 +25,11 @@ public class ReservationTokenService {
         reservationTokenRepository.updateConfirmedAt(reservationToken);
     }
 
-    public Optional<ReservationTokenEntity> getById(String tokenId) {
+    public ReservationTokenEntity getById(String tokenId) {
         ReservationTokenRepository reservationTokenRepository =
                 AppContext.getInstance().getReservationTokenRepository();
 
-        return reservationTokenRepository.findById(tokenId);
+        return reservationTokenRepository.findById(tokenId)
+                .orElseThrow(ApplicationException::new);
     }
 }

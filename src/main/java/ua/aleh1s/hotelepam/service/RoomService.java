@@ -1,6 +1,7 @@
 package ua.aleh1s.hotelepam.service;
 
 import ua.aleh1s.hotelepam.appcontext.AppContext;
+import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
@@ -50,14 +51,62 @@ public class RoomService {
                 .anyMatch(it -> it.intersects(requestedPeriod));
     }
 
-    public BigDecimal getTotalPrice(RoomEntity room, Period requestedPeriod) {
-        BigDecimal roomPrice = room.getPrice();
-        int nights = requestedPeriod.getDaysBetween();
-        return roomPrice.multiply(BigDecimal.valueOf(nights));
+    public BigDecimal getTotalPrice(Integer roomNumber, Period requestedPeriod) {
+        RoomEntity room = getByRoomNumber(roomNumber);
+        return getTotalPrice(room.getPrice(), requestedPeriod);
     }
 
-    public Optional<RoomEntity> getByRoomNumber(Integer roomNumber) {
+    public BigDecimal getTotalPrice(RoomEntity room, Period requestedPeriod) {
+        return getTotalPrice(room.getPrice(), requestedPeriod);
+    }
+
+    private BigDecimal getTotalPrice(BigDecimal pricePerNight, Period requestedPeriod) {
+        int nights = requestedPeriod.getDaysBetween();
+        return pricePerNight.multiply(BigDecimal.valueOf(nights));
+    }
+
+    public RoomEntity getByRoomNumber(Integer roomNumber) {
         RoomRepository roomRepository = AppContext.getInstance().getRoomRepository();
-        return roomRepository.getByRoomNumber(roomNumber);
+        return roomRepository.getByRoomNumber(roomNumber)
+                .orElseThrow(ApplicationException::new);
+    }
+
+    public List<RoomEntity> getSortedRooms(Map<String, String> sortParamMap) {
+        RoomRepository roomRepository = AppContext.getInstance().getRoomRepository();
+
+        List<RoomEntity> roomList = roomRepository.getAll();
+        if (sortParamMap.containsKey("price")) {
+            String direction = sortParamMap.get("price");
+            Comparator<RoomEntity> comparator = Comparator.comparing(RoomEntity::getPrice);
+            if (direction.equals("desc"))
+                comparator = comparator.reversed();
+            roomList.sort(comparator);
+        }
+
+        if (sortParamMap.containsKey("guests")) {
+            String direction = sortParamMap.get("guests");
+            Comparator<RoomEntity> comparator = Comparator.comparingInt(RoomEntity::getPersonsNumber);
+            if (direction.equals("desc"))
+                comparator = comparator.reversed();
+            roomList.sort(comparator);
+        }
+
+        if (sortParamMap.containsKey("class")) {
+            String direction = sortParamMap.get("class");
+            Comparator<RoomEntity> comparator = Comparator.comparingInt(room -> room.getRoomClass().getIndex());
+            if (direction.equals("desc"))
+                comparator = comparator.reversed();
+            roomList.sort(comparator);
+        }
+
+        if (sortParamMap.containsKey("status")) {
+            String direction = sortParamMap.get("status");
+            Comparator<RoomEntity> comparator = Comparator.comparingInt(room -> room.getStatus().getIndex());
+            if (direction.equals("desc"))
+                comparator = comparator.reversed();
+            roomList.sort(comparator);
+        }
+
+        return roomList;
     }
 }

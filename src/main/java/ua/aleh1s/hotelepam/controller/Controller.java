@@ -9,16 +9,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.command.CommandException;
+import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.command.CommandFactory;
 import ua.aleh1s.hotelepam.controller.command.impl.UnknownCommand;
 import ua.aleh1s.hotelepam.jdbc.DBManager;
 
 import java.io.IOException;
-import java.util.Optional;
-import java.util.function.Function;
 
 @WebServlet(name = "Controller", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
@@ -57,7 +54,7 @@ public class Controller extends HttpServlet {
         String path;
         try {
             path = command.execute(request, response);
-        } catch (CommandException e) {
+        } catch (ApplicationException e) {
             request.setAttribute("errorMessage", e.getMessage());
             path = e.getPath();
         }

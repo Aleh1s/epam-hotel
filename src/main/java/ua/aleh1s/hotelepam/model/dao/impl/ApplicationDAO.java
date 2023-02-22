@@ -1,18 +1,20 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
 import ua.aleh1s.hotelepam.appcontext.AppContext;
+import ua.aleh1s.hotelepam.constant.SqlField;
+import ua.aleh1s.hotelepam.constant.SqlField.ApplicationTable;
 import ua.aleh1s.hotelepam.model.dao.DAO;
 import ua.aleh1s.hotelepam.model.dao.DaoException;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
 import ua.aleh1s.hotelepam.model.pagination.PageRequest;
+import ua.aleh1s.hotelepam.model.querybuilder.QueryBuilder;
+import ua.aleh1s.hotelepam.model.querybuilder.SqlBase;
 import ua.aleh1s.hotelepam.model.sqlmapper.SqlApplicationEntityMapper;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,24 +76,40 @@ public class ApplicationDAO extends DAO {
         }
     }
 
+//    public List<ApplicationEntity> getAllByStatus(ApplicationStatus status, PageRequest pageRequest) throws DaoException {
+//        List<ApplicationEntity> applicationList = new ArrayList<>();
+//        try (PreparedStatement statement = connection.prepareStatement(SELECT_PAGE_BY_STATUS)) {
+//            statement.setInt(1, status.getIndex());
+//            statement.setInt(2, pageRequest.getOffset());
+//            statement.setInt(3, pageRequest.getLimit());
+//            try (ResultSet resultSet = statement.executeQuery()) {
+//                while (resultSet.next()) {
+//                    applicationList.add(mapper.map(resultSet));
+//                }
+//            }
+//        } catch (SQLException e) {
+//            throw new DaoException(e);
+//        }
+//        return applicationList;
+//    }
+
     public List<ApplicationEntity> getAllByStatus(ApplicationStatus status, PageRequest pageRequest) throws DaoException {
-        List<ApplicationEntity> applicationList = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(SELECT_PAGE_BY_STATUS)) {
-            statement.setInt(1, status.getIndex());
-            statement.setInt(2, pageRequest.getOffset());
-            statement.setInt(3, pageRequest.getLimit());
+        QueryBuilder qb = QueryBuilder.newBuilder(SqlBase.SELECT, "application");
+        qb.where(qb.eq(STATUS, status.getIndex())).limit(pageRequest.getLimit()).offset(pageRequest.getOffset());
+
+        List<ApplicationEntity> applications = new ArrayList<>();
+        try (PreparedStatement statement = qb.buildStatement(connection)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    applicationList.add(mapper.map(resultSet));
+                    applications.add(mapper.map(resultSet));
                 }
             }
         } catch (SQLException e) {
             throw new DaoException(e);
         }
-        return applicationList;
+
+        return applications;
     }
-
-
 
     public Integer countByStatus(ApplicationStatus status) throws DaoException {
         int count = 0;

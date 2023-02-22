@@ -8,6 +8,7 @@ import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.model.repository.UserRepository;
+import ua.aleh1s.hotelepam.service.UserService;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -19,23 +20,17 @@ public class TopUpAccountCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         BigDecimal amount = getBigDecimalValue(request, "amount");
+
         HttpSession session = request.getSession(false);
         Long userId = (Long) session.getAttribute("id");
 
-        UserRepository userRepository = AppContext.getInstance().getUserRepository();
-        Optional<UserEntity> userOptional = userRepository.findById(userId);
+        UserService userService = AppContext.getInstance().getUserService();
+        UserEntity user = userService.getById(userId);
 
-        String errorMessage, path = ResourcesManager.getInstance().getValue("path.command.profile");
-        if (userOptional.isEmpty()) {
-            errorMessage = "There is no user with such id";
-            request.setAttribute("errorMessage", errorMessage);
-            return path;
-        }
-
-        UserEntity user = userOptional.get();
         user.setAccount(user.getAccount().add(amount));
-        userRepository.update(user);
+        userService.update(user);
 
+        String path = ResourcesManager.getInstance().getValue("path.page.profile");
         try {
             response.sendRedirect(path);
             path = "redirect";

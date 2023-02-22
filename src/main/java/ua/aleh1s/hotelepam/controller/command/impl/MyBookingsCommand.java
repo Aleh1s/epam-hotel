@@ -13,6 +13,7 @@ import ua.aleh1s.hotelepam.model.pagination.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
+import ua.aleh1s.hotelepam.service.ReservationService;
 
 import java.util.Comparator;
 import java.util.List;
@@ -26,8 +27,14 @@ import static ua.aleh1s.hotelepam.model.entity.ReservationStatus.REMOVED;
 public class MyBookingsCommand implements Command {
 
     @Override
+    // todo: get page of reservations from database
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        final int PAGE_SIZE = 10;
+        ReservationService reservationService = AppContext.getInstance().getReservationService();
+        ReservationDtoMapper reservationDtoMapper = AppContext.getInstance().getReservationDtoMapper();
+
+        Integer pageNumber = getIntValueOrDefault(request, "pageNumber", 1);
+        Integer pageSize = getIntValueOrDefault(request, "pageSize", 10);
+        Integer statusIndex = getIntValueOrDefault(request, "status", 0);
 
         HttpSession session = request.getSession(false);
         Long userId = (Long) session.getAttribute("id");
@@ -35,36 +42,27 @@ public class MyBookingsCommand implements Command {
         if (nonNull(request.getParameter("default")))
             session.setAttribute("reservationStatus", null);
 
-        Integer pageNumber = getIntValueOrDefault(request, "pageNumber", 1);
-
-        ReservationRepository reservationRepository = AppContext.getInstance().getReservationRepository();
-        List<ReservationEntity> reservationList = reservationRepository.getAllByCustomerId(userId);
-
-        Integer statusIndex = getIntValueOrDefault(request, "status", 0);
-
         ReservationStatus status;
-        if (statusIndex == 0) {
+        if (statusIndex == 0)
             status = (ReservationStatus) session.getAttribute("reservationStatus");
-        } else {
+        else
             status = ReservationStatus.atIndex(statusIndex);
-        }
+
+        session.setAttribute("reservationStatus", status);
+
+        List<ReservationEntity> reservationList = reservationService.getAllByCustomerId(userId);
 
         if (nonNull(status))
             reservationList = reservationList.stream()
                     .filter(reservation -> reservation.getStatus().equals(status))
                     .collect(Collectors.toList());
 
-        session.setAttribute("reservationStatus", status);
-
         reservationList = reservationList.stream()
                 .filter(reservation -> !reservation.getStatus().equals(REMOVED))
                 .collect(Collectors.toList());
         reservationList.sort(Comparator.comparing(ReservationEntity::getCreatedAt).reversed());
 
-
-        PageRequest pageRequest = PageRequest.of(pageNumber, PAGE_SIZE);
-        ReservationDtoMapper reservationDtoMapper = AppContext.getInstance().getReservationDtoMapper();
-
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
         List<ReservationDto> reservationDtoList = reservationList.stream()
                 .skip(pageRequest.getOffset())
                 .limit(pageRequest.getLimit())
@@ -72,7 +70,7 @@ public class MyBookingsCommand implements Command {
                 .toList();
 
         Page<ReservationDto> reservationDtoPage = Page.of(reservationDtoList, reservationList.size());
-        Integer pagesNumber = getNumberOfPages(reservationDtoPage.getCount(), PAGE_SIZE);
+        Integer pagesNumber = getNumberOfPages(reservationDtoPage.getCount(), pageSize);
 
         request.setAttribute("currPage", pageNumber);
         request.setAttribute("pagesNumber", pagesNumber);

@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.command.CommandException;
+import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
 import ua.aleh1s.hotelepam.service.ReservationService;
@@ -25,18 +25,17 @@ public class ConfirmBookingCommand implements Command {
         ReservationService reservationService = AppContext.getInstance().getReservationService();
 
         String tokenId = request.getParameter("tokenId");
-        ReservationTokenEntity token = reservationTokenService.getById(tokenId)
-                .orElseThrow(CommandException::new);
+
+        ReservationTokenEntity token = reservationTokenService.getById(tokenId);
 
         LocalDateTime tokenExpiredAt = token.getExpiredAt();
         if (tokenExpiredAt.isBefore(LocalDateTime.now()))
-            throw new CommandException("Token has already expired!");
+            throw new ApplicationException("Token has already expired!");
 
         if (nonNull(token.getConfirmedAt()))
-            throw new CommandException("Token has already confirmed!");
+            throw new ApplicationException("Token has already confirmed!");
 
-        ReservationEntity reservation = reservationService.getById(token.getReservationId())
-                        .orElseThrow(CommandException::new);
+        ReservationEntity reservation = reservationService.getById(token.getReservationId());
 
         reservationTokenService.confirmToken(token);
         reservationService.changeStatus(reservation, PENDING_PAYMENT);
@@ -46,7 +45,7 @@ public class ConfirmBookingCommand implements Command {
             response.sendRedirect(path);
             path = "redirect";
         } catch (IOException e) {
-            throw new CommandException();
+            throw new ApplicationException();
         }
 
         return path;

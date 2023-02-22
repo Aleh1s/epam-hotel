@@ -15,7 +15,7 @@ public interface RequestRepository {
 
     Integer count(Criteria criteria); //todo: remove
 
-    Optional<RequestEntity> getById(Long requestId);
+    Optional<RequestEntity> findById(Long requestId);
 
     void update(RequestEntity requestEntity);
 }

@@ -18,6 +18,7 @@ import ua.aleh1s.hotelepam.model.pagination.Pagination;
 import ua.aleh1s.hotelepam.model.pagination.impl.RequsetPagination;
 import ua.aleh1s.hotelepam.model.repository.RequestRepository;
 import ua.aleh1s.hotelepam.model.repository.UserRepository;
+import ua.aleh1s.hotelepam.service.UserService;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,34 +29,26 @@ import static ua.aleh1s.hotelepam.utils.Utils.getIntValueOrDefault;
 public class ProfileCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        UserService userService = AppContext.getInstance().getUserService();
+        RequestRepository requestRepository = AppContext.getInstance().getRequestRepository(); //todo: replace by service
+        RequestDtoMapper requestDtoMapper = AppContext.getInstance().getRequestDtoMapper();
+        UserDtoMapper userDtoMapper = AppContext.getInstance().getUserDtoMapper();
+
         HttpSession session = request.getSession(false);
-
         Long userId = (Long) session.getAttribute("id");
-        UserRepository userRepository = AppContext.getInstance().getUserRepository();
 
-        Optional<UserEntity> userOptional = userRepository.findById(userId);
+        UserEntity user = userService.getById(userId);
 
-        String path = ResourcesManager.getInstance().getValue("path.page.error");
-        if (userOptional.isEmpty()) {
-            //todo: handle
-            return path;
-        }
-
-        UserEntity user = userOptional.get();
-
-        RequestRepository requestRepository = AppContext.getInstance().getRequestRepository();
         Criteria criteria = new RequestCriteria(user);
         Pagination pagination = new RequsetPagination(request);
 
         List<RequestEntity> requestEntityList = requestRepository.getAll(criteria, pagination); //todo: remove criteria and pagination
         Integer requestsCount = requestRepository.count(criteria);
 
-        RequestDtoMapper requestDtoMapper = AppContext.getInstance().getRequestDtoMapper();
         List<RequestDto> requestDtoList = requestEntityList.stream()
                 .map(requestDtoMapper)
                 .toList();
 
-        UserDtoMapper userDtoMapper = AppContext.getInstance().getUserDtoMapper();
         UserDto userDto = userDtoMapper.apply(user);
 
         Integer pageNumber = getIntValueOrDefault(request, "pageNumber", 1);

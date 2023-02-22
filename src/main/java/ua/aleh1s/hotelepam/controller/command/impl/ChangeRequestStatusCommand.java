@@ -5,6 +5,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
+import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.service.RequestService;
 import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.BookInfoDto;
@@ -20,27 +22,20 @@ import static ua.aleh1s.hotelepam.model.entity.RequestStatus.*;
 public class ChangeRequestStatusCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        RequestService requestService = AppContext.getInstance().getRequestService();
+
         Long requestId = Utils.getLongValue(request, "requestId");
         Integer statusIndex = Utils.getIntValue(request, "status");
         RequestStatus requestStatus = RequestStatus.atIndex(statusIndex);
 
-        RequestRepository requestRepository = AppContext.getInstance().getRequestRepository();
-        Optional<RequestEntity> requestOptional = requestRepository.getById(requestId);
+        RequestEntity requestEntity = requestService.getById(requestId);
 
-        String errorMessage, path = ResourcesManager.getInstance().getValue("path.page.error");
-        if (requestOptional.isEmpty()) {
-            //todo: handle
-            return path;
-        }
-
-        RequestEntity requestEntity = requestOptional.get();
-        if (!requestEntity.getStatus().equals(NEW)) {
-            //todo: handle
-            return path;
-        }
+        String path = ResourcesManager.getInstance().getValue("path.command.profile");
+        if (!requestEntity.getStatus().equals(NEW))
+            throw new ApplicationException("You cannot change status", path);
 
         requestEntity.setStatus(requestStatus);
-        requestRepository.update(requestEntity);
+        requestService.update(requestEntity);
 
         if (requestStatus.equals(CONFIRMED)){
             BookInfoDto bookInfoDto = BookInfoDto.Builder.newBuilder()

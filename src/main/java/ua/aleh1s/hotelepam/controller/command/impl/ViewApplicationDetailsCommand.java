@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
+import ua.aleh1s.hotelepam.service.ApplicationService;
+import ua.aleh1s.hotelepam.service.UserService;
 import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dtomapper.ApplicationDtoMapper;
@@ -21,28 +23,13 @@ public class ViewApplicationDetailsCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         Long applicationId = Utils.getLongValue(request, "applicationId");
 
-        ApplicationRepository applicationRepository = AppContext.getInstance().getApplicationRepository();
-        Optional<ApplicationEntity> applicationOptional = applicationRepository.getById(applicationId);
-
-        String path = ResourcesManager.getInstance().getValue("path.page.error");
-        if (applicationOptional.isEmpty()) {
-            //todo: handle
-            return path;
-        }
-
-        ApplicationEntity application = applicationOptional.get();
-
-        UserRepository userRepository = AppContext.getInstance().getUserRepository();
-        Optional<UserEntity> userOptional = userRepository.findById(application.getCustomerId());
-
-        if (userOptional.isEmpty()) {
-            //todo: handle
-            return path;
-        }
-        UserEntity user = userOptional.get();
-
-        UserDtoMapper userDtoMapper = AppContext.getInstance().getUserDtoMapper();
         ApplicationDtoMapper applicationDtoMapper = AppContext.getInstance().getApplicationDtoMapper();
+        UserDtoMapper userDtoMapper = AppContext.getInstance().getUserDtoMapper();
+        ApplicationService applicationService = AppContext.getInstance().getApplicationService();
+        UserService userService = AppContext.getInstance().getUserService();
+
+        ApplicationEntity application = applicationService.getById(applicationId);
+        UserEntity user = userService.getById(application.getCustomerId());
 
         request.setAttribute("application", applicationDtoMapper.apply(application));
         request.setAttribute("user", userDtoMapper.apply(user));

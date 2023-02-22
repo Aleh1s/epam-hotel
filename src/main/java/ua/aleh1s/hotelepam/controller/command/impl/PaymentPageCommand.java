@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
+import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.ReservationDto;
 import ua.aleh1s.hotelepam.controller.dto.RoomDto;
@@ -15,6 +16,8 @@ import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;
+import ua.aleh1s.hotelepam.service.ReservationService;
+import ua.aleh1s.hotelepam.service.RoomService;
 
 import java.util.Optional;
 
@@ -24,42 +27,25 @@ public class PaymentPageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        ReservationService reservationService = AppContext.getInstance().getReservationService();
+        RoomService roomService = AppContext.getInstance().getRoomService();
+        ReservationDtoMapper reservationDtoMapper = AppContext.getInstance().getReservationDtoMapper();
+        RoomDtoMapper roomDtoMapper = AppContext.getInstance().getRoomDtoMapper();
+
         Long reservationId = getLongValue(request, "reservationId");
 
         HttpSession session = request.getSession(false);
         session.setAttribute("reservationId", reservationId);
 
-        ReservationRepository reservationRepository = AppContext.getInstance().getReservationRepository();
-        Optional<ReservationEntity> reservationOptional = reservationRepository.getById(reservationId);
+        ReservationEntity reservation = reservationService.getById(reservationId);
 
-        String errorMessage, path = ResourcesManager.getInstance().getValue("path.command.my.bookings");
-        if (reservationOptional.isEmpty()) {
-            errorMessage = "There is no reservation with such id";
-            request.setAttribute("errorMessage", errorMessage);
-            return path;
-        }
+        String path = ResourcesManager.getInstance().getValue("path.command.my.bookings");
+        if (!reservation.getStatus().equals(ReservationStatus.PENDING_PAYMENT))
+            throw new ApplicationException("You cannot pay this reservation, because it's not confirmed", path);
 
-        ReservationEntity reservation = reservationOptional.get();
-        if (!reservation.getStatus().equals(ReservationStatus.PENDING_PAYMENT)) {
-            errorMessage = "You cannot pay this reservation, because it's not confirmed";
-            request.setAttribute("errorMessage", errorMessage);
-            return path;
-        }
-
-        RoomRepository roomRepository = AppContext.getInstance().getRoomRepository();
-        Optional<RoomEntity> roomOptional = roomRepository.getByRoomNumber(reservation.getRoomNumber());
-
-        if (roomOptional.isEmpty()) {
-            errorMessage = "There is no room with such number";
-            request.setAttribute("errorMessage", errorMessage);
-            return path;
-        }
-        RoomEntity room = roomOptional.get();
-
-        ReservationDtoMapper reservationDtoMapper = AppContext.getInstance().getReservationDtoMapper();
         ReservationDto reservationDto = reservationDtoMapper.apply(reservation);
 
-        RoomDtoMapper roomDtoMapper = AppContext.getInstance().getRoomDtoMapper();
+        RoomEntity room = roomService.getByRoomNumber(reservation.getRoomNumber());
         RoomDto roomDto = roomDtoMapper.apply(room);
 
         request.setAttribute("reservationDto", reservationDto);

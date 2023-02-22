@@ -6,9 +6,10 @@ import jakarta.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
+import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
-import ua.aleh1s.hotelepam.model.repository.UserRepository;
+import ua.aleh1s.hotelepam.service.UserService;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -16,33 +17,31 @@ import java.util.Optional;
 public class LoginCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        UserService userService = AppContext.getInstance().getUserService();
+
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        UserRepository userRepository = AppContext.getInstance().getUserRepository();
-        Optional<UserEntity> userEntityOptional = userRepository.findByEmail(email);
+        UserEntity user;
+        String errorMessage = "Password or email is incorrect",
+                path = ResourcesManager.getInstance().getValue("path.page.login");
 
-        String errorMessage = "Password or email is incorrect";
-        String path = ResourcesManager.getInstance().getValue("path.page.login");
-
-        if (userEntityOptional.isEmpty()) {
-            request.setAttribute("errorMessage", errorMessage);
-            return path;
+        try {
+            user = userService.getByEmail(email);
+        } catch (ApplicationException e) {
+            throw new ApplicationException(errorMessage, path);
         }
 
-        UserEntity userEntity = userEntityOptional.get();
-        boolean isPasswordValid = BCrypt.checkpw(password, userEntity.getPassword());
-        if (!isPasswordValid) {
-            request.setAttribute("errorMessage", errorMessage);
-            return path;
-        }
+        boolean isPasswordValid = BCrypt.checkpw(password, user.getPassword());
+        if (!isPasswordValid)
+            throw new ApplicationException(errorMessage, path);
 
         HttpSession session = request.getSession();
-        session.setAttribute("id", userEntity.getId());
-        session.setAttribute("lang", userEntity.getLocale().getLanguage());
-        session.setAttribute("role", userEntity.getRole());
+        session.setAttribute("id", user.getId());
+        session.setAttribute("lang", user.getLocale().getLanguage());
+        session.setAttribute("role", user.getRole());
 
-        path = ResourcesManager.getInstance().getValue("path.command.room.list");
+        path = ResourcesManager.getInstance().getValue("path.page.home");
         try {
             response.sendRedirect(path);
             path = "redirect";

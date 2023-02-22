@@ -12,6 +12,7 @@ import ua.aleh1s.hotelepam.model.pagination.Page;
 import ua.aleh1s.hotelepam.model.pagination.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;
+import ua.aleh1s.hotelepam.service.RoomService;
 
 import java.util.*;
 
@@ -25,14 +26,11 @@ public class RoomListCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        final int PAGE_SIZE = 9;
-
-        Integer pageNumber = getIntValueOrDefault(request, "pageNumber", 1);
-
-        RoomRepository roomRepository = AppContext.getInstance().getRoomRepository();
+        RoomService roomService = AppContext.getInstance().getRoomService();
         RoomCardDtoMapper roomCardDtoMapper = AppContext.getInstance().getRoomCardDtoMapper();
 
-        List<RoomEntity> roomList = roomRepository.getAll();
+        Integer pageSize = getIntValueOrDefault(request, "pageSize", 9);
+        Integer pageNumber = getIntValueOrDefault(request, "pageNumber", 1);
 
         HttpSession session = request.getSession();
         String[] sortValues = request.getParameterValues("sort");
@@ -53,40 +51,11 @@ public class RoomListCommand implements Command {
 
         session.setAttribute("roomListSortParamMap", sortParamMap);
 
-        if (sortParamMap.containsKey("price")) {
-            String direction = sortParamMap.get("price");
-            Comparator<RoomEntity> comparator = Comparator.comparing(RoomEntity::getPrice);
-            if (direction.equals("desc"))
-                comparator = comparator.reversed();
-            roomList.sort(comparator);
-        }
+        List<RoomEntity> roomList = roomService.getSortedRooms(sortParamMap);
 
-        if (sortParamMap.containsKey("guests")) {
-            String direction = sortParamMap.get("guests");
-            Comparator<RoomEntity> comparator = Comparator.comparingInt(RoomEntity::getPersonsNumber);
-            if (direction.equals("desc"))
-                comparator = comparator.reversed();
-            roomList.sort(comparator);
-        }
+        int totalCount = roomList.size();
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
 
-        if (sortParamMap.containsKey("class")) {
-            String direction = sortParamMap.get("class");
-            Comparator<RoomEntity> comparator = Comparator.comparingInt(room -> room.getRoomClass().getIndex());
-            if (direction.equals("desc"))
-                comparator = comparator.reversed();
-            roomList.sort(comparator);
-        }
-
-        if (sortParamMap.containsKey("status")) {
-            String direction = sortParamMap.get("status");
-            Comparator<RoomEntity> comparator = Comparator.comparingInt(room -> room.getStatus().getIndex());
-            if (direction.equals("desc"))
-                comparator = comparator.reversed();
-            roomList.sort(comparator);
-        }
-
-        Integer totalCount = roomList.size();
-        PageRequest pageRequest = PageRequest.of(pageNumber, PAGE_SIZE);
         List<RoomCardDto> roomCardDtoList = roomList.stream()
                 .skip(pageRequest.getOffset())
                 .limit(pageRequest.getLimit())
@@ -94,7 +63,7 @@ public class RoomListCommand implements Command {
                 .toList();
 
         Page<RoomCardDto> roomCardDtoPage = Page.of(roomCardDtoList, totalCount);
-        Integer pagesNumber = getNumberOfPages(totalCount, PAGE_SIZE);
+        Integer pagesNumber = getNumberOfPages(totalCount, pageSize);
 
         request.setAttribute("roomPage", roomCardDtoPage);
         request.setAttribute("currPage", pageNumber);

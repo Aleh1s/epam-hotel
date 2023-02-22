@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.command.CommandException;
+import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.dto.RoomCardDto;
 import ua.aleh1s.hotelepam.controller.dtomapper.RoomCardDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
@@ -22,9 +22,11 @@ public class ChooseRoomsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        ResourcesManager resourcesManager = ResourcesManager.getInstance();
         RoomCardDtoMapper roomCardDtoMapper = AppContext.getInstance().getRoomCardDtoMapper();
         RoomService roomService = AppContext.getInstance().getRoomService();
-        ResourcesManager resourcesManager = ResourcesManager.getInstance();
+
+        HttpSession session = request.getSession();
 
         Integer guests = getIntValue(request, "guests");
         LocalDate checkIn = getLocalDateValue(request, "checkIn");
@@ -32,7 +34,7 @@ public class ChooseRoomsCommand implements Command {
 
         Period requestedPeriod = Period.range(checkIn, checkOut);
         if (!isReservationPeriodValid(requestedPeriod))
-            throw new CommandException("Invalid range of date", resourcesManager.getValue("path.page.home"));
+            throw new ApplicationException("Invalid range of date", resourcesManager.getValue("path.page.home"));
 
         List<RoomEntity> availableRooms =
                 roomService.getAvailableRooms(guests, requestedPeriod);
@@ -41,7 +43,6 @@ public class ChooseRoomsCommand implements Command {
                 .map(roomCardDtoMapper)
                 .toList();
 
-        HttpSession session = request.getSession();
         session.setAttribute("requestedCheckIn", checkIn);
         session.setAttribute("requestedCheckOut", checkOut);
 

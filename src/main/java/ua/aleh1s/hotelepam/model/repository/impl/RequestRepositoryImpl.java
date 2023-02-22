@@ -65,7 +65,7 @@ public class RequestRepositoryImpl implements RequestRepository {
     }
 
     @Override
-    public Optional<RequestEntity> getById(Long requestId) {
+    public Optional<RequestEntity> findById(Long requestId) {
         Optional<RequestEntity> requestEntity = Optional.empty();
         RequestDAO dao = new RequestDAO();
         try (Transaction transaction = Transaction.start(dao)) {

@@ -6,10 +6,7 @@ import ua.aleh1s.hotelepam.mail.MailServiceImpl;
 import ua.aleh1s.hotelepam.model.repository.*;
 import ua.aleh1s.hotelepam.model.repository.impl.*;
 import ua.aleh1s.hotelepam.model.sqlmapper.*;
-import ua.aleh1s.hotelepam.service.ReservationService;
-import ua.aleh1s.hotelepam.service.ReservationTokenService;
-import ua.aleh1s.hotelepam.service.RoomService;
-import ua.aleh1s.hotelepam.service.UserService;
+import ua.aleh1s.hotelepam.service.*;
 
 import java.util.Objects;
 
@@ -39,6 +36,11 @@ public class AppContext {
     private ReservationTokenService reservationTokenService;
     private UserService userService;
     private SqlReservationTokenEntityMapper sqlReservationTokenEntityMapper;
+    private ApplicationService applicationService;
+    private RegistrationService registrationService;
+    private RequestService requestService;
+    private PaymentService paymentService;
+    private BookingService bookingService;
 
     {
         this.userRepository = new UserRepositoryImpl();
@@ -64,6 +66,11 @@ public class AppContext {
         this.reservationTokenService = new ReservationTokenService();
         this.userService = new UserService();
         this.sqlReservationTokenEntityMapper = new SqlReservationTokenEntityMapper();
+        this.applicationService = new ApplicationService();
+        this.registrationService = new RegistrationService();
+        this.requestService = new RequestService();
+        this.paymentService = new PaymentService();
+        this.bookingService = new BookingService();
     }
 
     public static synchronized AppContext getInstance() {
@@ -158,7 +165,24 @@ public class AppContext {
         return userService;
     }
 
-    public SqlReservationTokenEntityMapper getSqlReservationTokenEntityMapper() {
-        return sqlReservationTokenEntityMapper;
+    public SqlReservationTokenEntityMapper getSqlReservationTokenEntityMapper() {return sqlReservationTokenEntityMapper;}
+
+    public ApplicationService getApplicationService() {
+        return applicationService;
+    }
+
+    public RegistrationService getRegistrationService() {
+        return registrationService;
+    }
+    public RequestService getRequestService() {
+        return requestService;
+    }
+
+    public PaymentService getPaymentService() {
+        return paymentService;
+    }
+
+    public BookingService getBookingService() {
+        return bookingService;
     }
 }

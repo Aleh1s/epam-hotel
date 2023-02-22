@@ -5,11 +5,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
+import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.entity.*;
 import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
 import ua.aleh1s.hotelepam.model.repository.RequestRepository;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;
+import ua.aleh1s.hotelepam.service.ApplicationService;
+import ua.aleh1s.hotelepam.service.RequestService;
+import ua.aleh1s.hotelepam.service.RoomService;
+import ua.aleh1s.hotelepam.utils.Period;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -24,46 +29,27 @@ public class MakeRequestCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession(false);
-
-        Long applicationId = (Long) session.getAttribute("applicationId");
+        RoomService roomService = AppContext.getInstance().getRoomService();
+        ApplicationService applicationService = AppContext.getInstance().getApplicationService();
+        RequestService requestService = AppContext.getInstance().getRequestService();
 
         Integer roomNumber = getIntValue(request, "roomNumber");
         LocalDate entryDate = getLocalDateValue(request, "entryDate");
         LocalDate leavingDate = getLocalDateValue(request, "leavingDate");
 
-        RoomRepository roomRepository = AppContext.getInstance().getRoomRepository();
-        Optional<RoomEntity> roomOptional = roomRepository.getByRoomNumber(roomNumber);
+        HttpSession session = request.getSession(false);
+        Long applicationId = (Long) session.getAttribute("applicationId");
 
-        String errorMessage, path = ResourcesManager.getInstance().getValue("path.page.request");
-        if (roomOptional.isEmpty()) {
-            errorMessage = "There is no room with such id";
-            request.setAttribute("errorMessage", errorMessage);
-            return path;
-        }
+        ApplicationEntity application = applicationService.getById(applicationId);
 
-        RoomEntity room = roomOptional.get();
-
-        ApplicationRepository applicationRepository = AppContext.getInstance().getApplicationRepository();
-        Optional<ApplicationEntity> applicationOptional = applicationRepository.getById(applicationId);
-
-        if (applicationOptional.isEmpty()) {
-            //todo:
-            return path;
-        }
-
-        ApplicationEntity application = applicationOptional.get();
-        if (application.getStatus().equals(ApplicationStatus.PROCESSED)) {
-            errorMessage = "Application is already processed";
-            request.setAttribute("errorMessage", errorMessage);
-            return path;
-        }
+        String path = ResourcesManager.getInstance().getValue("path.page.request");
+        if (application.getStatus().equals(ApplicationStatus.PROCESSED))
+            throw new ApplicationException("Application is already processed", path);
 
         application.setStatus(ApplicationStatus.PROCESSED);
-        applicationRepository.update(application);
+        applicationService.update(application);
 
-        Long daysBetween = ChronoUnit.DAYS.between(entryDate, leavingDate);
-        BigDecimal totalAmount = room.getPrice().multiply(BigDecimal.valueOf(daysBetween));
+        BigDecimal totalAmount = roomService.getTotalPrice(roomNumber, Period.range(entryDate, leavingDate));
 
         RequestEntity requestEntity = RequestEntity.Builder.newBuilder()
                 .roomNumber(roomNumber)
@@ -74,8 +60,7 @@ public class MakeRequestCommand implements Command {
                 .totalAmount(totalAmount)
                 .build();
 
-        RequestRepository requestRepository = AppContext.getInstance().getRequestRepository();
-        requestRepository.create(requestEntity);
+        requestService.create(requestEntity);
 
         try {
             response.sendRedirect(ResourcesManager.getInstance().getValue("path.command.application.list"));

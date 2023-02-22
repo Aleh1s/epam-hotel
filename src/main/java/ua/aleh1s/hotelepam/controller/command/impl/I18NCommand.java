@@ -8,6 +8,7 @@ import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.model.repository.UserRepository;
+import ua.aleh1s.hotelepam.service.UserService;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 public class I18NCommand implements Command {
     @Override
+    // todo: make review
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         Optional<String> langOptional = Optional.ofNullable(request.getParameter("lang"));
         langOptional.ifPresent(s -> setLang(request, s));
@@ -56,13 +58,13 @@ public class I18NCommand implements Command {
     }
 
     private void updateUserEntityLang(String lang, Long userId) {
-        UserRepository userRepository = AppContext.getInstance().getUserRepository();
-        Optional<UserEntity> userEntityOptional = userRepository.findById(userId);
-        if (userEntityOptional.isPresent()) {
-            UserEntity userEntity = userEntityOptional.get();
-            if (lang.equals("en")) lang = "";
-            userEntity.setLocale(new Locale(lang));
-            userRepository.update(userEntity);
-        }
+        UserService userService = AppContext.getInstance().getUserService();
+        UserEntity user = userService.getById(userId);
+
+        if (lang.equals("en"))
+            lang = "";
+
+        user.setLocale(new Locale(lang));
+        userService.update(user);
     }
 }

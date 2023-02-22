@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
+import ua.aleh1s.hotelepam.service.ApplicationService;
 import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.ApplicationDto;
@@ -21,20 +22,20 @@ import static ua.aleh1s.hotelepam.utils.Utils.*;
 public class ApplicationListCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        final int PAGE_SIZE = 10;
+        ApplicationService applicationService = AppContext.getInstance().getApplicationService();
+        ApplicationDtoMapper applicationDtoMapper = AppContext.getInstance().getApplicationDtoMapper();
 
         Integer pageNumber = getIntValueOrDefault(request, "pageNumber", 1);
+        Integer pageSize = getIntValueOrDefault(request, "pageSize", 10);
 
-        ApplicationRepository applicationRepository = AppContext.getInstance().getApplicationRepository();
-        Page<ApplicationEntity> applicationPage = applicationRepository.getAllByStatus(ApplicationStatus.NEW, PageRequest.of(pageNumber, PAGE_SIZE));
+        Page<ApplicationEntity> applicationPage = applicationService.getAllByStatus(ApplicationStatus.NEW, PageRequest.of(pageNumber, pageSize));
 
-        ApplicationDtoMapper applicationDtoMapper = AppContext.getInstance().getApplicationDtoMapper();
         List<ApplicationDto> applicationDtoList = applicationPage.getResult().stream()
                 .map(applicationDtoMapper)
                 .toList();
 
         Page<ApplicationDto> applicationDtoPage = Page.of(applicationDtoList, applicationPage.getCount());
-        Integer pagesNumber = Utils.getNumberOfPages(applicationDtoPage.getCount(), PAGE_SIZE);
+        Integer pagesNumber = Utils.getNumberOfPages(applicationDtoPage.getCount(), pageSize);
 
         request.setAttribute("applicationPage", applicationDtoPage);
         request.setAttribute("pagesNumber", pagesNumber);
