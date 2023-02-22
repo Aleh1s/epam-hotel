@@ -25,6 +25,7 @@ public class ConfirmPaymentCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        ResourcesManager resourcesManager = ResourcesManager.getInstance();
         PaymentService paymentService = AppContext.getInstance().getPaymentService();
 
         HttpSession session = request.getSession(false);
@@ -37,12 +38,12 @@ public class ConfirmPaymentCommand implements Command {
         session.setAttribute("paymentPayedAt", reservation.getPayedAt());
         session.setAttribute("paymentTotalAmount", reservation.getTotalAmount());
 
-        String path = ResourcesManager.getInstance().getValue("path.page.success.payment");
+        String path = resourcesManager.getValue("path.page.success.payment");
         try {
             response.sendRedirect(path);
             path = "redirect";
         } catch (IOException e) {
-            path = ResourcesManager.getInstance().getValue("path.page.error");
+            path = resourcesManager.getValue("path.page.error");
         }
 
         return path;

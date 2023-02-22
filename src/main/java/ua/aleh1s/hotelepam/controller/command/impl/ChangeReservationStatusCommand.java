@@ -21,6 +21,7 @@ import static ua.aleh1s.hotelepam.utils.Utils.getLongValue;
 public class ChangeReservationStatusCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        ResourcesManager resourcesManager = ResourcesManager.getInstance();
         ReservationService reservationService = AppContext.getInstance().getReservationService();
 
         HttpSession session = request.getSession(false);
@@ -34,9 +35,9 @@ public class ChangeReservationStatusCommand implements Command {
 
         String path;
         if (userRole.equals(UserRole.CUSTOMER)) {
-            path = ResourcesManager.getInstance().getValue("path.command.my.bookings");
+            path = resourcesManager.getValue("path.command.my.bookings");
         } else {
-            path = ResourcesManager.getInstance().getValue("path.command.reservation.list");
+            path = resourcesManager.getValue("path.command.reservation.list");
         }
 
         reservation.setStatus(reservationStatus);
@@ -46,7 +47,7 @@ public class ChangeReservationStatusCommand implements Command {
             response.sendRedirect(path);
             path = "redirect";
         } catch (IOException e) {
-            path = ResourcesManager.getInstance().getValue("path.page.error");
+            path = resourcesManager.getValue("path.page.error");
         }
 
         return path;

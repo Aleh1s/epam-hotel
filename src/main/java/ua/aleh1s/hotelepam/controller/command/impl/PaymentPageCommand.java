@@ -27,6 +27,7 @@ public class PaymentPageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        ResourcesManager resourcesManager = ResourcesManager.getInstance();
         ReservationService reservationService = AppContext.getInstance().getReservationService();
         RoomService roomService = AppContext.getInstance().getRoomService();
         ReservationDtoMapper reservationDtoMapper = AppContext.getInstance().getReservationDtoMapper();
@@ -39,7 +40,7 @@ public class PaymentPageCommand implements Command {
 
         ReservationEntity reservation = reservationService.getById(reservationId);
 
-        String path = ResourcesManager.getInstance().getValue("path.command.my.bookings");
+        String path = resourcesManager.getValue("path.command.my.bookings");
         if (!reservation.getStatus().equals(ReservationStatus.PENDING_PAYMENT))
             throw new ApplicationException("You cannot pay this reservation, because it's not confirmed", path);
 
@@ -51,6 +52,6 @@ public class PaymentPageCommand implements Command {
         request.setAttribute("reservationDto", reservationDto);
         request.setAttribute("roomDto", roomDto);
 
-        return ResourcesManager.getInstance().getValue("path.page.confirm.payment");
+        return resourcesManager.getValue("path.page.confirm.payment");
     }
 }

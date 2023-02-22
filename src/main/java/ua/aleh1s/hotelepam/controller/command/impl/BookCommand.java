@@ -20,7 +20,6 @@ public class BookCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        ResourcesManager resourcesManager = ResourcesManager.getInstance();
         BookingService bookingService = AppContext.getInstance().getBookingService();
 
         HttpSession session = request.getSession(false);
@@ -37,7 +36,7 @@ public class BookCommand implements Command {
         session.setAttribute("reservationCheckIn", checkIn);
         session.setAttribute("reservationCheckOut", checkOut);
 
-        String path = resourcesManager.getValue("path.page.success.booking");
+        String path = ResourcesManager.getInstance().getValue("path.page.success.booking");
         try {
             response.sendRedirect(path);
             path = "redirect";

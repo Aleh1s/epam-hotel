@@ -1,6 +1,5 @@
 package ua.aleh1s.hotelepam.service;
 
-import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
@@ -14,9 +13,17 @@ import java.util.stream.Collectors;
 
 public class RoomService {
 
-    public boolean isRoomAvailable(Integer number, Period period) {
-        ReservationRepository reservationRepository = AppContext.getInstance().getReservationRepository();
+    private final ReservationRepository reservationRepository;
+    private final RoomRepository roomRepository;
 
+    public RoomService(
+            ReservationRepository reservationRepository,
+            RoomRepository roomRepository) {
+        this.reservationRepository = reservationRepository;
+        this.roomRepository = roomRepository;
+    }
+
+    public boolean isRoomAvailable(Integer number, Period period) {
         List<ReservationEntity> actualReservations =
                 reservationRepository.getActualReservationsByRoomNumber(number);
 
@@ -26,9 +33,6 @@ public class RoomService {
     }
 
     public List<RoomEntity> getAvailableRooms(Integer guests, Period requestedPeriod) {
-        ReservationRepository reservationRepository = AppContext.getInstance().getReservationRepository();
-        RoomRepository roomRepository = AppContext.getInstance().getRoomRepository();
-
         List<ReservationEntity> allReservations = reservationRepository.getActualReservations();
 
         Map<Integer, List<ReservationEntity>> groupByRoomNumber = allReservations.stream()
@@ -66,14 +70,11 @@ public class RoomService {
     }
 
     public RoomEntity getByRoomNumber(Integer roomNumber) {
-        RoomRepository roomRepository = AppContext.getInstance().getRoomRepository();
         return roomRepository.getByRoomNumber(roomNumber)
                 .orElseThrow(ApplicationException::new);
     }
 
     public List<RoomEntity> getSortedRooms(Map<String, String> sortParamMap) {
-        RoomRepository roomRepository = AppContext.getInstance().getRoomRepository();
-
         List<RoomEntity> roomList = roomRepository.getAll();
         if (sortParamMap.containsKey("price")) {
             String direction = sortParamMap.get("price");

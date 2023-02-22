@@ -19,6 +19,8 @@ import static ua.aleh1s.hotelepam.utils.Utils.getBigDecimalValue;
 public class TopUpAccountCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        ResourcesManager resourcesManager = ResourcesManager.getInstance();
+
         BigDecimal amount = getBigDecimalValue(request, "amount");
 
         HttpSession session = request.getSession(false);
@@ -30,12 +32,12 @@ public class TopUpAccountCommand implements Command {
         user.setAccount(user.getAccount().add(amount));
         userService.update(user);
 
-        String path = ResourcesManager.getInstance().getValue("path.page.profile");
+        String path = resourcesManager.getValue("path.page.profile");
         try {
             response.sendRedirect(path);
             path = "redirect";
         } catch (IOException e) {
-            path = ResourcesManager.getInstance().getValue("path.page.error");
+            path = resourcesManager.getValue("path.page.error");
         }
 
         return path;

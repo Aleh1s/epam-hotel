@@ -22,6 +22,7 @@ public class SignupCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        ResourcesManager resourcesManager = ResourcesManager.getInstance();
         RegistrationService registrationService = AppContext.getInstance().getRegistrationService();
 
         // todo: write validation
@@ -42,12 +43,12 @@ public class SignupCommand implements Command {
 
         registrationService.register(userEntity);
 
-        String path = ResourcesManager.getInstance().getValue("path.page.login");
+        String path = resourcesManager.getValue("path.page.login");
         try {
             response.sendRedirect(path);
             path = "redirect";
         } catch (IOException e) {
-            path = ResourcesManager.getInstance().getValue("path.page.error");
+            path = resourcesManager.getValue("path.page.error");
         }
         return path;
     }

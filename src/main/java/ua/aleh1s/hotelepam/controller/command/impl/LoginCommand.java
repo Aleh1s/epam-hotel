@@ -17,6 +17,7 @@ import java.util.Optional;
 public class LoginCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        ResourcesManager resourcesManager = ResourcesManager.getInstance();
         UserService userService = AppContext.getInstance().getUserService();
 
         String email = request.getParameter("email");
@@ -24,7 +25,7 @@ public class LoginCommand implements Command {
 
         UserEntity user;
         String errorMessage = "Password or email is incorrect",
-                path = ResourcesManager.getInstance().getValue("path.page.login");
+                path = resourcesManager.getValue("path.page.login");
 
         try {
             user = userService.getByEmail(email);
@@ -41,12 +42,12 @@ public class LoginCommand implements Command {
         session.setAttribute("lang", user.getLocale().getLanguage());
         session.setAttribute("role", user.getRole());
 
-        path = ResourcesManager.getInstance().getValue("path.page.home");
+        path = resourcesManager.getValue("path.page.home");
         try {
             response.sendRedirect(path);
             path = "redirect";
         } catch (IOException e) {
-            path = ResourcesManager.getInstance().getValue("path.page.error");
+            path = resourcesManager.getValue("path.page.error");
         }
         return path;
     }

@@ -8,13 +8,15 @@ import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.RoomCardDto;
 import ua.aleh1s.hotelepam.controller.dtomapper.RoomCardDtoMapper;
+import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.pagination.Page;
 import ua.aleh1s.hotelepam.model.pagination.PageRequest;
-import ua.aleh1s.hotelepam.model.entity.RoomEntity;
-import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 import ua.aleh1s.hotelepam.service.RoomService;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;

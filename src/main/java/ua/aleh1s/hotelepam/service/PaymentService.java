@@ -13,6 +13,16 @@ import java.util.Objects;
 
 public class PaymentService {
 
+    private final ReservationService reservationService;
+    private final UserService userService;
+
+    public PaymentService(
+            ReservationService reservationService,
+            UserService userService) {
+        this.reservationService = reservationService;
+        this.userService = userService;
+    }
+
     public ReservationEntity payReservation(Long reservationId, Long userId) {
         ReservationService reservationService = AppContext.getInstance().getReservationService();
         UserService userService = AppContext.getInstance().getUserService();

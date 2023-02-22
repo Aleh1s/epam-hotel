@@ -29,6 +29,7 @@ public class MakeRequestCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        ResourcesManager resourcesManager = ResourcesManager.getInstance();
         RoomService roomService = AppContext.getInstance().getRoomService();
         ApplicationService applicationService = AppContext.getInstance().getApplicationService();
         RequestService requestService = AppContext.getInstance().getRequestService();
@@ -42,7 +43,7 @@ public class MakeRequestCommand implements Command {
 
         ApplicationEntity application = applicationService.getById(applicationId);
 
-        String path = ResourcesManager.getInstance().getValue("path.page.request");
+        String path = resourcesManager.getValue("path.page.request");
         if (application.getStatus().equals(ApplicationStatus.PROCESSED))
             throw new ApplicationException("Application is already processed", path);
 
@@ -63,10 +64,10 @@ public class MakeRequestCommand implements Command {
         requestService.create(requestEntity);
 
         try {
-            response.sendRedirect(ResourcesManager.getInstance().getValue("path.command.application.list"));
+            response.sendRedirect(resourcesManager.getValue("path.command.application.list"));
             path = "redirect";
         } catch (IOException e) {
-            path = ResourcesManager.getInstance().getValue("path.page.error");
+            path = resourcesManager.getValue("path.page.error");
         }
         return path;
     }

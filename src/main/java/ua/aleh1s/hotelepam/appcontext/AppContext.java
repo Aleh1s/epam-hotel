@@ -32,45 +32,52 @@ public class AppContext {
     private final RoomService roomService;
     private final ReservationService reservationService;
     private final MailService mailService;
-    private ReservationTokenRepository reservationTokenRepository;
-    private ReservationTokenService reservationTokenService;
-    private UserService userService;
-    private SqlReservationTokenEntityMapper sqlReservationTokenEntityMapper;
-    private ApplicationService applicationService;
-    private RegistrationService registrationService;
-    private RequestService requestService;
-    private PaymentService paymentService;
-    private BookingService bookingService;
+    private final ReservationTokenRepository reservationTokenRepository;
+    private final ReservationTokenService reservationTokenService;
+    private final UserService userService;
+    private final SqlReservationTokenEntityMapper sqlReservationTokenEntityMapper;
+    private final ApplicationService applicationService;
+    private final RegistrationService registrationService;
+    private final RequestService requestService;
+    private final PaymentService paymentService;
+    private final BookingService bookingService;
 
     {
+        // Repositories
         this.userRepository = new UserRepositoryImpl();
         this.applicationRepository = new ApplicationRepositoryImpl();
         this.roomRepository = new RoomRepositoryImpl();
+        this.reservationRepository = new ReservationRepositoryImpl();
+        this.requestRepository = new RequestRepositoryImpl();
+        this.reservationTokenRepository = new ReservationTokenRepositoryImpl();
+
+        // Services
+        this.mailService = new MailServiceImpl();
+        this.userService = new UserService(userRepository);
+        this.roomService = new RoomService(reservationRepository, roomRepository);
+        this.reservationTokenService = new ReservationTokenService(reservationTokenRepository);
+        this.reservationService = new ReservationService(reservationRepository);
+        this.applicationService = new ApplicationService(applicationRepository);
+        this.requestService = new RequestService(requestRepository);
+        this.registrationService = new RegistrationService(userService);
+        this.paymentService = new PaymentService(reservationService, userService);
+        this.bookingService = new BookingService(roomService, reservationService, reservationTokenService, mailService, userService);
+
+        // Dto mappers
         this.roomCardDtoMapper = new RoomCardDtoMapper();
         this.roomDtoMapper = new RoomDtoMapper();
-        this.reservationRepository = new ReservationRepositoryImpl();
         this.applicationDtoMapper = new ApplicationDtoMapper();
-        this.requestRepository = new RequestRepositoryImpl();
         this.requestDtoMapper = new RequestDtoMapper();
         this.userDtoMapper = new UserDtoMapper();
         this.reservationDtoMapper = new ReservationDtoMapper();
+
+        //Sql entity mappers
         this.sqlApplicationEntityMapper = new SqlApplicationEntityMapper();
         this.sqlRequestEntityMapper = new SqlRequestEntityMapper();
         this.sqlReservationEntityMapper = new SqlReservationEntityMapper();
         this.sqlRoomEntityMapper = new SqlRoomEntityMapper();
         this.sqlUserEntityMapper = new SqlUserEntityMapper();
-        this.roomService = new RoomService();
-        this.reservationService = new ReservationService();
-        this.mailService = new MailServiceImpl();
-        this.reservationTokenRepository = new ReservationTokenRepositoryImpl();
-        this.reservationTokenService = new ReservationTokenService();
-        this.userService = new UserService();
         this.sqlReservationTokenEntityMapper = new SqlReservationTokenEntityMapper();
-        this.applicationService = new ApplicationService();
-        this.registrationService = new RegistrationService();
-        this.requestService = new RequestService();
-        this.paymentService = new PaymentService();
-        this.bookingService = new BookingService();
     }
 
     public static synchronized AppContext getInstance() {

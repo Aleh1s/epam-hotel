@@ -1,6 +1,5 @@
 package ua.aleh1s.hotelepam.service;
 
-import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.mail.Mail;
@@ -20,14 +19,27 @@ import static ua.aleh1s.hotelepam.utils.Utils.isReservationPeriodValid;
 
 public class BookingService {
 
+    private final RoomService roomService;
+    private final ReservationService reservationService;
+    private final ReservationTokenService reservationTokenService;
+    private final MailService mailService;
+    private final UserService userService;
+
+    public BookingService(
+            RoomService roomService,
+            ReservationService reservationService,
+            ReservationTokenService reservationTokenService,
+            MailService mailService,
+            UserService userService) {
+        this.roomService = roomService;
+        this.reservationService = reservationService;
+        this.reservationTokenService = reservationTokenService;
+        this.mailService = mailService;
+        this.userService = userService;
+    }
+
     public ReservationEntity bookRoom(Integer roomNumber, Long customerId, Period requestedPeriod) {
         ResourcesManager resourcesManager = ResourcesManager.getInstance();
-
-        RoomService roomService = AppContext.getInstance().getRoomService();
-        ReservationService reservationService = AppContext.getInstance().getReservationService();
-        ReservationTokenService reservationTokenService = AppContext.getInstance().getReservationTokenService();
-        MailService mailService = AppContext.getInstance().getMailService();
-        UserService userService = AppContext.getInstance().getUserService();
 
         String path = resourcesManager.getValue("path.command.view.room");
         if (!isReservationPeriodValid(requestedPeriod))

@@ -19,6 +19,7 @@ import java.time.LocalDate;
 public class ApplicationCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        ResourcesManager resourcesManager = ResourcesManager.getInstance();
         ApplicationService applicationService = AppContext.getInstance().getApplicationService();
 
         Integer guestsNumber = Utils.getIntValue(request, "guestsNumber");
@@ -30,7 +31,7 @@ public class ApplicationCommand implements Command {
         HttpSession session = request.getSession();
         Long id = (Long) session.getAttribute("id");
 
-        String path = ResourcesManager.getInstance().getValue("path.page.application");
+        String path = resourcesManager.getValue("path.page.application");
         if (entryDate.isBefore(LocalDate.now()))
             throw new ApplicationException("Entry date cannot be before now", path);
 
@@ -51,10 +52,10 @@ public class ApplicationCommand implements Command {
         session.setAttribute("leavingDate", leavingDate);
 
         try {
-            response.sendRedirect(ResourcesManager.getInstance().getValue("path.page.success.application"));
+            response.sendRedirect(resourcesManager.getValue("path.page.success.application"));
             path = "redirect";
         } catch (IOException e) {
-            path = ResourcesManager.getInstance().getValue("path.page.error");
+            path = resourcesManager.getValue("path.page.error");
         }
 
         return path;

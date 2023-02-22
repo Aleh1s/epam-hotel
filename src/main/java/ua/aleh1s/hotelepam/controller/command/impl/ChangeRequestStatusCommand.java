@@ -22,6 +22,7 @@ import static ua.aleh1s.hotelepam.model.entity.RequestStatus.*;
 public class ChangeRequestStatusCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        ResourcesManager resourcesManager = ResourcesManager.getInstance();
         RequestService requestService = AppContext.getInstance().getRequestService();
 
         Long requestId = Utils.getLongValue(request, "requestId");
@@ -30,7 +31,7 @@ public class ChangeRequestStatusCommand implements Command {
 
         RequestEntity requestEntity = requestService.getById(requestId);
 
-        String path = ResourcesManager.getInstance().getValue("path.command.profile");
+        String path = resourcesManager.getValue("path.command.profile");
         if (!requestEntity.getStatus().equals(NEW))
             throw new ApplicationException("You cannot change status", path);
 
@@ -48,16 +49,16 @@ public class ChangeRequestStatusCommand implements Command {
             HttpSession session = request.getSession(false);
             session.setAttribute("bookInfo", bookInfoDto);
 
-            path = ResourcesManager.getInstance().getValue("path.command.confirm.booking");
+            path = resourcesManager.getValue("path.command.confirm.booking");
         } else {
-            path = ResourcesManager.getInstance().getValue("path.command.profile");
+            path = resourcesManager.getValue("path.command.profile");
         }
 
         try {
             response.sendRedirect(path);
             path = "redirect";
         } catch (IOException e) {
-            path = ResourcesManager.getInstance().getValue("path.page.error");
+            path = resourcesManager.getValue("path.page.error");
         }
 
         return path;
