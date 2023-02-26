@@ -45,7 +45,7 @@ public class Utils {
         return localDateTime != null ? Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()) : null;
     }
 
-    public static int getNumberOfPages(int totalCount, int pageSize) {
+    public static int getNumberOfPages(long totalCount, int pageSize) {
         return (int) Math.ceil(totalCount / (double) pageSize);
     }
 

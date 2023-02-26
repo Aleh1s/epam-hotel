@@ -1,7 +1,7 @@
-package ua.aleh1s.hotelepam.model.querybuilder.node;
+package ua.aleh1s.hotelepam.model.queryspecification.node;
 
 public class Predicate extends ExpressionNode {
-    private ExpressionNode[] operands;
+    private final ExpressionNode[] operands;
     private final Operator operator;
 
     private Predicate(

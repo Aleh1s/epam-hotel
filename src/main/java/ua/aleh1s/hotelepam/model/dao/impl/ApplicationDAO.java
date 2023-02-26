@@ -1,24 +1,18 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
 import ua.aleh1s.hotelepam.appcontext.AppContext;
-import ua.aleh1s.hotelepam.constant.SqlField;
-import ua.aleh1s.hotelepam.constant.SqlField.ApplicationTable;
 import ua.aleh1s.hotelepam.model.dao.DAO;
 import ua.aleh1s.hotelepam.model.dao.DaoException;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
-import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
-import ua.aleh1s.hotelepam.model.pagination.PageRequest;
-import ua.aleh1s.hotelepam.model.querybuilder.QueryBuilder;
-import ua.aleh1s.hotelepam.model.querybuilder.SqlBase;
+import ua.aleh1s.hotelepam.model.queryspecification.QuerySpecification;
 import ua.aleh1s.hotelepam.model.sqlmapper.SqlApplicationEntityMapper;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.constant.SqlField.ApplicationTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlColumn.ApplicationTable.*;
 import static ua.aleh1s.hotelepam.constant.SqlQuery.ApplicationTable.*;
 
 public class ApplicationDAO extends DAO {
@@ -47,13 +41,13 @@ public class ApplicationDAO extends DAO {
             statement.setLong(1, entity.getId());
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    resultSet.updateLong(ID, entity.getId());
-                    resultSet.updateInt(NUMBER_OF_GUESTS, entity.getGuestsNumber());
-                    resultSet.updateInt(ROOM_CLASS, entity.getRoomClass().getIndex());
-                    resultSet.updateDate(LEAVING_DATE, Date.valueOf(entity.getLeavingDate()));
-                    resultSet.updateDate(ENTRY_DATE, Date.valueOf(entity.getEntryDate()));
-                    resultSet.updateInt(STATUS, entity.getStatus().getIndex());
-                    resultSet.updateLong(CUSTOMER_ID, entity.getCustomerId());
+                    resultSet.updateLong(ID.getName(), entity.getId());
+                    resultSet.updateInt(NUMBER_OF_GUESTS.getName(), entity.getGuestsNumber());
+                    resultSet.updateInt(ROOM_CLASS.getName(), entity.getRoomClass().getIndex());
+                    resultSet.updateDate(LEAVING_DATE.getName(), Date.valueOf(entity.getLeavingDate()));
+                    resultSet.updateDate(ENTRY_DATE.getName(), Date.valueOf(entity.getEntryDate()));
+                    resultSet.updateInt(STATUS.getName(), entity.getStatus().getIndex());
+                    resultSet.updateLong(CUSTOMER_ID.getName(), entity.getCustomerId());
                     resultSet.updateRow();
                 }
             }
@@ -76,53 +70,78 @@ public class ApplicationDAO extends DAO {
         }
     }
 
-//    public List<ApplicationEntity> getAllByStatus(ApplicationStatus status, PageRequest pageRequest) throws DaoException {
-//        List<ApplicationEntity> applicationList = new ArrayList<>();
-//        try (PreparedStatement statement = connection.prepareStatement(SELECT_PAGE_BY_STATUS)) {
-//            statement.setInt(1, status.getIndex());
-//            statement.setInt(2, pageRequest.getOffset());
-//            statement.setInt(3, pageRequest.getLimit());
+    public List<ApplicationEntity> getAllBySpecification(QuerySpecification specification) throws DaoException {
+        String query = specification.getQuery();
+
+        List<ApplicationEntity> applicationList = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            specification.injectValues(statement);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    applicationList.add(mapper.map(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+
+        return applicationList;
+    }
+
+    public long countBySpecification(QuerySpecification specification) throws DaoException {
+        String query = specification.getQuery();
+
+        long count = 0;
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            specification.injectValues(statement);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    count = resultSet.getLong(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+
+        return count;
+    }
+
+//    public Page<ApplicationEntity> getPageBySpecification(WhereSpecification whereSpecification, PageRequest pageRequest) throws DaoException {
+//        QueryBuilder selectQueryBuilder = QueryBuilder.newQueryBuilder(SqlBase.SELECT, "application");
+//        selectQueryBuilder.addWhereSpecification(whereSpecification);
+//        selectQueryBuilder.addPageRequest(pageRequest);
+//
+//        List<ApplicationEntity> applicationEntityList = new ArrayList<>();
+//        try (PreparedStatement statement = connection.prepareStatement(selectQueryBuilder.build())) {
+//            selectQueryBuilder.injectValues(statement);
+//
 //            try (ResultSet resultSet = statement.executeQuery()) {
 //                while (resultSet.next()) {
-//                    applicationList.add(mapper.map(resultSet));
+//                    applicationEntityList.add(mapper.map(resultSet));
 //                }
 //            }
 //        } catch (SQLException e) {
 //            throw new DaoException(e);
 //        }
-//        return applicationList;
+//
+//        QueryBuilder countQueryBuilder = QueryBuilder.newQueryBuilder(SqlBase.COUNT, "application");
+//        countQueryBuilder.addWhereSpecification(whereSpecification);
+//
+//        int totalNumber = 0;
+//        try (PreparedStatement statement = connection.prepareStatement(countQueryBuilder.build())) {
+//            countQueryBuilder.injectValues(statement);
+//
+//            try (ResultSet resultSet = statement.executeQuery()) {
+//                if (resultSet.next()) {
+//                    totalNumber = resultSet.getInt(1);
+//                }
+//            }
+//        } catch (SQLException e) {
+//            throw new DaoException(e);
+//        }
+//
+//        return Page.of(applicationEntityList, totalNumber);
 //    }
-
-    public List<ApplicationEntity> getAllByStatus(ApplicationStatus status, PageRequest pageRequest) throws DaoException {
-        QueryBuilder qb = QueryBuilder.newBuilder(SqlBase.SELECT, "application");
-        qb.where(qb.eq(STATUS, status.getIndex())).limit(pageRequest.getLimit()).offset(pageRequest.getOffset());
-
-        List<ApplicationEntity> applications = new ArrayList<>();
-        try (PreparedStatement statement = qb.buildStatement(connection)) {
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    applications.add(mapper.map(resultSet));
-                }
-            }
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-
-        return applications;
-    }
-
-    public Integer countByStatus(ApplicationStatus status) throws DaoException {
-        int count = 0;
-        try (PreparedStatement statement = connection.prepareStatement(COUNT_ALL_BY_STATUS)) {
-            statement.setInt(1, status.getIndex());
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    count = resultSet.getInt(1);
-                }
-            }
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return count;
-    }
 }

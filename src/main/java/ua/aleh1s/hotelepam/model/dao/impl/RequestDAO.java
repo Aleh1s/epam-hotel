@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.constant.SqlField.RequestTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlColumn.RequestTable.*;
 import static ua.aleh1s.hotelepam.constant.SqlQuery.RequestTable.*;
 
 public class RequestDAO extends DAO {
@@ -45,13 +45,13 @@ public class RequestDAO extends DAO {
             statement.setLong(1, entity.getId());
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    resultSet.updateLong(ID, entity.getId());
-                    resultSet.updateInt(ROOM_NUMBER, entity.getRoomNumber());
-                    resultSet.updateLong(CUSTOMER_ID, entity.getCustomerId());
-                    resultSet.updateInt(STATUS, entity.getStatus().getIndex());
-                    resultSet.updateDate(ENTRY_DATE, Date.valueOf(entity.getEntryDate()));
-                    resultSet.updateDate(LEAVING_DATE, Date.valueOf(entity.getLeavingDate()));
-                    resultSet.updateBigDecimal(TOTAL_AMOUNT, entity.getTotalAmount());
+                    resultSet.updateLong(ID.getName(), entity.getId());
+                    resultSet.updateInt(ROOM_NUMBER.getName(), entity.getRoomNumber());
+                    resultSet.updateLong(CUSTOMER_ID.getName(), entity.getCustomerId());
+                    resultSet.updateInt(STATUS.getName(), entity.getStatus().getIndex());
+                    resultSet.updateDate(ENTRY_DATE.getName(), Date.valueOf(entity.getEntryDate()));
+                    resultSet.updateDate(LEAVING_DATE.getName(), Date.valueOf(entity.getLeavingDate()));
+                    resultSet.updateBigDecimal(TOTAL_AMOUNT.getName(), entity.getTotalAmount());
                     resultSet.updateRow();
                 }
             }

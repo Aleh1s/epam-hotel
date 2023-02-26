@@ -6,6 +6,7 @@ import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
 import ua.aleh1s.hotelepam.model.pagination.Page;
 import ua.aleh1s.hotelepam.model.pagination.PageRequest;
 import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
+import ua.aleh1s.hotelepam.model.querybuilder.specification.where.WhereSpecification;
 
 public class ApplicationService {
 
@@ -24,8 +25,8 @@ public class ApplicationService {
         applicationRepository.update(application);
     }
 
-    public Page<ApplicationEntity> getAllByStatus(ApplicationStatus status, PageRequest pageRequest) {
-        return applicationRepository.getAllByStatus(status, pageRequest);
+    public Page<ApplicationEntity> getAllByApplicationStatus(ApplicationStatus status, PageRequest pageRequest) {
+        return applicationRepository.getAllByApplicationStatus(status, pageRequest);
     }
 
     public void create(ApplicationEntity applicationEntry) {

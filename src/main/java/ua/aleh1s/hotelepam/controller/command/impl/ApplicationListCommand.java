@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
+import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
 import ua.aleh1s.hotelepam.service.ApplicationService;
 import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
@@ -12,8 +13,6 @@ import ua.aleh1s.hotelepam.controller.dtomapper.ApplicationDtoMapper;
 import ua.aleh1s.hotelepam.model.pagination.Page;
 import ua.aleh1s.hotelepam.model.pagination.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
-import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
-import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
 
 import java.util.List;
 
@@ -28,7 +27,11 @@ public class ApplicationListCommand implements Command {
         Integer pageNumber = getIntValueOrDefault(request, "pageNumber", 1);
         Integer pageSize = getIntValueOrDefault(request, "pageSize", 10);
 
-        Page<ApplicationEntity> applicationPage = applicationService.getAllByStatus(ApplicationStatus.NEW, PageRequest.of(pageNumber, pageSize));
+//        WhereSpecification whereSpecification = WhereSpecification.newSpecification();
+//        WhereCriteria statusWhereCriteria = WhereCriteria.of(SqlColumn.ApplicationTable.STATUS, ApplicationStatus.NEW.getIndex(), SearchOperation.EQUAL);
+//        whereSpecification.addCriteria(statusWhereCriteria);
+
+        Page<ApplicationEntity> applicationPage = applicationService.getAllByApplicationStatus(ApplicationStatus.NEW, PageRequest.of(pageNumber, pageSize));
 
         List<ApplicationDto> applicationDtoList = applicationPage.getResult().stream()
                 .map(applicationDtoMapper)

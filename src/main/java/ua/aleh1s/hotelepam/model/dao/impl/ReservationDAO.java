@@ -1,7 +1,6 @@
 package ua.aleh1s.hotelepam.model.dao.impl;
 
 import ua.aleh1s.hotelepam.appcontext.AppContext;
-import ua.aleh1s.hotelepam.constant.SqlQuery;
 import ua.aleh1s.hotelepam.model.dao.DAO;
 import ua.aleh1s.hotelepam.model.dao.DaoException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.constant.SqlField.ReservationTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlColumn.ReservationTable.*;
 import static ua.aleh1s.hotelepam.constant.SqlQuery.ReservationTable.*;
 
 public class ReservationDAO extends DAO {
@@ -45,16 +44,16 @@ public class ReservationDAO extends DAO {
             statement.setLong(1, entity.getId());
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    resultSet.updateLong(ID, entity.getId());
-                    resultSet.updateInt(ROOM_NUMBER, entity.getRoomNumber());
-                    resultSet.updateLong(CUSTOMER_ID, entity.getCustomerId());
-                    resultSet.updateDate(ENTRY_DATE, Date.valueOf(entity.getEntryDate()));
-                    resultSet.updateDate(LEAVING_DATE, Date.valueOf(entity.getLeavingDate()));
-                    resultSet.updateTimestamp(CREATED_AT, Timestamp.valueOf(entity.getCreatedAt()));
-                    resultSet.updateTimestamp(EXPIRED_AT, Timestamp.valueOf(entity.getExpiredAt()));
-                    resultSet.updateTimestamp(PAYED_AT, entity.getPayedAt() != null ? Timestamp.valueOf(entity.getPayedAt()) : null);
-                    resultSet.updateBigDecimal(TOTAL_AMOUNT, entity.getTotalAmount());
-                    resultSet.updateInt(STATUS, entity.getStatus().getIndex());
+                    resultSet.updateLong(ID.getName(), entity.getId());
+                    resultSet.updateInt(ROOM_NUMBER.getName(), entity.getRoomNumber());
+                    resultSet.updateLong(CUSTOMER_ID.getName(), entity.getCustomerId());
+                    resultSet.updateDate(ENTRY_DATE.getName(), Date.valueOf(entity.getEntryDate()));
+                    resultSet.updateDate(LEAVING_DATE.getName(), Date.valueOf(entity.getLeavingDate()));
+                    resultSet.updateTimestamp(CREATED_AT.getName(), Timestamp.valueOf(entity.getCreatedAt()));
+                    resultSet.updateTimestamp(EXPIRED_AT.getName(), Timestamp.valueOf(entity.getExpiredAt()));
+                    resultSet.updateTimestamp(PAYED_AT.getName(), entity.getPayedAt() != null ? Timestamp.valueOf(entity.getPayedAt()) : null);
+                    resultSet.updateBigDecimal(TOTAL_AMOUNT.getName(), entity.getTotalAmount());
+                    resultSet.updateInt(STATUS.getName(), entity.getStatus().getIndex());
                     resultSet.updateRow();
                 }
             }

@@ -5,14 +5,14 @@ import java.util.List;
 public class Page<T> {
 
     private final List<T> result;
-    private final Integer count;
+    private final long count;
 
-    private Page(List<T> result, Integer count) {
+    private Page(List<T> result, long count) {
         this.result = result;
         this.count = count;
     }
 
-    public static <T> Page<T> of(List<T> result, Integer count) {
+    public static <T> Page<T> of(List<T> result, long count) {
         return new Page<>(result, count);
     }
 
@@ -21,7 +21,7 @@ public class Page<T> {
     }
 
 
-    public Integer getCount() {
+    public long getCount() {
         return count;
     }
 }

@@ -1,4 +1,4 @@
-package ua.aleh1s.hotelepam.model.querybuilder.node;
+package ua.aleh1s.hotelepam.model.queryspecification.node;
 
 public enum Operator {
     EQUAL("="),
@@ -9,7 +9,9 @@ public enum Operator {
     LESS_THAN("<="),
     BETWEEN("between"),
     IN("in"),
-    NOT_IN("not in");
+    NOT_IN("not in"),
+    LIKE("like"),
+    NOT_LIKE("not like");
 
     private final String value;
 

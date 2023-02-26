@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.constant.SqlField.UserTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlColumn.UserTable.*;
 import static ua.aleh1s.hotelepam.constant.SqlQuery.UserTable.*;
 
 public class UserDAO extends DAO {
@@ -56,15 +56,15 @@ public class UserDAO extends DAO {
             statement.setLong(1, entity.getId());
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    resultSet.updateLong(ID, entity.getId());
-                    resultSet.updateString(EMAIL, entity.getEmail());
-                    resultSet.updateString(FIRST_NAME, entity.getFirstName());
-                    resultSet.updateString(LAST_NAME, entity.getLastName());
-                    resultSet.updateString(PHONE_NUMBER, entity.getPhoneNumber());
-                    resultSet.updateString(PASSWORD, entity.getPassword());
-                    resultSet.updateString(LOCALE, entity.getLocale().getLanguage());
-                    resultSet.updateString(ROLE, entity.getRole().name());
-                    resultSet.updateBigDecimal(ACCOUNT, entity.getAccount());
+                    resultSet.updateLong(ID.getName(), entity.getId());
+                    resultSet.updateString(EMAIL.getName(), entity.getEmail());
+                    resultSet.updateString(FIRST_NAME.getName(), entity.getFirstName());
+                    resultSet.updateString(LAST_NAME.getName(), entity.getLastName());
+                    resultSet.updateString(PHONE_NUMBER.getName(), entity.getPhoneNumber());
+                    resultSet.updateString(PASSWORD.getName(), entity.getPassword());
+                    resultSet.updateString(LOCALE.getName(), entity.getLocale().getLanguage());
+                    resultSet.updateString(ROLE.getName(), entity.getRole().name());
+                    resultSet.updateBigDecimal(ACCOUNT.getName(), entity.getAccount());
                     resultSet.updateRow();
                 }
             }

@@ -16,14 +16,14 @@ import java.util.Properties;
 import static ua.aleh1s.hotelepam.constant.Application.DATABASE_PROPERTIES;
 
 public class DBManager {
-    private static final Logger LOGGER = LogManager.getLogger(DBManager.class);
+    private static final Logger logger = LogManager.getLogger(DBManager.class);
     private static DBManager INSTANCE;
     private DataSource dataSource;
 
     private DBManager() {
-        LOGGER.trace("DBManager initialization...");
+        logger.trace("DBManager initialization...");
         initialize();
-        LOGGER.trace("DBManager initialized");
+        logger.trace("DBManager initialized");
     }
 
     public static synchronized DBManager getInstance() {
@@ -33,25 +33,27 @@ public class DBManager {
     }
 
     private void initialize() {
-        LOGGER.trace("Data source initialization...");
+        logger.trace("Data source initialization...");
         Properties properties = loadProperties();
         HikariConfig config = new HikariConfig(properties);
         this.dataSource = new HikariDataSource(config);
-        LOGGER.trace("Data source initialized");
+        logger.trace("Data source initialized");
     }
 
     public synchronized void shutdown() {
-        LOGGER.trace("Shutdown data source is invoked");
+        logger.trace("Shutdown data source is invoked");
         ((HikariDataSource) dataSource).close();
-        LOGGER.trace("Shutdown data source is completed");
+        logger.trace("Shutdown data source is completed");
     }
 
-    public synchronized Connection getConnection() throws JdbcException {
+    public synchronized Connection getConnection() {
+        Connection connection = null;
         try {
-            return dataSource.getConnection();
+            connection = dataSource.getConnection();
         } catch (SQLException e) {
-            throw new JdbcException(e);
+            logger.error(e.getMessage(), e);
         }
+        return connection;
     }
 
     private Properties loadProperties() {
@@ -60,7 +62,7 @@ public class DBManager {
                 .getClassLoader().getResourceAsStream(DATABASE_PROPERTIES)) {
             properties.load(inputStream);
         } catch (IOException e) {
-            LOGGER.error("Error while database properties initialization");
+            logger.error("Error while database properties initialization");
         }
         return properties;
     }

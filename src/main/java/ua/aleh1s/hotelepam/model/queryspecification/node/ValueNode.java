@@ -1,4 +1,5 @@
-package ua.aleh1s.hotelepam.model.querybuilder.node;
+package ua.aleh1s.hotelepam.model.queryspecification.node;
+
 
 public class ValueNode extends ExpressionNode {
     private final String value;

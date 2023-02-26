@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.aleh1s.hotelepam.constant.SqlField.RoomTable.*;
+import static ua.aleh1s.hotelepam.constant.SqlColumn.RoomTable.*;
 import static ua.aleh1s.hotelepam.constant.SqlQuery.RoomTable.*;
 
 public class RoomDAO extends DAO {
@@ -43,17 +43,17 @@ public class RoomDAO extends DAO {
             statement.setLong(1, entity.getRoomNumber());
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    resultSet.updateInt(ROOM_NUMBER, entity.getRoomNumber());
-                    resultSet.updateInt(CLASS, entity.getRoomClass().getIndex());
-                    resultSet.updateInt(STATUS, entity.getStatus().getIndex());
-                    resultSet.updateString(DESCRIPTION, entity.getDescription());
-                    resultSet.updateDate(BUSY_UNTIL, entity.getBusyUntil() != null ? Date.valueOf(entity.getBusyUntil()) : null);
-                    resultSet.updateBigDecimal(PRICE, entity.getPrice());
-                    resultSet.updateString(NAME, entity.getName());
-                    resultSet.updateString(ATTRIBUTES, String.join(",", entity.getAttributes()));
-                    resultSet.updateInt(BEDS_NUMBER, entity.getBedsNumber());
-                    resultSet.updateInt(PERSONS_NUMBER, entity.getPersonsNumber());
-                    resultSet.updateInt(AREA, entity.getArea());
+                    resultSet.updateInt(ROOM_NUMBER.getName(), entity.getRoomNumber());
+                    resultSet.updateInt(CLASS.getName(), entity.getRoomClass().getIndex());
+                    resultSet.updateInt(STATUS.getName(), entity.getStatus().getIndex());
+                    resultSet.updateString(DESCRIPTION.getName(), entity.getDescription());
+                    resultSet.updateDate(BUSY_UNTIL.getName(), entity.getBusyUntil() != null ? Date.valueOf(entity.getBusyUntil()) : null);
+                    resultSet.updateBigDecimal(PRICE.getName(), entity.getPrice());
+                    resultSet.updateString(NAME.getName(), entity.getName());
+                    resultSet.updateString(ATTRIBUTES.getName(), String.join(",", entity.getAttributes()));
+                    resultSet.updateInt(BEDS_NUMBER.getName(), entity.getBedsNumber());
+                    resultSet.updateInt(PERSONS_NUMBER.getName(), entity.getPersonsNumber());
+                    resultSet.updateInt(AREA.getName(), entity.getArea());
                     resultSet.updateRow();
                 }
             }

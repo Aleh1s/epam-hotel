@@ -22,4 +22,9 @@ public enum ApplicationStatus {
     public int getIndex() {
         return index;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(index);
+    }
 }
