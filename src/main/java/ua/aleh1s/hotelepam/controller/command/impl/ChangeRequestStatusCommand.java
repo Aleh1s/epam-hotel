@@ -7,15 +7,14 @@ import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.service.RequestService;
+import ua.aleh1s.hotelepam.service.impl.RequestServiceImpl;
 import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.BookInfoDto;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.entity.RequestStatus;
-import ua.aleh1s.hotelepam.model.repository.RequestRepository;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import static ua.aleh1s.hotelepam.model.entity.RequestStatus.*;
 

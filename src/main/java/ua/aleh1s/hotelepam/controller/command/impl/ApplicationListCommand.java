@@ -10,8 +10,8 @@ import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.ApplicationDto;
 import ua.aleh1s.hotelepam.controller.dtomapper.ApplicationDtoMapper;
-import ua.aleh1s.hotelepam.model.pagination.Page;
-import ua.aleh1s.hotelepam.model.pagination.PageRequest;
+import ua.aleh1s.hotelepam.utils.Page;
+import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 
 import java.util.List;
@@ -26,10 +26,6 @@ public class ApplicationListCommand implements Command {
 
         Integer pageNumber = getIntValueOrDefault(request, "pageNumber", 1);
         Integer pageSize = getIntValueOrDefault(request, "pageSize", 10);
-
-//        WhereSpecification whereSpecification = WhereSpecification.newSpecification();
-//        WhereCriteria statusWhereCriteria = WhereCriteria.of(SqlColumn.ApplicationTable.STATUS, ApplicationStatus.NEW.getIndex(), SearchOperation.EQUAL);
-//        whereSpecification.addCriteria(statusWhereCriteria);
 
         Page<ApplicationEntity> applicationPage = applicationService.getAllByApplicationStatus(ApplicationStatus.NEW, PageRequest.of(pageNumber, pageSize));
 

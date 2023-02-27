@@ -1,19 +1,16 @@
 package ua.aleh1s.hotelepam.model.repository;
 
-import ua.aleh1s.hotelepam.model.criteria.Criteria;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
-import ua.aleh1s.hotelepam.model.pagination.Pagination;
+import ua.aleh1s.hotelepam.utils.Page;
+import ua.aleh1s.hotelepam.utils.PageRequest;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface RequestRepository {
 
     void create(RequestEntity request);
 
-    List<RequestEntity> getAll(Criteria criteria, Pagination pagination); //todo: change to page Request
-
-    Integer count(Criteria criteria); //todo: remove
+    Page<RequestEntity> getAllActiveByUserId(Long userId, PageRequest pageRequest); //todo: change to page Request
 
     Optional<RequestEntity> findById(Long requestId);
 

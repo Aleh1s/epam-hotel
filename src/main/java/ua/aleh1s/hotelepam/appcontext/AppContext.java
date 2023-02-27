@@ -1,12 +1,13 @@
 package ua.aleh1s.hotelepam.appcontext;
 
 import ua.aleh1s.hotelepam.controller.dtomapper.*;
-import ua.aleh1s.hotelepam.mail.MailService;
-import ua.aleh1s.hotelepam.mail.MailServiceImpl;
+import ua.aleh1s.hotelepam.service.MailService;
+import ua.aleh1s.hotelepam.service.impl.MailServiceImpl;
 import ua.aleh1s.hotelepam.model.repository.*;
 import ua.aleh1s.hotelepam.model.repository.impl.*;
-import ua.aleh1s.hotelepam.model.sqlmapper.*;
+import ua.aleh1s.hotelepam.model.sqlmapper.impl.*;
 import ua.aleh1s.hotelepam.service.*;
+import ua.aleh1s.hotelepam.service.impl.*;
 
 import java.util.Objects;
 
@@ -30,9 +31,9 @@ public class AppContext {
     private final SqlRoomEntityMapper sqlRoomEntityMapper;
     private final SqlUserEntityMapper sqlUserEntityMapper;
     private final RoomService roomService;
-    private final ReservationService reservationService;
     private final MailService mailService;
     private final ReservationTokenRepository reservationTokenRepository;
+    private final ReservationService reservationService;
     private final ReservationTokenService reservationTokenService;
     private final UserService userService;
     private final SqlReservationTokenEntityMapper sqlReservationTokenEntityMapper;
@@ -53,15 +54,15 @@ public class AppContext {
 
         // Services
         this.mailService = new MailServiceImpl();
-        this.userService = new UserService(userRepository);
-        this.roomService = new RoomService(reservationRepository, roomRepository);
-        this.reservationTokenService = new ReservationTokenService(reservationTokenRepository);
-        this.reservationService = new ReservationService(reservationRepository);
-        this.applicationService = new ApplicationService(applicationRepository);
-        this.requestService = new RequestService(requestRepository);
-        this.registrationService = new RegistrationService(userService);
-        this.paymentService = new PaymentService(reservationService, userService);
-        this.bookingService = new BookingService(roomService, reservationService, reservationTokenService, mailService, userService);
+        this.userService = new UserServiceImpl(userRepository);
+        this.roomService = new RoomServiceImpl(reservationRepository, roomRepository);
+        this.reservationTokenService = new ReservationTokenServiceImpl(reservationTokenRepository);
+        this.reservationService = new ReservationServiceImpl(reservationRepository);
+        this.applicationService = new ApplicationServiceImpl(applicationRepository);
+        this.requestService = new RequestServiceImpl(requestRepository);
+        this.registrationService = new RegistrationServiceImpl(userService);
+        this.paymentService = new PaymentServiceImpl(reservationService, userService);
+        this.bookingService = new BookingServiceImpl(roomService, reservationService, reservationTokenService, mailService, userService);
 
         // Dto mappers
         this.roomCardDtoMapper = new RoomCardDtoMapper();
@@ -150,18 +151,22 @@ public class AppContext {
         return sqlUserEntityMapper;
     }
 
-    public RoomService getRoomService() {return roomService;}
-
-    public ReservationService getReservationService() {
-        return reservationService;
-    }
-
     public MailService getMailService() {
         return mailService;
     }
 
     public ReservationTokenRepository getReservationTokenRepository() {
         return reservationTokenRepository;
+    }
+
+    public SqlReservationTokenEntityMapper getSqlReservationTokenEntityMapper() {return sqlReservationTokenEntityMapper;}
+
+    public RoomService getRoomService() {
+        return roomService;
+    }
+
+    public ReservationService getReservationService() {
+        return reservationService;
     }
 
     public ReservationTokenService getReservationTokenService() {
@@ -172,8 +177,6 @@ public class AppContext {
         return userService;
     }
 
-    public SqlReservationTokenEntityMapper getSqlReservationTokenEntityMapper() {return sqlReservationTokenEntityMapper;}
-
     public ApplicationService getApplicationService() {
         return applicationService;
     }
@@ -181,6 +184,7 @@ public class AppContext {
     public RegistrationService getRegistrationService() {
         return registrationService;
     }
+
     public RequestService getRequestService() {
         return requestService;
     }

@@ -10,6 +10,7 @@ import ua.aleh1s.hotelepam.controller.dto.RoomDto;
 import ua.aleh1s.hotelepam.controller.dtomapper.RoomDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.service.RoomService;
+import ua.aleh1s.hotelepam.service.impl.RoomServiceImpl;
 
 import static ua.aleh1s.hotelepam.utils.Utils.*;
 

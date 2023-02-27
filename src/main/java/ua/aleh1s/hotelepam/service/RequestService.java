@@ -1,27 +1,14 @@
 package ua.aleh1s.hotelepam.service;
 
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
-import ua.aleh1s.hotelepam.model.repository.RequestRepository;
+import ua.aleh1s.hotelepam.utils.Page;
+import ua.aleh1s.hotelepam.utils.PageRequest;
 
-public class RequestService {
+public interface RequestService {
 
-    private final RequestRepository requestRepository;
+    void create(RequestEntity entity);
+    RequestEntity getById(Long id);
+    void update(RequestEntity entity);
 
-    public RequestService(RequestRepository requestRepository) {
-        this.requestRepository = requestRepository;
-    }
-
-    public void create(RequestEntity requestEntity) {
-        requestRepository.create(requestEntity);
-    }
-
-    public RequestEntity getById(Long requestId) {
-        return requestRepository.findById(requestId)
-                .orElseThrow(ApplicationException::new);
-    }
-
-    public void update(RequestEntity requestEntity) {
-        requestRepository.update(requestEntity);
-    }
+    Page<RequestEntity> getAllActiveByUserId(Long userId, PageRequest pageRequest);
 }

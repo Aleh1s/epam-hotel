@@ -9,8 +9,8 @@ import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dto.RoomCardDto;
 import ua.aleh1s.hotelepam.controller.dtomapper.RoomCardDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
-import ua.aleh1s.hotelepam.model.pagination.Page;
-import ua.aleh1s.hotelepam.model.pagination.PageRequest;
+import ua.aleh1s.hotelepam.utils.Page;
+import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.service.RoomService;
 
 import java.util.Arrays;

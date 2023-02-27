@@ -1,6 +1,6 @@
 package ua.aleh1s.hotelepam.constant;
 
-import ua.aleh1s.hotelepam.model.querybuilder.specification.Column;
+import ua.aleh1s.hotelepam.model.querybuilder.entityconfiguration.Column;
 
 import java.sql.Types;
 

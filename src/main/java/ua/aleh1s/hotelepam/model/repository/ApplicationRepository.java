@@ -1,8 +1,8 @@
 package ua.aleh1s.hotelepam.model.repository;
 
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
-import ua.aleh1s.hotelepam.model.pagination.Page;
-import ua.aleh1s.hotelepam.model.pagination.PageRequest;
+import ua.aleh1s.hotelepam.utils.Page;
+import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 
 import java.util.Optional;

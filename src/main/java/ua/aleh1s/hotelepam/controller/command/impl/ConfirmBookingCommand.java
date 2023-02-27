@@ -10,6 +10,8 @@ import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
 import ua.aleh1s.hotelepam.service.ReservationService;
 import ua.aleh1s.hotelepam.service.ReservationTokenService;
+import ua.aleh1s.hotelepam.service.impl.ReservationServiceImpl;
+import ua.aleh1s.hotelepam.service.impl.ReservationTokenServiceImpl;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

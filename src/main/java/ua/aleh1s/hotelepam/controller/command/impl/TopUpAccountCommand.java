@@ -7,12 +7,11 @@ import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
-import ua.aleh1s.hotelepam.model.repository.UserRepository;
 import ua.aleh1s.hotelepam.service.UserService;
+import ua.aleh1s.hotelepam.service.impl.UserServiceImpl;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Optional;
 
 import static ua.aleh1s.hotelepam.utils.Utils.getBigDecimalValue;
 

@@ -11,6 +11,7 @@ import ua.aleh1s.hotelepam.controller.dto.RoomCardDto;
 import ua.aleh1s.hotelepam.controller.dtomapper.RoomCardDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.service.RoomService;
+import ua.aleh1s.hotelepam.service.impl.RoomServiceImpl;
 import ua.aleh1s.hotelepam.utils.Period;
 
 import java.time.LocalDate;

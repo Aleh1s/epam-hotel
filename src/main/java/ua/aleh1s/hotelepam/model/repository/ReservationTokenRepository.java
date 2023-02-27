@@ -9,5 +9,5 @@ public interface ReservationTokenRepository {
 
     Optional<ReservationTokenEntity> findById(String tokenId);
 
-    void updateConfirmedAt(ReservationTokenEntity reservationToken);
+    void update(ReservationTokenEntity reservationToken);
 }

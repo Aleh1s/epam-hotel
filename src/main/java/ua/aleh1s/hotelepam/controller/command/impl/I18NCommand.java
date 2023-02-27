@@ -7,8 +7,8 @@ import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
-import ua.aleh1s.hotelepam.model.repository.UserRepository;
 import ua.aleh1s.hotelepam.service.UserService;
+import ua.aleh1s.hotelepam.service.impl.UserServiceImpl;
 
 import java.io.IOException;
 import java.util.Locale;

@@ -11,6 +11,7 @@ import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
 import ua.aleh1s.hotelepam.model.entity.RoomClass;
 import ua.aleh1s.hotelepam.service.ApplicationService;
+import ua.aleh1s.hotelepam.service.impl.ApplicationServiceImpl;
 import ua.aleh1s.hotelepam.utils.Utils;
 
 import java.io.IOException;

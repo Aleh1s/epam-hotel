@@ -1,7 +1,7 @@
 package ua.aleh1s.hotelepam.model.repository;
 
-import ua.aleh1s.hotelepam.model.pagination.Page;
-import ua.aleh1s.hotelepam.model.pagination.PageRequest;
+import ua.aleh1s.hotelepam.utils.Page;
+import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 
@@ -14,9 +14,11 @@ public interface ReservationRepository {
     Page<ReservationEntity> getAllByStatus(ReservationStatus status, PageRequest pageRequest);
     Optional<ReservationEntity> getById(Long reservationId);
     void update(ReservationEntity reservation);
-    List<ReservationEntity> getAllByCustomerId(Long userId);
+    Page<ReservationEntity> getAllByUserIdAndStatusOrderByCreatedAtDesc(Long userId, ReservationStatus status, PageRequest pageRequest);
     Page<ReservationEntity> getAll(PageRequest pageRequest);
     List<ReservationEntity> getActualReservations();
     List<ReservationEntity> getActualReservationsByRoomNumber(Integer number);
     void updateStatus(ReservationEntity reservation);
+
+    Page<ReservationEntity> getAllByUserIdOrderByCreatedAtDesc(Long userId, PageRequest pageRequest);
 }

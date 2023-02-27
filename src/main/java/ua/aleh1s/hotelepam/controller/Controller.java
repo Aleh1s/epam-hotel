@@ -13,7 +13,7 @@ import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.command.CommandFactory;
 import ua.aleh1s.hotelepam.controller.command.impl.UnknownCommand;
-import ua.aleh1s.hotelepam.jdbc.DBManager;
+import ua.aleh1s.hotelepam.model.jdbc.DBManager;
 
 import java.io.IOException;
 

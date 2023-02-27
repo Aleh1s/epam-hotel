@@ -88,7 +88,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="request" items="${requestScope.requestDtoList}">
+                            <c:forEach var="request" items="${requestScope.requestDtoPage.result}">
                                 <tr>
                                     <td>${request.entryDate}</td>
                                     <td>${request.leavingDate}</td>

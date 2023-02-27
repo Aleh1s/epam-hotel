@@ -1,97 +1,66 @@
 package ua.aleh1s.hotelepam.model.repository.impl;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import ua.aleh1s.hotelepam.constant.SqlColumn;
-import ua.aleh1s.hotelepam.model.dao.DAO;
-import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
-import ua.aleh1s.hotelepam.model.pagination.Page;
-import ua.aleh1s.hotelepam.model.pagination.PageRequest;
-import ua.aleh1s.hotelepam.model.queryspecification.QuerySpecification;
-import ua.aleh1s.hotelepam.model.queryspecification.SqlBase;
-import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
-import ua.aleh1s.hotelepam.model.dao.DaoException;
-import ua.aleh1s.hotelepam.model.dao.impl.ApplicationDAO;
+import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
-import ua.aleh1s.hotelepam.model.querybuilder.specification.where.WhereSpecification;
-import ua.aleh1s.hotelepam.model.sqlmapper.SqlApplicationEntityMapper;
-import ua.aleh1s.hotelepam.querybuilder.Root;
-import ua.aleh1s.hotelepam.transaction.Transaction;
+import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
+import ua.aleh1s.hotelepam.utils.Page;
+import ua.aleh1s.hotelepam.utils.PageRequest;
+import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
+import ua.aleh1s.hotelepam.model.sqlmapper.impl.SqlApplicationEntityMapper;
+import ua.aleh1s.hotelepam.model.querybuilder.Root;
+import ua.aleh1s.hotelepam.model.querybuilder.node.PredicateNode;
 
-import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 public class ApplicationRepositoryImpl implements ApplicationRepository {
 
-    public static final Logger logger = LogManager.getLogger(ApplicationRepositoryImpl.class);
+    private static final SqlApplicationEntityMapper applicationEntityMapper = AppContext.getInstance().getSqlApplicationEntityMapper();
 
     @Override
-    public void create(ApplicationEntity applicationEntity) {
-        ApplicationDAO applicationSimpleDao = new ApplicationDAO();
-        try (Transaction transaction = Transaction.start(applicationSimpleDao)) {
-            try {
-                applicationSimpleDao.save(applicationEntity);
-                transaction.commit();
-            } catch (DaoException e) {
-                transaction.rollback();
-                logger.error(e.getMessage(), e);
-            }
-        }
+    public void create(ApplicationEntity application) {
+        Root<ApplicationEntity> root = Root.valueOf(ApplicationEntity.class);
+        root.insert().values(
+                root.get("id").set(application.getId()),
+                root.get("guestsNumber").set(application.getGuestsNumber()),
+                root.get("roomClass").set(application.getRoomClass().getIndex()),
+                root.get("entryDate").set(Date.valueOf(application.getEntryDate())),
+                root.get("leavingDate").set(Date.valueOf(application.getLeavingDate())),
+                root.get("status").set(application.getStatus().getIndex()),
+                root.get("customerId").set(application.getCustomerId())
+        ).execute();
     }
 
     @Override
     public Optional<ApplicationEntity> getById(Long id) {
-        Optional<ApplicationEntity> application = Optional.empty();
-        ApplicationDAO dao = new ApplicationDAO();
-        try (Transaction transaction = Transaction.start(dao)) {
-            try {
-                application = dao.findById(id);
-                transaction.commit();
-            } catch (DaoException e) {
-                transaction.rollback();
-                logger.error(e.getMessage(), e);
-            }
-        }
-        return application;
+        Root<ApplicationEntity> root = Root.valueOf(ApplicationEntity.class);
+        ApplicationEntity application = root.select().where(root.get("id").equal(id)).getResult(applicationEntityMapper);
+        return Optional.ofNullable(application);
     }
 
     @Override
     public void update(ApplicationEntity application) {
-        ApplicationDAO dao = new ApplicationDAO();
-        try (Transaction transaction = Transaction.start(dao)) {
-            try {
-                dao.update(application);
-                transaction.commit();
-            } catch (DaoException e) {
-                transaction.rollback();
-                logger.error(e.getMessage(), e);
-            }
-        }
+        Root<ApplicationEntity> root = Root.valueOf(ApplicationEntity.class);
+        root.update().set(
+                root.get("guestsNumber").set(application.getGuestsNumber()),
+                root.get("roomClass").set(application.getRoomClass().getIndex()),
+                root.get("entryDate").set(Date.valueOf(application.getEntryDate())),
+                root.get("leavingDate").set(Date.valueOf(application.getLeavingDate())),
+                root.get("status").set(application.getStatus().getIndex())
+        ).where(root.get("id").equal(application.getId())).execute();
     }
 
     @Override
     public Page<ApplicationEntity> getAllByApplicationStatus(ApplicationStatus status, PageRequest pageRequest) {
-        QuerySpecification sqs = QuerySpecification.newSpecification(SqlBase.SELECT, "application");
-        sqs.where(sqs.eq(SqlColumn.ApplicationTable.STATUS, status.getIndex())).offset(pageRequest.getOffset()).limit(pageRequest.getLimit());
+        Root<ApplicationEntity> root = Root.valueOf(ApplicationEntity.class);
+        PredicateNode statusEqual = root.get("status").equal(status.getIndex());
 
-        QuerySpecification cqs = QuerySpecification.newSpecification(SqlBase.COUNT, "application");
-        cqs.where(cqs.eq(SqlColumn.ApplicationTable.STATUS, status.getIndex()));
+        List<ApplicationEntity> applicationList = root.select().where(statusEqual).offset(pageRequest.getOffset()).limit(pageRequest.getLimit())
+                .getResultList(applicationEntityMapper);
 
-        List<ApplicationEntity> applicationList = new ArrayList<>();
-        long count = 0;
-        ApplicationDAO dao = new ApplicationDAO();
-        try (Transaction transaction = Transaction.start(dao)) {
-            try {
-                applicationList = dao.getAllBySpecification(sqs);
-                count = dao.countBySpecification(cqs);
-                transaction.commit();
-            } catch (DaoException e) {
-                transaction.rollback();
-                logger.error(e.getMessage(), e);
-            }
-        }
+        Long count = root.select(root.countAll()).where(statusEqual).execute(Long.class);
+
         return Page.of(applicationList, count);
     }
 }

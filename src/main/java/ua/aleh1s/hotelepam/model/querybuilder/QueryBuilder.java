@@ -1,75 +1,68 @@
 package ua.aleh1s.hotelepam.model.querybuilder;
 
-import ua.aleh1s.hotelepam.model.pagination.PageRequest;
-import ua.aleh1s.hotelepam.model.querybuilder.specification.orderby.OrderSpecification;
-import ua.aleh1s.hotelepam.model.querybuilder.specification.where.WhereCriteria;
-import ua.aleh1s.hotelepam.model.querybuilder.specification.where.WhereSpecification;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ua.aleh1s.hotelepam.model.jdbc.DBManager;
+import ua.aleh1s.hotelepam.model.querybuilder.entityconfiguration.Column;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.*;
 import java.util.StringJoiner;
 
-import static java.util.Objects.*;
+public abstract class QueryBuilder<T> {
 
-public class QueryBuilder {
+    private static final Logger logger = LogManager.getLogger(QueryBuilder.class);
+    protected final Root<T> root;
+    protected final StringJoiner query;
 
-    private final StringJoiner query;
-    private WhereSpecification whereSpecification;
-    private OrderSpecification orderSpecification;
-    private PageRequest pageRequest;
-
-    private QueryBuilder(StringJoiner stringJoiner) {
-        this.query = stringJoiner;
-    }
-
-    public static QueryBuilder newQueryBuilder(SqlBase sqlBase, String tableName) {
-        StringJoiner stringJoiner = new StringJoiner(" ", sqlBase.toString(), ";")
-                .add(String.format(" \"%s\"", tableName));
-        return new QueryBuilder(stringJoiner);
-    }
-
-    public void addWhereSpecification(WhereSpecification specification) {
-        this.whereSpecification = specification;
-    }
-
-    public void addOrderSpecification(OrderSpecification specification) {
-        this.orderSpecification = specification;
-    }
-
-    public void addPageRequest(PageRequest pageRequest) {
-        this.pageRequest = pageRequest;
+    protected QueryBuilder(Root<T> root, StringJoiner query) {
+        this.root = root;
+        this.query = query;
     }
 
     public String build() {
-        if (nonNull(whereSpecification))
-            query.add(whereSpecification.getCondition());
-
-        if (nonNull(orderSpecification))
-            query.add(orderSpecification.getCondition());
-
-        if (nonNull(pageRequest))
-            query.add("offset").add(String.valueOf(pageRequest.getOffset()))
-                    .add("limit").add(String.valueOf(pageRequest.getLimit()));
-
         return query.toString();
     }
 
-    public void injectValues(PreparedStatement statement) throws SQLException {
+    protected void injectValues(PreparedStatement statement) throws SQLException {
         int counter = 1;
-        for (WhereCriteria whereCriteria : whereSpecification.getCriteriaList()) {
-            Object value = whereCriteria.getValue();
+        for (Parameter parameter : root.getParameters()) {
+            Column column = parameter.getColumn();
+            Object value = parameter.getValue();
 
-            if (value instanceof LocalDate ld)
-                value = Date.valueOf(ld);
-
-            if (value instanceof LocalDateTime ldt)
-                value = Timestamp.valueOf(ldt);
-
-            statement.setObject(counter++, value, whereCriteria.getKey().getType());
+            statement.setObject(counter++, value, column.getType());
         }
+    }
+
+    public void execute() {
+        String query = build();
+        logger.info(query);
+        try (Connection connection = DBManager.getInstance().getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                injectValues(statement);
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
+
+    public <R> R execute(Class<R> clazz) {
+        R result = null;
+        String query = build();
+        logger.info(query);
+        try (Connection connection = DBManager.getInstance().getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                injectValues(statement);
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        result = resultSet.getObject(1, clazz);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 }

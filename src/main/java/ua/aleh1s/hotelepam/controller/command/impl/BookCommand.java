@@ -9,6 +9,7 @@ import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.service.BookingService;
+import ua.aleh1s.hotelepam.service.impl.BookingServiceImpl;
 import ua.aleh1s.hotelepam.utils.Period;
 
 import java.io.IOException;

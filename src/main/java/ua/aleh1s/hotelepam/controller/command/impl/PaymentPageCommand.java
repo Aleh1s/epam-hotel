@@ -14,12 +14,10 @@ import ua.aleh1s.hotelepam.controller.dtomapper.RoomDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
-import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
-import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 import ua.aleh1s.hotelepam.service.ReservationService;
 import ua.aleh1s.hotelepam.service.RoomService;
-
-import java.util.Optional;
+import ua.aleh1s.hotelepam.service.impl.ReservationServiceImpl;
+import ua.aleh1s.hotelepam.service.impl.RoomServiceImpl;
 
 import static ua.aleh1s.hotelepam.utils.Utils.getLongValue;
 

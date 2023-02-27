@@ -10,9 +10,9 @@ import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.service.UserService;
+import ua.aleh1s.hotelepam.service.impl.UserServiceImpl;
 
 import java.io.IOException;
-import java.util.Optional;
 
 public class LoginCommand implements Command {
     @Override

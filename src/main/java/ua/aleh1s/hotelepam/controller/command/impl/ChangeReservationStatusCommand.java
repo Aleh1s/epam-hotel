@@ -9,11 +9,10 @@ import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.model.entity.UserRole;
-import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
 import ua.aleh1s.hotelepam.service.ReservationService;
+import ua.aleh1s.hotelepam.service.impl.ReservationServiceImpl;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import static ua.aleh1s.hotelepam.utils.Utils.getIntValue;
 import static ua.aleh1s.hotelepam.utils.Utils.getLongValue;

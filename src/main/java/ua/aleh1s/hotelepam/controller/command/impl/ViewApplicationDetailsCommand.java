@@ -6,16 +6,14 @@ import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.service.ApplicationService;
 import ua.aleh1s.hotelepam.service.UserService;
+import ua.aleh1s.hotelepam.service.impl.ApplicationServiceImpl;
+import ua.aleh1s.hotelepam.service.impl.UserServiceImpl;
 import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dtomapper.ApplicationDtoMapper;
 import ua.aleh1s.hotelepam.controller.dtomapper.UserDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
-import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
-import ua.aleh1s.hotelepam.model.repository.UserRepository;
-
-import java.util.Optional;
 
 public class ViewApplicationDetailsCommand implements Command {
 
