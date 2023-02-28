@@ -14,19 +14,20 @@
 <div class="container">
     <div class="main">
         <div class="form-container">
-            <form class="custom-form" action="<c:url value="/controller?command=application"/>" method="post">
+            <form class="application-form" action="<c:url value="/controller?command=application"/>" method="post">
                 <h1 class="form-header"><fmt:message key="application.info"/></h1>
 
                 <div class="input-group">
                     <label for="number-of-guests">
-                        <fmt:message var="numberOfGuests" key="number.of.guests"/>
-                        ${numberOfGuests}
+                        <fmt:message var="guestsNumber" key="guests"/>
+                        ${guestsNumber}
                         <input min="1" max="10" class="form-input" id="number-of-guests"
                                value="1"
                                name="guestsNumber" type="number"
-                               placeholder="${numberOfGuests}" required>
+                               placeholder="${guestsNumber}" required>
                     </label>
                 </div>
+
                 <div class="input-group">
                     <label for="roomClass">
                         <fmt:message key="class"/>
@@ -41,19 +42,17 @@
                 </div>
                 <div class="input-group">
                     <label for="date-of-entry">
-                        <fmt:message key="entry.date"/>
+                        <fmt:message key="check.in"/>
                         <input id="date-of-entry" class="form-input" name="entryDate" type="date"
                                max="2024-01-01" required>
                     </label>
-                </div>
-                <div class="input-group">
                     <label for="date-of-leaving">
-                        <fmt:message key="leaving.date"/>
+                        <fmt:message key="check.out"/>
                         <input id="date-of-leaving" class="form-input" name="leavingDate" type="date"
                                max="2024-01-01" required>
                     </label>
                 </div>
-                <button class="btn-primary" type="submit"><fmt:message key="make.an.application"/></button>
+                <button class="btn-primary" type="submit"><fmt:message key="request"/></button>
             </form>
         </div>
     </div>

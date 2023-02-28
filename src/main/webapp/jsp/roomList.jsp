@@ -90,6 +90,7 @@
                             </option>
                         </select>
                     </div>
+                    <div></div>
                     <button type="submit" class="room-sort-btn"><fmt:message key="search"/></button>
                 </form>
             </div>

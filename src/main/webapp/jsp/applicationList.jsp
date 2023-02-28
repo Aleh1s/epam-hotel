@@ -18,7 +18,7 @@
                     <table class="styled-table">
                         <thead>
                         <tr>
-                            <th><fmt:message key="number.of.guests"/></th>
+                            <th><fmt:message key="guests"/></th>
                             <th><fmt:message key="room.class"/></th>
                             <th><fmt:message key="entry.date"/></th>
                             <th><fmt:message key="leaving.date"/></th>

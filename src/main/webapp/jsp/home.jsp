@@ -20,21 +20,21 @@
         <div class="home-search-bar">
             <form method="get" action="<c:url value="/controller"/>">
                 <input type="hidden" name="command" value="chooseRooms">
-                <div class="date-input">
+                <div class="bounded-input">
                     <label for="check-in">
                         Check-in
                     </label>
                     <input id="check-in" name="checkIn" type="date"
                            max="2024-01-01" required>
                 </div>
-                <div class="date-input">
+                <div class="bounded-input">
                     <label for="check-out">
                         Check-out
                     </label>
                     <input id="check-out" name="checkOut" type="date"
                            max="2024-01-01" required>
                 </div>
-                <div class="date-input">
+                <div class="bounded-input">
                     <label for="guests">
                         Guests
                     </label>

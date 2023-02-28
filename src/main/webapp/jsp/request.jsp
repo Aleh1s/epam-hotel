@@ -87,7 +87,7 @@
                             <input id="date-of-leaving" class="form-input" name="leavingDate" type="date"
                                    max="2024-01-01" required>
                         </label>
-                        <button type="submit" class="btn-primary"><fmt:message key="send.request"/></button>
+                        <button type="submit" class="btn-primary"><fmt:message key="request"/></button>
                     </form>
                 </div>
             </div>

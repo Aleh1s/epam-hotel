@@ -93,7 +93,7 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
 }
 
-.custom-form {
+.custom-form, .application-form {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -113,7 +113,7 @@
     width: 100%;
     height: 35px;
     padding: 9px 0;
-    color: #666;
+    color: #a1a1a1;
     outline: none;
     box-shadow: none;
     border: none;
@@ -123,10 +123,11 @@
     display: block;
     width: 100%;
     margin-bottom: 30px;
-    text-transform: uppercase;
     font-weight: 500;
-    font-size: 27px;
-    color: #666;
+    font-size: 24px;
+    color: #a1a1a1;
+    font-style: italic;
+    letter-spacing: 1px;
 }
 
 .form-button {
@@ -222,7 +223,8 @@
 
 .key, .value {
     display: inline;
-    font-size: 14px;
+    font-size: 13px;
+    letter-spacing: 1px;
 }
 
 .key {
@@ -257,11 +259,14 @@
 .room-card-footer > p {
     font-size: 18px;
     color: #1d3c62;
+    font-style: italic;
 }
 
 .input-group > label {
-    font-size: 15px;
+    font-size: 12px;
     color: #1d3c62;
+    letter-spacing: 1px;
+    margin-right: 8px;
 }
 
 .room-sort-form {
@@ -270,6 +275,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 20px 10px;
+    justify-items: end;
 }
 
 .room-sort-btn {
@@ -295,7 +301,8 @@
 
 .room-sort-form label {
     color: #1d3c62;
-    font-size: 15px;
+    font-size: 13px;
+    letter-spacing: 1px;
 }
 
 .room-sort-form > div {
@@ -1270,15 +1277,13 @@
     align-items: center;
 }
 
-.date-input {
+.bounded-input {
     width: 150px;
     height: 50px;
-    border: 1px solid #989494;
-    border-radius: 25px;
     padding: 5px 15px;
 }
 
-.date-input > label {
+.bounded-input > label {
     display: block;
     height: 12px;
     color: #1d3c62;
@@ -1287,7 +1292,7 @@
     margin-bottom: 3px;
 }
 
-.date-input > input {
+.bounded-input > input {
     height: 25px;
     display: block;
     width: 100%;
@@ -1295,7 +1300,7 @@
     color: #989494;
     outline: none;
     box-shadow: none;
-    border: none;
+    border-bottom: 1px solid #8d8d8d;
 }
 
 .home-search-bar form {
