@@ -37,7 +37,7 @@
                             </tr>
                             <tr>
                                 <td>Payment Time</td>
-                                <td>${sessionScope.paymentPayedAt}</td>
+                                <td><fmt:formatDate type="both" value="${sessionScope.paymentPayedAt}"/></td>
                                 <c:remove var="paymentPayedAt" scope="session"/>
                             </tr>
                         </table>

@@ -40,13 +40,13 @@ public final class CommandFactory {
         commandMap.put("profile", new ProfileCommand());
         commandMap.put("confirmBooking", new ConfirmBookingCommand());
         commandMap.put("reservationList", new ReservationListCommand());
-        commandMap.put("changeReservationStatus", new ChangeReservationStatusCommand());
         commandMap.put("myBookings", new MyBookingsCommand());
         commandMap.put("paymentPage", new PaymentPageCommand());
-        commandMap.put("confirmPayment", new ConfirmPaymentCommand());
+        commandMap.put("payReservation", new PayReservationCommand());
         commandMap.put("topUpAccount", new TopUpAccountCommand());
         commandMap.put("logOut", new LogOutCommand());
-        commandMap.put("changeRequestStatus", new ChangeRequestStatusCommand());
         commandMap.put("chooseRooms", new ChooseRoomsCommand());
+        commandMap.put("rejectRequest", new RejectRequestCommand());
+        commandMap.put("confirmRequest", new ConfirmRequestCommand());
     }
 }

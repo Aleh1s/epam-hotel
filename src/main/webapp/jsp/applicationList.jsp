@@ -20,23 +20,23 @@
                         <tr>
                             <th><fmt:message key="guests"/></th>
                             <th><fmt:message key="room.class"/></th>
-                            <th><fmt:message key="entry.date"/></th>
-                            <th><fmt:message key="leaving.date"/></th>
+                            <th><fmt:message key="check.in"/></th>
+                            <th><fmt:message key="check.out"/></th>
                             <th><fmt:message key="control"/></th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="application" items="${requestScope.applicationPage.result}">
                             <tr>
-                                <td>${application.guestsNumber}</td>
+                                <td>${application.guests}</td>
                                 <td>${application.roomClass}</td>
-                                <td>${application.entryDate}</td>
-                                <td>${application.leavingDate}</td>
+                                <td>${application.checkIn}</td>
+                                <td>${application.checkOut}</td>
                                 <td>
                                     <form method="get" action="<c:url value="/controller"/>">
                                         <input type="hidden" name="command" value="viewApplicationDetails">
                                         <input type="hidden" name="applicationId" value="${application.id}">
-                                        <button type="submit" class="btn-view">Show details</button>
+                                        <button type="submit" class="btn-view">Details</button>
                                     </form>
                                 </td>
                             </tr>

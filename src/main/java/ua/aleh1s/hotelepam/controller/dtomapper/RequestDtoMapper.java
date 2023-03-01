@@ -13,8 +13,8 @@ public class RequestDtoMapper implements Function<RequestEntity, RequestDto> {
                 .customerId(request.getCustomerId())
                 .roomNumber(request.getRoomNumber())
                 .status(request.getStatus())
-                .entryDate(request.getEntryDate())
-                .leavingDate(request.getLeavingDate())
+                .checkIn(request.getCheckIn())
+                .checkOut(request.getCheckOut())
                 .totalAmount(request.getTotalAmount())
                 .build();
     }

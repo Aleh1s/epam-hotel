@@ -27,9 +27,9 @@ public class RequestRepositoryImpl implements RequestRepository {
         root.insert().values(
                 root.get("roomNumber").set(request.getRoomNumber()),
                 root.get("customerId").set(request.getCustomerId()),
-                root.get("status").set(request.getStatus()),
-                root.get("entryDate").set(request.getEntryDate()),
-                root.get("leavingDate").set(request.getLeavingDate()),
+                root.get("status").set(request.getStatus().getIndex()),
+                root.get("checkIn").set(request.getCheckIn()),
+                root.get("checkOut").set(request.getCheckOut()),
                 root.get("totalAmount").set(request.getTotalAmount())
         ).execute();
     }
@@ -72,8 +72,8 @@ public class RequestRepositoryImpl implements RequestRepository {
                 root.get("roomNumber").set(entity.getRoomNumber()),
                 root.get("customerId").set(entity.getCustomerId()),
                 root.get("status").set(entity.getStatus().getIndex()),
-                root.get("entryDate").set(Date.valueOf(entity.getEntryDate())),
-                root.get("leavingDate").set(Date.valueOf(entity.getLeavingDate())),
+                root.get("checkIn").set(Date.valueOf(entity.getCheckIn())),
+                root.get("checkOut").set(Date.valueOf(entity.getCheckOut())),
                 root.get("totalAmount").set(entity.getTotalAmount().doubleValue())
         ).where(root.get("id").equal(entity.getId())).execute();
     }

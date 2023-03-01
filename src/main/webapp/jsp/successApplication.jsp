@@ -27,24 +27,20 @@
                     <div class="primary-info-container">
                         <table>
                             <tr class="active">
-                                <td>Guests Number</td>
-                                <td>${sessionScope.guestsNumber}</td>
-                                <c:remove var="guestsNumber" scope="session"/>
+                                <td>Guests</td>
+                                <td>${sessionScope.guests}</td>
                             </tr>
                             <tr>
                                 <td>Room Class</td>
-                                <td>${sessionScope.roomClass}</td>
-                                <c:remove var="roomClass" scope="session"/>
+                                <td>${sessionScope.clazz}</td>
                             </tr>
                             <tr>
-                                <td>Entry Date</td>
-                                <td>${sessionScope.entryDate}</td>
-                                <c:remove var="entryDate" scope="session"/>
+                                <td>Check-in</td>
+                                <td>${sessionScope.checkIn}</td>
                             </tr>
                             <tr>
-                                <td>Leaving Date</td>
-                                <td>${sessionScope.leavingDate}</td>
-                                <c:remove var="leavingDate" scope="session"/>
+                                <td>Check-out</td>
+                                <td>${sessionScope.checkOut}</td>
                             </tr>
                         </table>
                     </div>

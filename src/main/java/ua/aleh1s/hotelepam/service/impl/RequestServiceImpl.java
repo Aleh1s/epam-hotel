@@ -1,11 +1,19 @@
 package ua.aleh1s.hotelepam.service.impl;
 
+import ua.aleh1s.hotelepam.appcontext.AppContext;
+import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
+import ua.aleh1s.hotelepam.model.entity.RequestStatus;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.repository.RequestRepository;
 import ua.aleh1s.hotelepam.service.RequestService;
+
+import java.util.Objects;
+
+import static ua.aleh1s.hotelepam.model.entity.RequestStatus.CONFIRMED;
+import static ua.aleh1s.hotelepam.model.entity.RequestStatus.NEW;
 
 public class RequestServiceImpl implements RequestService {
 
@@ -32,7 +40,18 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public Page<RequestEntity> getAllActiveByUserId(Long userId, PageRequest pageRequest) {
+    public Page<RequestEntity> getAllActiveRequestsByUserId(Long userId, PageRequest pageRequest) {
         return requestRepository.getAllActiveByUserId(userId, pageRequest);
+    }
+
+    @Override
+    public void changeStatus(RequestEntity request, RequestStatus requestStatus) {
+        String path = ResourcesManager.getInstance().getValue("path.command.profile");
+
+        if (!request.getStatus().equals(NEW))
+            throw new ApplicationException("You cannot change status", path);
+
+        request.setStatus(requestStatus);
+        update(request);
     }
 }

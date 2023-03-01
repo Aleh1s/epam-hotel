@@ -45,4 +45,12 @@ public class RoomRepositoryImpl implements RoomRepository {
         Root<RoomEntity> root = Root.valueOf(RoomEntity.class);
         return root.select().getResultList(roomEntityMapper);
     }
+
+    @Override
+    public List<RoomEntity> getAllByGuests(Integer guests) {
+        Root<RoomEntity> root = Root.valueOf(RoomEntity.class);
+        return root.select().where(
+                root.get("personsNumber").equal(guests)
+        ).getResultList(roomEntityMapper);
+    }
 }

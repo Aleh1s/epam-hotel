@@ -23,20 +23,20 @@
                             </div>
                             <table>
                                 <tr class="active">
-                                    <td>Guests Number</td>
-                                    <td>${requestScope.application.guestsNumber}</td>
+                                    <td>Guests</td>
+                                    <td>${requestScope.application.guests}</td>
                                 </tr>
                                 <tr>
                                     <td>Room Class</td>
                                     <td>${requestScope.application.roomClass}</td>
                                 </tr>
                                 <tr>
-                                    <td>Entry Date</td>
-                                    <td>${requestScope.application.entryDate}</td>
+                                    <td>Check-in</td>
+                                    <td>${requestScope.application.checkIn}</td>
                                 </tr>
                                 <tr>
-                                    <td>Leaving Date</td>
-                                    <td>${requestScope.application.leavingDate}</td>
+                                    <td>Check-out</td>
+                                    <td>${requestScope.application.checkOut}</td>
                                 </tr>
                             </table>
                         </div>
@@ -78,13 +78,13 @@
                                    class="form-input" value="1" min="1" required>
                         </label>
                         <label for="date-of-entry">
-                            <fmt:message key="entry.date"/>
-                            <input id="date-of-entry" class="form-input" name="entryDate" type="date"
+                            <fmt:message key="check.in"/>
+                            <input id="date-of-entry" class="form-input" name="checkIn" type="date"
                                    max="2024-01-01" required>
                         </label>
                         <label for="date-of-leaving">
-                            <fmt:message key="leaving.date"/>
-                            <input id="date-of-leaving" class="form-input" name="leavingDate" type="date"
+                            <fmt:message key="check.out"/>
+                            <input id="date-of-leaving" class="form-input" name="checkOut" type="date"
                                    max="2024-01-01" required>
                         </label>
                         <button type="submit" class="btn-primary"><fmt:message key="request"/></button>

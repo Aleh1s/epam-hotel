@@ -17,7 +17,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ApplicationEntity getById(Long id) {
+    public ApplicationEntity getApplicationById(Long id) {
         return applicationRepository.getById(id)
                 .orElseThrow(ApplicationException::new);
     }

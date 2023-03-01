@@ -2,12 +2,9 @@ package ua.aleh1s.hotelepam.service.impl;
 
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.model.entity.*;
 import ua.aleh1s.hotelepam.utils.Mail;
 import ua.aleh1s.hotelepam.service.MailService;
-import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
-import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
-import ua.aleh1s.hotelepam.model.entity.RoomEntity;
-import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.service.*;
 import ua.aleh1s.hotelepam.utils.Period;
 
@@ -55,13 +52,15 @@ public class BookingServiceImpl implements BookingService {
         BigDecimal totalAmount = roomService.getTotalPrice(room, requestedPeriod);
 
         LocalDateTime now = LocalDateTime.now();
+        LocalDateTime expiredAt = now.plusMinutes(15);
+
         ReservationEntity reservation = ReservationEntity.Builder.newBuilder()
                 .roomNumber(roomNumber)
                 .customerId(customerId)
-                .entryDate(requestedPeriod.getStart())
-                .leavingDate(requestedPeriod.getEnd())
+                .checkIn(requestedPeriod.getStart())
+                .checkOut(requestedPeriod.getEnd())
                 .createdAt(now)
-                .expiredAt(now.plusDays(2))
+                .expiredAt(expiredAt)
                 .totalAmount(totalAmount)
                 .status(PENDING_CONFIRMATION)
                 .build();
@@ -71,7 +70,7 @@ public class BookingServiceImpl implements BookingService {
         ReservationTokenEntity reservationToken = ReservationTokenEntity.Builder.newBuilder()
                 .id(tokenId)
                 .createdAt(now)
-                .expiredAt(now.plusMinutes(15))
+                .expiredAt(expiredAt)
                 .reservationId(reservationId)
                 .build();
         reservationTokenService.create(reservationToken);
@@ -81,7 +80,7 @@ public class BookingServiceImpl implements BookingService {
                 "Book confirmation",
                 buildEmail(
                         String.format("%s %s", user.getFirstName(), user.getLastName()),
-                        String.format("http://localhost:8080/controller?command=confirmBooking&tokenId=%s", tokenId)
+                        String.format("http://localhost:8080/controller?command=confirmBooking&tokenId=%s", tokenId) //todo: replace localhost by configured path
                 )
         );
 

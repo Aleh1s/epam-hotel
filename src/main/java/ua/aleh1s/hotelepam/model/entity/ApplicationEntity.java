@@ -5,36 +5,36 @@ import java.time.LocalDate;
 public class ApplicationEntity {
 
     private Long id;
-    private Integer guestsNumber;
-    private RoomClass roomClass;
-    private LocalDate entryDate;
-    private LocalDate leavingDate;
+    private Integer guests;
+    private RoomClass clazz;
+    private LocalDate checkIn;
+    private LocalDate checkOut;
     private ApplicationStatus status;
     private Long customerId;
 
     public ApplicationEntity(
             Long id,
-            Integer guestsNumber,
-            RoomClass roomClass,
-            LocalDate entryDate,
-            LocalDate leavingDate,
+            Integer guests,
+            RoomClass clazz,
+            LocalDate checkIn,
+            LocalDate checkOut,
             ApplicationStatus status,
             Long customerId) {
         this.id = id;
-        this.guestsNumber = guestsNumber;
-        this.roomClass = roomClass;
-        this.entryDate = entryDate;
-        this.leavingDate = leavingDate;
+        this.guests = guests;
+        this.clazz = clazz;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
         this.status = status;
         this.customerId = customerId;
     }
 
     public static class Builder {
         private Long id;
-        private Integer guestsNumber;
-        private RoomClass roomClass;
-        private LocalDate entryDate;
-        private LocalDate leavingDate;
+        private Integer guests;
+        private RoomClass clazz;
+        private LocalDate checkIn;
+        private LocalDate checkOut;
         private ApplicationStatus status;
         private Long customerId;
 
@@ -49,23 +49,23 @@ public class ApplicationEntity {
             return this;
         }
 
-        public Builder guestsNumber(Integer guestsNumber) {
-            this.guestsNumber = guestsNumber;
+        public Builder guests(Integer guests) {
+            this.guests = guests;
             return this;
         }
 
-        public Builder roomClass(RoomClass roomClass) {
-            this.roomClass = roomClass;
+        public Builder clazz(RoomClass clazz) {
+            this.clazz = clazz;
             return this;
         }
 
-        public Builder entryDate(LocalDate entryDate) {
-            this.entryDate = entryDate;
+        public Builder checkIn(LocalDate checkIn) {
+            this.checkIn = checkIn;
             return this;
         }
 
-        public Builder leavingDate(LocalDate leavingDate) {
-            this.leavingDate = leavingDate;
+        public Builder checkOut(LocalDate checkOut) {
+            this.checkOut = checkOut;
             return this;
         }
 
@@ -81,7 +81,7 @@ public class ApplicationEntity {
 
         public ApplicationEntity build() {
             return new ApplicationEntity(
-                    id, guestsNumber, roomClass, entryDate, leavingDate, status, customerId
+                    id, guests, clazz, checkIn, checkOut, status, customerId
             );
         }
     }
@@ -90,52 +90,52 @@ public class ApplicationEntity {
         return id;
     }
 
-    public Integer getGuestsNumber() {
-        return guestsNumber;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public RoomClass getRoomClass() {
-        return roomClass;
+    public Integer getGuests() {
+        return guests;
     }
 
-    public LocalDate getEntryDate() {
-        return entryDate;
+    public void setGuests(Integer guests) {
+        this.guests = guests;
     }
 
-    public LocalDate getLeavingDate() {
-        return leavingDate;
+    public RoomClass getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(RoomClass clazz) {
+        this.clazz = clazz;
+    }
+
+    public LocalDate getCheckIn() {
+        return checkIn;
+    }
+
+    public void setCheckIn(LocalDate checkIn) {
+        this.checkIn = checkIn;
+    }
+
+    public LocalDate getCheckOut() {
+        return checkOut;
+    }
+
+    public void setCheckOut(LocalDate checkOut) {
+        this.checkOut = checkOut;
     }
 
     public ApplicationStatus getStatus() {
         return status;
     }
 
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setGuestsNumber(Integer guestsNumber) {
-        this.guestsNumber = guestsNumber;
-    }
-
-    public void setApartmentClass(RoomClass roomClass) {
-        this.roomClass = roomClass;
-    }
-
-    public void setEntryDate(LocalDate entryDate) {
-        this.entryDate = entryDate;
-    }
-
-    public void setLeavingDate(LocalDate leavingDate) {
-        this.leavingDate = leavingDate;
-    }
-
     public void setStatus(ApplicationStatus status) {
         this.status = status;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
     }
 
     public void setCustomerId(Long customerId) {

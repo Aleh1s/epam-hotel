@@ -18,7 +18,9 @@ public class RoomEntity {
     private Integer personsNumber;
     private Integer area;
 
-    public RoomEntity(
+    public RoomEntity() {}
+
+    private RoomEntity(
             Integer roomNumber,
             RoomClass roomClass,
             RoomStatus status,

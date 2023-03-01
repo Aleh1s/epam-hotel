@@ -8,6 +8,8 @@ import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
 import ua.aleh1s.hotelepam.service.ReservationService;
 
+import static ua.aleh1s.hotelepam.model.entity.ReservationStatus.*;
+
 public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
@@ -28,24 +30,19 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public void changeStatus(ReservationEntity entity, ReservationStatus status) {
-        entity.setStatus(status);
-        reservationRepository.updateStatus(entity);
+    public Page<ReservationEntity> getAllActualPayedReservations(PageRequest pageRequest) {
+        return reservationRepository.getAllActualReservationByStatus(PAYED, pageRequest);
     }
 
     @Override
-    public Page<ReservationEntity> getAllByStatus(ReservationStatus status, PageRequest pageRequest) {
-        return reservationRepository.getAllByStatus(status, pageRequest);
+    public Page<ReservationEntity> getAllReservationsByUserId(Long userId, PageRequest pageRequest) {
+        return reservationRepository.getAllReservationsByUserId(userId, pageRequest);
     }
 
     @Override
-    public Page<ReservationEntity> getAll(PageRequest pageRequest) {
-        return reservationRepository.getAll(pageRequest);
-    }
-
-    @Override
-    public Page<ReservationEntity> getAllByUserIdAndStatusOrderByCreatedAtDesc(Long userId, ReservationStatus status, PageRequest pageRequest) {
-        return reservationRepository.getAllByUserIdAndStatusOrderByCreatedAtDesc(userId, status, pageRequest);
+    public void cancelReservation(ReservationEntity reservation) {
+        reservation.setStatus(CANCELED);
+        update(reservation);
     }
 
     @Override
@@ -53,8 +50,4 @@ public class ReservationServiceImpl implements ReservationService {
         reservationRepository.update(reservation);
     }
 
-    @Override
-    public Page<ReservationEntity> getAllByUserIdOrderByCreatedAtDesc(Long userId, PageRequest pageRequest) {
-        return reservationRepository.getAllByUserIdOrderByCreatedAtDesc(userId, pageRequest);
-    }
 }

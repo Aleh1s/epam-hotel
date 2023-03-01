@@ -11,11 +11,12 @@ import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
 import ua.aleh1s.hotelepam.model.entity.RoomClass;
 import ua.aleh1s.hotelepam.service.ApplicationService;
-import ua.aleh1s.hotelepam.service.impl.ApplicationServiceImpl;
-import ua.aleh1s.hotelepam.utils.Utils;
+import ua.aleh1s.hotelepam.utils.Period;
 
 import java.io.IOException;
 import java.time.LocalDate;
+
+import static ua.aleh1s.hotelepam.utils.Utils.*;
 
 public class ApplicationCommand implements Command {
     @Override
@@ -23,40 +24,41 @@ public class ApplicationCommand implements Command {
         ResourcesManager resourcesManager = ResourcesManager.getInstance();
         ApplicationService applicationService = AppContext.getInstance().getApplicationService();
 
-        Integer guestsNumber = Utils.getIntValue(request, "guestsNumber");
-        Integer roomClassIdx = Utils.getIntValue(request, "roomClass");
-        LocalDate entryDate = Utils.getLocalDateValue(request, "entryDate");
-        LocalDate leavingDate = Utils.getLocalDateValue(request, "leavingDate");
-        RoomClass roomClass = RoomClass.atIndex(roomClassIdx);
+        Integer guests = getIntValue(request, "guests");
+        Integer classIndex = getIntValue(request, "clazz");
+        LocalDate checkIn = getLocalDateValue(request, "checkIn");
+        LocalDate checkOut = getLocalDateValue(request, "checkOut");
 
         HttpSession session = request.getSession();
         Long id = (Long) session.getAttribute("id");
 
         String path = resourcesManager.getValue("path.page.application");
-        if (entryDate.isBefore(LocalDate.now()))
-            throw new ApplicationException("Entry date cannot be before now", path);
+        if (!isReservationPeriodValid(Period.range(checkIn, checkOut)))
+            throw new ApplicationException("Date range is invalid", path);
 
-        if (leavingDate.isBefore(entryDate) || leavingDate.isEqual(entryDate))
-            throw new ApplicationException("Entry date must be before leaving date", path);
-
+        RoomClass clazz = RoomClass.atIndex(classIndex);
         ApplicationEntity applicationEntry = ApplicationEntity.Builder.newBuilder()
-                .guestsNumber(guestsNumber).roomClass(roomClass)
-                .entryDate(entryDate).leavingDate(leavingDate)
-                .status(ApplicationStatus.NEW).customerId(id)
+                .guests(guests)
+                .clazz(clazz)
+                .checkIn(checkIn)
+                .checkOut(checkOut)
+                .status(ApplicationStatus.NEW)
+                .customerId(id)
                 .build();
 
         applicationService.create(applicationEntry);
 
-        session.setAttribute("guestsNumber", guestsNumber);
-        session.setAttribute("roomClass", roomClass);
-        session.setAttribute("entryDate", entryDate);
-        session.setAttribute("leavingDate", leavingDate);
+        session.setAttribute("guests", guests);
+        session.setAttribute("clazz", clazz);
+        session.setAttribute("checkIn", checkIn);
+        session.setAttribute("checkOut", checkOut);
 
+        path = resourcesManager.getValue("path.page.success.application");
         try {
-            response.sendRedirect(resourcesManager.getValue("path.page.success.application"));
+            response.sendRedirect(path);
             path = "redirect";
         } catch (IOException e) {
-            path = resourcesManager.getValue("path.page.error");
+            throw new ApplicationException();
         }
 
         return path;

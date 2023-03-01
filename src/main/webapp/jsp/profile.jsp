@@ -20,7 +20,7 @@
                 <div class="profile-up-bar">
                     <c:if test="${sessionScope.role eq 'CUSTOMER'}">
                         <a class="profile-link"
-                           href="<c:url value="/controller?command=myBookings&default=on"/>"><fmt:message
+                           href="<c:url value="/controller?command=myBookings"/>"><fmt:message
                                 key="my.bookings"/></a>
                         <form action="<c:url value="/controller"/>" method="post">
                             <input type="hidden" name="command" value="topUpAccount"/>
@@ -41,7 +41,7 @@
                 <c:if test="${sessionScope.role eq 'CUSTOMER'}">
                     <div class="profile-account">
                         <p><fmt:message key="account"/></p>
-                        <h2>${requestScope.userDto.account}$</h2>
+                        <h2>$ ${requestScope.userDto.account}</h2>
                     </div>
                 </c:if>
             </div>
@@ -78,44 +78,44 @@
                             <p><fmt:message key="request.list"/></p>
                             <div></div>
                         </div>
-                        <table class="styled-table">
-                            <thead>
-                            <tr>
-                                <th><fmt:message key="entry.date"/></th>
-                                <th><fmt:message key="leaving.date"/></th>
-                                <th><fmt:message key="total.amount"/></th>
-                                <th><fmt:message key="control"/></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach var="request" items="${requestScope.requestDtoPage.result}">
+                        <c:if test="${not empty requestScope.requestDtoPage.result}">
+                            <table class="styled-table">
+                                <thead>
                                 <tr>
-                                    <td>${request.entryDate}</td>
-                                    <td>${request.leavingDate}</td>
-                                    <td>$ ${request.totalAmount}</td>
-                                    <td class="control">
-                                        <form action="<c:url value="/controller"/>" method="get">
-                                            <input type="hidden" name="command" value="viewRoom">
-                                            <input type="hidden" name="roomNumber" value="${request.roomNumber}">
-                                            <button class="btn-view" type="submit">View Room</button>
-                                        </form>
-                                        <form action="<c:url value="/controller"/>" method="post">
-                                            <input type="hidden" name="command" value="changeRequestStatus">
-                                            <input type="hidden" name="status" value="2">
-                                            <input type="hidden" name="requestId" value="${request.id}">
-                                            <button class="btn-trash" type="submit">Reject</button>
-                                        </form>
-                                        <form action="<c:url value="/controller"/>" method="get">
-                                            <input type="hidden" name="command" value="changeRequestStatus">
-                                            <input type="hidden" name="status" value="3">
-                                            <input type="hidden" name="requestId" value="${request.id}">
-                                            <button class="btn-accept" type="submit">Book</button>
-                                        </form>
-                                    </td>
+                                    <th><fmt:message key="check.in"/></th>
+                                    <th><fmt:message key="check.out"/></th>
+                                    <th><fmt:message key="total.amount"/></th>
+                                    <th><fmt:message key="control"/></th>
                                 </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="request" items="${requestScope.requestDtoPage.result}">
+                                    <tr>
+                                        <td>${request.checkIn}</td>
+                                        <td>${request.checkOut}</td>
+                                        <td>$ ${request.totalAmount}</td>
+                                        <td class="control">
+                                            <form action="<c:url value="/controller"/>" method="get">
+                                                <input type="hidden" name="command" value="viewRoom">
+                                                <input type="hidden" name="roomNumber" value="${request.roomNumber}">
+                                                <button class="btn-view" type="submit">View Room</button>
+                                            </form>
+                                            <form action="<c:url value="/controller"/>" method="post">
+                                                <input type="hidden" name="command" value="rejectRequest">
+                                                <input type="hidden" name="requestId" value="${request.id}">
+                                                <button class="btn-trash" type="submit">Reject</button>
+                                            </form>
+                                            <form action="<c:url value="/controller"/>" method="post">
+                                                <input type="hidden" name="command" value="confirmRequest">
+                                                <input type="hidden" name="requestId" value="${request.id}">
+                                                <button class="btn-accept" type="submit">Book</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:if>
                     </div>
                 </c:if>
             </div>

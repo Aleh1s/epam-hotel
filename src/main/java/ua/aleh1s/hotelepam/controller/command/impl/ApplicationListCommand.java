@@ -27,7 +27,8 @@ public class ApplicationListCommand implements Command {
         Integer pageNumber = getIntValueOrDefault(request, "pageNumber", 1);
         Integer pageSize = getIntValueOrDefault(request, "pageSize", 10);
 
-        Page<ApplicationEntity> applicationPage = applicationService.getAllByApplicationStatus(ApplicationStatus.NEW, PageRequest.of(pageNumber, pageSize));
+        Page<ApplicationEntity> applicationPage =
+                applicationService.getAllByApplicationStatus(ApplicationStatus.NEW, PageRequest.of(pageNumber, pageSize));
 
         List<ApplicationDto> applicationDtoList = applicationPage.getResult().stream()
                 .map(applicationDtoMapper)

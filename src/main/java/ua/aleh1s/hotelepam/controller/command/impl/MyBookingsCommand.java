@@ -29,35 +29,18 @@ public class MyBookingsCommand implements Command {
 
         Integer pageNumber = getIntValueOrDefault(request, "pageNumber", 1);
         Integer pageSize = getIntValueOrDefault(request, "pageSize", 10);
-        Integer statusIndex = getIntValueOrDefault(request, "status", 0);
 
         HttpSession session = request.getSession(false);
         Long userId = (Long) session.getAttribute("id");
-
-        if (nonNull(request.getParameter("default")))
-            session.setAttribute("reservationStatus", null);
-
-        ReservationStatus status;
-        if (statusIndex == 0)
-            status = (ReservationStatus) session.getAttribute("reservationStatus");
-        else
-            status = ReservationStatus.atIndex(statusIndex);
-
-        session.setAttribute("reservationStatus", status);
-
-        Page<ReservationEntity> reservationEntityPage;
-
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
-        if (nonNull(status))
-            reservationEntityPage = reservationService.getAllByUserIdAndStatusOrderByCreatedAtDesc(userId, status, pageRequest);
-        else
-            reservationEntityPage = reservationService.getAllByUserIdOrderByCreatedAtDesc(userId, pageRequest);
 
-        List<ReservationDto> reservationDtoList = reservationEntityPage.getResult().stream()
+        Page<ReservationEntity> reservationByUserId = reservationService.getAllReservationsByUserId(userId, pageRequest);
+
+        List<ReservationDto> reservationDtoList = reservationByUserId.getResult().stream()
                 .map(reservationDtoMapper)
                 .toList();
 
-        Page<ReservationDto> reservationDtoPage = Page.of(reservationDtoList, reservationEntityPage.getCount());
+        Page<ReservationDto> reservationDtoPage = Page.of(reservationDtoList, reservationByUserId.getCount());
         Integer pagesNumber = getNumberOfPages(reservationDtoPage.getCount(), pageSize);
 
         request.setAttribute("currPage", pageNumber);

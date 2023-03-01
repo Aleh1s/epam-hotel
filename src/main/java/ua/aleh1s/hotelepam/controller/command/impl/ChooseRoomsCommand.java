@@ -5,13 +5,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
-import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
-import ua.aleh1s.hotelepam.controller.dto.RoomCardDto;
-import ua.aleh1s.hotelepam.controller.dtomapper.RoomCardDtoMapper;
+import ua.aleh1s.hotelepam.controller.command.Command;
+import ua.aleh1s.hotelepam.controller.dto.RoomDto;
+import ua.aleh1s.hotelepam.controller.dtomapper.RoomDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.service.RoomService;
-import ua.aleh1s.hotelepam.service.impl.RoomServiceImpl;
 import ua.aleh1s.hotelepam.utils.Period;
 
 import java.time.LocalDate;
@@ -24,7 +23,7 @@ public class ChooseRoomsCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         ResourcesManager resourcesManager = ResourcesManager.getInstance();
-        RoomCardDtoMapper roomCardDtoMapper = AppContext.getInstance().getRoomCardDtoMapper();
+        RoomDtoMapper roomDtoMapper = AppContext.getInstance().getRoomDtoMapper();
         RoomService roomService = AppContext.getInstance().getRoomService();
 
         HttpSession session = request.getSession();
@@ -33,21 +32,29 @@ public class ChooseRoomsCommand implements Command {
         LocalDate checkIn = getLocalDateValue(request, "checkIn");
         LocalDate checkOut = getLocalDateValue(request, "checkOut");
 
+        String path = resourcesManager.getValue("path.page.home");
+
         Period requestedPeriod = Period.range(checkIn, checkOut);
         if (!isReservationPeriodValid(requestedPeriod))
-            throw new ApplicationException("Invalid range of date", resourcesManager.getValue("path.page.home"));
+            throw new ApplicationException("Invalid range of date.", path);
 
         List<RoomEntity> availableRooms =
                 roomService.getAvailableRooms(guests, requestedPeriod);
 
-        List<RoomCardDto> roomCardList = availableRooms.stream()
-                .map(roomCardDtoMapper)
+        if (availableRooms.isEmpty())
+            throw new ApplicationException("There are no available rooms. Try to pick another date.", path);
+
+        availableRooms.forEach(room ->
+                room.setPrice(roomService.getTotalPrice(room, requestedPeriod)));
+
+        List<RoomDto> roomDtoList = availableRooms.stream()
+                .map(roomDtoMapper)
                 .toList();
 
         session.setAttribute("requestedCheckIn", checkIn);
         session.setAttribute("requestedCheckOut", checkOut);
 
-        request.setAttribute("rooms", roomCardList);
+        request.setAttribute("availableRooms", roomDtoList);
         return resourcesManager.getValue("path.page.available.rooms");
     }
 }

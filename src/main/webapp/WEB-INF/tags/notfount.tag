@@ -4,7 +4,7 @@
 <fmt:setBundle basename="locale"/>
 
 <div class="not-found-container">
-    <img src="../img/no_results.webp" alt="No Results">
+    <img src="<c:url value="/img/no_results.webp"/>" alt="No Results">
     <h1><fmt:message key="no.results.found.header"/></h1>
     <p><fmt:message key="no.results.found.body"/></p>
 </div>

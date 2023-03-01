@@ -37,7 +37,7 @@ public class ProfileCommand implements Command {
 
         UserEntity user = userService.getById(userId);
 
-        Page<RequestEntity> requestEntityPage = requestService.getAllActiveByUserId(userId, PageRequest.of(pageNumber, 5));
+        Page<RequestEntity> requestEntityPage = requestService.getAllActiveRequestsByUserId(userId, PageRequest.of(pageNumber, 5));
 
         List<RequestDto> requestDtoList = requestEntityPage.getResult().stream()
                 .map(requestDtoMapper)

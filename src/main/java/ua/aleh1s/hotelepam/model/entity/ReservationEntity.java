@@ -9,8 +9,8 @@ public class ReservationEntity {
     private Long id;
     private Integer roomNumber;
     private Long customerId;
-    private LocalDate entryDate;
-    private LocalDate leavingDate;
+    private LocalDate checkIn;
+    private LocalDate checkOut;
     private LocalDateTime createdAt;
     private LocalDateTime expiredAt;
     private LocalDateTime payedAt;
@@ -21,8 +21,8 @@ public class ReservationEntity {
             Long id,
             Integer roomNumber,
             Long customerId,
-            LocalDate entryDate,
-            LocalDate leavingDate,
+            LocalDate checkIn,
+            LocalDate checkOut,
             LocalDateTime createdAt,
             LocalDateTime expiredAt,
             LocalDateTime payedAt,
@@ -31,8 +31,8 @@ public class ReservationEntity {
         this.id = id;
         this.roomNumber = roomNumber;
         this.customerId = customerId;
-        this.entryDate = entryDate;
-        this.leavingDate = leavingDate;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
         this.createdAt = createdAt;
         this.expiredAt = expiredAt;
         this.payedAt = payedAt;
@@ -44,14 +44,13 @@ public class ReservationEntity {
         private Long id;
         private Integer roomNumber;
         private Long customerId;
-        private LocalDate entryDate;
-        private LocalDate leavingDate;
+        private LocalDate checkIn;
+        private LocalDate checkOut;
         private LocalDateTime createdAt;
         private LocalDateTime expiredAt;
         private LocalDateTime payedAt;
         private BigDecimal totalAmount;
         private ReservationStatus status;
-
         private Builder() {}
 
         public static Builder newBuilder() {
@@ -73,13 +72,13 @@ public class ReservationEntity {
             return this;
         }
 
-        public Builder entryDate(LocalDate entryDate) {
-            this.entryDate = entryDate;
+        public Builder checkIn(LocalDate checkIn) {
+            this.checkIn = checkIn;
             return this;
         }
 
-        public Builder leavingDate(LocalDate leavingDate) {
-            this.leavingDate = leavingDate;
+        public Builder checkOut(LocalDate checkOut) {
+            this.checkOut = checkOut;
             return this;
         }
 
@@ -110,7 +109,7 @@ public class ReservationEntity {
 
         public ReservationEntity build() {
             return new ReservationEntity(
-                    id, roomNumber, customerId, entryDate, leavingDate, createdAt, expiredAt, payedAt, totalAmount, status
+                    id, roomNumber, customerId, checkIn, checkOut, createdAt, expiredAt, payedAt, totalAmount, status
             );
         }
     }
@@ -139,20 +138,20 @@ public class ReservationEntity {
         this.customerId = customerId;
     }
 
-    public LocalDate getEntryDate() {
-        return entryDate;
+    public LocalDate getCheckIn() {
+        return checkIn;
     }
 
-    public void setEntryDate(LocalDate entryDate) {
-        this.entryDate = entryDate;
+    public void setCheckIn(LocalDate checkIn) {
+        this.checkIn = checkIn;
     }
 
-    public LocalDate getLeavingDate() {
-        return leavingDate;
+    public LocalDate getCheckOut() {
+        return checkOut;
     }
 
-    public void setLeavingDate(LocalDate leavingDate) {
-        this.leavingDate = leavingDate;
+    public void setCheckOut(LocalDate checkOut) {
+        this.checkOut = checkOut;
     }
 
     public LocalDateTime getCreatedAt() {

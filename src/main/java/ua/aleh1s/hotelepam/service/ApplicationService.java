@@ -7,7 +7,7 @@ import ua.aleh1s.hotelepam.utils.PageRequest;
 
 public interface ApplicationService {
 
-    ApplicationEntity getById(Long id);
+    ApplicationEntity getApplicationById(Long id);
     void update(ApplicationEntity entity);
     Page<ApplicationEntity> getAllByApplicationStatus(ApplicationStatus status, PageRequest pageRequest);
     void create(ApplicationEntity entity);

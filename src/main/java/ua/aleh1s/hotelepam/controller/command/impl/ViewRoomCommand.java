@@ -11,6 +11,10 @@ import ua.aleh1s.hotelepam.controller.dtomapper.RoomDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.service.RoomService;
 import ua.aleh1s.hotelepam.service.impl.RoomServiceImpl;
+import ua.aleh1s.hotelepam.utils.Period;
+
+import java.time.LocalDate;
+import java.util.Objects;
 
 import static ua.aleh1s.hotelepam.utils.Utils.*;
 
@@ -23,9 +27,14 @@ public class ViewRoomCommand implements Command {
         Integer roomNumber = getIntValue(request, "roomNumber");
 
         HttpSession session = request.getSession();
+        LocalDate checkIn = (LocalDate) session.getAttribute("requestedCheckIn");
+        LocalDate checkOut = (LocalDate) session.getAttribute("requestedCheckOut");
         session.setAttribute("roomNumber", roomNumber);
 
         RoomEntity room = roomService.getByRoomNumber(roomNumber);
+
+        if (Objects.nonNull(checkIn) && Objects.nonNull(checkOut))
+            room.setPrice(roomService.getTotalPrice(room, Period.range(checkIn, checkOut)));
 
         RoomDto roomDto = roomDtoMapper.apply(room);
 

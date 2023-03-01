@@ -10,4 +10,5 @@ public interface RoomRepository {
     Optional<RoomEntity> getByRoomNumber(Integer roomNumber);
     void update(RoomEntity entity);
     List<RoomEntity> getAll();
+    List<RoomEntity> getAllByGuests(Integer guests);
 }

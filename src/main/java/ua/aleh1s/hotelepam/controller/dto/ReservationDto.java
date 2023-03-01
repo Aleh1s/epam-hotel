@@ -3,8 +3,6 @@ package ua.aleh1s.hotelepam.controller.dto;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class ReservationDto {
@@ -12,8 +10,8 @@ public class ReservationDto {
     private final Long id;
     private final Integer roomNumber;
     private final Long customerId;
-    private final Date entryDate;
-    private final Date leavingDate;
+    private final Date checkIn;
+    private final Date checkOut;
     private final Date createdAt;
     private final Date expiredAt;
     private final Date payedAt;
@@ -24,8 +22,8 @@ public class ReservationDto {
             Long id,
             Integer roomNumber,
             Long customerId,
-            Date entryDate,
-            Date leavingDate,
+            Date checkIn,
+            Date checkOut,
             Date createdAt,
             Date expiredAt,
             Date payedAt,
@@ -34,8 +32,8 @@ public class ReservationDto {
         this.id = id;
         this.roomNumber = roomNumber;
         this.customerId = customerId;
-        this.entryDate = entryDate;
-        this.leavingDate = leavingDate;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
         this.createdAt = createdAt;
         this.expiredAt = expiredAt;
         this.payedAt = payedAt;
@@ -47,8 +45,8 @@ public class ReservationDto {
         private Long id;
         private Integer roomNumber;
         private Long customerId;
-        private Date entryDate;
-        private Date leavingDate;
+        private Date checkIn;
+        private Date checkOut;
         private Date createdAt;
         private Date expiredAt;
         private Date payedAt;
@@ -77,13 +75,13 @@ public class ReservationDto {
             return this;
         }
 
-        public Builder entryDate(Date entryDate) {
-            this.entryDate = entryDate;
+        public Builder checkIn(Date entryDate) {
+            this.checkIn = entryDate;
             return this;
         }
 
-        public Builder leavingDate(Date leavingDate) {
-            this.leavingDate = leavingDate;
+        public Builder checkOut(Date leavingDate) {
+            this.checkOut = leavingDate;
             return this;
         }
 
@@ -114,7 +112,7 @@ public class ReservationDto {
 
         public ReservationDto build() {
             return new ReservationDto(
-                    id, roomNumber, customerId, entryDate, leavingDate, createdAt, expiredAt, payedAt, totalAmount, status
+                    id, roomNumber, customerId, checkIn, checkOut, createdAt, expiredAt, payedAt, totalAmount, status
             );
         }
     }
@@ -131,12 +129,12 @@ public class ReservationDto {
         return customerId;
     }
 
-    public Date getEntryDate() {
-        return entryDate;
+    public Date getCheckIn() {
+        return checkIn;
     }
 
-    public Date getLeavingDate() {
-        return leavingDate;
+    public Date getCheckOut() {
+        return checkOut;
     }
 
     public Date getCreatedAt() {
@@ -159,3 +157,4 @@ public class ReservationDto {
         return status;
     }
 }
+

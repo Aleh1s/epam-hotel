@@ -6,52 +6,34 @@ import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
-import ua.aleh1s.hotelepam.service.RequestService;
-import ua.aleh1s.hotelepam.service.impl.RequestServiceImpl;
-import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.dto.BookInfoDto;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.entity.RequestStatus;
+import ua.aleh1s.hotelepam.service.RequestService;
+import ua.aleh1s.hotelepam.utils.Utils;
 
 import java.io.IOException;
+import java.util.Objects;
 
-import static ua.aleh1s.hotelepam.model.entity.RequestStatus.*;
+public class RejectRequestCommand implements Command {
 
-public class ChangeRequestStatusCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         ResourcesManager resourcesManager = ResourcesManager.getInstance();
         RequestService requestService = AppContext.getInstance().getRequestService();
 
         Long requestId = Utils.getLongValue(request, "requestId");
-        Integer statusIndex = Utils.getIntValue(request, "status");
-        RequestStatus requestStatus = RequestStatus.atIndex(statusIndex);
+
+        HttpSession session = request.getSession(false);
+        Long userId = (Long) session.getAttribute("id");
 
         RequestEntity requestEntity = requestService.getById(requestId);
 
         String path = resourcesManager.getValue("path.command.profile");
-        if (!requestEntity.getStatus().equals(NEW))
+        if (!Objects.equals(requestEntity.getCustomerId(), userId))
             throw new ApplicationException("You cannot change status", path);
 
-        requestEntity.setStatus(requestStatus);
-        requestService.update(requestEntity);
-
-        if (requestStatus.equals(CONFIRMED)){
-            BookInfoDto bookInfoDto = BookInfoDto.Builder.newBuilder()
-                    .roomNumber(requestEntity.getRoomNumber())
-                    .entryDate(requestEntity.getEntryDate())
-                    .leavingDate(requestEntity.getLeavingDate())
-                    .totalAmount(requestEntity.getTotalAmount())
-                    .build();
-
-            HttpSession session = request.getSession(false);
-            session.setAttribute("bookInfo", bookInfoDto);
-
-            path = resourcesManager.getValue("path.command.confirm.booking");
-        } else {
-            path = resourcesManager.getValue("path.command.profile");
-        }
+        requestService.changeStatus(requestEntity, RequestStatus.REJECTED);
 
         try {
             response.sendRedirect(path);

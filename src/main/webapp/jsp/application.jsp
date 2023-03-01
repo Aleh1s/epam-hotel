@@ -23,7 +23,7 @@
                         ${guestsNumber}
                         <input min="1" max="10" class="form-input" id="number-of-guests"
                                value="1"
-                               name="guestsNumber" type="number"
+                               name="guests" type="number"
                                placeholder="${guestsNumber}" required>
                     </label>
                 </div>
@@ -31,7 +31,7 @@
                 <div class="input-group">
                     <label for="roomClass">
                         <fmt:message key="class"/>
-                        <select class="form-input" name="roomClass" id="roomClass" required>
+                        <select class="form-input" name="clazz" id="roomClass" required>
                             <option value="1"><fmt:message key="standard"/></option>
                             <option value="2"><fmt:message key="superior"/></option>
                             <option value="3"><fmt:message key="family"/></option>
@@ -43,12 +43,12 @@
                 <div class="input-group">
                     <label for="date-of-entry">
                         <fmt:message key="check.in"/>
-                        <input id="date-of-entry" class="form-input" name="entryDate" type="date"
+                        <input id="date-of-entry" class="form-input" name="checkIn" type="date"
                                max="2024-01-01" required>
                     </label>
                     <label for="date-of-leaving">
                         <fmt:message key="check.out"/>
-                        <input id="date-of-leaving" class="form-input" name="leavingDate" type="date"
+                        <input id="date-of-leaving" class="form-input" name="checkOut" type="date"
                                max="2024-01-01" required>
                     </label>
                 </div>

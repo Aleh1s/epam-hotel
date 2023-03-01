@@ -23,11 +23,9 @@
         <ul class="nav-center">
             <li class="nav-item"><a href="<c:url value="/jsp/home.jsp"/>"><fmt:message
                     key="home"/></a></li>
-            <li class="nav-item"><a href="<c:url value="/controller?command=roomList&default=on"/>"><fmt:message
-                    key="room.list"/></a></li>
             <c:if test="${not empty sessionScope.role and sessionScope.role eq 'CUSTOMER'}">
                 <li class="nav-item"><a href="<c:url value="/jsp/application.jsp"/>"><fmt:message
-                        key="application"/></a></li>
+                        key="request.room"/></a></li>
             </c:if>
             <c:if test="${not empty sessionScope.role and sessionScope.role eq 'MANAGER'}">
                 <li class="nav-item"><a

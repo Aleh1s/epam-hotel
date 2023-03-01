@@ -36,11 +36,11 @@
                                 <div class="value">${requestScope.roomDto.roomClass}</div>
                             </div>
                             <div>
-                                <div class="key"><fmt:message key="persons.number"/>:</div>
+                                <div class="key"><fmt:message key="persons"/>:</div>
                                 <div class="value">${requestScope.roomDto.personsNumber}</div>
                             </div>
                             <div>
-                                <div class="key"><fmt:message key="beds.number"/>:</div>
+                                <div class="key"><fmt:message key="beds"/>:</div>
                                 <div class="value">${requestScope.roomDto.bedsNumber}</div>
                             </div>
                             <div>
@@ -51,8 +51,12 @@
                     </div>
                     <div class="room-props-control">
                         <div class="room-price">
-                            <fmt:message key="price"/>: ${requestScope.roomDto.price}$/<fmt:message key="night"/>
+                            $ ${requestScope.roomDto.price}
                         </div>
+                            <form action="<c:url value="/controller"/>" method="post">
+                                <input type="hidden" name="command" value="book">
+                                <button type="submit" class="form-button"><fmt:message key="book"/></button>
+                            </form>
                     </div>
                 </div>
                 <div class="room-description-container">
@@ -67,24 +71,6 @@
                             <p>${attribute}</p>
                         </div>
                     </c:forEach>
-                </div>
-                <%--todo: make button to see room reservations for manager --%>
-                <div class="room-control-container">
-                    <form action="<c:url value="/controller"/>" method="get">
-                        <input type="hidden" name="command" value="book">
-                        <input type="hidden" name="roomNumber" value="${requestScope.roomDto.roomNumber}">
-                        <label for="check-out">
-                            <fmt:message key="check.in"/>
-                            <input id="check-out" class="form-input" name="checkIn" type="date"
-                                   max="2024-01-01" required value="${sessionScope.requestedCheckIn}">
-                        </label>
-                        <label for="check-in">
-                            <fmt:message key="check.out"/>
-                            <input id="check-in" class="form-input" name="checkOut" type="date"
-                                   max="2024-01-01" required value="${sessionScope.requestedCheckOut}">
-                        </label>
-                        <button type="submit" class="form-button"><fmt:message key="book"/></button>
-                    </form>
                 </div>
             </div>
         </div>

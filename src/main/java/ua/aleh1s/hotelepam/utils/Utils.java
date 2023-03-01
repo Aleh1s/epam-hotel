@@ -3,6 +3,8 @@ package ua.aleh1s.hotelepam.utils;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.math.BigDecimal;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -45,6 +47,10 @@ public class Utils {
         return localDateTime != null ? Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()) : null;
     }
 
+    public static java.sql.Date toDate(LocalDate ld) {
+        return ld != null ? java.sql.Date.valueOf(ld) : null;
+    }
+
     public static int getNumberOfPages(long totalCount, int pageSize) {
         return (int) Math.ceil(totalCount / (double) pageSize);
     }
@@ -58,5 +64,9 @@ public class Utils {
                 isDateRangeValid = checkIn.isBefore(checkOut);
 
         return isCheckInValid && isDateRangeValid;
+    }
+
+    public static Timestamp toTimestamp(LocalDateTime ldt) {
+        return ldt != null ? Timestamp.valueOf(ldt) : null;
     }
 }

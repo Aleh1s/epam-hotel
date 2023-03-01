@@ -17,10 +17,10 @@ public class SqlApplicationEntityMapper implements SqlEntityMapper<ApplicationEn
         try {
             application = ApplicationEntity.Builder.newBuilder()
                     .id(source.getLong(ID.getName()))
-                    .guestsNumber(source.getInt(NUMBER_OF_GUESTS.getName()))
-                    .roomClass(RoomClass.atIndex(source.getInt(ROOM_CLASS.getName())))
-                    .entryDate(source.getDate(ENTRY_DATE.getName()).toLocalDate())
-                    .leavingDate(source.getDate(LEAVING_DATE.getName()).toLocalDate())
+                    .guests(source.getInt(GUESTS.getName()))
+                    .clazz(RoomClass.atIndex(source.getInt(ROOM_CLASS.getName())))
+                    .checkIn(source.getDate(CHECK_IN.getName()).toLocalDate())
+                    .checkOut(source.getDate(CHECK_OUT.getName()).toLocalDate())
                     .status(ApplicationStatus.atIndex(source.getInt(STATUS.getName())))
                     .customerId(source.getLong(CUSTOMER_ID.getName()))
                     .build();

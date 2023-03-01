@@ -10,10 +10,10 @@ public class ApplicationDtoMapper implements Function<ApplicationEntity, Applica
     public ApplicationDto apply(ApplicationEntity applicationEntity) {
         return ApplicationDto.Builder.newBuilder()
                 .id(applicationEntity.getId())
-                .guestsNumber(applicationEntity.getGuestsNumber())
-                .roomClass(applicationEntity.getRoomClass())
-                .entryDate(applicationEntity.getEntryDate())
-                .leavingDate(applicationEntity.getLeavingDate())
+                .guests(applicationEntity.getGuests())
+                .roomClass(applicationEntity.getClazz())
+                .checkIn(applicationEntity.getCheckIn())
+                .checkOut(applicationEntity.getCheckOut())
                 .status(applicationEntity.getStatus())
                 .customerId(applicationEntity.getCustomerId())
                 .build();

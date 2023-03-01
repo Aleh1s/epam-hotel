@@ -18,7 +18,7 @@
                 <div></div>
             </div>
             <div class="room-list">
-                <c:forEach var="room" items="${requestScope.rooms}">
+                <c:forEach var="room" items="${requestScope.availableRooms}">
                     <tags:roomcard room="${room}"/>
                 </c:forEach>
             </div>

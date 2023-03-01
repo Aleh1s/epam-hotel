@@ -11,9 +11,6 @@ import ua.aleh1s.hotelepam.model.entity.*;
 import ua.aleh1s.hotelepam.service.ApplicationService;
 import ua.aleh1s.hotelepam.service.RequestService;
 import ua.aleh1s.hotelepam.service.RoomService;
-import ua.aleh1s.hotelepam.service.impl.ApplicationServiceImpl;
-import ua.aleh1s.hotelepam.service.impl.RequestServiceImpl;
-import ua.aleh1s.hotelepam.service.impl.RoomServiceImpl;
 import ua.aleh1s.hotelepam.utils.Period;
 
 import java.io.IOException;
@@ -28,41 +25,46 @@ public class MakeRequestCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         ResourcesManager resourcesManager = ResourcesManager.getInstance();
+
         RoomService roomService = AppContext.getInstance().getRoomService();
         ApplicationService applicationService = AppContext.getInstance().getApplicationService();
         RequestService requestService = AppContext.getInstance().getRequestService();
 
         Integer roomNumber = getIntValue(request, "roomNumber");
-        LocalDate entryDate = getLocalDateValue(request, "entryDate");
-        LocalDate leavingDate = getLocalDateValue(request, "leavingDate");
+        LocalDate checkIn = getLocalDateValue(request, "checkIn");
+        LocalDate checkOut = getLocalDateValue(request, "checkOut");
 
         HttpSession session = request.getSession(false);
         Long applicationId = (Long) session.getAttribute("applicationId");
 
-        ApplicationEntity application = applicationService.getById(applicationId);
+        ApplicationEntity application = applicationService.getApplicationById(applicationId);
 
-        String path = resourcesManager.getValue("path.page.request");
+        String path = resourcesManager.getValue("path.command.application.list");
         if (application.getStatus().equals(ApplicationStatus.PROCESSED))
             throw new ApplicationException("Application is already processed", path);
+
+        Period requestedPeriod = Period.range(checkIn, checkOut);
+        if (!roomService.isRoomAvailable(roomNumber, requestedPeriod))
+            throw new ApplicationException(String.format("Room with number %s is already taken", roomNumber), path);
 
         application.setStatus(ApplicationStatus.PROCESSED);
         applicationService.update(application);
 
-        BigDecimal totalAmount = roomService.getTotalPrice(roomNumber, Period.range(entryDate, leavingDate));
+        BigDecimal totalAmount = roomService.getTotalPrice(roomNumber, requestedPeriod);
 
         RequestEntity requestEntity = RequestEntity.Builder.newBuilder()
                 .roomNumber(roomNumber)
                 .customerId(application.getCustomerId())
                 .status(RequestStatus.NEW)
-                .entryDate(entryDate)
-                .leavingDate(leavingDate)
+                .checkIn(checkIn)
+                .checkOut(checkOut)
                 .totalAmount(totalAmount)
                 .build();
 
         requestService.create(requestEntity);
 
         try {
-            response.sendRedirect(resourcesManager.getValue("path.command.application.list"));
+            response.sendRedirect(path);
             path = "redirect";
         } catch (IOException e) {
             path = resourcesManager.getValue("path.page.error");

@@ -30,15 +30,15 @@ public class RoomServiceImpl implements RoomService {
                 reservationRepository.getActualReservationsByRoomNumber(number);
 
         return actualReservations.stream()
-                .map(it -> new Period(it.getEntryDate(), it.getLeavingDate()))
+                .map(it -> new Period(it.getCheckIn(), it.getCheckOut()))
                 .noneMatch(it -> it.intersects(period));
     }
 
     @Override
     public List<RoomEntity> getAvailableRooms(Integer guests, Period requestedPeriod) {
-        List<ReservationEntity> allReservations = reservationRepository.getActualReservations();
+        List<ReservationEntity> actualReservations = reservationRepository.getActualReservations();
 
-        Map<Integer, List<ReservationEntity>> groupByRoomNumber = allReservations.stream()
+        Map<Integer, List<ReservationEntity>> groupByRoomNumber = actualReservations.stream()
                 .collect(Collectors.groupingBy(ReservationEntity::getRoomNumber));
 
         Set<Integer> busyRooms = groupByRoomNumber.entrySet().stream()
@@ -46,9 +46,8 @@ public class RoomServiceImpl implements RoomService {
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());
 
-        return roomRepository.getAll().stream()
+        return roomRepository.getAllByGuests(guests).stream()
                 .filter(room -> !busyRooms.contains(room.getRoomNumber()))
-                .filter(room -> Objects.equals(room.getPersonsNumber(), guests))
                 .toList();
     }
 
@@ -109,7 +108,7 @@ public class RoomServiceImpl implements RoomService {
 
     private boolean isRoomBusy(Period requestedPeriod, List<ReservationEntity> roomReservations) {
         return roomReservations.stream()
-                .map(it -> new Period(it.getEntryDate(), it.getLeavingDate()))
+                .map(it -> new Period(it.getCheckIn(), it.getCheckOut()))
                 .anyMatch(it -> it.intersects(requestedPeriod));
     }
 

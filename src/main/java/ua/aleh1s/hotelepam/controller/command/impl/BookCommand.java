@@ -24,11 +24,12 @@ public class BookCommand implements Command {
         BookingService bookingService = AppContext.getInstance().getBookingService();
 
         HttpSession session = request.getSession(false);
+
         Long userId = (Long) session.getAttribute("id");
         Integer roomNumber = (Integer) session.getAttribute("roomNumber");
+        LocalDate checkIn = (LocalDate) session.getAttribute("requestedCheckIn");
+        LocalDate checkOut = (LocalDate) session.getAttribute("requestedCheckOut");
 
-        LocalDate checkIn = getLocalDateValue(request, "checkIn");
-        LocalDate checkOut = getLocalDateValue(request, "checkOut");
         Period requestedPeriod = Period.range(checkIn, checkOut);
 
         ReservationEntity reservation = bookingService.bookRoom(roomNumber, userId, requestedPeriod);

@@ -9,8 +9,8 @@ public class RequestEntity {
     private Integer roomNumber;
     private Long customerId;
     private RequestStatus status;
-    private LocalDate entryDate;
-    private LocalDate leavingDate;
+    private LocalDate checkIn;
+    private LocalDate checkOut;
     private BigDecimal totalAmount;
 
     private RequestEntity(
@@ -18,15 +18,15 @@ public class RequestEntity {
             Integer roomNumber,
             Long customerId,
             RequestStatus status,
-            LocalDate entryDate,
-            LocalDate leavingDate,
+            LocalDate checkIn,
+            LocalDate checkOut,
             BigDecimal totalAmount) {
         this.id = id;
         this.roomNumber = roomNumber;
         this.customerId = customerId;
         this.status = status;
-        this.entryDate = entryDate;
-        this.leavingDate = leavingDate;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
         this.totalAmount = totalAmount;
     }
 
@@ -35,8 +35,8 @@ public class RequestEntity {
         private Integer roomNumber;
         private Long customerId;
         private RequestStatus status;
-        private LocalDate entryDate;
-        private LocalDate leavingDate;
+        private LocalDate checkIn;
+        private LocalDate checkOut;
         private BigDecimal totalAmount;
 
         private Builder() {
@@ -66,13 +66,13 @@ public class RequestEntity {
             return this;
         }
 
-        public Builder entryDate(LocalDate entryDate) {
-            this.entryDate = entryDate;
+        public Builder checkIn(LocalDate checkIn) {
+            this.checkIn = checkIn;
             return this;
         }
 
-        public Builder leavingDate(LocalDate leavingDate) {
-            this.leavingDate = leavingDate;
+        public Builder checkOut(LocalDate checkOut) {
+            this.checkOut = checkOut;
             return this;
         }
 
@@ -83,7 +83,7 @@ public class RequestEntity {
 
         public RequestEntity build() {
             return new RequestEntity(
-                    id, roomNumber, customerId, status, entryDate, leavingDate, totalAmount
+                    id, roomNumber, customerId, status, checkIn, checkOut, totalAmount
             );
         }
     }
@@ -120,20 +120,20 @@ public class RequestEntity {
         this.status = status;
     }
 
-    public LocalDate getEntryDate() {
-        return entryDate;
+    public LocalDate getCheckIn() {
+        return checkIn;
     }
 
-    public void setEntryDate(LocalDate entryDate) {
-        this.entryDate = entryDate;
+    public void setCheckIn(LocalDate checkIn) {
+        this.checkIn = checkIn;
     }
 
-    public LocalDate getLeavingDate() {
-        return leavingDate;
+    public LocalDate getCheckOut() {
+        return checkOut;
     }
 
-    public void setLeavingDate(LocalDate leavingDate) {
-        this.leavingDate = leavingDate;
+    public void setCheckOut(LocalDate checkOut) {
+        this.checkOut = checkOut;
     }
 
     public BigDecimal getTotalAmount() {

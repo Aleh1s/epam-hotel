@@ -10,8 +10,6 @@ import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
 import ua.aleh1s.hotelepam.service.ReservationService;
 import ua.aleh1s.hotelepam.service.ReservationTokenService;
-import ua.aleh1s.hotelepam.service.impl.ReservationServiceImpl;
-import ua.aleh1s.hotelepam.service.impl.ReservationTokenServiceImpl;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -30,17 +28,22 @@ public class ConfirmBookingCommand implements Command {
 
         ReservationTokenEntity token = reservationTokenService.getById(tokenId);
 
-        LocalDateTime tokenExpiredAt = token.getExpiredAt();
-        if (tokenExpiredAt.isBefore(LocalDateTime.now()))
-            throw new ApplicationException("Token has already expired!");
-
         if (nonNull(token.getConfirmedAt()))
             throw new ApplicationException("Token has already confirmed!");
 
         ReservationEntity reservation = reservationService.getById(token.getReservationId());
 
+        LocalDateTime tokenExpiredAt = token.getExpiredAt();
+        if (tokenExpiredAt.isBefore(LocalDateTime.now())) {
+            reservationService.cancelReservation(reservation);
+            throw new ApplicationException("Token has already expired!");
+        }
+
+        reservation.setExpiredAt(LocalDateTime.now().plusDays(2));
+        reservation.setStatus(PENDING_PAYMENT);
+
         reservationTokenService.confirmToken(token);
-        reservationService.changeStatus(reservation, PENDING_PAYMENT);
+        reservationService.update(reservation);
 
         String path = ResourcesManager.getInstance().getValue("path.page.booking.confirmation");
         try {

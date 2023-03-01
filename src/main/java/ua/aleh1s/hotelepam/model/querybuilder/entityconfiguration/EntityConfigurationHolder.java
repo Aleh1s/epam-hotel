@@ -39,10 +39,10 @@ public class EntityConfigurationHolder {
 
         Map<String, Column> applicationEntityColumnMap = new HashMap<>();
         applicationEntityColumnMap.put("id", SqlColumn.ApplicationTable.ID);
-        applicationEntityColumnMap.put("guestsNumber", SqlColumn.ApplicationTable.NUMBER_OF_GUESTS);
+        applicationEntityColumnMap.put("guests", SqlColumn.ApplicationTable.GUESTS);
         applicationEntityColumnMap.put("roomClass", SqlColumn.ApplicationTable.ROOM_CLASS);
-        applicationEntityColumnMap.put("entryDate", SqlColumn.ApplicationTable.ENTRY_DATE);
-        applicationEntityColumnMap.put("leavingDate", SqlColumn.ApplicationTable.LEAVING_DATE);
+        applicationEntityColumnMap.put("checkIn", SqlColumn.ApplicationTable.CHECK_IN);
+        applicationEntityColumnMap.put("checkOut", SqlColumn.ApplicationTable.CHECK_OUT);
         applicationEntityColumnMap.put("status", SqlColumn.ApplicationTable.STATUS);
         applicationEntityColumnMap.put("customerId", SqlColumn.ApplicationTable.CUSTOMER_ID);
 
@@ -55,8 +55,8 @@ public class EntityConfigurationHolder {
         requestEntityColumnMap.put("roomNumber", SqlColumn.RequestTable.ROOM_NUMBER);
         requestEntityColumnMap.put("customerId", SqlColumn.RequestTable.CUSTOMER_ID);
         requestEntityColumnMap.put("status", SqlColumn.RequestTable.STATUS);
-        requestEntityColumnMap.put("entryDate", SqlColumn.RequestTable.ENTRY_DATE);
-        requestEntityColumnMap.put("leavingDate", SqlColumn.RequestTable.LEAVING_DATE);
+        requestEntityColumnMap.put("checkIn", SqlColumn.RequestTable.CHECK_IN);
+        requestEntityColumnMap.put("checkOut", SqlColumn.RequestTable.CHECK_OUT);
         requestEntityColumnMap.put("totalAmount", SqlColumn.RequestTable.TOTAL_AMOUNT);
 
         EntityConfiguration requestConfiguration =
@@ -67,8 +67,8 @@ public class EntityConfigurationHolder {
         reservationEntityColumnMap.put("id", SqlColumn.ReservationTable.ID);
         reservationEntityColumnMap.put("roomNumber", SqlColumn.ReservationTable.ROOM_NUMBER);
         reservationEntityColumnMap.put("customerId", SqlColumn.ReservationTable.CUSTOMER_ID);
-        reservationEntityColumnMap.put("entryDate", SqlColumn.ReservationTable.ENTRY_DATE);
-        reservationEntityColumnMap.put("leavingDate", SqlColumn.ReservationTable.LEAVING_DATE);
+        reservationEntityColumnMap.put("checkIn", SqlColumn.ReservationTable.CHECK_IN);
+        reservationEntityColumnMap.put("checkOut", SqlColumn.ReservationTable.CHECK_OUT);
         reservationEntityColumnMap.put("createdAt", SqlColumn.ReservationTable.CREATED_AT);
         reservationEntityColumnMap.put("expiredAt", SqlColumn.ReservationTable.EXPIRED_AT);
         reservationEntityColumnMap.put("payedAt", SqlColumn.ReservationTable.PAYED_AT);

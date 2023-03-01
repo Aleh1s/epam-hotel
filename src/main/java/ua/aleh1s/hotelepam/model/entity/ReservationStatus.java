@@ -4,11 +4,8 @@ public enum ReservationStatus {
 
     PENDING_CONFIRMATION(1),
     PENDING_PAYMENT(2),
-    CANCELLED(3),
-    PAYED(4),
-    EXPIRED(5),
-    REMOVED(6);
-
+    PAYED(3),
+    CANCELED(4);
     private final int index;
 
     ReservationStatus(int index) {
@@ -19,10 +16,8 @@ public enum ReservationStatus {
         return switch (index) {
             case 1 -> PENDING_CONFIRMATION;
             case 2 -> PENDING_PAYMENT;
-            case 3 -> CANCELLED;
-            case 4 -> PAYED;
-            case 5 -> EXPIRED;
-            case 6 -> REMOVED;
+            case 3 -> PAYED;
+            case 4 -> CANCELED;
             default -> throw new IllegalStateException("Unexpected value: " + index);
         };
     }

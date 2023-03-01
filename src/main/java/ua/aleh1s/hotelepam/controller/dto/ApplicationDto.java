@@ -8,36 +8,36 @@ import java.time.LocalDate;
 public class ApplicationDto {
 
     private final Long id;
-    private final Integer guestsNumber;
+    private final Integer guests;
     private final RoomClass roomClass;
-    private final LocalDate entryDate;
-    private final LocalDate leavingDate;
+    private final LocalDate checkIn;
+    private final LocalDate checkOut;
     private final ApplicationStatus status;
     private final Long customerId;
 
     public ApplicationDto (
             Long id,
-            Integer guestsNumber,
+            Integer guests,
             RoomClass roomClass,
-            LocalDate entryDate,
-            LocalDate leavingDate,
+            LocalDate checkIn,
+            LocalDate checkOut,
             ApplicationStatus status,
             Long customerId) {
         this.id = id;
-        this.guestsNumber = guestsNumber;
+        this.guests = guests;
         this.roomClass = roomClass;
-        this.entryDate = entryDate;
-        this.leavingDate = leavingDate;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
         this.status = status;
         this.customerId = customerId;
     }
 
     public static class Builder {
         private Long id;
-        private Integer guestsNumber;
+        private Integer guests;
         private RoomClass roomClass;
-        private LocalDate entryDate;
-        private LocalDate leavingDate;
+        private LocalDate checkIn;
+        private LocalDate checkOut;
         private ApplicationStatus status;
         private Long customerId;
 
@@ -52,8 +52,8 @@ public class ApplicationDto {
             return this;
         }
 
-        public Builder guestsNumber(Integer guestsNumber) {
-            this.guestsNumber = guestsNumber;
+        public Builder guests(Integer guests) {
+            this.guests = guests;
             return this;
         }
 
@@ -62,13 +62,13 @@ public class ApplicationDto {
             return this;
         }
 
-        public Builder entryDate(LocalDate entryDate) {
-            this.entryDate = entryDate;
+        public Builder checkIn(LocalDate checkIn) {
+            this.checkIn = checkIn;
             return this;
         }
 
-        public Builder leavingDate(LocalDate leavingDate) {
-            this.leavingDate = leavingDate;
+        public Builder checkOut(LocalDate checkOut) {
+            this.checkOut = checkOut;
             return this;
         }
 
@@ -84,7 +84,7 @@ public class ApplicationDto {
 
         public ApplicationDto build() {
             return new ApplicationDto(
-                    id, guestsNumber, roomClass, entryDate, leavingDate, status, customerId
+                    id, guests, roomClass, checkIn, checkOut, status, customerId
             );
         }
     }
@@ -93,20 +93,20 @@ public class ApplicationDto {
         return id;
     }
 
-    public Integer getGuestsNumber() {
-        return guestsNumber;
+    public Integer getGuests() {
+        return guests;
     }
 
     public RoomClass getRoomClass() {
         return roomClass;
     }
 
-    public LocalDate getEntryDate() {
-        return entryDate;
+    public LocalDate getCheckIn() {
+        return checkIn;
     }
 
-    public LocalDate getLeavingDate() {
-        return leavingDate;
+    public LocalDate getCheckOut() {
+        return checkOut;
     }
 
     public ApplicationStatus getStatus() {

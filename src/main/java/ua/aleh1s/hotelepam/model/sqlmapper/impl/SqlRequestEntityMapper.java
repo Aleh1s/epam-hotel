@@ -18,8 +18,8 @@ public class SqlRequestEntityMapper implements SqlEntityMapper<RequestEntity> {
                     .customerId(source.getLong(CUSTOMER_ID.getName()))
                     .roomNumber(source.getInt(ROOM_NUMBER.getName()))
                     .status(RequestStatus.atIndex(source.getInt(STATUS.getName())))
-                    .entryDate(source.getDate(ENTRY_DATE.getName()).toLocalDate())
-                    .leavingDate(source.getDate(LEAVING_DATE.getName()).toLocalDate())
+                    .checkIn(source.getDate(CHECK_IN.getName()).toLocalDate())
+                    .checkOut(source.getDate(CHECK_OUT.getName()).toLocalDate())
                     .totalAmount(source.getBigDecimal(TOTAL_AMOUNT.getName()))
                     .build();
         } catch (SQLException e) {

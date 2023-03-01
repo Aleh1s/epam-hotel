@@ -57,6 +57,9 @@ public abstract class ConditionalQueryBuilder<T> extends QueryBuilder<T> {
                         .add(QUESTION_MARK)
                         .add("and")
                         .add(QUESTION_MARK);
+            } else if (p instanceof NullCheckNode ncn) {
+                query.add(ncn.getComparedColumn().getName())
+                        .add(ncn.getOperator().toString());
             } else {
                 throw new IllegalArgumentException("Unknown type of predicate");
             }

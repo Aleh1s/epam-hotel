@@ -1,10 +1,7 @@
 package ua.aleh1s.hotelepam.model.querybuilder;
 
 import ua.aleh1s.hotelepam.model.querybuilder.entityconfiguration.Column;
-import ua.aleh1s.hotelepam.model.querybuilder.node.ComparisonNode;
-import ua.aleh1s.hotelepam.model.querybuilder.node.ContainsNode;
-import ua.aleh1s.hotelepam.model.querybuilder.node.RangeNode;
-import ua.aleh1s.hotelepam.model.querybuilder.node.PredicateNode;
+import ua.aleh1s.hotelepam.model.querybuilder.node.*;
 
 public class ColumnDecorator {
 
@@ -30,7 +27,7 @@ public class ColumnDecorator {
         return ComparisonNode.of(Operator.GREATER_THAN_OR_EQUAL, column, value);
     }
 
-    public PredicateNode lt(Object value) {
+    public PredicateNode lte(Object value) {
         return ComparisonNode.of(Operator.LESS_THAN_OR_EQUAL, column, value);
     }
 
@@ -58,6 +55,14 @@ public class ColumnDecorator {
         return ComparisonNode.of(Operator.NOT_LIKE, column, pattern);
     }
 
+    public PredicateNode isNotNull() {
+        return NullCheckNode.of(Operator.IS_NOT_NULL, column);
+    }
+
+    public PredicateNode isNull() {
+        return NullCheckNode.of(Operator.IS_NULL, column);
+    }
+
     public InsertionValue set(Object value) {
         return InsertionValue.of(column, value);
     }
@@ -65,4 +70,5 @@ public class ColumnDecorator {
     public Column getColumn() {
         return column;
     }
+
 }

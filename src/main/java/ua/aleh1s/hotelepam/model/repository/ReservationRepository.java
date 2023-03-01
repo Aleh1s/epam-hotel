@@ -11,14 +11,10 @@ import java.util.Optional;
 public interface ReservationRepository {
 
     Long create(ReservationEntity entity);
-    Page<ReservationEntity> getAllByStatus(ReservationStatus status, PageRequest pageRequest);
+    Page<ReservationEntity> getAllActualReservationByStatus(ReservationStatus status, PageRequest pageRequest);
     Optional<ReservationEntity> getById(Long reservationId);
     void update(ReservationEntity reservation);
-    Page<ReservationEntity> getAllByUserIdAndStatusOrderByCreatedAtDesc(Long userId, ReservationStatus status, PageRequest pageRequest);
-    Page<ReservationEntity> getAll(PageRequest pageRequest);
     List<ReservationEntity> getActualReservations();
     List<ReservationEntity> getActualReservationsByRoomNumber(Integer number);
-    void updateStatus(ReservationEntity reservation);
-
-    Page<ReservationEntity> getAllByUserIdOrderByCreatedAtDesc(Long userId, PageRequest pageRequest);
+    Page<ReservationEntity> getAllReservationsByUserId(Long userId, PageRequest pageRequest);
 }

@@ -1,4 +1,4 @@
-<%@ attribute name="room" type="ua.aleh1s.hotelepam.controller.dto.RoomCardDto" required="true" %>
+<%@ attribute name="room" type="ua.aleh1s.hotelepam.controller.dto.RoomDto" required="true" %>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -22,11 +22,11 @@
                 <div class="value">${room.roomClass}</div>
             </li>
             <li>
-                <div class="key"><fmt:message key="persons.number"/>:</div>
+                <div class="key"><fmt:message key="persons"/>:</div>
                 <div class="value">${room.personsNumber}</div>
             </li>
             <li>
-                <div class="key"><fmt:message key="beds.number"/>:</div>
+                <div class="key"><fmt:message key="beds"/>:</div>
                 <div class="value">${room.bedsNumber}</div>
             </li>
             <li>
@@ -36,8 +36,7 @@
         </ul>
     </div>
     <div class="room-card-footer">
-        <p class="room-price-label">${room.price}$/<fmt:message
-                key="night"/></p>
+        <p class="room-price-label">$ ${room.price}</p>
         <a href="<c:url value="/controller?command=viewRoom&roomNumber=${room.roomNumber}"/>"><fmt:message
                 key="view"/></a>
     </div>

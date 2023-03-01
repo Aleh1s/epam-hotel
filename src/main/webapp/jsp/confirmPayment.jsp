@@ -44,20 +44,19 @@
                             </tr>
                             <tr>
                                 <td>Entry date:</td>
-                                <td><fmt:formatDate type="date" value="${requestScope.reservationDto.entryDate}"
+                                <td><fmt:formatDate type="date" value="${requestScope.reservationDto.checkIn}"
                                                     pattern="MMM dd, yyyy"/></td>
                             </tr>
                             <tr>
                                 <td>Leaving date:</td>
-                                <td><fmt:formatDate type="date" value="${requestScope.reservationDto.leavingDate}"
+                                <td><fmt:formatDate type="date" value="${requestScope.reservationDto.checkOut}"
                                                     pattern="MMM dd, yyyy"/></td>
                             </tr>
                             <tr>
                                 <td>Total amount:</td>
-                                <td>${requestScope.reservationDto.totalAmount}$</td>
+                                <td>$ ${requestScope.reservationDto.totalAmount}</td>
                             </tr>
                         </table>
-
                         <button type="submit" class="btn-primary">Pay</button>
                     </div>
                 </form>

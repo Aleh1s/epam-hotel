@@ -431,34 +431,9 @@
     grid-template-areas:
             "image props"
             "description description"
-            "control control"
             "attributes attributes";
-    grid-template-rows: 400px minmax(80px, auto) minmax(70px, auto) minmax(200px, auto);
+    grid-template-rows: 400px minmax(80px, auto) minmax(200px, auto);
     grid-template-columns: 60% 40%;
-}
-
-.room-control-container {
-    margin-top: 50px;
-    grid-area: control;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-}
-
-.room-control-container .form-input {
-    width: 200px;
-    margin-left: 7px;
-    border-bottom: 1px solid #1d3c62;
-}
-
-.room-control-container label {
-    color: #1d3c62;
-}
-
-.room-control-container form {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
 }
 
 .room-image-container {
@@ -553,19 +528,13 @@
 }
 
 .room-price {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.room-price {
     color: #1d3c62;
     font-size: 20px;
 }
 
 .room-props-control {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -678,8 +647,8 @@
     border-bottom: 1px solid #dddddd;
 }
 
-.styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+.styled-table tbody tr.disabled {
+    background-color: #efefef;
 }
 
 .styled-table tbody tr:last-of-type {

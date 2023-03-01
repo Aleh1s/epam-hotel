@@ -3,6 +3,7 @@ package ua.aleh1s.hotelepam.model.repository.impl;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
+import ua.aleh1s.hotelepam.model.querybuilder.OrderUnit;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.repository.ApplicationRepository;
@@ -22,11 +23,10 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
     public void create(ApplicationEntity application) {
         Root<ApplicationEntity> root = Root.valueOf(ApplicationEntity.class);
         root.insert().values(
-                root.get("id").set(application.getId()),
-                root.get("guestsNumber").set(application.getGuestsNumber()),
-                root.get("roomClass").set(application.getRoomClass().getIndex()),
-                root.get("entryDate").set(Date.valueOf(application.getEntryDate())),
-                root.get("leavingDate").set(Date.valueOf(application.getLeavingDate())),
+                root.get("guests").set(application.getGuests()),
+                root.get("roomClass").set(application.getClazz().getIndex()),
+                root.get("checkIn").set(Date.valueOf(application.getCheckIn())),
+                root.get("checkOut").set(Date.valueOf(application.getCheckOut())),
                 root.get("status").set(application.getStatus().getIndex()),
                 root.get("customerId").set(application.getCustomerId())
         ).execute();
@@ -43,10 +43,10 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
     public void update(ApplicationEntity application) {
         Root<ApplicationEntity> root = Root.valueOf(ApplicationEntity.class);
         root.update().set(
-                root.get("guestsNumber").set(application.getGuestsNumber()),
-                root.get("roomClass").set(application.getRoomClass().getIndex()),
-                root.get("entryDate").set(Date.valueOf(application.getEntryDate())),
-                root.get("leavingDate").set(Date.valueOf(application.getLeavingDate())),
+                root.get("guests").set(application.getGuests()),
+                root.get("roomClass").set(application.getClazz().getIndex()),
+                root.get("checkIn").set(Date.valueOf(application.getCheckIn())),
+                root.get("checkOut").set(Date.valueOf(application.getCheckOut())),
                 root.get("status").set(application.getStatus().getIndex())
         ).where(root.get("id").equal(application.getId())).execute();
     }
@@ -56,7 +56,10 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
         Root<ApplicationEntity> root = Root.valueOf(ApplicationEntity.class);
         PredicateNode statusEqual = root.get("status").equal(status.getIndex());
 
-        List<ApplicationEntity> applicationList = root.select().where(statusEqual).offset(pageRequest.getOffset()).limit(pageRequest.getLimit())
+        List<ApplicationEntity> applicationList = root.select()
+                .where(statusEqual)
+                .offset(pageRequest.getOffset())
+                .limit(pageRequest.getLimit())
                 .getResultList(applicationEntityMapper);
 
         Long count = root.select(root.countAll()).where(statusEqual).execute(Long.class);

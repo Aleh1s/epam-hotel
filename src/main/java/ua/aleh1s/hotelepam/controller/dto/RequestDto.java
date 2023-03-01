@@ -11,8 +11,8 @@ public class RequestDto {
     private final Integer roomNumber;
     private final Long customerId;
     private final RequestStatus status;
-    private final LocalDate entryDate;
-    private final LocalDate leavingDate;
+    private final LocalDate checkIn;
+    private final LocalDate checkOut;
     private final BigDecimal totalAmount;
 
     private RequestDto(
@@ -20,15 +20,15 @@ public class RequestDto {
             Integer roomNumber,
             Long customerId,
             RequestStatus status,
-            LocalDate entryDate,
-            LocalDate leavingDate,
+            LocalDate checkIn,
+            LocalDate checkOut,
             BigDecimal totalAmount) {
         this.id = id;
         this.roomNumber = roomNumber;
         this.customerId = customerId;
         this.status = status;
-        this.entryDate = entryDate;
-        this.leavingDate = leavingDate;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
         this.totalAmount = totalAmount;
     }
 
@@ -37,8 +37,8 @@ public class RequestDto {
         private Integer roomNumber;
         private Long customerId;
         private RequestStatus status;
-        private LocalDate entryDate;
-        private LocalDate leavingDate;
+        private LocalDate checkIn;
+        private LocalDate checkOut;
         private BigDecimal totalAmount;
 
         private Builder() {}
@@ -67,13 +67,13 @@ public class RequestDto {
             return this;
         }
 
-        public Builder entryDate(LocalDate entryDate) {
-            this.entryDate = entryDate;
+        public Builder checkIn(LocalDate checkIn) {
+            this.checkIn = checkIn;
             return this;
         }
 
-        public Builder leavingDate(LocalDate leavingDate) {
-            this.leavingDate = leavingDate;
+        public Builder checkOut(LocalDate checkOut) {
+            this.checkOut = checkOut;
             return this;
         }
 
@@ -84,7 +84,7 @@ public class RequestDto {
 
         public RequestDto build() {
             return new RequestDto(
-                    id, roomNumber, customerId, status, entryDate, leavingDate, totalAmount
+                    id, roomNumber, customerId, status, checkIn, checkOut, totalAmount
             );
         }
     }
@@ -105,12 +105,12 @@ public class RequestDto {
         return status;
     }
 
-    public LocalDate getEntryDate() {
-        return entryDate;
+    public LocalDate getCheckIn() {
+        return checkIn;
     }
 
-    public LocalDate getLeavingDate() {
-        return leavingDate;
+    public LocalDate getCheckOut() {
+        return checkOut;
     }
 
     public BigDecimal getTotalAmount() {

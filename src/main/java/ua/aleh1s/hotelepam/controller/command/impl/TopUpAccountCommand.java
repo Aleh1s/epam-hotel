@@ -31,7 +31,7 @@ public class TopUpAccountCommand implements Command {
         user.setAccount(user.getAccount().add(amount));
         userService.update(user);
 
-        String path = resourcesManager.getValue("path.page.profile");
+        String path = resourcesManager.getValue("path.command.profile");
         try {
             response.sendRedirect(path);
             path = "redirect";

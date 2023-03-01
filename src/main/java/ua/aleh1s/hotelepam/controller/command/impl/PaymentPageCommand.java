@@ -19,6 +19,8 @@ import ua.aleh1s.hotelepam.service.RoomService;
 import ua.aleh1s.hotelepam.service.impl.ReservationServiceImpl;
 import ua.aleh1s.hotelepam.service.impl.RoomServiceImpl;
 
+import java.time.LocalDateTime;
+
 import static ua.aleh1s.hotelepam.utils.Utils.getLongValue;
 
 public class PaymentPageCommand implements Command {
@@ -38,9 +40,9 @@ public class PaymentPageCommand implements Command {
 
         ReservationEntity reservation = reservationService.getById(reservationId);
 
-        String path = resourcesManager.getValue("path.command.my.bookings");
-        if (!reservation.getStatus().equals(ReservationStatus.PENDING_PAYMENT))
-            throw new ApplicationException("You cannot pay this reservation, because it's not confirmed", path);
+        String path = resourcesManager.getValue("path.command.profile");
+        if (reservation.getExpiredAt().isBefore(LocalDateTime.now()))
+            throw new ApplicationException("Reservation was canceled", path);
 
         ReservationDto reservationDto = reservationDtoMapper.apply(reservation);
 

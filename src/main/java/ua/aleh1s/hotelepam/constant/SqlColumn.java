@@ -36,10 +36,10 @@ public class SqlColumn {
 
     public static class ApplicationTable {
         public static final Column ID = Column.of("id", Types.BIGINT);
-        public static final Column NUMBER_OF_GUESTS = Column.of("number_of_guests", Types.INTEGER);
+        public static final Column GUESTS = Column.of("guests", Types.INTEGER);
         public static final Column ROOM_CLASS = Column.of("room_class", Types.INTEGER);
-        public static final Column ENTRY_DATE = Column.of("date_of_entry", Types.DATE);
-        public static final Column LEAVING_DATE = Column.of("date_of_leaving", Types.DATE);
+        public static final Column CHECK_IN = Column.of("check_in", Types.DATE);
+        public static final Column CHECK_OUT = Column.of("check_out", Types.DATE);
         public static final Column STATUS = Column.of("status", Types.INTEGER);
         public static final Column CUSTOMER_ID = Column.of("customer_id", Types.BIGINT);
     }
@@ -50,8 +50,8 @@ public class SqlColumn {
         public static final Column CUSTOMER_ID = Column.of("customer_id", Types.BIGINT);
         public static final Column ROOM_NUMBER = Column.of("room_number", Types.INTEGER);
         public static final Column STATUS = Column.of("status", Types.INTEGER);
-        public static final Column ENTRY_DATE = Column.of("entry_date", Types.DATE);
-        public static final Column LEAVING_DATE = Column.of("leaving_date", Types.DATE);
+        public static final Column CHECK_IN = Column.of("check_in", Types.DATE);
+        public static final Column CHECK_OUT = Column.of("check_out", Types.DATE);
         public static final Column TOTAL_AMOUNT = Column.of("total_amount", Types.NUMERIC);
     }
 
@@ -59,10 +59,10 @@ public class SqlColumn {
         public static final Column ID = Column.of("id", Types.BIGINT);
         public static final Column ROOM_NUMBER = Column.of("room_number", Types.INTEGER);
         public static final Column CUSTOMER_ID = Column.of("customer_id", Types.BIGINT);
-        public static final Column ENTRY_DATE = Column.of("date_of_entry", Types.DATE);
-        public static final Column LEAVING_DATE = Column.of("date_of_leaving", Types.DATE);
+        public static final Column CHECK_IN = Column.of("check_in", Types.DATE);
+        public static final Column CHECK_OUT = Column.of("check_out", Types.DATE);
         public static final Column CREATED_AT = Column.of("created_at", Types.TIMESTAMP);
-        public static final Column EXPIRED_AT = Column.of("expiration_date", Types.TIMESTAMP);
+        public static final Column EXPIRED_AT = Column.of("expired_at", Types.TIMESTAMP);
         public static final Column PAYED_AT = Column.of("payed_at", Types.TIMESTAMP);
         public static final Column TOTAL_AMOUNT = Column.of("total_amount", Types.NUMERIC);
         public static final Column STATUS = Column.of("status", Types.INTEGER);

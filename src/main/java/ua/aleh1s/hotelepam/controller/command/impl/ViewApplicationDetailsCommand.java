@@ -6,8 +6,6 @@ import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.service.ApplicationService;
 import ua.aleh1s.hotelepam.service.UserService;
-import ua.aleh1s.hotelepam.service.impl.ApplicationServiceImpl;
-import ua.aleh1s.hotelepam.service.impl.UserServiceImpl;
 import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.dtomapper.ApplicationDtoMapper;
@@ -26,7 +24,7 @@ public class ViewApplicationDetailsCommand implements Command {
         ApplicationService applicationService = AppContext.getInstance().getApplicationService();
         UserService userService = AppContext.getInstance().getUserService();
 
-        ApplicationEntity application = applicationService.getById(applicationId);
+        ApplicationEntity application = applicationService.getApplicationById(applicationId);
         UserEntity user = userService.getById(application.getCustomerId());
 
         request.setAttribute("application", applicationDtoMapper.apply(application));

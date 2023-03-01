@@ -116,11 +116,11 @@
                                     <div class="value">${room.roomClass}</div>
                                 </li>
                                 <li>
-                                    <div class="key"><fmt:message key="persons.number"/>:</div>
+                                    <div class="key"><fmt:message key="persons"/>:</div>
                                     <div class="value">${room.personsNumber}</div>
                                 </li>
                                 <li>
-                                    <div class="key"><fmt:message key="beds.number"/>:</div>
+                                    <div class="key"><fmt:message key="beds"/>:</div>
                                     <div class="value">${room.bedsNumber}</div>
                                 </li>
                                 <li>
