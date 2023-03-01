@@ -42,6 +42,7 @@ public class SqlColumn {
         public static final Column CHECK_OUT = Column.of("check_out", Types.DATE);
         public static final Column STATUS = Column.of("status", Types.INTEGER);
         public static final Column CUSTOMER_ID = Column.of("customer_id", Types.BIGINT);
+        public static final Column CREATED_AT = Column.of("created_at", Types.TIMESTAMP);
     }
 
     //RequestEntity

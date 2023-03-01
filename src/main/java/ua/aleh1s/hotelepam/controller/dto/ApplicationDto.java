@@ -4,6 +4,7 @@ import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
 import ua.aleh1s.hotelepam.model.entity.RoomClass;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ApplicationDto {
 
@@ -12,15 +13,17 @@ public class ApplicationDto {
     private final RoomClass roomClass;
     private final LocalDate checkIn;
     private final LocalDate checkOut;
+    private final LocalDateTime createdAt;
     private final ApplicationStatus status;
     private final Long customerId;
 
-    public ApplicationDto (
+    public ApplicationDto(
             Long id,
             Integer guests,
             RoomClass roomClass,
             LocalDate checkIn,
             LocalDate checkOut,
+            LocalDateTime createdAt,
             ApplicationStatus status,
             Long customerId) {
         this.id = id;
@@ -28,6 +31,7 @@ public class ApplicationDto {
         this.roomClass = roomClass;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
+        this.createdAt = createdAt;
         this.status = status;
         this.customerId = customerId;
     }
@@ -38,10 +42,12 @@ public class ApplicationDto {
         private RoomClass roomClass;
         private LocalDate checkIn;
         private LocalDate checkOut;
+        private LocalDateTime createdAt;
         private ApplicationStatus status;
         private Long customerId;
 
-        private Builder() {}
+        private Builder() {
+        }
 
         public static Builder newBuilder() {
             return new Builder();
@@ -72,6 +78,11 @@ public class ApplicationDto {
             return this;
         }
 
+        public Builder createdAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
         public Builder status(ApplicationStatus status) {
             this.status = status;
             return this;
@@ -84,7 +95,7 @@ public class ApplicationDto {
 
         public ApplicationDto build() {
             return new ApplicationDto(
-                    id, guests, roomClass, checkIn, checkOut, status, customerId
+                    id, guests, roomClass, checkIn, checkOut, createdAt, status, customerId
             );
         }
     }
@@ -115,5 +126,9 @@ public class ApplicationDto {
 
     public Long getCustomerId() {
         return customerId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }

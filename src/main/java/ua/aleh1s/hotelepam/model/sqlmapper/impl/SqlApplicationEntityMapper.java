@@ -23,6 +23,7 @@ public class SqlApplicationEntityMapper implements SqlEntityMapper<ApplicationEn
                     .checkOut(source.getDate(CHECK_OUT.getName()).toLocalDate())
                     .status(ApplicationStatus.atIndex(source.getInt(STATUS.getName())))
                     .customerId(source.getLong(CUSTOMER_ID.getName()))
+                    .createdAt(source.getTimestamp(CREATED_AT.getName()).toLocalDateTime())
                     .build();
         } catch (SQLException e) {
             e.printStackTrace();

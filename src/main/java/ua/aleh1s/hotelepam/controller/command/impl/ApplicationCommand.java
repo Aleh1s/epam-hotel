@@ -15,6 +15,7 @@ import ua.aleh1s.hotelepam.utils.Period;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static ua.aleh1s.hotelepam.utils.Utils.*;
 
@@ -44,8 +45,8 @@ public class ApplicationCommand implements Command {
                 .checkOut(checkOut)
                 .status(ApplicationStatus.NEW)
                 .customerId(id)
+                .createdAt(LocalDateTime.now())
                 .build();
-
         applicationService.create(applicationEntry);
 
         session.setAttribute("guests", guests);

@@ -45,6 +45,7 @@ public class EntityConfigurationHolder {
         applicationEntityColumnMap.put("checkOut", SqlColumn.ApplicationTable.CHECK_OUT);
         applicationEntityColumnMap.put("status", SqlColumn.ApplicationTable.STATUS);
         applicationEntityColumnMap.put("customerId", SqlColumn.ApplicationTable.CUSTOMER_ID);
+        applicationEntityColumnMap.put("createdAt", SqlColumn.ApplicationTable.CREATED_AT);
 
         EntityConfiguration applicationConfiguration =
                 EntityConfiguration.newConfiguration("application", applicationEntityColumnMap);

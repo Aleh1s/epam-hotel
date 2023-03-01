@@ -1,6 +1,7 @@
 package ua.aleh1s.hotelepam.model.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ApplicationEntity {
 
@@ -9,6 +10,7 @@ public class ApplicationEntity {
     private RoomClass clazz;
     private LocalDate checkIn;
     private LocalDate checkOut;
+    private LocalDateTime createdAt;
     private ApplicationStatus status;
     private Long customerId;
 
@@ -18,6 +20,7 @@ public class ApplicationEntity {
             RoomClass clazz,
             LocalDate checkIn,
             LocalDate checkOut,
+            LocalDateTime createdAt,
             ApplicationStatus status,
             Long customerId) {
         this.id = id;
@@ -25,6 +28,7 @@ public class ApplicationEntity {
         this.clazz = clazz;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
+        this.createdAt = createdAt;
         this.status = status;
         this.customerId = customerId;
     }
@@ -35,10 +39,12 @@ public class ApplicationEntity {
         private RoomClass clazz;
         private LocalDate checkIn;
         private LocalDate checkOut;
+        private LocalDateTime createdAt;
         private ApplicationStatus status;
         private Long customerId;
 
-        private Builder() {}
+        private Builder() {
+        }
 
         public static Builder newBuilder() {
             return new Builder();
@@ -69,6 +75,11 @@ public class ApplicationEntity {
             return this;
         }
 
+        public Builder createdAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
         public Builder status(ApplicationStatus status) {
             this.status = status;
             return this;
@@ -81,7 +92,7 @@ public class ApplicationEntity {
 
         public ApplicationEntity build() {
             return new ApplicationEntity(
-                    id, guests, clazz, checkIn, checkOut, status, customerId
+                    id, guests, clazz, checkIn, checkOut, createdAt, status, customerId
             );
         }
     }
@@ -140,5 +151,13 @@ public class ApplicationEntity {
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
