@@ -42,6 +42,7 @@ public class AppContext {
     private final RequestService requestService;
     private final PaymentService paymentService;
     private final BookingService bookingService;
+    private final PdfBuilderService pdfBuilderService;
 
     {
         // Repositories
@@ -63,7 +64,7 @@ public class AppContext {
         this.registrationService = new RegistrationServiceImpl(userService);
         this.paymentService = new PaymentServiceImpl(reservationService, userService);
         this.bookingService = new BookingServiceImpl(roomService, reservationService, reservationTokenService, mailService, userService);
-
+        this.pdfBuilderService = new PdfBuilderServiceImpl(reservationService, roomService, userService);
         // Dto mappers
         this.roomCardDtoMapper = new RoomCardDtoMapper();
         this.roomDtoMapper = new RoomDtoMapper();
@@ -195,5 +196,9 @@ public class AppContext {
 
     public BookingService getBookingService() {
         return bookingService;
+    }
+
+    public PdfBuilderService getPdfBuilderService() {
+        return pdfBuilderService;
     }
 }

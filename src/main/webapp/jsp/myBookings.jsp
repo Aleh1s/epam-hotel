@@ -54,6 +54,18 @@
                                             <button disabled class="btn-pay disabled">Pay</button>
                                         </c:otherwise>
                                     </c:choose>
+                                    <c:choose>
+                                        <c:when test="${reservation.status.index eq 3}">
+                                            <form action="<c:url value="/controller"/>" method="get">
+                                                <input type="hidden" name="command" value="downloadReservationPdf"/>
+                                                <input type="hidden" name="reservationId" value="${reservation.id}">
+                                                <button type="submit" class="btn-accept">Download Pdf</button>
+                                            </form>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button disabled class="btn-accept disabled">Download Pdf</button>
+                                        </c:otherwise>
+                                    </c:choose>
                                     <form action="<c:url value="/controller"/>" method="get">
                                         <input type="hidden" name="command" value="viewRoom">
                                         <input type="hidden" name="roomNumber" value="${reservation.roomNumber}">
