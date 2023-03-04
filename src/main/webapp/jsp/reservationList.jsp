@@ -37,7 +37,7 @@
                                 <td>${reservation.checkOut}</td>
                                 <td>$ ${reservation.totalAmount}</td>
                                 <td>
-                                        <tags:reservationstatus status="${reservation.status}"/>
+                                        <st:reservationstatus status="${reservation.status}"/>
                                 </td>
                                 <td>
                                     <form method="get" action="<c:url value="/controller"/>">

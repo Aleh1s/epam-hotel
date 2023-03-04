@@ -39,7 +39,7 @@
                                                     pattern="MMM dd, yyyy"/></td>
                                 <td>$ ${reservation.totalAmount}</td>
                                 <td>
-                                    <tags:reservationstatus status="${reservation.status}"/>
+                                    <st:reservationstatus status="${reservation.status}"/>
                                 </td>
                                 <td class="control">
                                     <c:choose>
