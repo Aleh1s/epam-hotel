@@ -1,6 +1,8 @@
 package ua.aleh1s.hotelepam.appcontext;
 
 import ua.aleh1s.hotelepam.controller.dtomapper.*;
+import ua.aleh1s.hotelepam.controller.security.SecurityManager;
+import ua.aleh1s.hotelepam.controller.security.SecurityManagerImpl;
 import ua.aleh1s.hotelepam.service.MailService;
 import ua.aleh1s.hotelepam.service.impl.MailServiceImpl;
 import ua.aleh1s.hotelepam.model.repository.*;
@@ -43,6 +45,7 @@ public class AppContext {
     private final PaymentService paymentService;
     private final BookingService bookingService;
     private final PdfBuilderService pdfBuilderService;
+    private final SecurityManager securityManager;
 
     {
         // Repositories
@@ -80,6 +83,8 @@ public class AppContext {
         this.sqlRoomEntityMapper = new SqlRoomEntityMapper();
         this.sqlUserEntityMapper = new SqlUserEntityMapper();
         this.sqlReservationTokenEntityMapper = new SqlReservationTokenEntityMapper();
+
+        this.securityManager = new SecurityManagerImpl();
     }
 
     public static synchronized AppContext getInstance() {
@@ -200,5 +205,9 @@ public class AppContext {
 
     public PdfBuilderService getPdfBuilderService() {
         return pdfBuilderService;
+    }
+
+    public SecurityManager getSecurityManager() {
+        return securityManager;
     }
 }
