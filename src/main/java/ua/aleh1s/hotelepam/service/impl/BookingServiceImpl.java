@@ -10,6 +10,8 @@ import ua.aleh1s.hotelepam.utils.Period;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.UUID;
 
 import static ua.aleh1s.hotelepam.model.entity.ReservationStatus.PENDING_CONFIRMATION;
@@ -75,13 +77,15 @@ public class BookingServiceImpl implements BookingService {
                 .build();
         reservationTokenService.create(reservationToken);
 
+        String message = buildEmail(
+                String.format("%s %s", user.getFirstName(), user.getLastName()),
+                String.format("http://localhost:8080/controller?command=confirmBooking&tokenId=%s", tokenId), //todo: replace localhost by configured path
+                user.getLocale()
+        );
         Mail mail = Mail.construct(
                 user.getEmail(),
                 "Book confirmation",
-                buildEmail(
-                        String.format("%s %s", user.getFirstName(), user.getLastName()),
-                        String.format("http://localhost:8080/controller?command=confirmBooking&tokenId=%s", tokenId) //todo: replace localhost by configured path
-                )
+                message
         );
 
         mailService.send(mail);
@@ -89,7 +93,8 @@ public class BookingServiceImpl implements BookingService {
         return reservation;
     }
 
-    private String buildEmail(String name, String link) {
+    private String buildEmail(String name, String link, Locale lang) {
+        ResourceBundle bundle = ResourceBundle.getBundle("locale", lang);
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
                 "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +
@@ -107,7 +112,7 @@ public class BookingServiceImpl implements BookingService {
                 "                  \n" +
                 "                    </td>\n" +
                 "                    <td style=\"font-size:28px;line-height:1.315789474;Margin-top:4px;padding-left:10px\">\n" +
-                "                      <span style=\"font-family:Helvetica,Arial,sans-serif;font-weight:700;color:#ffffff;text-decoration:none;vertical-align:top;display:inline-block\">Confirm your reservation</span>\n" +
+                "                      <span style=\"font-family:Helvetica,Arial,sans-serif;font-weight:700;color:#ffffff;text-decoration:none;vertical-align:top;display:inline-block\">" + bundle.getString("mail.booking.title") + "</span>\n" +
                 "                    </td>\n" +
                 "                  </tr>\n" +
                 "                </tbody></table>\n" +
@@ -145,7 +150,7 @@ public class BookingServiceImpl implements BookingService {
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
                 "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n" +
                 "        \n" +
-                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Thank you for booking. Please click on the below link to confirm your reservation: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Confirm now</a> </p></blockquote>\n Link will expire in 15 minutes. <p>See you soon</p>" +
+                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" + bundle.getString("mail.booking.greeting") + " " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> " + bundle.getString("mail.booking.gratitude") + ": </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">" + bundle.getString("mail.booking.confirm") + "</a> </p></blockquote>\n " + bundle.getString("mail.booking.link.expire") + " <p>" + bundle.getString("mail.booking.see.you.soon") + "</p>" +
                 "        \n" +
                 "      </td>\n" +
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +

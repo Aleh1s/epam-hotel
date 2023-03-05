@@ -29,7 +29,7 @@
             </c:if>
             <c:if test="${not empty sessionScope.role and sessionScope.role eq 'MANAGER'}">
                 <li class="nav-item"><a
-                        href="<c:url value="/controller?command=reservationList&default=on"/>"><fmt:message
+                        href="<c:url value="/controller?command=reservationList"/>"><fmt:message
                         key="reservations"/></a></li>
                 <li class="nav-item"><a href="<c:url value="/controller?command=applicationList"/>"><fmt:message
                         key="applications"/></a></li>

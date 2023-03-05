@@ -5,7 +5,7 @@
 
 <html>
 <head>
-    <title>Successful Confirmation</title>
+    <title>Successful Confirmation!</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -18,12 +18,11 @@
                     <div class="success-mark-container">
                         <img src="../img/success_mark.png" alt="Success mark">
                     </div>
-                    <h1>Booking is confirmed!</h1>
-                    <p>Your booking is successfully confirmed. Reservation must be paid within two days. If the bill is
-                        not paid, the reservation is automatically withdrawn.</p>
+                    <h1><fmt:message key="success.booking.title"/></h1>
+                    <p><fmt:message key="success.booking.body"/></p>
                     <form action="<c:url value="/controller"/>" method="get">
                         <input type="hidden" name="command" value="roomList">
-                        <button type="submit" class="btn-primary">Go home</button>
+                        <button type="submit" class="btn-primary"><fmt:message key="go.home"/></button>
                     </form>
                 </div>
             </div>

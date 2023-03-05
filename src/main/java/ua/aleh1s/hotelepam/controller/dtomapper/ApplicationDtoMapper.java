@@ -2,8 +2,11 @@ package ua.aleh1s.hotelepam.controller.dtomapper;
 
 import ua.aleh1s.hotelepam.controller.dto.ApplicationDto;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
+import ua.aleh1s.hotelepam.utils.Utils;
 
 import java.util.function.Function;
+
+import static ua.aleh1s.hotelepam.utils.Utils.toDate;
 
 public class ApplicationDtoMapper implements Function<ApplicationEntity, ApplicationDto> {
     @Override
@@ -12,8 +15,8 @@ public class ApplicationDtoMapper implements Function<ApplicationEntity, Applica
                 .id(entity.getId())
                 .guests(entity.getGuests())
                 .roomClass(entity.getClazz())
-                .checkIn(entity.getCheckIn())
-                .checkOut(entity.getCheckOut())
+                .checkIn(toDate(entity.getCheckIn()))
+                .checkOut(toDate(entity.getCheckOut()))
                 .status(entity.getStatus())
                 .customerId(entity.getCustomerId())
                 .createdAt(entity.getCreatedAt())

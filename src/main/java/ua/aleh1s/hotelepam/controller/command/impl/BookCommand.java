@@ -11,6 +11,7 @@ import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.service.BookingService;
 import ua.aleh1s.hotelepam.service.impl.BookingServiceImpl;
 import ua.aleh1s.hotelepam.utils.Period;
+import ua.aleh1s.hotelepam.utils.Utils;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -35,8 +36,8 @@ public class BookCommand implements Command {
         ReservationEntity reservation = bookingService.bookRoom(roomNumber, userId, requestedPeriod);
 
         session.setAttribute("reservationTotalAmount", reservation.getTotalAmount());
-        session.setAttribute("reservationCheckIn", checkIn);
-        session.setAttribute("reservationCheckOut", checkOut);
+        session.setAttribute("reservationCheckIn", Utils.toDate(checkIn));
+        session.setAttribute("reservationCheckOut", Utils.toDate(checkOut));
 
         String path = ResourcesManager.getInstance().getValue("path.page.success.booking");
         try {

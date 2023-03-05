@@ -13,6 +13,7 @@ import ua.aleh1s.hotelepam.service.UserService;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 public class PdfBuilderServiceImpl implements PdfBuilderService {
@@ -49,6 +50,8 @@ public class PdfBuilderServiceImpl implements PdfBuilderService {
         RoomEntity room = roomService.getByRoomNumber(reservation.getRoomNumber());
         UserEntity user = userService.getById(reservation.getCustomerId());
 
+        ResourceBundle bundle = ResourceBundle.getBundle("locale", user.getLocale());
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
             Document document = new Document();
@@ -64,27 +67,27 @@ public class PdfBuilderServiceImpl implements PdfBuilderService {
             document.add(title);
 
             PdfPTable table = new PdfPTable(4);
-            addKeyValue(table, "Room Number:", room.getRoomNumber().toString());
-            addKeyValue(table, "Room Class:", room.getRoomClass().name().toLowerCase());
+            addKeyValue(table, bundle.getString("room.number"), room.getRoomNumber().toString());
+            addKeyValue(table, bundle.getString("room.class"), room.getRoomClass().name().toLowerCase());
 
-            addKeyValue(table, "Room Price (Per Night):", String.format("$ %s", room.getPrice().toString()));
-            addKeyValue(table, "Room Beds:", room.getBedsNumber().toString());
+            addKeyValue(table, bundle.getString("room.price.per.night"), String.format("$ %s", room.getPrice().toString()));
+            addKeyValue(table, bundle.getString("beds"), room.getBedsNumber().toString());
 
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            addKeyValue(table, "Check-In:", reservation.getCheckIn().format(dateFormatter));
-            addKeyValue(table, "Check-Out:", reservation.getCheckOut().format(dateFormatter));
+            addKeyValue(table, bundle.getString("check.in"), reservation.getCheckIn().format(dateFormatter));
+            addKeyValue(table, bundle.getString("check.out"), reservation.getCheckOut().format(dateFormatter));
 
-            addKeyValue(table, "Payed At:", reservation.getPayedAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
-            addKeyValue(table, "Room Guests:", room.getPersonsNumber().toString());
+            addKeyValue(table, bundle.getString("payed.at"), reservation.getPayedAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
+            addKeyValue(table, bundle.getString("guests"), room.getPersonsNumber().toString());
 
-            addKeyValue(table, "Total Amount:", String.format("$ %s", reservation.getTotalAmount().toString()));
-            addKeyValue(table, "Status:", reservation.getStatus().name().toLowerCase());
+            addKeyValue(table, bundle.getString("total.amount"), String.format("$ %s", reservation.getTotalAmount().toString()));
+            addKeyValue(table, bundle.getString("status"), reservation.getStatus().name().toLowerCase());
 
-            addKeyValue(table, "First Name:", user.getFirstName());
-            addKeyValue(table, "Last Name:", user.getLastName());
+            addKeyValue(table, bundle.getString("first.name"), user.getFirstName());
+            addKeyValue(table, bundle.getString("last.name"), user.getLastName());
 
-            addKeyValue(table, "Email:", user.getEmail());
-            addKeyValue(table, "Phone:", user.getPhoneNumber());
+            addKeyValue(table, bundle.getString("email"), user.getEmail());
+            addKeyValue(table, bundle.getString("phone"), user.getPhoneNumber());
 
             document.add(table);
             document.close();

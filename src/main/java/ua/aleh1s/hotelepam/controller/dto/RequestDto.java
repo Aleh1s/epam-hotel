@@ -4,6 +4,7 @@ import ua.aleh1s.hotelepam.model.entity.RequestStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class RequestDto {
 
@@ -11,8 +12,8 @@ public class RequestDto {
     private final Integer roomNumber;
     private final Long customerId;
     private final RequestStatus status;
-    private final LocalDate checkIn;
-    private final LocalDate checkOut;
+    private final Date checkIn;
+    private final Date checkOut;
     private final BigDecimal totalAmount;
 
     private RequestDto(
@@ -20,8 +21,8 @@ public class RequestDto {
             Integer roomNumber,
             Long customerId,
             RequestStatus status,
-            LocalDate checkIn,
-            LocalDate checkOut,
+            Date checkIn,
+            Date checkOut,
             BigDecimal totalAmount) {
         this.id = id;
         this.roomNumber = roomNumber;
@@ -37,8 +38,8 @@ public class RequestDto {
         private Integer roomNumber;
         private Long customerId;
         private RequestStatus status;
-        private LocalDate checkIn;
-        private LocalDate checkOut;
+        private Date checkIn;
+        private Date checkOut;
         private BigDecimal totalAmount;
 
         private Builder() {}
@@ -67,12 +68,12 @@ public class RequestDto {
             return this;
         }
 
-        public Builder checkIn(LocalDate checkIn) {
+        public Builder checkIn(Date checkIn) {
             this.checkIn = checkIn;
             return this;
         }
 
-        public Builder checkOut(LocalDate checkOut) {
+        public Builder checkOut(Date checkOut) {
             this.checkOut = checkOut;
             return this;
         }
@@ -105,11 +106,11 @@ public class RequestDto {
         return status;
     }
 
-    public LocalDate getCheckIn() {
+    public Date getCheckIn() {
         return checkIn;
     }
 
-    public LocalDate getCheckOut() {
+    public Date getCheckOut() {
         return checkOut;
     }
 

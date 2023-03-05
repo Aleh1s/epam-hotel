@@ -12,29 +12,33 @@
 <div class="container">
     <div class="main">
         <div class="main-container">
-            <div class="horizontal-delimiter-with-text">
-                <p>Reservations</p>
-                <div></div>
-            </div>
             <c:choose>
                 <c:when test="${not empty requestScope.reservationPage.result}">
+                    <div class="horizontal-delimiter-with-text">
+                        <p><fmt:message key="reservations"/></p>
+                        <div></div>
+                    </div>
                     <table class="styled-table">
                         <thead>
                         <tr>
-                            <th>Room Number</th>
-                            <th>Check-in</th>
-                            <th>Check-out</th>
-                            <th>Total amount</th>
-                            <th>Status</th>
-                            <th>Full Info</th>
+                            <th><fmt:message key="room.number"/></th>
+                            <th><fmt:message key="check.in"/></th>
+                            <th><fmt:message key="check.out"/></th>
+                            <th><fmt:message key="total.amount"/></th>
+                            <th><fmt:message key="status"/></th>
+                            <th><fmt:message key="full.info"/></th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="reservation" items="${requestScope.reservationPage.result}">
                             <tr>
                                 <td>${reservation.roomNumber}</td>
-                                <td>${reservation.checkIn}</td>
-                                <td>${reservation.checkOut}</td>
+                                <td>
+                                    <fmt:formatDate type="date" value="${reservation.checkIn}" pattern="dd-MM-yyyy"/>
+                                </td>
+                                <td>
+                                    <fmt:formatDate type="date" value="${reservation.checkOut}" pattern="dd-MM-yyyy"/>
+                                </td>
                                 <td>$ ${reservation.totalAmount}</td>
                                 <td>
                                         <st:reservationstatus status="${reservation.status}"/>
@@ -43,7 +47,7 @@
                                     <form method="get" action="<c:url value="/controller"/>">
                                         <input type="hidden" name="command" value="getFullReservation"/>
                                         <input type="hidden" name="reservationId" value="${reservation.id}"/>
-                                        <button type="submit" class="btn-view">Full Info</button>
+                                        <button type="submit" class="btn-view"><fmt:message key="full.info"/></button>
                                     </form>
                                 </td>
                             </tr>

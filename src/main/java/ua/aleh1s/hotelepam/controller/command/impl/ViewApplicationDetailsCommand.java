@@ -31,6 +31,6 @@ public class ViewApplicationDetailsCommand implements Command {
         request.setAttribute("user", userDtoMapper.apply(user));
 
         request.getSession(false).setAttribute("applicationId", applicationId);
-        return ResourcesManager.getInstance().getValue("path.page.request");
+        return ResourcesManager.getInstance().getValue("path.page.application.details");
     }
 }

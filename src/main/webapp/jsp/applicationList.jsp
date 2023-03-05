@@ -10,11 +10,16 @@
 </head>
 <body>
 <c:import url="component/header.jsp"/>
+<tags:errorhandler message="${requestScope.errorMessage}"/>
 <div class="container">
     <div class="main">
         <div class="main-container">
             <c:choose>
                 <c:when test="${not empty requestScope.applicationPage.result}">
+                    <div class="horizontal-delimiter-with-text">
+                        <p><fmt:message key="reservations"/></p>
+                        <div></div>
+                    </div>
                     <table class="styled-table">
                         <thead>
                         <tr>
@@ -30,13 +35,17 @@
                             <tr>
                                 <td>${application.guests}</td>
                                 <td>${application.roomClass}</td>
-                                <td>${application.checkIn}</td>
-                                <td>${application.checkOut}</td>
+                                <td>
+                                    <fmt:formatDate type="date" value="${application.checkIn}" pattern="dd-MM-yyyy"/>
+                                </td>
+                                <td>
+                                    <fmt:formatDate type="date" value="${application.checkOut}" pattern="dd-MM-yyyy"/>
+                                </td>
                                 <td>
                                     <form method="get" action="<c:url value="/controller"/>">
                                         <input type="hidden" name="command" value="viewApplicationDetails">
                                         <input type="hidden" name="applicationId" value="${application.id}">
-                                        <button type="submit" class="btn-view">Details</button>
+                                        <button type="submit" class="btn-view"><fmt:message key="details"/></button>
                                     </form>
                                 </td>
                             </tr>

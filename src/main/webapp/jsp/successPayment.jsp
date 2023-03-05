@@ -1,6 +1,7 @@
 <%@ include file="/WEB-INF/jspf/encoding.jspf" %>
 <%@ include file="/WEB-INF/jspf/taglibs.jspf" %>
 <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
+<fmt:setBundle basename="locale"/>
 <html>
 <head>
     <title>Success Payment</title>
@@ -17,36 +18,33 @@
                         <img src="../img/success_mark.png" alt="Success mark">
                     </div>
                     <div class="congratulation-container">
-                        <h1>Payment Successful!</h1>
-                        <p>Your payment has been processed! Details of transaction are included below.</p>
+                        <h1><fmt:message key="success.payment.title"/></h1>
+                        <p><fmt:message key="success.payment.body"/></p>
                     </div>
                     <div class="horizontal-delimiter-with-text">
-                        <p>Transaction info</p>
+                        <p><fmt:message key="transaction.info"/></p>
                         <div></div>
                     </div>
                     <div class="primary-info-container">
                         <table>
                             <tr class="active">
-                                <td>Total Amount</td>
+                                <td><fmt:message key="total.amount"/></td>
                                 <td>$ ${sessionScope.paymentTotalAmount}</td>
-                                <c:remove var="paymentTotalAmount" scope="session"/>
                             </tr>
                             <tr>
-                                <td>Payment Type</td>
+                                <td><fmt:message key="payment.type"/></td>
                                 <td>Net Banking</td>
                             </tr>
                             <tr>
-                                <td>Payment Time</td>
-                                <td><fmt:formatDate type="both" value="${sessionScope.paymentPayedAt}"/></td>
-                                <c:remove var="paymentPayedAt" scope="session"/>
+                                <td><fmt:message key="payment.time"/></td>
+                                <td><fmt:formatDate type="both" value="${sessionScope.paymentPayedAt}"
+                                                    pattern="dd-MM-yyyy HH:mm:ss"/></td>
                             </tr>
                         </table>
                     </div>
                 </div>
-                <form class="go-home-form" method="get" action="<c:url value="/controller"/>">
-                    <input type="hidden" name="command" value="roomList">
-                    <input type="hidden" name="default" value="on">
-                    <button type="submit" class="btn-primary">Go Home</button>
+                <form class="go-home-form" method="get" action="<c:url value="/jsp/home.jsp"/>">
+                    <button type="submit" class="btn-primary"><fmt:message key="go.home"/></button>
                 </form>
             </div>
         </div>

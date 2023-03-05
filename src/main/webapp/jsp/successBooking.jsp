@@ -1,6 +1,8 @@
 <%@ include file="/WEB-INF/jspf/encoding.jspf" %>
 <%@ include file="/WEB-INF/jspf/taglibs.jspf" %>
 <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
+<fmt:setBundle basename="locale"/>
+
 <html>
 <head>
     <title>Success booking</title>
@@ -17,34 +19,38 @@
                         <img src="../img/success_mark.png" alt="Success mark">
                     </div>
                     <div class="congratulation-container">
-                        <h1>Reservation needs confirmation!</h1>
-                        <p>You will receive email to confirm your reservation. Confirmation is valid 15 minutes.</p>
+                        <h1><fmt:message key="reservation.needs.confirmation"/></h1>
+                        <p><fmt:message key="confirm.reservation.email.message"/></p>
                     </div>
                     <div class="horizontal-delimiter-with-text">
-                        <p>Booking info</p>
+                        <p><fmt:message key="booking.info"/></p>
                         <div></div>
                     </div>
                     <div class="primary-info-container">
                         <table>
                             <tr class="active">
-                                <td>Total Amount</td>
+                                <td><fmt:message key="total.amount"/></td>
                                 <td>$ ${sessionScope.reservationTotalAmount}</td>
                             </tr>
                             <tr>
-                                <td>Check-in</td>
-                                <td>${sessionScope.reservationCheckIn}</td>
+                                <td><fmt:message key="check.in"/></td>
+                                <td>
+                                    <fmt:formatDate type="date" value="${sessionScope.reservationCheckIn}"
+                                                    pattern="dd-MM-yyyy"/>
+                                </td>
                             </tr>
                             <tr>
-                                <td>Check-out</td>
-                                <td>${sessionScope.reservationCheckOut}</td>
+                                <td><fmt:message key="check.out"/></td>
+                                <td>
+                                    <fmt:formatDate type="date" value="${sessionScope.reservationCheckOut}"
+                                                    pattern="dd-MM-yyyy"/>
+                                </td>
                             </tr>
                         </table>
                     </div>
                 </div>
-                <form class="go-home-form" method="get" action="<c:url value="/controller"/>">
-                    <input type="hidden" name="command" value="roomList">
-                    <input type="hidden" name="default" value="on">
-                    <button type="submit" class="btn-primary">Go Home</button>
+                <form class="go-home-form" method="get" action="<c:url value="/jsp/home.jsp"/>">
+                    <button type="submit" class="btn-primary"><fmt:message key="go.home"/></button>
                 </form>
             </div>
         </div>

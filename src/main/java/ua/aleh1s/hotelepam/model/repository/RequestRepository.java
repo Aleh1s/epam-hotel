@@ -10,7 +10,7 @@ public interface RequestRepository {
 
     void create(RequestEntity request);
 
-    Page<RequestEntity> getAllActiveByUserId(Long userId, PageRequest pageRequest); //todo: change to page Request
+    Page<RequestEntity> getAllActiveByUserId(Long userId, PageRequest pageRequest);
 
     Optional<RequestEntity> findById(Long requestId);
 

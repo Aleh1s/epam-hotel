@@ -15,7 +15,7 @@
     <div class="main">
         <div class="main-container">
             <div class="horizontal-delimiter-with-text">
-                <p>Reservations</p>
+                <p><fmt:message key="reservations"/></p>
                 <div></div>
             </div>
             <c:choose>
@@ -23,20 +23,20 @@
                     <table class="styled-table">
                         <thead>
                         <tr>
-                            <th>Check-in</th>
-                            <th>Check-out</th>
-                            <th>Total amount</th>
-                            <th>Status</th>
-                            <th>Control</th>
+                            <th><fmt:message key="check.in"/></th>
+                            <th><fmt:message key="check.out"/></th>
+                            <th><fmt:message key="total.amount"/></th>
+                            <th><fmt:message key="status"/></th>
+                            <th><fmt:message key="control"/></th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="reservation" items="${requestScope.reservationPage.result}">
                             <tr ${reservation.status.index eq 4 ? 'class="disabled"' : ''}>
                                 <td><fmt:formatDate type="date" value="${reservation.checkIn}"
-                                                    pattern="MMM dd, yyyy"/></td>
+                                                    pattern="dd-MM-yyyy"/></td>
                                 <td><fmt:formatDate type="date" value="${reservation.checkOut}"
-                                                    pattern="MMM dd, yyyy"/></td>
+                                                    pattern="dd-MM-yyyy"/></td>
                                 <td>$ ${reservation.totalAmount}</td>
                                 <td>
                                     <st:reservationstatus status="${reservation.status}"/>
@@ -47,11 +47,11 @@
                                             <form action="<c:url value="/controller"/>" method="post">
                                                 <input type="hidden" name="command" value="payReservation"/>
                                                 <input type="hidden" name="reservationId" value="${reservation.id}">
-                                                <button type="submit" class="btn-pay">Pay</button>
+                                                <button type="submit" class="btn-pay"><fmt:message key="pay"/></button>
                                             </form>
                                         </c:when>
                                         <c:otherwise>
-                                            <button disabled class="btn-pay disabled">Pay</button>
+                                            <button disabled class="btn-pay disabled"><fmt:message key="pay"/></button>
                                         </c:otherwise>
                                     </c:choose>
                                     <c:choose>
@@ -59,17 +59,17 @@
                                             <form action="<c:url value="/controller"/>" method="get">
                                                 <input type="hidden" name="command" value="downloadReservationPdf"/>
                                                 <input type="hidden" name="reservationId" value="${reservation.id}">
-                                                <button type="submit" class="btn-accept">Download Pdf</button>
+                                                <button type="submit" class="btn-accept"><fmt:message key="download.pdf"/></button>
                                             </form>
                                         </c:when>
                                         <c:otherwise>
-                                            <button disabled class="btn-accept disabled">Download Pdf</button>
+                                            <button disabled class="btn-accept disabled"><fmt:message key="download.pdf"/></button>
                                         </c:otherwise>
                                     </c:choose>
                                     <form action="<c:url value="/controller"/>" method="get">
                                         <input type="hidden" name="command" value="viewRoom">
                                         <input type="hidden" name="roomNumber" value="${reservation.roomNumber}">
-                                        <button type="submit" class="btn-view">View room</button>
+                                        <button type="submit" class="btn-view"><fmt:message key="view.room"/></button>
                                     </form>
                                 </td>
                             </tr>

@@ -91,24 +91,30 @@
                                 <tbody>
                                 <c:forEach var="request" items="${requestScope.requestDtoPage.result}">
                                     <tr>
-                                        <td>${request.checkIn}</td>
-                                        <td>${request.checkOut}</td>
+                                        <td>
+                                            <fmt:formatDate type="date" value="${request.checkIn}"
+                                                            pattern="dd-MM-yyyy"/>
+                                        </td>
+                                        <td>
+                                            <fmt:formatDate type="date" value="${request.checkOut}"
+                                                            pattern="dd-MM-yyyy"/>
+                                        </td>
                                         <td>$ ${request.totalAmount}</td>
                                         <td class="control">
                                             <form action="<c:url value="/controller"/>" method="get">
                                                 <input type="hidden" name="command" value="viewRoom">
                                                 <input type="hidden" name="roomNumber" value="${request.roomNumber}">
-                                                <button class="btn-view" type="submit">View Room</button>
+                                                <button class="btn-view" type="submit"><fmt:message key="view.room"/></button>
                                             </form>
                                             <form action="<c:url value="/controller"/>" method="post">
                                                 <input type="hidden" name="command" value="rejectRequest">
                                                 <input type="hidden" name="requestId" value="${request.id}">
-                                                <button class="btn-trash" type="submit">Reject</button>
+                                                <button class="btn-trash" type="submit"><fmt:message key="reject"/></button>
                                             </form>
                                             <form action="<c:url value="/controller"/>" method="post">
                                                 <input type="hidden" name="command" value="confirmRequest">
                                                 <input type="hidden" name="requestId" value="${request.id}">
-                                                <button class="btn-accept" type="submit">Book</button>
+                                                <button class="btn-accept" type="submit"><fmt:message key="book"/></button>
                                             </form>
                                         </td>
                                     </tr>

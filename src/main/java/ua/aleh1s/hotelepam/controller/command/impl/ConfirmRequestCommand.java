@@ -12,12 +12,14 @@ import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.service.BookingService;
 import ua.aleh1s.hotelepam.service.RequestService;
 import ua.aleh1s.hotelepam.utils.Period;
+import ua.aleh1s.hotelepam.utils.Utils;
 
 import java.io.IOException;
 import java.util.Objects;
 
 import static ua.aleh1s.hotelepam.model.entity.RequestStatus.CONFIRMED;
 import static ua.aleh1s.hotelepam.utils.Utils.getLongValue;
+import static ua.aleh1s.hotelepam.utils.Utils.toDate;
 
 public class ConfirmRequestCommand implements Command {
 
@@ -50,8 +52,8 @@ public class ConfirmRequestCommand implements Command {
         );
 
         session.setAttribute("reservationTotalAmount", reservation.getTotalAmount());
-        session.setAttribute("reservationCheckIn", requestEntity.getCheckIn());
-        session.setAttribute("reservationCheckOut", requestEntity.getCheckOut());
+        session.setAttribute("reservationCheckIn", toDate(requestEntity.getCheckIn()));
+        session.setAttribute("reservationCheckOut", toDate(requestEntity.getCheckOut()));
 
         path = ResourcesManager.getInstance().getValue("path.page.success.booking");
         try {

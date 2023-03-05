@@ -5,14 +5,15 @@ import ua.aleh1s.hotelepam.model.entity.RoomClass;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class ApplicationDto {
 
     private final Long id;
     private final Integer guests;
     private final RoomClass roomClass;
-    private final LocalDate checkIn;
-    private final LocalDate checkOut;
+    private final Date checkIn;
+    private final Date checkOut;
     private final LocalDateTime createdAt;
     private final ApplicationStatus status;
     private final Long customerId;
@@ -21,8 +22,8 @@ public class ApplicationDto {
             Long id,
             Integer guests,
             RoomClass roomClass,
-            LocalDate checkIn,
-            LocalDate checkOut,
+            Date checkIn,
+            Date checkOut,
             LocalDateTime createdAt,
             ApplicationStatus status,
             Long customerId) {
@@ -40,8 +41,8 @@ public class ApplicationDto {
         private Long id;
         private Integer guests;
         private RoomClass roomClass;
-        private LocalDate checkIn;
-        private LocalDate checkOut;
+        private Date checkIn;
+        private Date checkOut;
         private LocalDateTime createdAt;
         private ApplicationStatus status;
         private Long customerId;
@@ -68,12 +69,12 @@ public class ApplicationDto {
             return this;
         }
 
-        public Builder checkIn(LocalDate checkIn) {
+        public Builder checkIn(Date checkIn) {
             this.checkIn = checkIn;
             return this;
         }
 
-        public Builder checkOut(LocalDate checkOut) {
+        public Builder checkOut(Date checkOut) {
             this.checkOut = checkOut;
             return this;
         }
@@ -112,11 +113,11 @@ public class ApplicationDto {
         return roomClass;
     }
 
-    public LocalDate getCheckIn() {
+    public Date getCheckIn() {
         return checkIn;
     }
 
-    public LocalDate getCheckOut() {
+    public Date getCheckOut() {
         return checkOut;
     }
 

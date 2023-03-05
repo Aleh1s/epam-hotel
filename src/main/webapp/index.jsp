@@ -10,12 +10,7 @@
 </head>
 <body>
 
-<c:url var="roomList" value="/controller">
-    <c:param name="command" value="roomList"/>
-    <c:param name="default" value="on"/>
-</c:url>
-
-<c:redirect url="${roomList}"/>
+<c:redirect url="/jsp/home.jsp"/>
 
 </body>
 </html>

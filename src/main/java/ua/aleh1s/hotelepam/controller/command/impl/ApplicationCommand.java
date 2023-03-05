@@ -51,8 +51,8 @@ public class ApplicationCommand implements Command {
 
         session.setAttribute("guests", guests);
         session.setAttribute("clazz", clazz);
-        session.setAttribute("checkIn", checkIn);
-        session.setAttribute("checkOut", checkOut);
+        session.setAttribute("checkIn", toDate(checkIn));
+        session.setAttribute("checkOut", toDate(checkOut));
 
         path = resourcesManager.getValue("path.page.success.application");
         try {

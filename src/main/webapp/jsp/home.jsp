@@ -22,26 +22,26 @@
                 <input type="hidden" name="command" value="chooseRooms">
                 <div class="bounded-input">
                     <label for="check-in">
-                        Check-in
+                        <fmt:message key="check.in"/>
                     </label>
                     <input id="check-in" name="checkIn" type="date"
                            max="2024-01-01" required>
                 </div>
                 <div class="bounded-input">
                     <label for="check-out">
-                        Check-out
+                        <fmt:message key="check.out"/>
                     </label>
                     <input id="check-out" name="checkOut" type="date"
                            max="2024-01-01" required>
                 </div>
                 <div class="bounded-input">
                     <label for="guests">
-                        Guests
+                        <fmt:message key="guests"/>
                     </label>
                     <input id="guests" name="guests" type="number" min="1" max="10" required
                            placeholder="Guests" value="1">
                 </div>
-                <button type="submit" class="btn-primary">Search</button>
+                <button type="submit" class="btn-primary"><fmt:message key="search"/></button>
             </form>
         </div>
     </div>

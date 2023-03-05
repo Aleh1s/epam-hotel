@@ -18,55 +18,61 @@
                     <div class="primary-info-container">
                         <div>
                             <div class="horizontal-delimiter-with-text">
-                                <p>Application Details</p>
+                                <p><fmt:message key="application.info"/></p>
                                 <div></div>
                             </div>
                             <table>
                                 <tr class="active">
-                                    <td>Guests</td>
+                                    <td><fmt:message key="guests"/></td>
                                     <td>${requestScope.application.guests}</td>
                                 </tr>
                                 <tr>
-                                    <td>Room Class</td>
+                                    <td><fmt:message key="room.class"/></td>
                                     <td>${requestScope.application.roomClass}</td>
                                 </tr>
                                 <tr>
-                                    <td>Check-in</td>
-                                    <td>${requestScope.application.checkIn}</td>
+                                    <td><fmt:message key="check.in"/></td>
+                                    <td>
+                                        <fmt:formatDate type="date" value="${requestScope.application.checkIn}"
+                                                        pattern="dd-MM-yyyy"/>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>Check-out</td>
-                                    <td>${requestScope.application.checkOut}</td>
+                                    <td><fmt:message key="check.out"/></td>
+                                    <td>
+                                        <fmt:formatDate type="date" value="${requestScope.application.checkOut}"
+                                                        pattern="dd-MM-yyyy"/>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
                         <div>
                             <div class="horizontal-delimiter-with-text">
-                                <p>Customer Details</p>
+                                <p><fmt:message key="customer.info"/></p>
                                 <div></div>
                             </div>
                             <table>
                                 <tr class="active">
-                                    <td>Email</td>
+                                    <td><fmt:message key="email"/></td>
                                     <td>${requestScope.user.email}</td>
                                 </tr>
                                 <tr>
-                                    <td>First Name</td>
+                                    <td><fmt:message key="first.name"/></td>
                                     <td>${requestScope.user.firstName}</td>
                                 </tr>
                                 <tr>
-                                    <td>Last Name</td>
+                                    <td><fmt:message key="last.name"/></td>
                                     <td>${requestScope.user.lastName}</td>
                                 </tr>
                                 <tr>
-                                    <td>Phone</td>
+                                    <td><fmt:message key="phone"/></td>
                                     <td>${requestScope.user.phoneNumber}</td>
                                 </tr>
                             </table>
                         </div>
                     </div>
                     <div class="horizontal-delimiter-with-text">
-                        <p>Send Request</p>
+                        <p><fmt:message key="request"/></p>
                         <div></div>
                     </div>
                     <form class="request-form" action="<c:url value="/controller"/>" method="post">
