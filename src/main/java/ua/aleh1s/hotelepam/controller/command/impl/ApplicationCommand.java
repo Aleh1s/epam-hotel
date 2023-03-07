@@ -34,7 +34,7 @@ public class ApplicationCommand implements Command {
         Long id = (Long) session.getAttribute("id");
 
         String path = resourcesManager.getValue("path.page.application");
-        if (!isReservationPeriodValid(Period.range(checkIn, checkOut)))
+        if (!isReservationPeriodValid(Period.between(checkIn, checkOut)))
             throw new ApplicationException("Date range is invalid", path);
 
         RoomClass clazz = RoomClass.atIndex(classIndex);

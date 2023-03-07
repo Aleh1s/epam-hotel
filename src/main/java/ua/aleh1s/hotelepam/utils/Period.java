@@ -12,7 +12,7 @@ public class Period {
         this.end = end;
     }
 
-    public static Period range(LocalDate start, LocalDate end) {
+    public static Period between(LocalDate start, LocalDate end) {
         return new Period(start, end);
     }
 

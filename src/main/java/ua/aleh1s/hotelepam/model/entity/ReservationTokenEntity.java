@@ -1,6 +1,7 @@
 package ua.aleh1s.hotelepam.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class ReservationTokenEntity {
 
@@ -104,5 +105,29 @@ public class ReservationTokenEntity {
 
     public void setReservationId(Long reservationId) {
         this.reservationId = reservationId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ReservationTokenEntity that = (ReservationTokenEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(createdAt, that.createdAt) && Objects.equals(expiredAt, that.expiredAt) && Objects.equals(confirmedAt, that.confirmedAt) && Objects.equals(reservationId, that.reservationId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, createdAt, expiredAt, confirmedAt, reservationId);
+    }
+
+    @Override
+    public String toString() {
+        return "ReservationTokenEntity{" +
+                "id='" + id + '\'' +
+                ", createdAt=" + createdAt +
+                ", expiredAt=" + expiredAt +
+                ", confirmedAt=" + confirmedAt +
+                ", reservationId=" + reservationId +
+                '}';
     }
 }

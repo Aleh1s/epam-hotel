@@ -7,6 +7,9 @@ import ua.aleh1s.hotelepam.service.ReservationTokenService;
 
 import java.time.LocalDateTime;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
 public class ReservationTokenServiceImpl implements ReservationTokenService {
 
     private final ReservationTokenRepository reservationTokenRepository;
@@ -22,6 +25,9 @@ public class ReservationTokenServiceImpl implements ReservationTokenService {
 
     @Override
     public void confirmToken(ReservationTokenEntity reservationToken) {
+        if (nonNull(reservationToken.getConfirmedAt()))
+            throw new ApplicationException("Token has already confirmed!");
+
         reservationToken.setConfirmedAt(LocalDateTime.now());
         reservationTokenRepository.update(reservationToken);
     }

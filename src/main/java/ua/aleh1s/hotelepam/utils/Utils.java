@@ -14,7 +14,6 @@ import static java.util.Objects.*;
 
 public class Utils {
 
-
     public static Integer getIntValue(HttpServletRequest request, String name) {
         return Integer.parseInt(request.getParameter(name));
     }
@@ -36,11 +35,6 @@ public class Utils {
         if (nonNull(intParameterStr) && !intParameterStr.isBlank())
             return Integer.parseInt(intParameterStr);
         return def;
-    }
-
-    public static Integer getIntContextParamValue(HttpServletRequest request, String key) {
-        String initParameter = request.getServletContext().getInitParameter(key);
-        return Integer.parseInt(initParameter);
     }
 
     public static Date toDate(LocalDateTime localDateTime) {

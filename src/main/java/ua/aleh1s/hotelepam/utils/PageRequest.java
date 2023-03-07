@@ -1,5 +1,7 @@
 package ua.aleh1s.hotelepam.utils;
 
+import java.util.Objects;
+
 public class PageRequest {
 
     private final int pageNumber;
@@ -20,5 +22,26 @@ public class PageRequest {
 
     public int getLimit() {
         return pageSize;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PageRequest that = (PageRequest) o;
+        return pageNumber == that.pageNumber && pageSize == that.pageSize;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pageNumber, pageSize);
+    }
+
+    @Override
+    public String toString() {
+        return "PageRequest{" +
+                "pageNumber=" + pageNumber +
+                ", pageSize=" + pageSize +
+                '}';
     }
 }

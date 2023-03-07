@@ -34,7 +34,7 @@ public class ChooseRoomsCommand implements Command {
 
         String path = resourcesManager.getValue("path.page.home");
 
-        Period requestedPeriod = Period.range(checkIn, checkOut);
+        Period requestedPeriod = Period.between(checkIn, checkOut);
         if (!isReservationPeriodValid(requestedPeriod))
             throw new ApplicationException("Invalid range of date.", path);
 

@@ -9,14 +9,11 @@ import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.service.BookingService;
-import ua.aleh1s.hotelepam.service.impl.BookingServiceImpl;
 import ua.aleh1s.hotelepam.utils.Period;
 import ua.aleh1s.hotelepam.utils.Utils;
 
 import java.io.IOException;
 import java.time.LocalDate;
-
-import static ua.aleh1s.hotelepam.utils.Utils.getLocalDateValue;
 
 public class BookCommand implements Command {
 
@@ -31,7 +28,7 @@ public class BookCommand implements Command {
         LocalDate checkIn = (LocalDate) session.getAttribute("requestedCheckIn");
         LocalDate checkOut = (LocalDate) session.getAttribute("requestedCheckOut");
 
-        Period requestedPeriod = Period.range(checkIn, checkOut);
+        Period requestedPeriod = Period.between(checkIn, checkOut);
 
         ReservationEntity reservation = bookingService.bookRoom(roomNumber, userId, requestedPeriod);
 

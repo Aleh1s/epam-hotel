@@ -43,7 +43,7 @@ public class MakeRequestCommand implements Command {
         if (application.getStatus().equals(ApplicationStatus.PROCESSED))
             throw new ApplicationException("Application is already processed", path);
 
-        Period requestedPeriod = Period.range(checkIn, checkOut);
+        Period requestedPeriod = Period.between(checkIn, checkOut);
         if (!roomService.isRoomAvailable(roomNumber, requestedPeriod))
             throw new ApplicationException(String.format("Room with number %s is already taken", roomNumber), path);
 

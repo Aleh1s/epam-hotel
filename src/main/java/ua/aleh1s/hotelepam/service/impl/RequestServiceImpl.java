@@ -1,18 +1,14 @@
 package ua.aleh1s.hotelepam.service.impl;
 
-import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.entity.RequestStatus;
-import ua.aleh1s.hotelepam.utils.Page;
-import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.repository.RequestRepository;
 import ua.aleh1s.hotelepam.service.RequestService;
+import ua.aleh1s.hotelepam.utils.Page;
+import ua.aleh1s.hotelepam.utils.PageRequest;
 
-import java.util.Objects;
-
-import static ua.aleh1s.hotelepam.model.entity.RequestStatus.CONFIRMED;
 import static ua.aleh1s.hotelepam.model.entity.RequestStatus.NEW;
 
 public class RequestServiceImpl implements RequestService {

@@ -3,6 +3,7 @@ package ua.aleh1s.hotelepam.model.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class ReservationEntity {
 
@@ -192,5 +193,34 @@ public class ReservationEntity {
 
     public void setStatus(ReservationStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ReservationEntity that = (ReservationEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(roomNumber, that.roomNumber) && Objects.equals(customerId, that.customerId) && Objects.equals(checkIn, that.checkIn) && Objects.equals(checkOut, that.checkOut) && Objects.equals(createdAt, that.createdAt) && Objects.equals(expiredAt, that.expiredAt) && Objects.equals(payedAt, that.payedAt) && Objects.equals(totalAmount, that.totalAmount) && status == that.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, roomNumber, customerId, checkIn, checkOut, createdAt, expiredAt, payedAt, totalAmount, status);
+    }
+
+    @Override
+    public String toString() {
+        return "ReservationEntity{" +
+                "id=" + id +
+                ", roomNumber=" + roomNumber +
+                ", customerId=" + customerId +
+                ", checkIn=" + checkIn +
+                ", checkOut=" + checkOut +
+                ", createdAt=" + createdAt +
+                ", expiredAt=" + expiredAt +
+                ", payedAt=" + payedAt +
+                ", totalAmount=" + totalAmount +
+                ", status=" + status +
+                '}';
     }
 }

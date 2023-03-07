@@ -28,9 +28,6 @@ public class ConfirmBookingCommand implements Command {
 
         ReservationTokenEntity token = reservationTokenService.getById(tokenId);
 
-        if (nonNull(token.getConfirmedAt()))
-            throw new ApplicationException("Token has already confirmed!");
-
         ReservationEntity reservation = reservationService.getById(token.getReservationId());
 
         LocalDateTime tokenExpiredAt = token.getExpiredAt();
@@ -39,10 +36,10 @@ public class ConfirmBookingCommand implements Command {
             throw new ApplicationException("Token has already expired!");
         }
 
+        reservationTokenService.confirmToken(token);
+
         reservation.setExpiredAt(LocalDateTime.now().plusDays(2));
         reservation.setStatus(PENDING_PAYMENT);
-
-        reservationTokenService.confirmToken(token);
         reservationService.update(reservation);
 
         String path = ResourcesManager.getInstance().getValue("path.page.booking.confirmation");

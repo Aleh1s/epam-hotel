@@ -2,6 +2,7 @@ package ua.aleh1s.hotelepam.model.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class ApplicationEntity {
 
@@ -159,5 +160,32 @@ public class ApplicationEntity {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ApplicationEntity that = (ApplicationEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(guests, that.guests) && clazz == that.clazz && Objects.equals(checkIn, that.checkIn) && Objects.equals(checkOut, that.checkOut) && Objects.equals(createdAt, that.createdAt) && status == that.status && Objects.equals(customerId, that.customerId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, guests, clazz, checkIn, checkOut, createdAt, status, customerId);
+    }
+
+    @Override
+    public String toString() {
+        return "ApplicationEntity{" +
+                "id=" + id +
+                ", guests=" + guests +
+                ", clazz=" + clazz +
+                ", checkIn=" + checkIn +
+                ", checkOut=" + checkOut +
+                ", createdAt=" + createdAt +
+                ", status=" + status +
+                ", customerId=" + customerId +
+                '}';
     }
 }

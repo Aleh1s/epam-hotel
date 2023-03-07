@@ -12,7 +12,6 @@ import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.service.BookingService;
 import ua.aleh1s.hotelepam.service.RequestService;
 import ua.aleh1s.hotelepam.utils.Period;
-import ua.aleh1s.hotelepam.utils.Utils;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -45,7 +44,7 @@ public class ConfirmRequestCommand implements Command {
         ReservationEntity reservation = bookingService.bookRoom(
                 requestEntity.getRoomNumber(),
                 requestEntity.getCustomerId(),
-                Period.range(
+                Period.between(
                         requestEntity.getCheckIn(),
                         requestEntity.getCheckOut()
                 )

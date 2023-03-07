@@ -2,6 +2,7 @@ package ua.aleh1s.hotelepam.model.entity;
 
 import java.math.BigDecimal;
 import java.util.Locale;
+import java.util.Objects;
 
 public class UserEntity {
     private Long id;
@@ -173,5 +174,33 @@ public class UserEntity {
 
     public void setAccount(BigDecimal account) {
         this.account = account;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity user = (UserEntity) o;
+        return Objects.equals(id, user.id) && Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(password, user.password) && Objects.equals(locale, user.locale) && role == user.role && Objects.equals(account, user.account);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, firstName, lastName, phoneNumber, password, locale, role, account);
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", password='" + password + '\'' +
+                ", locale=" + locale +
+                ", role=" + role +
+                ", account=" + account +
+                '}';
     }
 }

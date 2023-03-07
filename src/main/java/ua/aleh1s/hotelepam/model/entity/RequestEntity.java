@@ -2,6 +2,7 @@ package ua.aleh1s.hotelepam.model.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class RequestEntity {
 
@@ -142,5 +143,31 @@ public class RequestEntity {
 
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RequestEntity request = (RequestEntity) o;
+        return Objects.equals(id, request.id) && Objects.equals(roomNumber, request.roomNumber) && Objects.equals(customerId, request.customerId) && status == request.status && Objects.equals(checkIn, request.checkIn) && Objects.equals(checkOut, request.checkOut) && Objects.equals(totalAmount, request.totalAmount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, roomNumber, customerId, status, checkIn, checkOut, totalAmount);
+    }
+
+    @Override
+    public String toString() {
+        return "RequestEntity{" +
+                "id=" + id +
+                ", roomNumber=" + roomNumber +
+                ", customerId=" + customerId +
+                ", status=" + status +
+                ", checkIn=" + checkIn +
+                ", checkOut=" + checkOut +
+                ", totalAmount=" + totalAmount +
+                '}';
     }
 }
