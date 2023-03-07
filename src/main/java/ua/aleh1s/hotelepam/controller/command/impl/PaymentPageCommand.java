@@ -7,17 +7,14 @@ import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.dto.ReservationDto;
-import ua.aleh1s.hotelepam.controller.dto.RoomDto;
-import ua.aleh1s.hotelepam.controller.dtomapper.ReservationDtoMapper;
-import ua.aleh1s.hotelepam.controller.dtomapper.RoomDtoMapper;
+import ua.aleh1s.hotelepam.model.dto.ReservationDto;
+import ua.aleh1s.hotelepam.model.dto.RoomDto;
+import ua.aleh1s.hotelepam.model.dtomapper.ReservationDtoMapper;
+import ua.aleh1s.hotelepam.model.dtomapper.RoomDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
-import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.service.ReservationService;
 import ua.aleh1s.hotelepam.service.RoomService;
-import ua.aleh1s.hotelepam.service.impl.ReservationServiceImpl;
-import ua.aleh1s.hotelepam.service.impl.RoomServiceImpl;
 
 import java.time.LocalDateTime;
 

@@ -6,10 +6,10 @@ import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.dto.RequestDto;
-import ua.aleh1s.hotelepam.controller.dto.UserDto;
-import ua.aleh1s.hotelepam.controller.dtomapper.RequestDtoMapper;
-import ua.aleh1s.hotelepam.controller.dtomapper.UserDtoMapper;
+import ua.aleh1s.hotelepam.model.dto.RequestDto;
+import ua.aleh1s.hotelepam.model.dto.UserDto;
+import ua.aleh1s.hotelepam.model.dtomapper.RequestDtoMapper;
+import ua.aleh1s.hotelepam.model.dtomapper.UserDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.utils.Page;
@@ -39,15 +39,15 @@ public class ProfileCommand implements Command {
 
         Page<RequestEntity> requestEntityPage = requestService.getAllActiveRequestsByUserId(userId, PageRequest.of(pageNumber, 5));
 
-        List<RequestDto> requestDtoList = requestEntityPage.getResult().stream()
+        List<RequestDto> requestDtoList = requestEntityPage.result().stream()
                 .map(requestDtoMapper)
                 .toList();
 
-        Page<RequestDto> requestDtoPage = Page.of(requestDtoList, requestEntityPage.getCount());
+        Page<RequestDto> requestDtoPage = Page.of(requestDtoList, requestEntityPage.count());
 
         UserDto userDto = userDtoMapper.apply(user);
 
-        Integer pagesNumber = Utils.getNumberOfPages(requestDtoPage.getCount(), 5);
+        Integer pagesNumber = Utils.getNumberOfPages(requestDtoPage.count(), 5);
 
         request.setAttribute("userDto", userDto);
         request.setAttribute("requestDtoPage", requestDtoPage);

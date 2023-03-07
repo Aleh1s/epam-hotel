@@ -16,7 +16,7 @@ public class SqlReservationTokenEntityMapper implements SqlEntityMapper<Reservat
         ReservationTokenEntity reservationToken = null;
         try {
             Timestamp confirmedAt = resultSet.getTimestamp(CONFIRMED_AT.getName());
-            reservationToken = ReservationTokenEntity.Builder.newBuilder()
+            reservationToken = ReservationTokenEntity.builder()
                     .id(resultSet.getString(ID.getName()))
                     .createdAt(resultSet.getTimestamp(CREATED_AT.getName()).toLocalDateTime())
                     .expiredAt(resultSet.getTimestamp(EXPIRED_AT.getName()).toLocalDateTime())

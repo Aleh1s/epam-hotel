@@ -3,7 +3,6 @@ package ua.aleh1s.hotelepam.utils;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.math.BigDecimal;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,6 +12,8 @@ import java.util.Date;
 import static java.util.Objects.*;
 
 public class Utils {
+
+    private Utils() {throw new RuntimeException("Cannot instantiate Utils.class");}
 
     public static Integer getIntValue(HttpServletRequest request, String name) {
         return Integer.parseInt(request.getParameter(name));
@@ -50,8 +51,8 @@ public class Utils {
     }
 
     public static boolean isReservationPeriodValid(Period period) {
-        LocalDate checkIn = period.getStart();
-        LocalDate checkOut = period.getEnd();
+        LocalDate checkIn = period.start();
+        LocalDate checkOut = period.end();
 
         LocalDate now = LocalDate.now();
         boolean isCheckInValid = checkIn.isAfter(now) || checkIn.isEqual(now),

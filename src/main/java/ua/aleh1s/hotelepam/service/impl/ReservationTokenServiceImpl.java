@@ -1,5 +1,6 @@
 package ua.aleh1s.hotelepam.service.impl;
 
+import lombok.AllArgsConstructor;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
 import ua.aleh1s.hotelepam.model.repository.ReservationTokenRepository;
@@ -10,13 +11,10 @@ import java.time.LocalDateTime;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
+@AllArgsConstructor
 public class ReservationTokenServiceImpl implements ReservationTokenService {
 
     private final ReservationTokenRepository reservationTokenRepository;
-
-    public ReservationTokenServiceImpl(ReservationTokenRepository reservationTokenRepository) {
-        this.reservationTokenRepository = reservationTokenRepository;
-    }
 
     @Override
     public void create(ReservationTokenEntity reservationToken) {

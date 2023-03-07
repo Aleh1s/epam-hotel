@@ -15,7 +15,7 @@ public class SqlApplicationEntityMapper implements SqlEntityMapper<ApplicationEn
     public ApplicationEntity apply(ResultSet source) {
         ApplicationEntity application = null;
         try {
-            application = ApplicationEntity.Builder.newBuilder()
+            application = ApplicationEntity.builder()
                     .id(source.getLong(ID.getName()))
                     .guests(source.getInt(GUESTS.getName()))
                     .clazz(RoomClass.atIndex(source.getInt(ROOM_CLASS.getName())))

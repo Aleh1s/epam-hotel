@@ -39,13 +39,13 @@ class PaymentServiceImplTest {
     @Test
     void payReservation() {
         Long reservationId = 1L, customerId = 1L;
-        ReservationEntity reservation = ReservationEntity.Builder.newBuilder()
+        ReservationEntity reservation = ReservationEntity.builder()
                 .customerId(customerId)
                 .totalAmount(BigDecimal.TEN)
                 .expiredAt(LocalDateTime.now().plusMinutes(2))
                 .build();
 
-        UserEntity user = UserEntity.Builder.newBuilder()
+        UserEntity user = UserEntity.builder()
                 .id(customerId)
                 .account(BigDecimal.TEN)
                 .build();
@@ -69,7 +69,7 @@ class PaymentServiceImplTest {
 
         verify(userService, times(1))
                 .update(userCaptor.capture());
-        
+
         assertEquals(BigDecimal.ZERO, userCaptor.getValue().getAccount());
         assertNotNull(reservationCaptor.getValue().getPayedAt());
         assertEquals(ReservationStatus.PAYED, reservationCaptor.getValue().getStatus());

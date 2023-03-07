@@ -52,7 +52,7 @@ public class MakeRequestCommand implements Command {
 
         BigDecimal totalAmount = roomService.getTotalPrice(roomNumber, requestedPeriod);
 
-        RequestEntity requestEntity = RequestEntity.Builder.newBuilder()
+        RequestEntity requestEntity = RequestEntity.builder()
                 .roomNumber(roomNumber)
                 .customerId(application.getCustomerId())
                 .status(RequestStatus.NEW)

@@ -15,7 +15,7 @@ public class SqlReservationEntityMapper implements SqlEntityMapper<ReservationEn
         ReservationEntity reservation = null;
         try {
             Timestamp payedAt = source.getTimestamp(PAYED_AT.getName());
-            reservation = ReservationEntity.Builder.newBuilder()
+            reservation = ReservationEntity.builder()
                     .id(source.getLong(ID.getName()))
                     .roomNumber(source.getInt(ROOM_NUMBER.getName()))
                     .customerId(source.getLong(CUSTOMER_ID.getName()))

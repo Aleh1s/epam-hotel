@@ -6,12 +6,12 @@ import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.dto.RoomCardDto;
-import ua.aleh1s.hotelepam.controller.dtomapper.RoomCardDtoMapper;
+import ua.aleh1s.hotelepam.model.dto.RoomDto;
+import ua.aleh1s.hotelepam.model.dtomapper.RoomDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
+import ua.aleh1s.hotelepam.service.RoomService;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
-import ua.aleh1s.hotelepam.service.RoomService;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,7 +29,7 @@ public class RoomListCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         RoomService roomService = AppContext.getInstance().getRoomService();
-        RoomCardDtoMapper roomCardDtoMapper = AppContext.getInstance().getRoomCardDtoMapper();
+        RoomDtoMapper roomDtoMapper = AppContext.getInstance().getRoomDtoMapper();
 
         Integer pageSize = getIntValueOrDefault(request, "pageSize", 9);
         Integer pageNumber = getIntValueOrDefault(request, "pageNumber", 1);
@@ -58,13 +58,13 @@ public class RoomListCommand implements Command {
         int totalCount = roomList.size();
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
 
-        List<RoomCardDto> roomCardDtoList = roomList.stream()
+        List<RoomDto> roomDtoList = roomList.stream()
                 .skip(pageRequest.getOffset())
                 .limit(pageRequest.getLimit())
-                .map(roomCardDtoMapper)
+                .map(roomDtoMapper)
                 .toList();
 
-        Page<RoomCardDto> roomCardDtoPage = Page.of(roomCardDtoList, totalCount);
+        Page<RoomDto> roomCardDtoPage = Page.of(roomDtoList, totalCount);
         Integer pagesNumber = getNumberOfPages(totalCount, pageSize);
 
         request.setAttribute("roomPage", roomCardDtoPage);

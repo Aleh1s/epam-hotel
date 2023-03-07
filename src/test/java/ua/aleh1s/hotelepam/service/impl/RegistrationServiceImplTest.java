@@ -29,7 +29,7 @@ class RegistrationServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        toRegister = UserEntity.Builder.newBuilder()
+        toRegister = UserEntity.builder()
                 .email("test@gmai.com")
                 .phoneNumber("testPhoneNumber")
                 .password(inputPassword)

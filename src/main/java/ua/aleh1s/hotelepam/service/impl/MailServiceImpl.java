@@ -43,9 +43,9 @@ public class MailServiceImpl implements MailService {
         try {
             MimeMessage email = new MimeMessage(session);
             email.setFrom(new InternetAddress(username));
-            email.setRecipient(Message.RecipientType.TO, new InternetAddress(mail.getToAddress()));
-            email.setSubject(MimeUtility.encodeText(mail.getSubject(), "utf-8", "B"));
-            email.setText(mail.getMessage(), "utf-8", "html");
+            email.setRecipient(Message.RecipientType.TO, new InternetAddress(mail.toAddress()));
+            email.setSubject(MimeUtility.encodeText(mail.subject(), "utf-8", "B"));
+            email.setText(mail.message(), "utf-8", "html");
             Transport.send(email);
         } catch (MessagingException | UnsupportedEncodingException e) {
             logger.error(e.getMessage(), e);

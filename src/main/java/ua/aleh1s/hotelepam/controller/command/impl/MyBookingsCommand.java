@@ -6,17 +6,15 @@ import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.dto.ReservationDto;
-import ua.aleh1s.hotelepam.controller.dtomapper.ReservationDtoMapper;
+import ua.aleh1s.hotelepam.model.dto.ReservationDto;
+import ua.aleh1s.hotelepam.model.dtomapper.ReservationDtoMapper;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
-import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.service.ReservationService;
 
 import java.util.List;
 
-import static java.util.Objects.*;
 import static ua.aleh1s.hotelepam.utils.Utils.getIntValueOrDefault;
 import static ua.aleh1s.hotelepam.utils.Utils.getNumberOfPages;
 
@@ -36,12 +34,12 @@ public class MyBookingsCommand implements Command {
 
         Page<ReservationEntity> reservationByUserId = reservationService.getAllReservationsByUserId(userId, pageRequest);
 
-        List<ReservationDto> reservationDtoList = reservationByUserId.getResult().stream()
+        List<ReservationDto> reservationDtoList = reservationByUserId.result().stream()
                 .map(reservationDtoMapper)
                 .toList();
 
-        Page<ReservationDto> reservationDtoPage = Page.of(reservationDtoList, reservationByUserId.getCount());
-        Integer pagesNumber = getNumberOfPages(reservationDtoPage.getCount(), pageSize);
+        Page<ReservationDto> reservationDtoPage = Page.of(reservationDtoList, reservationByUserId.count());
+        Integer pagesNumber = getNumberOfPages(reservationDtoPage.count(), pageSize);
 
         request.setAttribute("currPage", pageNumber);
         request.setAttribute("pagesNumber", pagesNumber);

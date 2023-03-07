@@ -31,7 +31,7 @@ public class SignupCommand implements Command {
         Locale defaultLocale = new Locale("");
         UserRole userRole = UserRole.CUSTOMER;
 
-        UserEntity userEntity = UserEntity.Builder.newBuilder()
+        UserEntity userEntity = UserEntity.builder()
                 .email(email).firstName(firstName).lastName(lastName)
                 .phoneNumber(phoneNumber).password(password).locale(defaultLocale)
                 .role(userRole).account(BigDecimal.ZERO)

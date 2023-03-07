@@ -1,5 +1,6 @@
 package ua.aleh1s.hotelepam.service.impl;
 
+import lombok.AllArgsConstructor;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
@@ -15,17 +16,11 @@ import java.util.Objects;
 
 import static ua.aleh1s.hotelepam.model.entity.ReservationStatus.*;
 
+@AllArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
 
     private final ReservationService reservationService;
     private final UserService userService;
-
-    public PaymentServiceImpl(
-            ReservationService reservationService,
-            UserService userService) {
-        this.reservationService = reservationService;
-        this.userService = userService;
-    }
 
     @Override
     public ReservationEntity payReservation(Long reservationId, Long userId) {

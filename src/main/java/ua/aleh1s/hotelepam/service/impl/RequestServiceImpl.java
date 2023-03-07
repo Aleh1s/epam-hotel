@@ -1,5 +1,6 @@
 package ua.aleh1s.hotelepam.service.impl;
 
+import lombok.AllArgsConstructor;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
@@ -11,13 +12,10 @@ import ua.aleh1s.hotelepam.utils.PageRequest;
 
 import static ua.aleh1s.hotelepam.model.entity.RequestStatus.NEW;
 
+@AllArgsConstructor
 public class RequestServiceImpl implements RequestService {
 
     private final RequestRepository requestRepository;
-
-    public RequestServiceImpl(RequestRepository requestRepository) {
-        this.requestRepository = requestRepository;
-    }
 
     @Override
     public void create(RequestEntity entity) {

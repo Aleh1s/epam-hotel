@@ -36,7 +36,7 @@ class ReservationServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        reservation = ReservationEntity.Builder.newBuilder().build();
+        reservation = ReservationEntity.builder().build();
     }
 
     @Test

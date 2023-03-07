@@ -17,7 +17,7 @@ public class SqlRoomEntityMapper implements SqlEntityMapper<RoomEntity> {
         RoomEntity roomEntity = null;
         try {
             Date date = source.getDate(BUSY_UNTIL.getName());
-            roomEntity = RoomEntity.Builder.newBuilder()
+            roomEntity = RoomEntity.builder()
                     .roomNumber(source.getInt(ROOM_NUMBER.getName()))
                     .roomClass(RoomClass.atIndex(source.getInt(CLASS.getName())))
                     .status(RoomStatus.atIndex(source.getInt(STATUS.getName())))

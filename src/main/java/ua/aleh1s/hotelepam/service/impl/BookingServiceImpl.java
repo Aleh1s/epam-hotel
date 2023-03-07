@@ -1,5 +1,6 @@
 package ua.aleh1s.hotelepam.service.impl;
 
+import lombok.AllArgsConstructor;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.*;
@@ -17,6 +18,7 @@ import java.util.UUID;
 import static ua.aleh1s.hotelepam.model.entity.ReservationStatus.PENDING_CONFIRMATION;
 import static ua.aleh1s.hotelepam.utils.Utils.isReservationPeriodValid;
 
+@AllArgsConstructor
 public class BookingServiceImpl implements BookingService {
 
     private final RoomService roomService;
@@ -24,19 +26,6 @@ public class BookingServiceImpl implements BookingService {
     private final ReservationTokenService reservationTokenService;
     private final MailService mailService;
     private final UserService userService;
-
-    public BookingServiceImpl(
-            RoomService roomService,
-            ReservationService reservationService,
-            ReservationTokenService reservationTokenService,
-            MailService mailService,
-            UserService userService) {
-        this.roomService = roomService;
-        this.reservationService = reservationService;
-        this.reservationTokenService = reservationTokenService;
-        this.mailService = mailService;
-        this.userService = userService;
-    }
 
     @Override
     public ReservationEntity bookRoom(Integer roomNumber, Long customerId, Period requestedPeriod) {
@@ -56,11 +45,11 @@ public class BookingServiceImpl implements BookingService {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expiredAt = now.plusMinutes(15);
 
-        ReservationEntity reservation = ReservationEntity.Builder.newBuilder()
+        ReservationEntity reservation = ReservationEntity.builder()
                 .roomNumber(roomNumber)
                 .customerId(customerId)
-                .checkIn(requestedPeriod.getStart())
-                .checkOut(requestedPeriod.getEnd())
+                .checkIn(requestedPeriod.start())
+                .checkOut(requestedPeriod.end())
                 .createdAt(now)
                 .expiredAt(expiredAt)
                 .totalAmount(totalAmount)
@@ -69,7 +58,7 @@ public class BookingServiceImpl implements BookingService {
         Long reservationId = reservationService.create(reservation);
 
         String tokenId = UUID.randomUUID().toString();
-        ReservationTokenEntity reservationToken = ReservationTokenEntity.Builder.newBuilder()
+        ReservationTokenEntity reservationToken = ReservationTokenEntity.builder()
                 .id(tokenId)
                 .createdAt(now)
                 .expiredAt(expiredAt)
@@ -82,10 +71,10 @@ public class BookingServiceImpl implements BookingService {
                 String.format("http://localhost:8080/controller?command=confirmBooking&tokenId=%s", tokenId), //todo: replace localhost by configured path
                 user.getLocale()
         );
-        Mail mail = Mail.construct(
-                user.getEmail(),
+        Mail mail = new Mail(
                 "Book confirmation",
-                message
+                message,
+                user.getEmail()
         );
 
         mailService.send(mail);

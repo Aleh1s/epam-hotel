@@ -43,10 +43,6 @@ class BookingServiceImplTest {
     @InjectMocks
     private BookingServiceImpl underTest;
 
-    @BeforeEach
-    void setUp() {
-    }
-
     @Test
     void canBookRoom() {
         Integer roomNumber = 1;
@@ -57,10 +53,10 @@ class BookingServiceImplTest {
                 LocalDate.now().plusDays(7)
         );
 
-        RoomEntity room = RoomEntity.Builder.newBuilder().build();
+        RoomEntity room = RoomEntity.builder().build();
 
         String email = "test@gmail.com";
-        UserEntity user = UserEntity.Builder.newBuilder()
+        UserEntity user = UserEntity.builder()
                 .firstName("Test")
                 .lastName("Test")
                 .email(email)
@@ -97,7 +93,7 @@ class BookingServiceImplTest {
                 .send(mailCaptor.capture());
 
         assertEquals(reservationId, reservationTokenCaptor.getValue().getReservationId());
-        assertEquals(email, mailCaptor.getValue().getToAddress());
+        assertEquals(email, mailCaptor.getValue().toAddress());
     }
 
     @Test
@@ -114,7 +110,7 @@ class BookingServiceImplTest {
     void bookRoomShouldThrowApplicationException2() {
         Integer roomNumber = 1;
 
-        RoomEntity room = RoomEntity.Builder.newBuilder().build();
+        RoomEntity room = RoomEntity.builder().build();
         Period validPeriod = Period.between(
                 LocalDate.now(),
                 LocalDate.now().plusDays(7)

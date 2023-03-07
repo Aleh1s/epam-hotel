@@ -32,7 +32,7 @@ class ReservationTokenServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        reservationToken = ReservationTokenEntity.Builder.newBuilder().build();
+        reservationToken = ReservationTokenEntity.builder().build();
     }
 
     @Test

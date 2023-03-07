@@ -7,8 +7,8 @@ import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.service.ReservationService;
 import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.dto.ReservationDto;
-import ua.aleh1s.hotelepam.controller.dtomapper.ReservationDtoMapper;
+import ua.aleh1s.hotelepam.model.dto.ReservationDto;
+import ua.aleh1s.hotelepam.model.dtomapper.ReservationDtoMapper;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
@@ -31,12 +31,12 @@ public class ReservationListCommand implements Command {
         Page<ReservationEntity> reservationPage =
                 reservationService.getAllActualPayedReservations(pageRequest);
 
-        List<ReservationDto> reservationDtoList = reservationPage.getResult().stream()
+        List<ReservationDto> reservationDtoList = reservationPage.result().stream()
                 .map(reservationDtoMapper)
                 .toList();
 
-        Page<ReservationDto> reservationDtoPage = Page.of(reservationDtoList, reservationPage.getCount());
-        Integer pagesNumber = Utils.getNumberOfPages(reservationDtoPage.getCount(), pageSize);
+        Page<ReservationDto> reservationDtoPage = Page.of(reservationDtoList, reservationPage.count());
+        Integer pagesNumber = Utils.getNumberOfPages(reservationDtoPage.count(), pageSize);
 
         request.setAttribute("reservationPage", reservationDtoPage);
         request.setAttribute("pagesNumber", pagesNumber);

@@ -38,7 +38,7 @@ public class ApplicationCommand implements Command {
             throw new ApplicationException("Date range is invalid", path);
 
         RoomClass clazz = RoomClass.atIndex(classIndex);
-        ApplicationEntity applicationEntry = ApplicationEntity.Builder.newBuilder()
+        ApplicationEntity applicationEntry = ApplicationEntity.builder()
                 .guests(guests)
                 .clazz(clazz)
                 .checkIn(checkIn)

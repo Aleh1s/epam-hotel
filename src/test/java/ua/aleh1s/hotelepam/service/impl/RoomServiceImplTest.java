@@ -41,7 +41,7 @@ class RoomServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        room = RoomEntity.Builder.newBuilder().build();
+        room = RoomEntity.builder().build();
     }
 
     @Test
@@ -52,12 +52,12 @@ class RoomServiceImplTest {
                 LocalDate.of(2023, 10, 8)
         );
 
-        ReservationEntity reservation1 = ReservationEntity.Builder.newBuilder()
+        ReservationEntity reservation1 = ReservationEntity.builder()
                 .checkIn(LocalDate.of(2023, 9, 27))
                 .checkOut(LocalDate.of(2023, 10, 1))
                 .build();
 
-        ReservationEntity reservation2 = ReservationEntity.Builder.newBuilder()
+        ReservationEntity reservation2 = ReservationEntity.builder()
                 .checkIn(LocalDate.of(2023, 10, 8))
                 .checkOut(LocalDate.of(2023, 10, 15))
                 .build();
@@ -80,7 +80,7 @@ class RoomServiceImplTest {
                 LocalDate.of(2023, 10, 8)
         );
 
-        ReservationEntity reservation1 = ReservationEntity.Builder.newBuilder()
+        ReservationEntity reservation1 = ReservationEntity.builder()
                 .checkIn(LocalDate.of(2023, 10, 1))
                 .checkOut(LocalDate.of(2023, 10, 5))
                 .build();
@@ -103,13 +103,13 @@ class RoomServiceImplTest {
                 LocalDate.of(2023, 10, 8)
         );
 
-        ReservationEntity reservation1 = ReservationEntity.Builder.newBuilder()
+        ReservationEntity reservation1 = ReservationEntity.builder()
                 .roomNumber(1)
                 .checkIn(LocalDate.of(2023, 9, 27))
                 .checkOut(LocalDate.of(2023, 10, 1))
                 .build();
 
-        ReservationEntity reservation2 = ReservationEntity.Builder.newBuilder()
+        ReservationEntity reservation2 = ReservationEntity.builder()
                 .roomNumber(2)
                 .checkIn(LocalDate.of(2023, 10, 8))
                 .checkOut(LocalDate.of(2023, 10, 15))

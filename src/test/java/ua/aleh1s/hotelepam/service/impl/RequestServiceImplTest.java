@@ -37,7 +37,7 @@ class RequestServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        request = RequestEntity.Builder.newBuilder().build();
+        request = RequestEntity.builder().build();
     }
 
     @Test

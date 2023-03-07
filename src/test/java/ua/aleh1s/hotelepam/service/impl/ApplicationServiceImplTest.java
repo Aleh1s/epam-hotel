@@ -36,7 +36,7 @@ class ApplicationServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        application = ApplicationEntity.Builder.newBuilder().build();
+        application = ApplicationEntity.builder().build();
     }
 
     @Test

@@ -8,8 +8,8 @@ import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
 import ua.aleh1s.hotelepam.service.ApplicationService;
 import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.dto.ApplicationDto;
-import ua.aleh1s.hotelepam.controller.dtomapper.ApplicationDtoMapper;
+import ua.aleh1s.hotelepam.model.dto.ApplicationDto;
+import ua.aleh1s.hotelepam.model.dtomapper.ApplicationDtoMapper;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
@@ -30,12 +30,12 @@ public class ApplicationListCommand implements Command {
         Page<ApplicationEntity> applicationPage =
                 applicationService.getAllByApplicationStatus(ApplicationStatus.NEW, PageRequest.of(pageNumber, pageSize));
 
-        List<ApplicationDto> applicationDtoList = applicationPage.getResult().stream()
+        List<ApplicationDto> applicationDtoList = applicationPage.result().stream()
                 .map(applicationDtoMapper)
                 .toList();
 
-        Page<ApplicationDto> applicationDtoPage = Page.of(applicationDtoList, applicationPage.getCount());
-        Integer pagesNumber = Utils.getNumberOfPages(applicationDtoPage.getCount(), pageSize);
+        Page<ApplicationDto> applicationDtoPage = Page.of(applicationDtoList, applicationPage.count());
+        Integer pagesNumber = Utils.getNumberOfPages(applicationDtoPage.count(), pageSize);
 
         request.setAttribute("applicationPage", applicationDtoPage);
         request.setAttribute("pagesNumber", pagesNumber);

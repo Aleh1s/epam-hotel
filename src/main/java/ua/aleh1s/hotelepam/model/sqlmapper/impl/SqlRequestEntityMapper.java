@@ -13,7 +13,7 @@ public class SqlRequestEntityMapper implements SqlEntityMapper<RequestEntity> {
     public RequestEntity apply(ResultSet source) {
         RequestEntity requestEntity = null;
         try {
-            requestEntity = RequestEntity.Builder.newBuilder()
+            requestEntity = RequestEntity.builder()
                     .id(source.getLong(ID.getName()))
                     .customerId(source.getLong(CUSTOMER_ID.getName()))
                     .roomNumber(source.getInt(ROOM_NUMBER.getName()))

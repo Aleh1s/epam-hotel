@@ -1,5 +1,6 @@
 package ua.aleh1s.hotelepam.service.impl;
 
+import lombok.AllArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
@@ -7,13 +8,10 @@ import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.service.RegistrationService;
 import ua.aleh1s.hotelepam.service.UserService;
 
+@AllArgsConstructor
 public class RegistrationServiceImpl implements RegistrationService {
 
     private final UserService userService;
-
-    public RegistrationServiceImpl(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     public void register(UserEntity user) {

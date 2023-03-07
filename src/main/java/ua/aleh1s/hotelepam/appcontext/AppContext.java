@@ -1,8 +1,8 @@
 package ua.aleh1s.hotelepam.appcontext;
 
-import ua.aleh1s.hotelepam.controller.dtomapper.*;
 import ua.aleh1s.hotelepam.controller.security.SecurityManager;
 import ua.aleh1s.hotelepam.controller.security.SecurityManagerImpl;
+import ua.aleh1s.hotelepam.model.dtomapper.*;
 import ua.aleh1s.hotelepam.service.MailService;
 import ua.aleh1s.hotelepam.service.impl.MailServiceImpl;
 import ua.aleh1s.hotelepam.model.repository.*;
@@ -22,7 +22,6 @@ public class AppContext {
     private final ReservationRepository reservationRepository;
     private final RequestRepository requestRepository;
     private final RoomDtoMapper roomDtoMapper;
-    private final RoomCardDtoMapper roomCardDtoMapper;
     private final ApplicationDtoMapper applicationDtoMapper;
     private final RequestDtoMapper requestDtoMapper;
     private final UserDtoMapper userDtoMapper;
@@ -69,7 +68,6 @@ public class AppContext {
         this.bookingService = new BookingServiceImpl(roomService, reservationService, reservationTokenService, mailService, userService);
         this.pdfBuilderService = new PdfBuilderServiceImpl(reservationService, roomService, userService);
         // Dto mappers
-        this.roomCardDtoMapper = new RoomCardDtoMapper();
         this.roomDtoMapper = new RoomDtoMapper();
         this.applicationDtoMapper = new ApplicationDtoMapper();
         this.requestDtoMapper = new RequestDtoMapper();
@@ -103,10 +101,6 @@ public class AppContext {
 
     public RoomRepository getRoomRepository() {
         return roomRepository;
-    }
-
-    public RoomCardDtoMapper getRoomCardDtoMapper() {
-        return roomCardDtoMapper;
     }
 
     public RoomDtoMapper getRoomDtoMapper() {

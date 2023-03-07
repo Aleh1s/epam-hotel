@@ -1,4 +1,4 @@
-<%@ attribute name="room" type="ua.aleh1s.hotelepam.controller.dto.RoomDto" required="true" %>
+<%@ attribute name="room" type="ua.aleh1s.hotelepam.model.dto.RoomDto" required="true" %>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>

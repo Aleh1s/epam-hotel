@@ -2,6 +2,7 @@ package ua.aleh1s.hotelepam.service.impl;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import lombok.AllArgsConstructor;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
@@ -16,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
+@AllArgsConstructor
 public class PdfBuilderServiceImpl implements PdfBuilderService {
 
     private static BaseFont baseFont;
@@ -35,15 +37,6 @@ public class PdfBuilderServiceImpl implements PdfBuilderService {
     private final ReservationService reservationService;
     private final RoomService roomService;
     private final UserService userService;
-
-    public PdfBuilderServiceImpl(
-            ReservationService reservationService,
-            RoomService roomService,
-            UserService userService) {
-        this.reservationService = reservationService;
-        this.roomService = roomService;
-        this.userService = userService;
-    }
 
     public ByteArrayOutputStream buildReservationPdfById(Long id) {
         ReservationEntity reservation = reservationService.getById(id);

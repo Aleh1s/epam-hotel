@@ -32,7 +32,7 @@ class UserServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        user = UserEntity.Builder.newBuilder().build();
+        user = UserEntity.builder().build();
     }
 
     @Test

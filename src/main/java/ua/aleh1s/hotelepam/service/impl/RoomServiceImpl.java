@@ -1,5 +1,6 @@
 package ua.aleh1s.hotelepam.service.impl;
 
+import lombok.AllArgsConstructor;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
@@ -12,17 +13,11 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 public class RoomServiceImpl implements RoomService {
 
     private final ReservationRepository reservationRepository;
     private final RoomRepository roomRepository;
-
-    public RoomServiceImpl(
-            ReservationRepository reservationRepository,
-            RoomRepository roomRepository) {
-        this.reservationRepository = reservationRepository;
-        this.roomRepository = roomRepository;
-    }
 
     @Override
     public boolean isRoomAvailable(Integer number, Period period) {
