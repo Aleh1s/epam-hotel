@@ -35,13 +35,13 @@
                     </c:if>
                 </div>
                 <div class="header-user-info">
-                    <h2>${requestScope.userDto.firstName} ${requestScope.userDto.lastName}</h2>
-                    <p>${requestScope.userDto.role}</p>
+                    <h2>${requestScope.userDto.firstName()} ${requestScope.userDto.lastName()}</h2>
+                    <p>${requestScope.userDto.role()}</p>
                 </div>
                 <c:if test="${sessionScope.role eq 'CUSTOMER'}">
                     <div class="profile-account">
                         <p><fmt:message key="account"/></p>
-                        <h2>$ ${requestScope.userDto.account}</h2>
+                        <h2>$ ${requestScope.userDto.account()}</h2>
                     </div>
                 </c:if>
             </div>
@@ -55,19 +55,19 @@
                         <tbody>
                         <tr class="active">
                             <td class="table-key"><fmt:message key="email"/>:</td>
-                            <td class="table-value">${requestScope.userDto.email}</td>
+                            <td class="table-value">${requestScope.userDto.email()}</td>
                         </tr>
                         <tr>
                             <td class="table-key"><fmt:message key="first.name"/>:</td>
-                            <td class="table-value">${requestScope.userDto.firstName}</td>
+                            <td class="table-value">${requestScope.userDto.firstName()}</td>
                         </tr>
                         <tr>
                             <td class="table-key"><fmt:message key="last.name"/>:</td>
-                            <td class="table-value">${requestScope.userDto.lastName}</td>
+                            <td class="table-value">${requestScope.userDto.lastName()}</td>
                         </tr>
                         <tr class="active">
                             <td class="table-key"><fmt:message key="phone"/>:</td>
-                            <td class="table-value">${requestScope.userDto.phoneNumber}</td>
+                            <td class="table-value">${requestScope.userDto.phoneNumber()}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -78,7 +78,7 @@
                             <p><fmt:message key="request.list"/></p>
                             <div></div>
                         </div>
-                        <c:if test="${not empty requestScope.requestDtoPage.result}">
+                        <c:if test="${not empty requestScope.requestDtoPage.result()}">
                             <table class="styled-table">
                                 <thead>
                                 <tr>
@@ -89,7 +89,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="request" items="${requestScope.requestDtoPage.result}">
+                                <c:forEach var="request" items="${requestScope.requestDtoPage.result()}">
                                     <tr>
                                         <td>
                                             <fmt:formatDate type="date" value="${request.checkIn}"
@@ -99,21 +99,21 @@
                                             <fmt:formatDate type="date" value="${request.checkOut}"
                                                             pattern="dd-MM-yyyy"/>
                                         </td>
-                                        <td>$ ${request.totalAmount}</td>
+                                        <td>$ ${request.totalAmount()}</td>
                                         <td class="control">
                                             <form action="<c:url value="/controller"/>" method="get">
                                                 <input type="hidden" name="command" value="viewRoom">
-                                                <input type="hidden" name="roomNumber" value="${request.roomNumber}">
+                                                <input type="hidden" name="roomNumber" value="${request.roomNumber()}">
                                                 <button class="btn-view" type="submit"><fmt:message key="view.room"/></button>
                                             </form>
                                             <form action="<c:url value="/controller"/>" method="post">
                                                 <input type="hidden" name="command" value="rejectRequest">
-                                                <input type="hidden" name="requestId" value="${request.id}">
+                                                <input type="hidden" name="requestId" value="${request.id()}">
                                                 <button class="btn-trash" type="submit"><fmt:message key="reject"/></button>
                                             </form>
                                             <form action="<c:url value="/controller"/>" method="post">
                                                 <input type="hidden" name="command" value="confirmRequest">
-                                                <input type="hidden" name="requestId" value="${request.id}">
+                                                <input type="hidden" name="requestId" value="${request.id()}">
                                                 <button class="btn-accept" type="submit"><fmt:message key="book"/></button>
                                             </form>
                                         </td>

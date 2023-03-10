@@ -13,7 +13,7 @@
     <div class="main">
         <div class="main-container">
             <c:choose>
-                <c:when test="${not empty requestScope.reservationPage.result}">
+                <c:when test="${not empty requestScope.reservationPage.result()}">
                     <div class="horizontal-delimiter-with-text">
                         <p><fmt:message key="reservations"/></p>
                         <div></div>
@@ -30,23 +30,23 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="reservation" items="${requestScope.reservationPage.result}">
+                        <c:forEach var="reservation" items="${requestScope.reservationPage.result()}">
                             <tr>
-                                <td>${reservation.roomNumber}</td>
+                                <td>${reservation.roomNumber()}</td>
                                 <td>
-                                    <fmt:formatDate type="date" value="${reservation.checkIn}" pattern="dd-MM-yyyy"/>
+                                    <fmt:formatDate type="date" value="${reservation.checkIn()}" pattern="dd-MM-yyyy"/>
                                 </td>
                                 <td>
-                                    <fmt:formatDate type="date" value="${reservation.checkOut}" pattern="dd-MM-yyyy"/>
+                                    <fmt:formatDate type="date" value="${reservation.checkOut()}" pattern="dd-MM-yyyy"/>
                                 </td>
-                                <td>$ ${reservation.totalAmount}</td>
+                                <td>$ ${reservation.totalAmount()}</td>
                                 <td>
-                                        <st:reservationstatus status="${reservation.status}"/>
+                                        <st:reservationstatus status="${reservation.status()}"/>
                                 </td>
                                 <td>
                                     <form method="get" action="<c:url value="/controller"/>">
                                         <input type="hidden" name="command" value="getFullReservation"/>
-                                        <input type="hidden" name="reservationId" value="${reservation.id}"/>
+                                        <input type="hidden" name="reservationId" value="${reservation.id()}"/>
                                         <button type="submit" class="btn-view"><fmt:message key="full.info"/></button>
                                     </form>
                                 </td>

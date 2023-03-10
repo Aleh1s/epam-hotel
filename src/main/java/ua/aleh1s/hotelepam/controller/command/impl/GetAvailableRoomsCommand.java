@@ -7,14 +7,20 @@ import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.command.Command;
+import ua.aleh1s.hotelepam.model.criteria.Order;
+import ua.aleh1s.hotelepam.model.criteria.RoomCriteria;
 import ua.aleh1s.hotelepam.model.dto.RoomDto;
 import ua.aleh1s.hotelepam.model.dtomapper.RoomDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.service.RoomService;
+import ua.aleh1s.hotelepam.utils.Page;
+import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.utils.Period;
+import ua.aleh1s.hotelepam.utils.Utils;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import static ua.aleh1s.hotelepam.utils.Utils.*;
 
@@ -26,35 +32,61 @@ public class GetAvailableRoomsCommand implements Command {
         RoomDtoMapper roomDtoMapper = AppContext.getInstance().getRoomDtoMapper();
         RoomService roomService = AppContext.getInstance().getRoomService();
 
-        HttpSession session = request.getSession();
-
-        Integer guests = getIntValue(request, "guests");
-        LocalDate checkIn = getLocalDateValue(request, "checkIn");
-        LocalDate checkOut = getLocalDateValue(request, "checkOut");
+        HttpSession session;
+        String page = request.getParameter("page");
+        RoomCriteria criteria;
+        int pageNumber;
+        Period requestedPeriod;
 
         String path = resourcesManager.getValue("path.page.home");
+        if (Objects.nonNull(page) && page.equals("home")) {
+            session = request.getSession();
+            pageNumber = 1;
+            requestedPeriod = Period.between(
+                    getLocalDateValue(request, "checkIn"),
+                    getLocalDateValue(request, "checkOut")
+            );
 
-        Period requestedPeriod = Period.between(checkIn, checkOut);
-        if (!isReservationPeriodValid(requestedPeriod))
-            throw new ApplicationException("Invalid range of date.", path);
+            if (!isReservationPeriodValid(requestedPeriod))
+                throw new ApplicationException("Invalid range of date.", path);
 
-        List<RoomEntity> availableRooms =
-                roomService.getAvailableRooms(guests, requestedPeriod);
+            criteria = new RoomCriteria();
+            criteria.setSort("price,asc");
+            criteria.setPeriod(requestedPeriod);
+            session.setAttribute("roomCriteria", criteria);
+        } else {
+            session = request.getSession(false);
+            criteria = (RoomCriteria) session.getAttribute("roomCriteria");
+            requestedPeriod = criteria.getPeriod();
+            String sort = request.getParameter("sort");
+            if (Objects.nonNull(sort))
+                criteria.setSort(sort);
+            pageNumber = getIntValueOrDefault(request, "pageNumber", 1);
+        }
 
-        if (availableRooms.isEmpty())
+        Page<RoomEntity> availableRoomPage =
+                roomService.getAvailableRooms(criteria, PageRequest.of(pageNumber, 9));
+
+        if (availableRoomPage.result().isEmpty())
             throw new ApplicationException("There are no available rooms. Try to pick another date.", path);
 
-        availableRooms.forEach(room ->
+        availableRoomPage.result().forEach(room ->
                 room.setPrice(roomService.getTotalPrice(room, requestedPeriod)));
 
-        List<RoomDto> roomDtoList = availableRooms.stream()
+        List<RoomDto> roomDtoList = availableRoomPage.result().stream()
                 .map(roomDtoMapper)
                 .toList();
 
-        session.setAttribute("requestedCheckIn", checkIn);
-        session.setAttribute("requestedCheckOut", checkOut);
+        Page<RoomDto> roomDtoPage = Page.of(roomDtoList, availableRoomPage.count());
+        Integer pagesNumber = getNumberOfPages(roomDtoPage.count(), 9);
 
-        request.setAttribute("availableRooms", roomDtoList);
+        session.setAttribute("requestedCheckIn", requestedPeriod.start());
+        session.setAttribute("requestedCheckOut", requestedPeriod.end());
+
+        request.setAttribute("availableRooms", roomDtoPage);
+        request.setAttribute("currPage", pageNumber);
+        request.setAttribute("pagesNumber", pagesNumber);
+
         return resourcesManager.getValue("path.page.available.rooms");
     }
 }

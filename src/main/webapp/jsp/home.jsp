@@ -20,6 +20,7 @@
         <div class="home-search-bar">
             <form method="get" action="<c:url value="/controller"/>">
                 <input type="hidden" name="command" value="getAvailableRooms">
+                <input type="hidden" name="page" value="home"/>
                 <div class="bounded-input">
                     <label for="check-in">
                         <fmt:message key="check.in"/>
@@ -33,13 +34,6 @@
                     </label>
                     <input id="check-out" name="checkOut" type="date"
                            max="2024-01-01" required>
-                </div>
-                <div class="bounded-input">
-                    <label for="guests">
-                        <fmt:message key="guests"/>
-                    </label>
-                    <input id="guests" name="guests" type="number" min="1" max="10" required
-                           placeholder="Guests" value="1">
                 </div>
                 <button type="submit" class="btn-primary"><fmt:message key="search"/></button>
             </form>

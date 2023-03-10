@@ -31,7 +31,6 @@ public final class CommandFactory {
         commandMap.put("i18n", new I18NCommand());
         commandMap.put("application", new ApplicationCommand());
         commandMap.put("redirectToErrorPage", new UnknownCommand());
-        commandMap.put("roomList", new RoomListCommand());
         commandMap.put("viewRoom", new ViewRoomCommand());
         commandMap.put("book", new BookCommand());
         commandMap.put("applicationList", new ApplicationListCommand());
@@ -41,7 +40,6 @@ public final class CommandFactory {
         commandMap.put("confirmBooking", new ConfirmBookingCommand());
         commandMap.put("reservationList", new ReservationListCommand());
         commandMap.put("myBookings", new MyBookingsCommand());
-        commandMap.put("paymentPage", new PaymentPageCommand());
         commandMap.put("payReservation", new PayReservationCommand());
         commandMap.put("topUpAccount", new TopUpAccountCommand());
         commandMap.put("logOut", new LogOutCommand());

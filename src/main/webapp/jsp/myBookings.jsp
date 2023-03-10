@@ -19,7 +19,7 @@
                 <div></div>
             </div>
             <c:choose>
-                <c:when test="${not empty requestScope.reservationPage.result}">
+                <c:when test="${not empty requestScope.reservationPage.result()}">
                     <table class="styled-table">
                         <thead>
                         <tr>
@@ -31,22 +31,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="reservation" items="${requestScope.reservationPage.result}">
-                            <tr ${reservation.status.index eq 4 ? 'class="disabled"' : ''}>
-                                <td><fmt:formatDate type="date" value="${reservation.checkIn}"
+                        <c:forEach var="reservation" items="${requestScope.reservationPage.result()}">
+                            <tr ${reservation.status().index eq 4 ? 'class="disabled"' : ''}>
+                                <td><fmt:formatDate type="date" value="${reservation.checkIn()}"
                                                     pattern="dd-MM-yyyy"/></td>
-                                <td><fmt:formatDate type="date" value="${reservation.checkOut}"
+                                <td><fmt:formatDate type="date" value="${reservation.checkOut()}"
                                                     pattern="dd-MM-yyyy"/></td>
-                                <td>$ ${reservation.totalAmount}</td>
+                                <td>$ ${reservation.totalAmount()}</td>
                                 <td>
-                                    <st:reservationstatus status="${reservation.status}"/>
+                                    <st:reservationstatus status="${reservation.status()}"/>
                                 </td>
                                 <td class="control">
                                     <c:choose>
-                                        <c:when test="${reservation.status.index eq 2}">
+                                        <c:when test="${reservation.status().index eq 2}">
                                             <form action="<c:url value="/controller"/>" method="post">
                                                 <input type="hidden" name="command" value="payReservation"/>
-                                                <input type="hidden" name="reservationId" value="${reservation.id}">
+                                                <input type="hidden" name="reservationId" value="${reservation.id()}">
                                                 <button type="submit" class="btn-pay"><fmt:message key="pay"/></button>
                                             </form>
                                         </c:when>
@@ -55,10 +55,10 @@
                                         </c:otherwise>
                                     </c:choose>
                                     <c:choose>
-                                        <c:when test="${reservation.status.index eq 3}">
+                                        <c:when test="${reservation.status().index eq 3}">
                                             <form action="<c:url value="/controller"/>" method="get">
                                                 <input type="hidden" name="command" value="downloadReservationPdf"/>
-                                                <input type="hidden" name="reservationId" value="${reservation.id}">
+                                                <input type="hidden" name="reservationId" value="${reservation.id()}">
                                                 <button type="submit" class="btn-accept"><fmt:message key="download.pdf"/></button>
                                             </form>
                                         </c:when>
@@ -68,7 +68,7 @@
                                     </c:choose>
                                     <form action="<c:url value="/controller"/>" method="get">
                                         <input type="hidden" name="command" value="viewRoom">
-                                        <input type="hidden" name="roomNumber" value="${reservation.roomNumber}">
+                                        <input type="hidden" name="roomNumber" value="${reservation.roomNumber()}">
                                         <button type="submit" class="btn-view"><fmt:message key="view.room"/></button>
                                     </form>
                                 </td>

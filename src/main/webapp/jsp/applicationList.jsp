@@ -15,7 +15,7 @@
     <div class="main">
         <div class="main-container">
             <c:choose>
-                <c:when test="${not empty requestScope.applicationPage.result}">
+                <c:when test="${not empty requestScope.applicationPage.result()}">
                     <div class="horizontal-delimiter-with-text">
                         <p><fmt:message key="reservations"/></p>
                         <div></div>
@@ -31,20 +31,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="application" items="${requestScope.applicationPage.result}">
+                        <c:forEach var="application" items="${requestScope.applicationPage.result()}">
                             <tr>
-                                <td>${application.guests}</td>
-                                <td>${application.roomClass}</td>
+                                <td>${application.guests()}</td>
+                                <td>${application.roomClass()}</td>
                                 <td>
-                                    <fmt:formatDate type="date" value="${application.checkIn}" pattern="dd-MM-yyyy"/>
+                                    <fmt:formatDate type="date" value="${application.checkIn()}" pattern="dd-MM-yyyy"/>
                                 </td>
                                 <td>
-                                    <fmt:formatDate type="date" value="${application.checkOut}" pattern="dd-MM-yyyy"/>
+                                    <fmt:formatDate type="date" value="${application.checkOut()}" pattern="dd-MM-yyyy"/>
                                 </td>
                                 <td>
                                     <form method="get" action="<c:url value="/controller"/>">
                                         <input type="hidden" name="command" value="viewApplicationDetails">
-                                        <input type="hidden" name="applicationId" value="${application.id}">
+                                        <input type="hidden" name="applicationId" value="${application.id()}">
                                         <button type="submit" class="btn-view"><fmt:message key="details"/></button>
                                     </form>
                                 </td>

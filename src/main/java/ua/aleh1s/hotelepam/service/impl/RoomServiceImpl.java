@@ -2,16 +2,23 @@ package ua.aleh1s.hotelepam.service.impl;
 
 import lombok.AllArgsConstructor;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.model.criteria.Order;
+import ua.aleh1s.hotelepam.model.criteria.RoomCriteria;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 import ua.aleh1s.hotelepam.service.RoomService;
+import ua.aleh1s.hotelepam.utils.Page;
+import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.utils.Period;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static ua.aleh1s.hotelepam.model.criteria.Order.DESC;
 
 @AllArgsConstructor
 public class RoomServiceImpl implements RoomService {
@@ -30,20 +37,57 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<RoomEntity> getAvailableRooms(Integer guests, Period requestedPeriod) {
+    public Page<RoomEntity> getAvailableRooms(RoomCriteria criteria, PageRequest pageRequest) {
         List<ReservationEntity> actualReservations = reservationRepository.getActualReservations();
 
         Map<Integer, List<ReservationEntity>> groupByRoomNumber = actualReservations.stream()
                 .collect(Collectors.groupingBy(ReservationEntity::getRoomNumber));
 
         Set<Integer> busyRooms = groupByRoomNumber.entrySet().stream()
-                .filter(entry -> isRoomBusy(requestedPeriod, entry.getValue()))
+                .filter(entry -> isRoomBusy(criteria.getPeriod(), entry.getValue()))
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());
 
-        return roomRepository.getAllByGuests(guests).stream()
+        List<RoomEntity> availableRooms = roomRepository.getAll().stream()
                 .filter(room -> !busyRooms.contains(room.getRoomNumber()))
-                .toList();
+                .collect(Collectors.toList());
+
+        sortRooms(availableRooms, criteria);
+
+        List<RoomEntity> result = availableRooms.stream()
+                .skip(pageRequest.getOffset())
+                .limit(pageRequest.getLimit())
+                .collect(Collectors.toList());
+
+        return Page.of(result, availableRooms.size());
+    }
+
+    private void sortRooms(List<RoomEntity> toSort, RoomCriteria criteria) {
+        Order price = criteria.getPrice();
+        Order guests = criteria.getGuests();
+        Order clazz = criteria.getClazz();
+        Order status = criteria.getStatus();
+
+        Comparator<RoomEntity> comparator;
+        if (Objects.nonNull(price)) {
+            comparator = Comparator.comparing(RoomEntity::getPrice);
+            if (price.equals(DESC))
+                comparator = comparator.reversed();
+        } else if (Objects.nonNull(guests)) {
+            comparator = Comparator.comparing(RoomEntity::getPersonsNumber);
+            if (guests.equals(DESC))
+                comparator.reversed();
+        } else if (Objects.nonNull(clazz)) {
+            comparator = Comparator.comparing(room -> room.getRoomClass().getIndex());
+            if (clazz.equals(DESC))
+                comparator.reversed();
+        } else {
+            comparator = Comparator.comparing(room -> room.getStatus().getIndex());
+            if (status.equals(DESC))
+                comparator.reversed();
+        }
+
+        toSort.sort(comparator);
     }
 
     @Override

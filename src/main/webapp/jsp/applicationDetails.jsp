@@ -24,23 +24,23 @@
                             <table>
                                 <tr class="active">
                                     <td><fmt:message key="guests"/></td>
-                                    <td>${requestScope.application.guests}</td>
+                                    <td>${requestScope.application.guests()}</td>
                                 </tr>
                                 <tr>
                                     <td><fmt:message key="room.class"/></td>
-                                    <td>${requestScope.application.roomClass}</td>
+                                    <td>${requestScope.application.roomClass()}</td>
                                 </tr>
                                 <tr>
                                     <td><fmt:message key="check.in"/></td>
                                     <td>
-                                        <fmt:formatDate type="date" value="${requestScope.application.checkIn}"
+                                        <fmt:formatDate type="date" value="${requestScope.application.checkIn()}"
                                                         pattern="dd-MM-yyyy"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><fmt:message key="check.out"/></td>
                                     <td>
-                                        <fmt:formatDate type="date" value="${requestScope.application.checkOut}"
+                                        <fmt:formatDate type="date" value="${requestScope.application.checkOut()}"
                                                         pattern="dd-MM-yyyy"/>
                                     </td>
                                 </tr>
@@ -54,19 +54,19 @@
                             <table>
                                 <tr class="active">
                                     <td><fmt:message key="email"/></td>
-                                    <td>${requestScope.user.email}</td>
+                                    <td>${requestScope.user.email()}</td>
                                 </tr>
                                 <tr>
                                     <td><fmt:message key="first.name"/></td>
-                                    <td>${requestScope.user.firstName}</td>
+                                    <td>${requestScope.user.firstName()}</td>
                                 </tr>
                                 <tr>
                                     <td><fmt:message key="last.name"/></td>
-                                    <td>${requestScope.user.lastName}</td>
+                                    <td>${requestScope.user.lastName()}</td>
                                 </tr>
                                 <tr>
                                     <td><fmt:message key="phone"/></td>
-                                    <td>${requestScope.user.phoneNumber}</td>
+                                    <td>${requestScope.user.phoneNumber()}</td>
                                 </tr>
                             </table>
                         </div>

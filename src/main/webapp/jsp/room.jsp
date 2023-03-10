@@ -24,34 +24,34 @@
                             <c:if test="${not empty sessionScope.role and sessionScope.role eq 'MANAGER'}">
                                 <div>
                                     <div class="key"><fmt:message key="room.number"/>:</div>
-                                    <div class="value">${requestScope.roomDto.roomNumber}</div>
+                                    <div class="value">${requestScope.roomDto.roomNumber()}</div>
                                 </div>
                             </c:if>
                             <div>
                                 <div class="key"><fmt:message key="status"/>:</div>
-                                <div class="value">${requestScope.roomDto.roomStatus}</div>
+                                <div class="value">${requestScope.roomDto.roomStatus()}</div>
                             </div>
                             <div>
                                 <div class="key"><fmt:message key="class"/>:</div>
-                                <div class="value">${requestScope.roomDto.roomClass}</div>
+                                <div class="value">${requestScope.roomDto.roomClass()}</div>
                             </div>
                             <div>
                                 <div class="key"><fmt:message key="persons"/>:</div>
-                                <div class="value">${requestScope.roomDto.personsNumber}</div>
+                                <div class="value">${requestScope.roomDto.personsNumber()}</div>
                             </div>
                             <div>
                                 <div class="key"><fmt:message key="beds"/>:</div>
-                                <div class="value">${requestScope.roomDto.bedsNumber}</div>
+                                <div class="value">${requestScope.roomDto.bedsNumber()}</div>
                             </div>
                             <div>
                                 <div class="key"><fmt:message key="area"/>:</div>
-                                <div class="value">${requestScope.roomDto.area} M<sup>2</sup></div>
+                                <div class="value">${requestScope.roomDto.area()} M<sup>2</sup></div>
                             </div>
                         </div>
                     </div>
                     <div class="room-props-control">
                         <div class="room-price">
-                            $ ${requestScope.roomDto.price}
+                            $ ${requestScope.roomDto.price()}
                         </div>
                             <form action="<c:url value="/controller"/>" method="post">
                                 <input type="hidden" name="command" value="book">
@@ -61,12 +61,12 @@
                 </div>
                 <div class="room-description-container">
                     <div class="room-name">
-                        <h2>${requestScope.roomDto.name}</h2>
+                        <h2>${requestScope.roomDto.name()}</h2>
                     </div>
-                    <p>${requestScope.roomDto.description}</p>
+                    <p>${requestScope.roomDto.description()}</p>
                 </div>
                 <div class="room-attributes-container">
-                    <c:forEach var="attribute" items="${requestScope.roomDto.attributes}">
+                    <c:forEach var="attribute" items="${requestScope.roomDto.attributes()}">
                         <div class="room-attribute">
                             <p>${attribute}</p>
                         </div>
