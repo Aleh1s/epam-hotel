@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ApplicationRepository {
     void create(ApplicationEntity applicationEntity);
-    Optional<ApplicationEntity> getById(Long id);
+    Optional<ApplicationEntity> findById(Long id);
     void update(ApplicationEntity application);
     Page<ApplicationEntity> getAllByApplicationStatus(ApplicationStatus status, PageRequest pageRequest);
 }

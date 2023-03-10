@@ -1,10 +1,8 @@
 package ua.aleh1s.hotelepam.model.repository.impl;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.entity.RequestStatus;
+import ua.aleh1s.hotelepam.model.querybuilder.EntityManager;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.repository.RequestRepository;
@@ -18,12 +16,19 @@ import java.util.Optional;
 
 public class RequestRepositoryImpl implements RequestRepository {
 
-    private static final Logger logger = LogManager.getLogger(RequestRepositoryImpl.class);
-    private static final SqlRequestEntityMapper requestEntityMapper = AppContext.getInstance().getSqlRequestEntityMapper();
+    private final SqlRequestEntityMapper requestEntityMapper;
+    private final EntityManager entityManager;
+
+    public RequestRepositoryImpl(
+            SqlRequestEntityMapper requestEntityMapper,
+            EntityManager entityManager) {
+        this.requestEntityMapper = requestEntityMapper;
+        this.entityManager = entityManager;
+    }
 
     @Override
     public void create(RequestEntity request) {
-        Root<RequestEntity> root = Root.valueOf(RequestEntity.class);
+        Root<RequestEntity> root = entityManager.valueOf(RequestEntity.class);
         root.insert().values(
                 root.get("roomNumber").set(request.getRoomNumber()),
                 root.get("customerId").set(request.getCustomerId()),
@@ -36,7 +41,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     @Override
     public Page<RequestEntity> getAllActiveByUserId(Long userId, PageRequest pageRequest) {
-        Root<RequestEntity> root = Root.valueOf(RequestEntity.class);
+        Root<RequestEntity> root = entityManager.valueOf(RequestEntity.class);
 
         MultiplePredicateNode predicate = root.and(
                 root.get("customerId").equal(userId),
@@ -58,7 +63,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     @Override
     public Optional<RequestEntity> findById(Long requestId) {
-        Root<RequestEntity> root = Root.valueOf(RequestEntity.class);
+        Root<RequestEntity> root = entityManager.valueOf(RequestEntity.class);
         RequestEntity request = root.select()
                 .where(root.get("id").equal(requestId))
                 .getResult(requestEntityMapper);
@@ -67,7 +72,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     @Override
     public void update(RequestEntity entity) {
-        Root<RequestEntity> root = Root.valueOf(RequestEntity.class);
+        Root<RequestEntity> root = entityManager.valueOf(RequestEntity.class);
         root.update().set(
                 root.get("roomNumber").set(entity.getRoomNumber()),
                 root.get("customerId").set(entity.getCustomerId()),

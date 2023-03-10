@@ -44,19 +44,19 @@ class ApplicationServiceImplTest {
         Long id = 1L;
         ArgumentCaptor<Long> idCaptor =
                 ArgumentCaptor.forClass(Long.class);
-        given(applicationRepository.getById(any()))
+        given(applicationRepository.findById(any()))
                 .willReturn(Optional.of(application));
 
         underTest.getApplicationById(id);
 
         verify(applicationRepository, times(1))
-                .getById(idCaptor.capture());
+                .findById(idCaptor.capture());
         assertEquals(id, idCaptor.getValue());
     }
 
     @Test
     void getApplicationByIdShouldThrowApplicationException() {
-        given(applicationRepository.getById(any()))
+        given(applicationRepository.findById(any()))
                 .willReturn(Optional.empty());
 
         assertThrows(ApplicationException.class, () -> underTest.getApplicationById(any()));

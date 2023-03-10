@@ -1,7 +1,6 @@
 package ua.aleh1s.hotelepam.service.impl;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
@@ -17,7 +16,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public ApplicationEntity getApplicationById(Long id) {
-        return applicationRepository.getById(id)
+        return applicationRepository.findById(id)
                 .orElseThrow(ApplicationException::new);
     }
 

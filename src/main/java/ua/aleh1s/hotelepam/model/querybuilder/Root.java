@@ -25,15 +25,9 @@ public class Root<T> {
     private final Map<String, Column> columnMap;
     private List<Parameter> parameters;
 
-
-    private Root(String tableName, Map<String, Column> columnMap) {
+    public Root(String tableName, Map<String, Column> columnMap) {
         this.tableName = tableName;
         this.columnMap = columnMap;
-    }
-
-    public static <T> Root<T> valueOf(Class<T> clazz) {
-        EntityConfiguration ec = configurationHolder.valueOf(clazz);
-        return new Root<>(ec.getTableName(), ec.getColumnMap());
     }
 
     public SelectQueryBuilder<T> select() {

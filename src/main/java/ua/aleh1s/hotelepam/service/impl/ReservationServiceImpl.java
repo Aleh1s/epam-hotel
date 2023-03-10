@@ -3,7 +3,6 @@ package ua.aleh1s.hotelepam.service.impl;
 import lombok.AllArgsConstructor;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
-import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
@@ -23,7 +22,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public ReservationEntity getById(Long id) {
-        return reservationRepository.getById(id)
+        return reservationRepository.findById(id)
                 .orElseThrow(ApplicationException::new);
     }
 

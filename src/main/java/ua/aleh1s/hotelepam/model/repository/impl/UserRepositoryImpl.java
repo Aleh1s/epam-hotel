@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
+import ua.aleh1s.hotelepam.model.querybuilder.EntityManager;
 import ua.aleh1s.hotelepam.model.repository.UserRepository;
 import ua.aleh1s.hotelepam.model.sqlmapper.impl.SqlUserEntityMapper;
 import ua.aleh1s.hotelepam.model.querybuilder.Root;
@@ -13,12 +14,19 @@ import java.util.Optional;
 
 public class UserRepositoryImpl implements UserRepository {
 
-    private static final Logger logger = LogManager.getLogger(UserRepositoryImpl.class);
-    private static final SqlUserEntityMapper userEntityMapper = AppContext.getInstance().getSqlUserEntityMapper();
+    private final SqlUserEntityMapper userEntityMapper;
+    private final EntityManager entityManager;
+
+    public UserRepositoryImpl(
+            SqlUserEntityMapper userEntityMapper,
+            EntityManager entityManager) {
+        this.userEntityMapper = userEntityMapper;
+        this.entityManager = entityManager;
+    }
 
     @Override
     public void create(UserEntity userEntity) {
-        Root<UserRepository> root = Root.valueOf(UserRepository.class);
+        Root<UserRepository> root = entityManager.valueOf(UserRepository.class);
         root.insert().values(
                 root.get("email").set(userEntity.getEmail()),
                 root.get("firstName").set(userEntity.getFirstName()),
@@ -33,7 +41,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void update(UserEntity entity) {
-        Root<UserEntity> root = Root.valueOf(UserEntity.class);
+        Root<UserEntity> root = entityManager.valueOf(UserEntity.class);
         root.update().set(
                 root.get("email").set(entity.getEmail()),
                 root.get("firstName").set(entity.getFirstName()),
@@ -48,21 +56,21 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<UserEntity> findById(Long id) {
-        Root<UserEntity> root = Root.valueOf(UserEntity.class);
+        Root<UserEntity> root = entityManager.valueOf(UserEntity.class);
         UserEntity userEntity = root.select().where(root.get("id").equal(id)).getResult(userEntityMapper);
         return Optional.ofNullable(userEntity);
     }
 
     @Override
     public Optional<UserEntity> findByEmail(String email) {
-        Root<UserEntity> root = Root.valueOf(UserEntity.class);
+        Root<UserEntity> root = entityManager.valueOf(UserEntity.class);
         UserEntity userEntity = root.select().where(root.get("email").equal(email)).getResult(userEntityMapper);
         return Optional.ofNullable(userEntity);
     }
 
     @Override
     public Optional<UserEntity> findByPhoneNumber(String phoneNumber) {
-        Root<UserEntity> root = Root.valueOf(UserEntity.class);
+        Root<UserEntity> root = entityManager.valueOf(UserEntity.class);
         UserEntity userEntity = root.select().where(root.get("phoneNumber").equal(phoneNumber)).getResult(userEntityMapper);
         return Optional.ofNullable(userEntity);
     }

@@ -10,10 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
-import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
-import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
 import ua.aleh1s.hotelepam.model.repository.impl.ReservationRepositoryImpl;
-import ua.aleh1s.hotelepam.service.ReservationService;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 
@@ -57,19 +54,19 @@ class ReservationServiceImplTest {
         ArgumentCaptor<Long> idCaptor =
                 ArgumentCaptor.forClass(Long.class);
 
-        given(reservationRepository.getById(any()))
+        given(reservationRepository.findById(any()))
                 .willReturn(Optional.of(reservation));
 
         underTest.getById(id);
 
         verify(reservationRepository, times(1))
-                .getById(idCaptor.capture());
+                .findById(idCaptor.capture());
         assertEquals(id, idCaptor.getValue());
     }
 
     @Test
     void getByIdShouldThrowApplicationException() {
-        given(reservationRepository.getById(any()))
+        given(reservationRepository.findById(any()))
                 .willReturn(Optional.empty());
 
         assertThrows(ApplicationException.class, () -> underTest.getById(any()));

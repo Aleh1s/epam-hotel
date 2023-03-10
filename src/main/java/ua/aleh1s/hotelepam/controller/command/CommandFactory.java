@@ -45,7 +45,7 @@ public final class CommandFactory {
         commandMap.put("payReservation", new PayReservationCommand());
         commandMap.put("topUpAccount", new TopUpAccountCommand());
         commandMap.put("logOut", new LogOutCommand());
-        commandMap.put("chooseRooms", new ChooseRoomsCommand());
+        commandMap.put("getAvailableRooms", new GetAvailableRoomsCommand());
         commandMap.put("rejectRequest", new RejectRequestCommand());
         commandMap.put("confirmRequest", new ConfirmRequestCommand());
         commandMap.put("downloadReservationPdf", new DownloadReservationPdfCommand());

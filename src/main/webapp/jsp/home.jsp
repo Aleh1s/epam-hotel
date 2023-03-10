@@ -19,7 +19,7 @@
     <div class="search-bar-container">
         <div class="home-search-bar">
             <form method="get" action="<c:url value="/controller"/>">
-                <input type="hidden" name="command" value="chooseRooms">
+                <input type="hidden" name="command" value="getAvailableRooms">
                 <div class="bounded-input">
                     <label for="check-in">
                         <fmt:message key="check.in"/>

@@ -1,10 +1,8 @@
 package ua.aleh1s.hotelepam.model.repository.impl;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
+import ua.aleh1s.hotelepam.model.querybuilder.EntityManager;
 import ua.aleh1s.hotelepam.model.querybuilder.OrderUnit;
 import ua.aleh1s.hotelepam.model.querybuilder.Root;
 import ua.aleh1s.hotelepam.model.querybuilder.node.MultiplePredicateNode;
@@ -25,13 +23,20 @@ import static ua.aleh1s.hotelepam.utils.Utils.toTimestamp;
 
 public class ReservationRepositoryImpl implements ReservationRepository {
 
-    private static final Logger logger = LogManager.getLogger(ReservationRepositoryImpl.class);
-    private static final SqlReservationEntityMapper reservationEntityMapper
-            = AppContext.getInstance().getSqlReservationEntityMapper();
+    private final SqlReservationEntityMapper reservationEntityMapper;
+    private final EntityManager entityManager;
+
+    public ReservationRepositoryImpl(
+            SqlReservationEntityMapper reservationEntityMapper,
+            EntityManager entityManager) {
+        this.reservationEntityMapper = reservationEntityMapper;
+        this.entityManager = entityManager;
+    }
+
 
     @Override
     public Long create(ReservationEntity entity) {
-        Root<ReservationEntity> root = Root.valueOf(ReservationEntity.class);
+        Root<ReservationEntity> root = entityManager.valueOf(ReservationEntity.class);
         return root.insert().values(
                 root.get("roomNumber").set(entity.getRoomNumber()),
                 root.get("customerId").set(entity.getCustomerId()),
@@ -47,7 +52,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public Page<ReservationEntity> getAllActualReservationByStatus(ReservationStatus status, PageRequest pageRequest) {
-        Root<ReservationEntity> root = Root.valueOf(ReservationEntity.class);
+        Root<ReservationEntity> root = entityManager.valueOf(ReservationEntity.class);
         MultiplePredicateNode predicate = root.and(
                 root.get("status").equal(status.getIndex()),
                 root.get("checkOut").gte(toDate(LocalDate.now()))
@@ -57,8 +62,8 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     @Override
-    public Optional<ReservationEntity> getById(Long reservationId) {
-        Root<ReservationEntity> root = Root.valueOf(ReservationEntity.class);
+    public Optional<ReservationEntity> findById(Long reservationId) {
+        Root<ReservationEntity> root = entityManager.valueOf(ReservationEntity.class);
         ReservationEntity reservation = root.select()
                 .where(root.get("id").equal(reservationId))
                 .getResult(reservationEntityMapper);
@@ -67,7 +72,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public void update(ReservationEntity entity) {
-        Root<ReservationEntity> root = Root.valueOf(ReservationEntity.class);
+        Root<ReservationEntity> root = entityManager.valueOf(ReservationEntity.class);
         root.update().set(
                 root.get("roomNumber").set(entity.getRoomNumber()),
                 root.get("customerId").set(entity.getCustomerId()),
@@ -85,7 +90,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     public List<ReservationEntity> getActualReservations() {
         cancelAllExpiredReservations();
 
-        Root<ReservationEntity> root = Root.valueOf(ReservationEntity.class);
+        Root<ReservationEntity> root = entityManager.valueOf(ReservationEntity.class);
         Date now = toDate(LocalDate.now());
         return root.select().where(
                 root.and(
@@ -102,7 +107,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     public List<ReservationEntity> getActualReservationsByRoomNumber(Integer number) {
         cancelAllExpiredReservationsByRoomNumber(number);
 
-        Root<ReservationEntity> root = Root.valueOf(ReservationEntity.class);
+        Root<ReservationEntity> root = entityManager.valueOf(ReservationEntity.class);
 
         Date now = toDate(LocalDateTime.now());
         return root.select().where(
@@ -118,7 +123,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     private void cancelAllExpiredReservationsByRoomNumber(Integer number) {
-        Root<ReservationEntity> root = Root.valueOf(ReservationEntity.class);
+        Root<ReservationEntity> root = entityManager.valueOf(ReservationEntity.class);
         root.update().set(
                 root.get("status").set(ReservationStatus.CANCELED.getIndex())
         ).where(
@@ -131,7 +136,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     private void cancelAllExpiredReservationsByUserId(Long userId) {
-        Root<ReservationEntity> root = Root.valueOf(ReservationEntity.class);
+        Root<ReservationEntity> root = entityManager.valueOf(ReservationEntity.class);
         root.update().set(
                 root.get("status").set(ReservationStatus.CANCELED.getIndex())
         ).where(
@@ -144,7 +149,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     private void cancelAllExpiredReservations() {
-        Root<ReservationEntity> root = Root.valueOf(ReservationEntity.class);
+        Root<ReservationEntity> root = entityManager.valueOf(ReservationEntity.class);
         root.update().set(
                 root.get("status").set(ReservationStatus.CANCELED.getIndex())
         ).where(
@@ -157,7 +162,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public Page<ReservationEntity> getAllReservationsByUserId(Long userId, PageRequest pageRequest) {
-        Root<ReservationEntity> root = Root.valueOf(ReservationEntity.class);
+        Root<ReservationEntity> root = entityManager.valueOf(ReservationEntity.class);
         PredicateNode userIdEqual = root.get("customerId").equal(userId);
 
         return getAllReservations(userIdEqual, pageRequest, root, root.get("createdAt", OrderUnit.Direction.DESC));

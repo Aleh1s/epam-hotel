@@ -18,7 +18,7 @@ import java.util.List;
 
 import static ua.aleh1s.hotelepam.utils.Utils.*;
 
-public class ChooseRoomsCommand implements Command {
+public class GetAvailableRoomsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

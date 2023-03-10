@@ -12,7 +12,7 @@ public interface ReservationRepository {
 
     Long create(ReservationEntity entity);
     Page<ReservationEntity> getAllActualReservationByStatus(ReservationStatus status, PageRequest pageRequest);
-    Optional<ReservationEntity> getById(Long reservationId);
+    Optional<ReservationEntity> findById(Long reservationId);
     void update(ReservationEntity reservation);
     List<ReservationEntity> getActualReservations();
     List<ReservationEntity> getActualReservationsByRoomNumber(Integer number);

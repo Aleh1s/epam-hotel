@@ -1,24 +1,29 @@
 package ua.aleh1s.hotelepam.model.repository.impl;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
+import ua.aleh1s.hotelepam.model.querybuilder.EntityManager;
+import ua.aleh1s.hotelepam.model.querybuilder.Root;
 import ua.aleh1s.hotelepam.model.repository.ReservationTokenRepository;
 import ua.aleh1s.hotelepam.model.sqlmapper.impl.SqlReservationTokenEntityMapper;
-import ua.aleh1s.hotelepam.model.querybuilder.Root;
 
 import java.sql.Timestamp;
 import java.util.Optional;
 
 public class ReservationTokenRepositoryImpl implements ReservationTokenRepository {
 
-    private static final Logger logger = LogManager.getLogger(ReservationTokenRepositoryImpl.class);
-    private static final SqlReservationTokenEntityMapper reservationTokenMapper =
-            AppContext.getInstance().getSqlReservationTokenEntityMapper();
+    private final SqlReservationTokenEntityMapper reservationTokenMapper;
+    private final EntityManager entityManager;
+
+    public ReservationTokenRepositoryImpl(
+            SqlReservationTokenEntityMapper reservationTokenMapper,
+            EntityManager entityManager) {
+        this.reservationTokenMapper = reservationTokenMapper;
+        this.entityManager = entityManager;
+    }
+
     @Override
     public void create(ReservationTokenEntity reservationToken) {
-        Root<ReservationTokenEntity> root = Root.valueOf(ReservationTokenEntity.class);
+        Root<ReservationTokenEntity> root = entityManager.valueOf(ReservationTokenEntity.class);
 
         root.insert().values(
                 root.get("id").set(reservationToken.getId()),
@@ -30,7 +35,7 @@ public class ReservationTokenRepositoryImpl implements ReservationTokenRepositor
 
     @Override
     public Optional<ReservationTokenEntity> findById(String tokenId) {
-        Root<ReservationTokenEntity> root = Root.valueOf(ReservationTokenEntity.class);
+        Root<ReservationTokenEntity> root = entityManager.valueOf(ReservationTokenEntity.class);
         ReservationTokenEntity result = root.select()
                 .where(root.get("id").equal(tokenId)).getResult(reservationTokenMapper);
         return Optional.ofNullable(result);
@@ -38,7 +43,7 @@ public class ReservationTokenRepositoryImpl implements ReservationTokenRepositor
 
     @Override
     public void update(ReservationTokenEntity entity) {
-        Root<ReservationTokenEntity> root = Root.valueOf(ReservationTokenEntity.class);
+        Root<ReservationTokenEntity> root = entityManager.valueOf(ReservationTokenEntity.class);
         Timestamp confirmedAt = entity.getConfirmedAt() != null ? Timestamp.valueOf(entity.getConfirmedAt()) : null;
         root.update().set(
                 root.get("createdAt").set(entity.getCreatedAt()),

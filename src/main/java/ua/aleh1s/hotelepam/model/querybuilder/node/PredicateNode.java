@@ -7,7 +7,6 @@ public abstract class PredicateNode extends ExpressionNode {
     protected PredicateNode(Operator operator) {
         this.operator = operator;
     }
-
     public Operator getOperator() {
         return operator;
     }

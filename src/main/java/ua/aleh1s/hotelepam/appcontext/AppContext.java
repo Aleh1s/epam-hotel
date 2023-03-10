@@ -3,6 +3,8 @@ package ua.aleh1s.hotelepam.appcontext;
 import ua.aleh1s.hotelepam.controller.security.SecurityManager;
 import ua.aleh1s.hotelepam.controller.security.SecurityManagerImpl;
 import ua.aleh1s.hotelepam.model.dtomapper.*;
+import ua.aleh1s.hotelepam.model.querybuilder.EntityManager;
+import ua.aleh1s.hotelepam.model.querybuilder.entityconfiguration.EntityConfigurationHolder;
 import ua.aleh1s.hotelepam.service.MailService;
 import ua.aleh1s.hotelepam.service.impl.MailServiceImpl;
 import ua.aleh1s.hotelepam.model.repository.*;
@@ -45,16 +47,31 @@ public class AppContext {
     private final BookingService bookingService;
     private final PdfBuilderService pdfBuilderService;
     private final SecurityManager securityManager;
+    private final EntityManager entityManager;
+    private final SqlUserEntityMapper userEntityMapper;
+    private final SqlRoomEntityMapper roomEntityMapper;
+    private final SqlReservationTokenEntityMapper reservationTokenEntityMapper;
+    private final SqlReservationEntityMapper reservationEntityMapper;
+    private final SqlRequestEntityMapper requestEntityMapper;
+    private final SqlApplicationEntityMapper applicationEntityMapper;
 
     {
+        // Sql Entity Mappers
+        this.userEntityMapper = new SqlUserEntityMapper();
+        this.roomEntityMapper = new SqlRoomEntityMapper();
+        this.reservationTokenEntityMapper = new SqlReservationTokenEntityMapper();
+        this.reservationEntityMapper = new SqlReservationEntityMapper();
+        this.requestEntityMapper = new SqlRequestEntityMapper();
+        this.applicationEntityMapper = new SqlApplicationEntityMapper();
+        // Entity Manager
+        this.entityManager = new EntityManager();
         // Repositories
-        this.userRepository = new UserRepositoryImpl();
-        this.applicationRepository = new ApplicationRepositoryImpl();
-        this.roomRepository = new RoomRepositoryImpl();
-        this.reservationRepository = new ReservationRepositoryImpl();
-        this.requestRepository = new RequestRepositoryImpl();
-        this.reservationTokenRepository = new ReservationTokenRepositoryImpl();
-
+        this.userRepository = new UserRepositoryImpl(userEntityMapper, entityManager);
+        this.applicationRepository = new ApplicationRepositoryImpl(applicationEntityMapper, entityManager);
+        this.roomRepository = new RoomRepositoryImpl(roomEntityMapper, entityManager);
+        this.reservationRepository = new ReservationRepositoryImpl(reservationEntityMapper, entityManager);
+        this.requestRepository = new RequestRepositoryImpl(requestEntityMapper, entityManager);
+        this.reservationTokenRepository = new ReservationTokenRepositoryImpl(reservationTokenEntityMapper, entityManager);
         // Services
         this.mailService = new MailServiceImpl();
         this.userService = new UserServiceImpl(userRepository);
@@ -203,5 +220,33 @@ public class AppContext {
 
     public SecurityManager getSecurityManager() {
         return securityManager;
+    }
+
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+
+    public SqlUserEntityMapper getUserEntityMapper() {
+        return userEntityMapper;
+    }
+
+    public SqlRoomEntityMapper getRoomEntityMapper() {
+        return roomEntityMapper;
+    }
+
+    public SqlReservationTokenEntityMapper getReservationTokenEntityMapper() {
+        return reservationTokenEntityMapper;
+    }
+
+    public SqlReservationEntityMapper getReservationEntityMapper() {
+        return reservationEntityMapper;
+    }
+
+    public SqlRequestEntityMapper getRequestEntityMapper() {
+        return requestEntityMapper;
+    }
+
+    public SqlApplicationEntityMapper getApplicationEntityMapper() {
+        return applicationEntityMapper;
     }
 }

@@ -1,9 +1,7 @@
 package ua.aleh1s.hotelepam.model.repository.impl;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
+import ua.aleh1s.hotelepam.model.querybuilder.EntityManager;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 import ua.aleh1s.hotelepam.model.sqlmapper.impl.SqlRoomEntityMapper;
 import ua.aleh1s.hotelepam.model.querybuilder.Root;
@@ -13,12 +11,19 @@ import java.util.Optional;
 
 public class RoomRepositoryImpl implements RoomRepository {
 
-    private static final Logger logger = LogManager.getLogger(RoomRepositoryImpl.class);
-    private static final SqlRoomEntityMapper roomEntityMapper = AppContext.getInstance().getSqlRoomEntityMapper();
+    private final SqlRoomEntityMapper roomEntityMapper;
+    private final EntityManager entityManager;
+
+    public RoomRepositoryImpl(
+            SqlRoomEntityMapper roomEntityMapper,
+            EntityManager entityManager) {
+        this.roomEntityMapper = roomEntityMapper;
+        this.entityManager = entityManager;
+    }
 
     @Override
     public Optional<RoomEntity> getByRoomNumber(Integer roomNumber) {
-        Root<RoomEntity> root = Root.valueOf(RoomEntity.class);
+        Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
         RoomEntity room = root.select().where(root.get("roomNumber").equal(roomNumber))
                 .getResult(roomEntityMapper);
         return Optional.ofNullable(room);
@@ -26,7 +31,7 @@ public class RoomRepositoryImpl implements RoomRepository {
 
     @Override
     public void update(RoomEntity entity) {
-        Root<RoomEntity> root = Root.valueOf(RoomEntity.class);
+        Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
         root.update().set(
                 root.get("roomClass").set(entity.getRoomClass().getIndex()),
                 root.get("status").set(entity.getStatus().getIndex()),
@@ -42,13 +47,13 @@ public class RoomRepositoryImpl implements RoomRepository {
 
     @Override
     public List<RoomEntity> getAll() {
-        Root<RoomEntity> root = Root.valueOf(RoomEntity.class);
+        Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
         return root.select().getResultList(roomEntityMapper);
     }
 
     @Override
     public List<RoomEntity> getAllByGuests(Integer guests) {
-        Root<RoomEntity> root = Root.valueOf(RoomEntity.class);
+        Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
         return root.select().where(
                 root.get("personsNumber").equal(guests)
         ).getResultList(roomEntityMapper);
