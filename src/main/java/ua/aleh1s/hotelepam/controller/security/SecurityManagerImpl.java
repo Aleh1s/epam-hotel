@@ -27,11 +27,13 @@ public class SecurityManagerImpl implements SecurityManager {
 
             Set<String> managerAccessSet = toSet(props.getProperty("MANAGER"));
             Set<String> customerAccessSet = toSet(props.getProperty("CUSTOMER"));
+            Set<String> adminAccessSet = toSet(props.getProperty("ADMIN"));
             Set<String> commonsAccessSet = toSet(props.getProperty("COMMONS"));
             Set<String> outOfControlAccessSet = toSet(props.getProperty("OUT_OF_CONTROL"));
 
             accessMap.put(UserRole.MANAGER, managerAccessSet);
             accessMap.put(UserRole.CUSTOMER, customerAccessSet);
+            accessMap.put(UserRole.ADMIN, adminAccessSet);
             commons = commonsAccessSet;
             outOfControl = outOfControlAccessSet;
 

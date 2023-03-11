@@ -26,7 +26,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void create(UserEntity userEntity) {
-        Root<UserRepository> root = entityManager.valueOf(UserRepository.class);
+        Root<UserEntity> root = entityManager.valueOf(UserEntity.class);
         root.insert().values(
                 root.get("email").set(userEntity.getEmail()),
                 root.get("firstName").set(userEntity.getFirstName()),

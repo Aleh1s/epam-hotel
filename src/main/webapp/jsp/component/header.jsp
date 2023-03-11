@@ -21,26 +21,48 @@
             </div>
         </div>
         <ul class="nav-center">
-            <li class="nav-item"><a href="<c:url value="/jsp/home.jsp"/>"><fmt:message
-                    key="home"/></a></li>
+            <c:if test="${empty sessionScope.role or (not empty sessionScope.role and sessionScope.role eq 'CUSTOMER')}">
+                <li class="nav-item">
+                    <a href="<c:url value="/jsp/home.jsp"/>"><fmt:message key="home"/></a>
+                </li>
+            </c:if>
+
             <c:if test="${not empty sessionScope.role and sessionScope.role eq 'CUSTOMER'}">
-                <li class="nav-item"><a href="<c:url value="/jsp/application.jsp"/>"><fmt:message
-                        key="request.room"/></a></li>
+                <li class="nav-item">
+                    <a href="<c:url value="/jsp/application.jsp"/>"><fmt:message key="request.room"/></a>
+                </li>
             </c:if>
+
             <c:if test="${not empty sessionScope.role and sessionScope.role eq 'MANAGER'}">
-                <li class="nav-item"><a
-                        href="<c:url value="/controller?command=reservationList"/>"><fmt:message
-                        key="reservations"/></a></li>
-                <li class="nav-item"><a href="<c:url value="/controller?command=applicationList"/>"><fmt:message
-                        key="applications"/></a></li>
+                <li class="nav-item">
+                    <a href="<c:url value="/controller?command=reservationList"/>"><fmt:message key="reservations"/></a>
+                </li>
+                <li class="nav-item">
+                    <a href="<c:url value="/controller?command=applicationList"/>"><fmt:message key="applications"/></a>
+                </li>
             </c:if>
+
+            <c:if test="${not empty sessionScope.role and sessionScope.role eq 'ADMIN'}">
+                <li class="nav-item">
+                    <a href="<c:url value="/controller?command=getAllRooms"/>"><fmt:message key="rooms"/></a>
+                </li>
+                <li class="nav-item">
+                    <a href="<c:url value="/controller?command=createRoom"/>"><fmt:message key="create.room"/></a>
+                </li>
+                <li class="nav-item">
+                    <a href="<c:url value="/controller?command=createManager"/>"><fmt:message key="create.manager"/></a>
+                </li>
+            </c:if>
+
         </ul>
         <ul class="nav-right">
+
             <li class="nav-item"><a href="<c:url value="/jsp/login.jsp"/>"><fmt:message key="log.in"/></a></li>
             <li class="nav-item"><a href="<c:url value="/jsp/signup.jsp"/>"><fmt:message key="sign.up"/></a></li>
+
             <c:if test="${not empty sessionScope.id}">
-                <li class="nav-item"><a href="<c:url value="/controller?command=profile"/>"><fmt:message
-                        key="profile"/></a>
+                <li class="nav-item">
+                    <a href="<c:url value="/controller?command=profile"/>"><fmt:message key="profile"/></a>
                 </li>
             </c:if>
         </ul>

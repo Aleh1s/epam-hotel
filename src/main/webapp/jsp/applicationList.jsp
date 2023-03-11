@@ -16,10 +16,8 @@
         <div class="main-container">
             <c:choose>
                 <c:when test="${not empty requestScope.applicationPage.result()}">
-                    <div class="horizontal-delimiter-with-text">
-                        <p><fmt:message key="reservations"/></p>
-                        <div></div>
-                    </div>
+                    <fmt:message var="reservationsMessage" key="reservations"/>
+                    <tags:horizontaldelimiter message="${reservationsMessage}"/>
                     <table class="styled-table">
                         <thead>
                         <tr>

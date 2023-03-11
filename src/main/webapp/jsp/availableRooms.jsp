@@ -13,10 +13,8 @@
 <div class="container">
     <div class="main">
         <div class="main-container">
-            <div class="horizontal-delimiter-with-text">
-                <p><fmt:message key="sorting"/></p>
-                <div></div>
-            </div>
+            <fmt:message var="sortingMessage" key="sorting"/>
+            <tags:horizontaldelimiter message="${sortingMessage}"/>
             <div class="sort">
                 <form action="<c:url value="/controller"/>" method="get">
                     <h2><fmt:message key="sorting"/></h2>
@@ -48,10 +46,8 @@
                     <button type="submit" class="btn-primary"><fmt:message key="search"/></button>
                 </form>
             </div>
-            <div class="horizontal-delimiter-with-text">
-                <p><fmt:message key="rooms"/></p>
-                <div></div>
-            </div>
+            <fmt:message var="roomsMessage" key="rooms"/>
+            <tags:horizontaldelimiter message="${roomsMessage}"/>
             <div class="room-list">
                 <c:forEach var="room" items="${requestScope.availableRooms.result()}">
                     <tags:roomcard room="${room}"/>

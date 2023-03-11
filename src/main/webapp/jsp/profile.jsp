@@ -47,10 +47,8 @@
             </div>
             <div class="profile-body">
                 <div class="body-user-info">
-                    <div class="horizontal-delimiter-with-text">
-                        <p><fmt:message key="contact.info"/></p>
-                        <div></div>
-                    </div>
+                    <fmt:message var="contactInfoMessage" key="contact.info"/>
+                    <tags:horizontaldelimiter message="${contactInfoMessage}"/>
                     <table class="key-value-table">
                         <tbody>
                         <tr class="active">
@@ -74,10 +72,8 @@
                 </div>
                 <c:if test="${sessionScope.role eq 'CUSTOMER'}">
                     <div class="profile-request-list">
-                        <div class="horizontal-delimiter-with-text">
-                            <p><fmt:message key="request.list"/></p>
-                            <div></div>
-                        </div>
+                        <fmt:message var="requestListMessage" key="request.list"/>
+                        <tags:horizontaldelimiter message="${requestListMessage}"/>
                         <c:if test="${not empty requestScope.requestDtoPage.result()}">
                             <table class="styled-table">
                                 <thead>

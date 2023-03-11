@@ -10,7 +10,6 @@ import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.service.UserService;
-import ua.aleh1s.hotelepam.service.impl.UserServiceImpl;
 
 import java.io.IOException;
 
@@ -42,7 +41,13 @@ public class LoginCommand implements Command {
         session.setAttribute("lang", user.getLocale().getLanguage());
         session.setAttribute("role", user.getRole());
 
-        path = resourcesManager.getValue("path.page.home");
+        switch (user.getRole()) {
+            case CUSTOMER -> path = ResourcesManager.getInstance().getValue("path.page.home");
+            case MANAGER -> path = ResourcesManager.getInstance().getValue("path.command.get.applications");
+            case ADMIN -> path = ResourcesManager.getInstance().getValue("path.command.get.rooms");
+            default -> throw new IllegalArgumentException("Unknown user role");
+        }
+
         try {
             response.sendRedirect(path);
             path = "redirect";

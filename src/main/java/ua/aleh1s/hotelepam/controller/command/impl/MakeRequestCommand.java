@@ -40,7 +40,7 @@ public class MakeRequestCommand implements Command {
 
         ApplicationEntity application = applicationService.getApplicationById(applicationId);
 
-        String path = resourcesManager.getValue("path.command.application.list");
+        String path = resourcesManager.getValue("path.command.get.applications");
         if (application.getStatus().equals(ApplicationStatus.PROCESSED))
             throw new ApplicationException("Application is already processed", path);
 

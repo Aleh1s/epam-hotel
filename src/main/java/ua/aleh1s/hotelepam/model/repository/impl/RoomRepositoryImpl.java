@@ -5,6 +5,8 @@ import ua.aleh1s.hotelepam.model.querybuilder.EntityManager;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 import ua.aleh1s.hotelepam.model.sqlmapper.impl.SqlRoomEntityMapper;
 import ua.aleh1s.hotelepam.model.querybuilder.Root;
+import ua.aleh1s.hotelepam.utils.Page;
+import ua.aleh1s.hotelepam.utils.PageRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,10 +54,13 @@ public class RoomRepositoryImpl implements RoomRepository {
     }
 
     @Override
-    public List<RoomEntity> getAllByGuests(Integer guests) {
+    public Page<RoomEntity> getAll(PageRequest pageRequest) {
         Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
-        return root.select().where(
-                root.get("guests").equal(guests)
-        ).getResultList(roomEntityMapper);
+        List<RoomEntity> result = root.select().offset(pageRequest.getOffset()).limit(pageRequest.getLimit())
+                .getResultList(roomEntityMapper);
+
+        Long count = root.select(root.countAll()).execute(Long.class);
+
+        return Page.of(result, count);
     }
 }

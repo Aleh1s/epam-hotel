@@ -61,6 +61,11 @@ public class RoomServiceImpl implements RoomService {
         return Page.of(result, availableRooms.size());
     }
 
+    @Override
+    public Page<RoomEntity> getRooms(PageRequest pageRequest) {
+        return roomRepository.getAll(pageRequest);
+    }
+
     private void sortRooms(List<RoomEntity> toSort, RoomCriteria criteria) {
         Order price = criteria.getPrice();
         Order guests = criteria.getGuests();

@@ -3,7 +3,6 @@
 <%@ attribute name="command" type="java.lang.String" required="true" %>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="pagination">
     <c:forEach var="i" begin="1" end="${pagesNumber}">

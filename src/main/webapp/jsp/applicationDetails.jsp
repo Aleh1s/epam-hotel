@@ -17,10 +17,8 @@
                 <div class="request-container">
                     <div class="primary-info-container">
                         <div>
-                            <div class="horizontal-delimiter-with-text">
-                                <p><fmt:message key="application.info"/></p>
-                                <div></div>
-                            </div>
+                            <fmt:message var="applicationInfo" key="application.info"/>
+                            <tags:horizontaldelimiter message="${applicationInfo}"/>
                             <table>
                                 <tr class="active">
                                     <td><fmt:message key="guests"/></td>
@@ -47,10 +45,8 @@
                             </table>
                         </div>
                         <div>
-                            <div class="horizontal-delimiter-with-text">
-                                <p><fmt:message key="customer.info"/></p>
-                                <div></div>
-                            </div>
+                            <fmt:message var="customerInfo" key="customer.info"/>
+                            <tags:horizontaldelimiter message="${customerInfo}"/>
                             <table>
                                 <tr class="active">
                                     <td><fmt:message key="email"/></td>
@@ -71,10 +67,10 @@
                             </table>
                         </div>
                     </div>
-                    <div class="horizontal-delimiter-with-text">
-                        <p><fmt:message key="request"/></p>
-                        <div></div>
-                    </div>
+
+                    <fmt:message var="requestMessage" key="request"/>
+                    <tags:horizontaldelimiter message="${requestMessage}"/>
+
                     <form class="request-form" action="<c:url value="/controller"/>" method="post">
                         <input type="hidden" name="command" value="makeRequest">
                         <label for="room-number">
