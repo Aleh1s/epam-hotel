@@ -12,20 +12,22 @@ import ua.aleh1s.hotelepam.service.impl.UserServiceImpl;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
 public class I18NCommand implements Command {
     @Override
-    // todo: make review
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         Optional<String> langOptional = Optional.ofNullable(request.getParameter("lang"));
         langOptional.ifPresent(s -> setLang(request, s));
 
-        String path = "redirect";
-        try {
-            response.sendRedirect(ResourcesManager.getInstance().getValue("path.command.room.list"));
-        } catch (IOException e) {
-            path = ResourcesManager.getInstance().getValue("path.page.error");
+        String path;
+        HttpSession session = request.getSession(false);
+
+        if (Objects.isNull(session.getAttribute("role"))) {
+            path = ResourcesManager.getInstance().getValue("path.page.home");
+        } else {
+            path = ResourcesManager.getInstance().getValue("path.command.profile");
         }
 
         return path;

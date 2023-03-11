@@ -21,8 +21,8 @@
                     <h1><fmt:message key="success.booking.title"/></h1>
                     <p><fmt:message key="success.booking.body"/></p>
                     <form action="<c:url value="/controller"/>" method="get">
-                        <input type="hidden" name="command" value="roomList">
-                        <button type="submit" class="btn-primary"><fmt:message key="go.home"/></button>
+                        <input type="hidden" name="command" value="myBookings">
+                        <button type="submit" class="btn-primary"><fmt:message key="ok"/></button>
                     </form>
                 </div>
             </div>

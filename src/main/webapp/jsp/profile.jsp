@@ -92,11 +92,11 @@
                                 <c:forEach var="request" items="${requestScope.requestDtoPage.result()}">
                                     <tr>
                                         <td>
-                                            <fmt:formatDate type="date" value="${request.checkIn}"
+                                            <fmt:formatDate type="date" value="${request.checkIn()}"
                                                             pattern="dd-MM-yyyy"/>
                                         </td>
                                         <td>
-                                            <fmt:formatDate type="date" value="${request.checkOut}"
+                                            <fmt:formatDate type="date" value="${request.checkOut()}"
                                                             pattern="dd-MM-yyyy"/>
                                         </td>
                                         <td>$ ${request.totalAmount()}</td>

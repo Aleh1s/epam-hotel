@@ -50,9 +50,7 @@
                         </table>
                     </div>
                 </div>
-                <form class="go-home-form" method="get" action="<c:url value="/controller"/>">
-                    <input type="hidden" name="command" value="roomList">
-                    <input type="hidden" name="default" value="on">
+                <form class="go-home-form" method="get" action="<c:url value="/jsp/home.jsp"/>">
                     <button type="submit" class="btn-primary"><fmt:message key="go.home"/></button>
                 </form>
             </div>
