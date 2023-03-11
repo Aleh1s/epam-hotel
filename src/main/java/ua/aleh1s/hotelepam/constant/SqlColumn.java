@@ -53,6 +53,7 @@ public class SqlColumn {
         public static final Column CHECK_IN = Column.of("check_in", Types.DATE);
         public static final Column CHECK_OUT = Column.of("check_out", Types.DATE);
         public static final Column TOTAL_AMOUNT = Column.of("total_amount", Types.NUMERIC);
+        public static final Column CREATED_AT = Column.of("created_at", Types.TIMESTAMP);
     }
 
     public static class ReservationTable {

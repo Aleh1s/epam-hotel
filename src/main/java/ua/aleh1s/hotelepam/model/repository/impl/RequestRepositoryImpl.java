@@ -3,12 +3,14 @@ package ua.aleh1s.hotelepam.model.repository.impl;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.entity.RequestStatus;
 import ua.aleh1s.hotelepam.model.querybuilder.EntityManager;
+import ua.aleh1s.hotelepam.model.querybuilder.OrderUnit;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.repository.RequestRepository;
 import ua.aleh1s.hotelepam.model.sqlmapper.impl.SqlRequestEntityMapper;
 import ua.aleh1s.hotelepam.model.querybuilder.Root;
 import ua.aleh1s.hotelepam.model.querybuilder.node.MultiplePredicateNode;
+import ua.aleh1s.hotelepam.utils.Utils;
 
 import java.sql.Date;
 import java.util.List;
@@ -35,7 +37,8 @@ public class RequestRepositoryImpl implements RequestRepository {
                 root.get("status").set(request.getStatus().getIndex()),
                 root.get("checkIn").set(request.getCheckIn()),
                 root.get("checkOut").set(request.getCheckOut()),
-                root.get("totalAmount").set(request.getTotalAmount())
+                root.get("totalAmount").set(request.getTotalAmount()),
+                root.get("createdAt").set(Utils.toTimestamp(request.getCreatedAt()))
         ).execute();
     }
 
@@ -50,6 +53,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 
         List<RequestEntity> resultList = root.select()
                 .where(predicate)
+                .order(root.get("createdAt", OrderUnit.Direction.DESC))
                 .offset(pageRequest.getOffset())
                 .limit(pageRequest.getLimit())
                 .getResultList(requestEntityMapper);
@@ -79,7 +83,8 @@ public class RequestRepositoryImpl implements RequestRepository {
                 root.get("status").set(entity.getStatus().getIndex()),
                 root.get("checkIn").set(Date.valueOf(entity.getCheckIn())),
                 root.get("checkOut").set(Date.valueOf(entity.getCheckOut())),
-                root.get("totalAmount").set(entity.getTotalAmount().doubleValue())
+                root.get("totalAmount").set(entity.getTotalAmount().doubleValue()),
+                root.get("createdAt").set(Utils.toTimestamp(entity.getCreatedAt()))
         ).where(root.get("id").equal(entity.getId())).execute();
     }
 }

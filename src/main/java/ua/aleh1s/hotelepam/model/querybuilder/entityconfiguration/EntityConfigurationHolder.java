@@ -59,6 +59,7 @@ public class EntityConfigurationHolder {
         requestEntityColumnMap.put("checkIn", SqlColumn.RequestTable.CHECK_IN);
         requestEntityColumnMap.put("checkOut", SqlColumn.RequestTable.CHECK_OUT);
         requestEntityColumnMap.put("totalAmount", SqlColumn.RequestTable.TOTAL_AMOUNT);
+        requestEntityColumnMap.put("createdAt", SqlColumn.RequestTable.CREATED_AT);
 
         EntityConfiguration requestConfiguration =
                 EntityConfiguration.newConfiguration("request", requestEntityColumnMap);

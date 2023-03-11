@@ -16,6 +16,7 @@ import ua.aleh1s.hotelepam.utils.Period;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static ua.aleh1s.hotelepam.utils.Utils.getIntValue;
 import static ua.aleh1s.hotelepam.utils.Utils.getLocalDateValue;
@@ -59,8 +60,8 @@ public class MakeRequestCommand implements Command {
                 .checkIn(checkIn)
                 .checkOut(checkOut)
                 .totalAmount(totalAmount)
+                .createdAt(LocalDateTime.now())
                 .build();
-
         requestService.create(requestEntity);
 
         try {
