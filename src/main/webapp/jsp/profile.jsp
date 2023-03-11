@@ -103,6 +103,7 @@
                                         <td class="control">
                                             <form action="<c:url value="/controller"/>" method="get">
                                                 <input type="hidden" name="command" value="viewRoom">
+                                                <input type="hidden" name="page" value="profile">
                                                 <input type="hidden" name="roomNumber" value="${request.roomNumber()}">
                                                 <button class="btn-view" type="submit"><fmt:message key="view.room"/></button>
                                             </form>

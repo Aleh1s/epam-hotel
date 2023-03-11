@@ -68,6 +68,7 @@
                                     </c:choose>
                                     <form action="<c:url value="/controller"/>" method="get">
                                         <input type="hidden" name="command" value="viewRoom">
+                                        <input type="hidden" name="page" value="profile">
                                         <input type="hidden" name="roomNumber" value="${reservation.roomNumber()}">
                                         <button type="submit" class="btn-view"><fmt:message key="view.room"/></button>
                                     </form>

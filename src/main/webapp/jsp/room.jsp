@@ -47,12 +47,21 @@
                     </div>
                     <div class="room-props-control">
                         <div class="room-price">
-                            $ ${requestScope.roomDto.price()}
+                            <c:choose>
+                                <c:when test="${requestScope.renderButton}">
+                                    $ ${requestScope.roomDto.price()}
+                                </c:when>
+                                <c:otherwise>
+                                    $ ${requestScope.roomDto.price()}/<fmt:message key="night"/>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
+                        <c:if test="${requestScope.renderButton}">
                             <form action="<c:url value="/controller"/>" method="post">
                                 <input type="hidden" name="command" value="book">
                                 <button type="submit" class="form-button"><fmt:message key="book"/></button>
                             </form>
+                        </c:if>
                     </div>
                 </div>
                 <div class="room-description-container">

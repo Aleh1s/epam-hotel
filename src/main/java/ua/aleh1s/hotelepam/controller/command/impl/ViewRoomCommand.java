@@ -24,19 +24,22 @@ public class ViewRoomCommand implements Command {
         RoomDtoMapper roomDtoMapper = AppContext.getInstance().getRoomDtoMapper();
 
         Integer roomNumber = getIntValue(request, "roomNumber");
+        String page = request.getParameter("page");
 
         HttpSession session = request.getSession();
-        LocalDate checkIn = (LocalDate) session.getAttribute("requestedCheckIn");
-        LocalDate checkOut = (LocalDate) session.getAttribute("requestedCheckOut");
-        session.setAttribute("roomNumber", roomNumber);
-
         RoomEntity room = roomService.getByRoomNumber(roomNumber);
+        boolean fromProfilePage = page != null && page.equals("profile");
 
-        if (Objects.nonNull(checkIn) && Objects.nonNull(checkOut))
+        if (!fromProfilePage) {
+            LocalDate checkIn = (LocalDate) session.getAttribute("requestedCheckIn");
+            LocalDate checkOut = (LocalDate) session.getAttribute("requestedCheckOut");
+            session.setAttribute("roomNumber", roomNumber);
             room.setPrice(roomService.getTotalPrice(room, Period.between(checkIn, checkOut)));
+        }
 
         RoomDto roomDto = roomDtoMapper.apply(room);
 
+        request.setAttribute("renderButton", !fromProfilePage);
         request.setAttribute("roomDto", roomDto);
         return ResourcesManager.getInstance().getValue("path.page.room");
     }
