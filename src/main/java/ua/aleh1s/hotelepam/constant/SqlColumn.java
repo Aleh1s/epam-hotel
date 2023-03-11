@@ -21,17 +21,16 @@ public class SqlColumn {
     }
 
     public static class RoomTable {
-        public static final Column ROOM_NUMBER = Column.of("room_number", Types.INTEGER);
-        public static final Column CLASS = Column.of("class", Types.INTEGER);
-        public static final Column STATUS = Column.of("status", Types.INTEGER);
+        public static final Column NUMBER = Column.of("number", Types.INTEGER);
+        public static final Column CLAZZ = Column.of("class", Types.INTEGER);
+        public static final Column TITLE = Column.of("title", Types.VARCHAR);
         public static final Column DESCRIPTION = Column.of("description", Types.LONGNVARCHAR);
-        public static final Column BUSY_UNTIL = Column.of("busy_until", Types.DATE);
-        public static final Column PRICE = Column.of("price", Types.NUMERIC);
-        public static final Column NAME = Column.of("name", Types.VARCHAR);
         public static final Column ATTRIBUTES = Column.of("attributes", Types.LONGNVARCHAR);
-        public static final Column BEDS_NUMBER = Column.of("beds_number", Types.INTEGER);
-        public static final Column PERSONS_NUMBER = Column.of("persons_number", Types.INTEGER);
+        public static final Column BEDS = Column.of("beds", Types.INTEGER);
+        public static final Column GUESTS = Column.of("guests", Types.INTEGER);
         public static final Column AREA = Column.of("area", Types.INTEGER);
+        public static final Column PRICE = Column.of("price", Types.NUMERIC);
+        public static final Column IS_UNAVAILABLE = Column.of("is_unavailable", Types.BOOLEAN);
     }
 
     public static class ApplicationTable {

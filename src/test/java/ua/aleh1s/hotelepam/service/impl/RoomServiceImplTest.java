@@ -105,13 +105,13 @@ class RoomServiceImplTest {
 //        );
 //
 //        ReservationEntity reservation1 = ReservationEntity.builder()
-//                .roomNumber(1)
+//                .number(1)
 //                .checkIn(LocalDate.of(2023, 9, 27))
 //                .checkOut(LocalDate.of(2023, 10, 1))
 //                .build();
 //
 //        ReservationEntity reservation2 = ReservationEntity.builder()
-//                .roomNumber(2)
+//                .number(2)
 //                .checkIn(LocalDate.of(2023, 10, 8))
 //                .checkOut(LocalDate.of(2023, 10, 15))
 //                .build();

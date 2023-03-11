@@ -40,7 +40,7 @@ public class ApplicationCommand implements Command {
         RoomClass clazz = RoomClass.atIndex(classIndex);
         ApplicationEntity applicationEntry = ApplicationEntity.builder()
                 .guests(guests)
-                .clazz(clazz)
+                .roomClass(clazz)
                 .checkIn(checkIn)
                 .checkOut(checkOut)
                 .status(ApplicationStatus.NEW)

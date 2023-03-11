@@ -14,20 +14,16 @@
     <div class="room-card-content">
         <ul class="key-value-list">
             <li>
-                <div class="key"><fmt:message key="status"/>:</div>
-                <div class="value">${room.roomStatus()}</div>
-            </li>
-            <li>
                 <div class="key"><fmt:message key="class"/>:</div>
-                <div class="value">${room.roomClass()}</div>
+                <div class="value">${room.clazz()}</div>
             </li>
             <li>
                 <div class="key"><fmt:message key="persons"/>:</div>
-                <div class="value">${room.personsNumber()}</div>
+                <div class="value">${room.guests()}</div>
             </li>
             <li>
                 <div class="key"><fmt:message key="beds"/>:</div>
-                <div class="value">${room.bedsNumber()}</div>
+                <div class="value">${room.beds()}</div>
             </li>
             <li>
                 <div class="key"><fmt:message key="area"/>:</div>
@@ -37,7 +33,7 @@
     </div>
     <div class="room-card-footer">
         <p class="room-price-label">$ ${room.price()}</p>
-        <a href="<c:url value="/controller?command=viewRoom&roomNumber=${room.roomNumber()}"/>"><fmt:message
+        <a href="<c:url value="/controller?command=viewRoom&roomNumber=${room.number()}"/>"><fmt:message
                 key="view"/></a>
     </div>
 </div>

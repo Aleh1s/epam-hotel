@@ -49,7 +49,7 @@ class ApplicationRepositoryImplTest {
                 .valueOf(ApplicationEntity.class);
 
         this.application = ApplicationEntity.builder()
-                .id(1L).clazz(RoomClass.FAMILY)
+                .id(1L).roomClass(RoomClass.FAMILY)
                 .guests(3)
                 .checkIn(LocalDate.now())
                 .checkOut(LocalDate.now().plusDays(7))

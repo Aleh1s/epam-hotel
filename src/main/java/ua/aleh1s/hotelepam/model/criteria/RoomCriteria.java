@@ -20,7 +20,6 @@ public class RoomCriteria {
     private Order price;
     private Order guests;
     private Order clazz;
-    private Order status;
 
     public void setSort(String sort) {
         dropSort();
@@ -52,13 +51,7 @@ public class RoomCriteria {
                     clazz = Order.DESC;
                 }
             }
-            default -> {
-                if (order.equals("asc")) {
-                    status = Order.ASC;
-                } else {
-                    status = Order.DESC;
-                }
-            }
+            default -> throw new IllegalArgumentException("Unknown field");
         }
     }
 
@@ -68,6 +61,5 @@ public class RoomCriteria {
         this.price = null;
         this.guests = null;
         this.clazz = null;
-        this.status = null;
     }
 }

@@ -13,7 +13,7 @@ public class ApplicationDtoMapper implements Function<ApplicationEntity, Applica
         return new ApplicationDto(
                 entity.getId(),
                 entity.getGuests(),
-                entity.getClazz(),
+                entity.getRoomClass(),
                 toDate(entity.getCheckIn()),
                 toDate(entity.getCheckOut()),
                 entity.getCreatedAt(),

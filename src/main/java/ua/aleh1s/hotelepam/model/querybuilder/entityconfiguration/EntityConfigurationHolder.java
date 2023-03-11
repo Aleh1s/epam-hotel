@@ -92,16 +92,15 @@ public class EntityConfigurationHolder {
         entityConfigurationMap.put(ReservationTokenEntity.class, reservationToken);
 
         Map<String, Column> roomEntityColumnMap = new HashMap<>();
-        roomEntityColumnMap.put("roomNumber", SqlColumn.RoomTable.ROOM_NUMBER);
-        roomEntityColumnMap.put("class", SqlColumn.RoomTable.CLASS);
-        roomEntityColumnMap.put("status", SqlColumn.RoomTable.STATUS);
+        roomEntityColumnMap.put("number", SqlColumn.RoomTable.NUMBER);
+        roomEntityColumnMap.put("class", SqlColumn.RoomTable.CLAZZ);
         roomEntityColumnMap.put("description", SqlColumn.RoomTable.DESCRIPTION);
-        roomEntityColumnMap.put("busyUntil", SqlColumn.RoomTable.BUSY_UNTIL);
         roomEntityColumnMap.put("price", SqlColumn.RoomTable.PRICE);
-        roomEntityColumnMap.put("name", SqlColumn.RoomTable.NAME);
+        roomEntityColumnMap.put("title", SqlColumn.RoomTable.TITLE);
         roomEntityColumnMap.put("attributes", SqlColumn.RoomTable.ATTRIBUTES);
-        roomEntityColumnMap.put("bedsNumber", SqlColumn.RoomTable.BEDS_NUMBER);
-        roomEntityColumnMap.put("personsNumber", SqlColumn.RoomTable.PERSONS_NUMBER);
+        roomEntityColumnMap.put("beds", SqlColumn.RoomTable.BEDS);
+        roomEntityColumnMap.put("guests", SqlColumn.RoomTable.GUESTS);
+        roomEntityColumnMap.put("isUnavailable", SqlColumn.RoomTable.IS_UNAVAILABLE);
 
         EntityConfiguration roomConfiguration =
                 EntityConfiguration.newConfiguration("room", roomEntityColumnMap);

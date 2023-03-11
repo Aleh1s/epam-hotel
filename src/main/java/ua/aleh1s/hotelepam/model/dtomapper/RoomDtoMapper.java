@@ -7,19 +7,18 @@ import java.util.function.Function;
 
 public class RoomDtoMapper implements Function<RoomEntity, RoomDto> {
     @Override
-    public RoomDto apply(RoomEntity roomEntity) {
+    public RoomDto apply(RoomEntity room) {
         return new RoomDto(
-                roomEntity.getRoomNumber(),
-                roomEntity.getRoomClass().name().toLowerCase(),
-                roomEntity.getStatus().name().toLowerCase(),
-                roomEntity.getDescription(),
-                roomEntity.getBusyUntil(),
-                roomEntity.getPrice().doubleValue(),
-                roomEntity.getName(),
-                roomEntity.getAttributes(),
-                roomEntity.getBedsNumber(),
-                roomEntity.getPersonsNumber(),
-                roomEntity.getArea()
+                room.getNumber(),
+                room.getClazz().name().toLowerCase(),
+                room.getTitle(),
+                room.getDescription(),
+                room.getAttributes(),
+                room.getBeds(),
+                room.getGuests(),
+                room.getPrice().doubleValue(),
+                room.getArea(),
+                room.getIsUnavailable()
         );
     }
 }

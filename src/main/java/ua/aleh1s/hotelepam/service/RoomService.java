@@ -17,5 +17,4 @@ public interface RoomService {
     BigDecimal getTotalPrice(Integer roomNumber, Period requestedPeriod);
     BigDecimal getTotalPrice(RoomEntity room, Period requestedPeriod);
     RoomEntity getByRoomNumber(Integer roomNumber);
-    List<RoomEntity> getSortedRooms(Map<String, String> sortParamMap);
 }

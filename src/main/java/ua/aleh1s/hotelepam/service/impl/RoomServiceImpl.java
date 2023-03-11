@@ -15,7 +15,6 @@ import ua.aleh1s.hotelepam.utils.Period;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static ua.aleh1s.hotelepam.model.criteria.Order.DESC;
@@ -49,7 +48,7 @@ public class RoomServiceImpl implements RoomService {
                 .collect(Collectors.toSet());
 
         List<RoomEntity> availableRooms = roomRepository.getAll().stream()
-                .filter(room -> !busyRooms.contains(room.getRoomNumber()))
+                .filter(room -> !busyRooms.contains(room.getNumber()))
                 .collect(Collectors.toList());
 
         sortRooms(availableRooms, criteria);
@@ -66,7 +65,6 @@ public class RoomServiceImpl implements RoomService {
         Order price = criteria.getPrice();
         Order guests = criteria.getGuests();
         Order clazz = criteria.getClazz();
-        Order status = criteria.getStatus();
 
         Comparator<RoomEntity> comparator;
         if (Objects.nonNull(price)) {
@@ -74,16 +72,12 @@ public class RoomServiceImpl implements RoomService {
             if (price.equals(DESC))
                 comparator = comparator.reversed();
         } else if (Objects.nonNull(guests)) {
-            comparator = Comparator.comparing(RoomEntity::getPersonsNumber);
+            comparator = Comparator.comparing(RoomEntity::getGuests);
             if (guests.equals(DESC))
                 comparator.reversed();
-        } else if (Objects.nonNull(clazz)) {
-            comparator = Comparator.comparing(room -> room.getRoomClass().getIndex());
-            if (clazz.equals(DESC))
-                comparator.reversed();
         } else {
-            comparator = Comparator.comparing(room -> room.getStatus().getIndex());
-            if (status.equals(DESC))
+            comparator = Comparator.comparing(room -> room.getClazz().getIndex());
+            if (clazz.equals(DESC))
                 comparator.reversed();
         }
 
@@ -105,44 +99,6 @@ public class RoomServiceImpl implements RoomService {
     public RoomEntity getByRoomNumber(Integer roomNumber) {
         return roomRepository.getByRoomNumber(roomNumber)
                 .orElseThrow(ApplicationException::new);
-    }
-
-    @Override
-    public List<RoomEntity> getSortedRooms(Map<String, String> sortParamMap) {
-        List<RoomEntity> roomList = roomRepository.getAll();
-        if (sortParamMap.containsKey("price")) {
-            String direction = sortParamMap.get("price");
-            Comparator<RoomEntity> comparator = Comparator.comparing(RoomEntity::getPrice);
-            if (direction.equals("desc"))
-                comparator = comparator.reversed();
-            roomList.sort(comparator);
-        }
-
-        if (sortParamMap.containsKey("guests")) {
-            String direction = sortParamMap.get("guests");
-            Comparator<RoomEntity> comparator = Comparator.comparingInt(RoomEntity::getPersonsNumber);
-            if (direction.equals("desc"))
-                comparator = comparator.reversed();
-            roomList.sort(comparator);
-        }
-
-        if (sortParamMap.containsKey("class")) {
-            String direction = sortParamMap.get("class");
-            Comparator<RoomEntity> comparator = Comparator.comparingInt(room -> room.getRoomClass().getIndex());
-            if (direction.equals("desc"))
-                comparator = comparator.reversed();
-            roomList.sort(comparator);
-        }
-
-        if (sortParamMap.containsKey("status")) {
-            String direction = sortParamMap.get("status");
-            Comparator<RoomEntity> comparator = Comparator.comparingInt(room -> room.getStatus().getIndex());
-            if (direction.equals("desc"))
-                comparator = comparator.reversed();
-            roomList.sort(comparator);
-        }
-
-        return roomList;
     }
 
     private boolean isRoomBusy(Period requestedPeriod, List<ReservationEntity> roomReservations) {

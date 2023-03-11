@@ -25,7 +25,6 @@
                         <c:set var="price" value="${sessionScope.roomCriteria.price}"/>
                         <c:set var="guests" value="${sessionScope.roomCriteria.guests}"/>
                         <c:set var="clazz" value="${sessionScope.roomCriteria.clazz}"/>
-                        <c:set var="status" value="${sessionScope.roomCriteria.status}"/>
 
                         <option value="price,asc" ${not empty price and price.name() eq 'ASC' ? 'selected' : ''}>
                             <fmt:message key="price"/> <fmt:message key="cheap.expensive"/>
@@ -44,12 +43,6 @@
                         </option>
                         <option value="class,desc" ${not empty clazz and clazz.name() eq 'DESC' ? 'selected' : ''}>
                             <fmt:message key="class"/> <fmt:message key="president.standard"/>
-                        </option>
-                        <option value="status,asc" ${not empty status and status.name() eq 'ASC' ? 'selected' : ''}>
-                            <fmt:message key="status"/> <fmt:message key="free.unavailable"/>
-                        </option>
-                        <option value="status,desc" ${not empty status and status.name() eq 'DESC' ? 'selected' : ''}>
-                            <fmt:message key="status"/> <fmt:message key="unavailable.free"/>
                         </option>
                     </select>
                     <button type="submit" class="btn-primary"><fmt:message key="search"/></button>

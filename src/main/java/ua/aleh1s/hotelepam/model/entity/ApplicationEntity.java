@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class ApplicationEntity {
     private Long id;
     private Integer guests;
-    private RoomClass clazz;
+    private RoomClass roomClass;
     private LocalDate checkIn;
     private LocalDate checkOut;
     private LocalDateTime createdAt;

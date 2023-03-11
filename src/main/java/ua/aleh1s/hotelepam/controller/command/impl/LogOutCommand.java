@@ -19,7 +19,7 @@ public class LogOutCommand implements Command {
         session.removeAttribute("id");
         session.removeAttribute("role");
 
-        String path = resourcesManager.getValue("path.command.room.list");
+        String path = resourcesManager.getValue("path.page.home");
         try {
             response.sendRedirect(path);
             path = "redirect";

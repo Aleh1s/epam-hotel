@@ -24,24 +24,20 @@
                             <c:if test="${not empty sessionScope.role and sessionScope.role eq 'MANAGER'}">
                                 <div>
                                     <div class="key"><fmt:message key="room.number"/>:</div>
-                                    <div class="value">${requestScope.roomDto.roomNumber()}</div>
+                                    <div class="value">${requestScope.roomDto.number()}</div>
                                 </div>
                             </c:if>
                             <div>
-                                <div class="key"><fmt:message key="status"/>:</div>
-                                <div class="value">${requestScope.roomDto.roomStatus()}</div>
-                            </div>
-                            <div>
                                 <div class="key"><fmt:message key="class"/>:</div>
-                                <div class="value">${requestScope.roomDto.roomClass()}</div>
+                                <div class="value">${requestScope.roomDto.clazz()}</div>
                             </div>
                             <div>
                                 <div class="key"><fmt:message key="persons"/>:</div>
-                                <div class="value">${requestScope.roomDto.personsNumber()}</div>
+                                <div class="value">${requestScope.roomDto.guests()}</div>
                             </div>
                             <div>
                                 <div class="key"><fmt:message key="beds"/>:</div>
-                                <div class="value">${requestScope.roomDto.bedsNumber()}</div>
+                                <div class="value">${requestScope.roomDto.beds()}</div>
                             </div>
                             <div>
                                 <div class="key"><fmt:message key="area"/>:</div>
@@ -61,7 +57,7 @@
                 </div>
                 <div class="room-description-container">
                     <div class="room-name">
-                        <h2>${requestScope.roomDto.name()}</h2>
+                        <h2>${requestScope.roomDto.title()}</h2>
                     </div>
                     <p>${requestScope.roomDto.description()}</p>
                 </div>

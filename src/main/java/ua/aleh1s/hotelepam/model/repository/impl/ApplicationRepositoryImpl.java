@@ -34,7 +34,7 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
         Root<ApplicationEntity> root = entityManager.valueOf(ApplicationEntity.class);
         root.insert().values(
                 root.get("guests").set(application.getGuests()),
-                root.get("roomClass").set(application.getClazz().getIndex()),
+                root.get("roomClass").set(application.getRoomClass().getIndex()),
                 root.get("checkIn").set(toDate(application.getCheckIn())),
                 root.get("checkOut").set(toDate(application.getCheckOut())),
                 root.get("status").set(application.getStatus().getIndex()),
@@ -46,7 +46,8 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
     @Override
     public Optional<ApplicationEntity> findById(Long id) {
         Root<ApplicationEntity> root = entityManager.valueOf(ApplicationEntity.class);
-        ApplicationEntity application = root.select().where(root.get("id").equal(id)).getResult(applicationEntityMapper);
+        ApplicationEntity application = root.select().where(root.get("id").equal(id))
+                .getResult(applicationEntityMapper);
         return Optional.ofNullable(application);
     }
 
@@ -55,7 +56,7 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
         Root<ApplicationEntity> root = entityManager.valueOf(ApplicationEntity.class);
         root.update().set(
                 root.get("guests").set(application.getGuests()),
-                root.get("roomClass").set(application.getClazz().getIndex()),
+                root.get("roomClass").set(application.getRoomClass().getIndex()),
                 root.get("checkIn").set(toDate(application.getCheckIn())),
                 root.get("checkOut").set(toDate(application.getCheckOut())),
                 root.get("status").set(application.getStatus().getIndex()),

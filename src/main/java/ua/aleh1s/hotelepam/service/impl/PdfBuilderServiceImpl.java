@@ -60,18 +60,18 @@ public class PdfBuilderServiceImpl implements PdfBuilderService {
             document.add(title);
 
             PdfPTable table = new PdfPTable(4);
-            addKeyValue(table, bundle.getString("room.number"), room.getRoomNumber().toString());
-            addKeyValue(table, bundle.getString("room.class"), room.getRoomClass().name().toLowerCase());
+            addKeyValue(table, bundle.getString("room.number"), room.getNumber().toString());
+            addKeyValue(table, bundle.getString("room.class"), room.getClazz().name().toLowerCase());
 
             addKeyValue(table, bundle.getString("room.price.per.night"), String.format("$ %s", room.getPrice().toString()));
-            addKeyValue(table, bundle.getString("beds"), room.getBedsNumber().toString());
+            addKeyValue(table, bundle.getString("beds"), room.getBeds().toString());
 
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             addKeyValue(table, bundle.getString("check.in"), reservation.getCheckIn().format(dateFormatter));
             addKeyValue(table, bundle.getString("check.out"), reservation.getCheckOut().format(dateFormatter));
 
             addKeyValue(table, bundle.getString("payed.at"), reservation.getPayedAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
-            addKeyValue(table, bundle.getString("guests"), room.getPersonsNumber().toString());
+            addKeyValue(table, bundle.getString("guests"), room.getGuests().toString());
 
             addKeyValue(table, bundle.getString("total.amount"), String.format("$ %s", reservation.getTotalAmount().toString()));
             addKeyValue(table, bundle.getString("status"), reservation.getStatus().name().toLowerCase());

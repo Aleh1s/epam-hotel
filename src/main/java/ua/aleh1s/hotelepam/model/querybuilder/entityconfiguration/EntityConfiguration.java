@@ -4,8 +4,8 @@ import java.util.Map;
 
 public class EntityConfiguration {
 
-    private String tableName;
-    private Map<String, Column> columnMap;
+    private final String tableName;
+    private final Map<String, Column> columnMap;
 
     private EntityConfiguration(
             String tableName,

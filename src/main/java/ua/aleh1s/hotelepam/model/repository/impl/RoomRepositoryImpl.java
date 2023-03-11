@@ -24,7 +24,7 @@ public class RoomRepositoryImpl implements RoomRepository {
     @Override
     public Optional<RoomEntity> getByRoomNumber(Integer roomNumber) {
         Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
-        RoomEntity room = root.select().where(root.get("roomNumber").equal(roomNumber))
+        RoomEntity room = root.select().where(root.get("number").equal(roomNumber))
                 .getResult(roomEntityMapper);
         return Optional.ofNullable(room);
     }
@@ -33,16 +33,16 @@ public class RoomRepositoryImpl implements RoomRepository {
     public void update(RoomEntity entity) {
         Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
         root.update().set(
-                root.get("roomClass").set(entity.getRoomClass().getIndex()),
-                root.get("status").set(entity.getStatus().getIndex()),
+                root.get("class").set(entity.getClazz().getIndex()),
+                root.get("title").set(entity.getTitle()),
                 root.get("description").set(entity.getDescription()),
-                root.get("price").set(entity.getPrice().doubleValue()),
-                root.get("name").set(entity.getName()),
                 root.get("attributes").set(String.join(",", entity.getAttributes())),
-                root.get("bedsNumber").set(entity.getBedsNumber()),
-                root.get("personsNumber").set(entity.getPersonsNumber()),
-                root.get("area").set(entity.getArea())
-        ).where(root.get("roomNumber").equal(entity.getRoomNumber())).execute();
+                root.get("beds").set(entity.getBeds()),
+                root.get("guests").set(entity.getGuests()),
+                root.get("price").set(entity.getPrice().doubleValue()),
+                root.get("area").set(entity.getArea()),
+                root.get("isUnavailable").set(entity.getIsUnavailable())
+        ).where(root.get("number").equal(entity.getNumber())).execute();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class RoomRepositoryImpl implements RoomRepository {
     public List<RoomEntity> getAllByGuests(Integer guests) {
         Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
         return root.select().where(
-                root.get("personsNumber").equal(guests)
+                root.get("guests").equal(guests)
         ).getResultList(roomEntityMapper);
     }
 }
