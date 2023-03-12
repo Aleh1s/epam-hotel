@@ -2,6 +2,7 @@ package ua.aleh1s.hotelepam.model.repository.impl;
 
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.querybuilder.EntityManager;
+import ua.aleh1s.hotelepam.model.querybuilder.OrderUnit;
 import ua.aleh1s.hotelepam.model.repository.RoomRepository;
 import ua.aleh1s.hotelepam.model.sqlmapper.impl.SqlRoomEntityMapper;
 import ua.aleh1s.hotelepam.model.querybuilder.Root;
@@ -54,9 +55,17 @@ public class RoomRepositoryImpl implements RoomRepository {
     }
 
     @Override
+    public List<RoomEntity> getAvailableRooms() {
+        Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
+        return root.select().where(root.get("isUnavailable").equal(false)).getResultList(roomEntityMapper);
+    }
+
+    @Override
     public Page<RoomEntity> getAll(PageRequest pageRequest) {
         Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
-        List<RoomEntity> result = root.select().offset(pageRequest.getOffset()).limit(pageRequest.getLimit())
+        List<RoomEntity> result = root.select().order(root.get("number", OrderUnit.Direction.ASC))
+                .offset(pageRequest.getOffset())
+                .limit(pageRequest.getLimit())
                 .getResultList(roomEntityMapper);
 
         Long count = root.select(root.countAll()).execute(Long.class);

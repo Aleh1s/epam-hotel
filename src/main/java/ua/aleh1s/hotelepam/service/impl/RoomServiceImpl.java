@@ -1,6 +1,7 @@
 package ua.aleh1s.hotelepam.service.impl;
 
 import lombok.AllArgsConstructor;
+import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.criteria.Order;
 import ua.aleh1s.hotelepam.model.criteria.RoomCriteria;
@@ -32,6 +33,10 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public boolean isRoomAvailable(Integer number, Period period) {
+        RoomEntity room = getByRoomNumber(number);
+        if (room.getIsUnavailable())
+            return false;
+
         List<ReservationEntity> actualReservations =
                 reservationRepository.getActualReservationsByRoomNumber(number);
 
@@ -41,7 +46,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Page<RoomEntity> getAvailableRooms(RoomCriteria criteria, PageRequest pageRequest) {
+    public Page<RoomEntity> getNotReservedRooms(RoomCriteria criteria, PageRequest pageRequest) {
         List<ReservationEntity> actualReservations = reservationRepository.getActualReservations();
 
         Map<Integer, List<ReservationEntity>> groupByRoomNumber = actualReservations.stream()
@@ -52,7 +57,7 @@ public class RoomServiceImpl implements RoomService {
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());
 
-        List<RoomEntity> availableRooms = roomRepository.getAll().stream()
+        List<RoomEntity> availableRooms = roomRepository.getAvailableRooms().stream()
                 .filter(room -> !busyRooms.contains(room.getNumber()))
                 .collect(Collectors.toList());
 

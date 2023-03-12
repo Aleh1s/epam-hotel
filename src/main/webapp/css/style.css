@@ -1111,23 +1111,38 @@
     flex-direction: column;
 }
 
-.btn-danger {
+.btn-danger, .btn-success {
     border-radius: 17px;
     width: fit-content;
     height: 34px;
-    border: 1px solid red;
-    color: red;
     background-color: white;
     font-size: 14px;
     padding: 5px 10px;
     transition: all 0.3s ease 0s;
 }
 
-.btn-danger:hover {
+.btn-danger {
+    border: 1px solid red;
+    color: red;
+}
+
+.btn-success {
+    border: 1px solid green;
+    color: green;
+}
+
+.btn-danger:hover, .btn-success:hover {
     color: white;
-    background-color: red;
     transition: all 0.3s ease 0s;
     cursor: pointer;
+}
+
+.btn-danger:hover {
+    background-color: red;
+}
+
+.btn-success:hover {
+    background-color: green;
 }
 
 .not-found-container {

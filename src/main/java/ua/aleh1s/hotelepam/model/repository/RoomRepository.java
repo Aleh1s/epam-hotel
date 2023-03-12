@@ -12,5 +12,6 @@ public interface RoomRepository {
     Optional<RoomEntity> getByRoomNumber(Integer roomNumber);
     void update(RoomEntity entity);
     List<RoomEntity> getAll();
+    List<RoomEntity> getAvailableRooms();
     Page<RoomEntity> getAll(PageRequest pageRequest);
 }

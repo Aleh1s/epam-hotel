@@ -53,11 +53,25 @@
                 <input type="hidden" name="number" value="${room.number()}">
                 <button type="submit" class="btn-primary"><fmt:message key="edit"/></button>
             </form>
-            <form action="<c:url value="/controller"/>" method="post">
-                <input type="hidden" name="command" value="blockRoom">
-                <input type="hidden" name="number" value="${room.number()}">
-                <button type="submit" class="btn-danger"><fmt:message key="set.unavailable"/></button>
-            </form>
+            <c:choose>
+                <c:when test="${room.isUnavailable()}">
+                    <form action="<c:url value="/controller"/>" method="post">
+                        <input type="hidden" name="command" value="changeRoomAvailability">
+                        <input type="hidden" name="number" value="${room.number()}">
+                        <input type="hidden" name="value" value="false">
+                        <button type="submit" class="btn-success"><fmt:message key="set.available"/></button>
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <form action="<c:url value="/controller"/>" method="post">
+                        <input type="hidden" name="command" value="changeRoomAvailability">
+                        <input type="hidden" name="number" value="${room.number()}">
+                        <input type="hidden" name="value" value="true">
+                        <button type="submit" class="btn-danger"><fmt:message key="set.unavailable"/></button>
+                    </form>
+                </c:otherwise>
+            </c:choose>
+
         </div>
     </div>
 </div>

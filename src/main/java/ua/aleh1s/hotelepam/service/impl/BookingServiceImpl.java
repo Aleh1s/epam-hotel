@@ -37,7 +37,7 @@ public class BookingServiceImpl implements BookingService {
 
         RoomEntity room = roomService.getByRoomNumber(roomNumber);
         if (!roomService.isRoomAvailable(roomNumber, requestedPeriod))
-            throw new ApplicationException("Room is already taken, try reserve another date or room.", path);
+            throw new ApplicationException("Room is unavailable, try pick another room.", path);
 
         UserEntity user = userService.getById(customerId);
         BigDecimal totalAmount = roomService.getTotalPrice(room, requestedPeriod);

@@ -8,8 +8,10 @@ import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
+import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.service.ReservationService;
 import ua.aleh1s.hotelepam.service.ReservationTokenService;
+import ua.aleh1s.hotelepam.service.RoomService;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -23,12 +25,17 @@ public class ConfirmBookingCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         ReservationTokenService reservationTokenService = AppContext.getInstance().getReservationTokenService();
         ReservationService reservationService = AppContext.getInstance().getReservationService();
+        RoomService roomService = AppContext.getInstance().getRoomService();
 
         String tokenId = request.getParameter("tokenId");
 
         ReservationTokenEntity token = reservationTokenService.getById(tokenId);
-
         ReservationEntity reservation = reservationService.getById(token.getReservationId());
+        RoomEntity room = roomService.getByRoomNumber(reservation.getRoomNumber());
+
+        if (room.getIsUnavailable())
+            throw new ApplicationException("Room is unavailable now. Try to pick another room.",
+                    ResourcesManager.getInstance().getValue("path.command.profile"));
 
         LocalDateTime tokenExpiredAt = token.getExpiredAt();
         if (tokenExpiredAt.isBefore(LocalDateTime.now())) {

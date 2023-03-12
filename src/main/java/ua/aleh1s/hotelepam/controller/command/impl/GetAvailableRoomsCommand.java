@@ -7,7 +7,6 @@ import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.model.criteria.Order;
 import ua.aleh1s.hotelepam.model.criteria.RoomCriteria;
 import ua.aleh1s.hotelepam.model.dto.RoomDto;
 import ua.aleh1s.hotelepam.model.dtomapper.RoomDtoMapper;
@@ -16,9 +15,7 @@ import ua.aleh1s.hotelepam.service.RoomService;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.utils.Period;
-import ua.aleh1s.hotelepam.utils.Utils;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -65,7 +62,7 @@ public class GetAvailableRoomsCommand implements Command {
         }
 
         Page<RoomEntity> availableRoomPage =
-                roomService.getAvailableRooms(criteria, PageRequest.of(pageNumber, 9));
+                roomService.getNotReservedRooms(criteria, PageRequest.of(pageNumber, 9));
 
         if (availableRoomPage.result().isEmpty())
             throw new ApplicationException("There are no available rooms. Try to pick another date.", path);
