@@ -46,7 +46,7 @@ public class MakeRequestCommand implements Command {
 
         Period requestedPeriod = Period.between(checkIn, checkOut);
         if (!roomService.isRoomAvailable(roomNumber, requestedPeriod))
-            throw new ApplicationException(String.format("Room with number %s is already taken", roomNumber), path);
+            throw new ApplicationException(String.format("Room with number %s is unavailable", roomNumber), path);
 
         application.setStatus(ApplicationStatus.PROCESSED);
         applicationService.update(application);

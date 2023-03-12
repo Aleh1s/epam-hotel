@@ -3,9 +3,12 @@ package ua.aleh1s.hotelepam.model.sqlmapper.impl;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.entity.RequestStatus;
 import ua.aleh1s.hotelepam.model.sqlmapper.SqlEntityMapper;
+import ua.aleh1s.hotelepam.utils.Utils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import static ua.aleh1s.hotelepam.constant.SqlColumn.RequestTable.*;
 
@@ -21,6 +24,7 @@ public class SqlRequestEntityMapper implements SqlEntityMapper<RequestEntity> {
                     .checkIn(source.getDate(CHECK_IN.getName()).toLocalDate())
                     .checkOut(source.getDate(CHECK_OUT.getName()).toLocalDate())
                     .totalAmount(source.getBigDecimal(TOTAL_AMOUNT.getName()))
+                    .createdAt(source.getTimestamp(CREATED_AT.getName()).toLocalDateTime())
                     .build();
         } catch (SQLException e) {
             e.printStackTrace();

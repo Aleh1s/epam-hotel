@@ -81,7 +81,7 @@ public class AppContext {
         this.applicationService = new ApplicationServiceImpl(applicationRepository);
         this.requestService = new RequestServiceImpl(requestRepository);
         this.registrationService = new RegistrationServiceImpl(userService);
-        this.paymentService = new PaymentServiceImpl(reservationService, userService);
+        this.paymentService = new PaymentServiceImpl(reservationService, userService, roomService);
         this.bookingService = new BookingServiceImpl(roomService, reservationService, reservationTokenService, mailService, userService);
         this.pdfBuilderService = new PdfBuilderServiceImpl(reservationService, roomService, userService);
         // Dto mappers
