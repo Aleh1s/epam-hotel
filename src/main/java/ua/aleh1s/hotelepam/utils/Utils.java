@@ -61,6 +61,10 @@ public class Utils {
         return isCheckInValid && isDateRangeValid;
     }
 
+    public static boolean getBoolean(HttpServletRequest request, String name) {
+        return Boolean.parseBoolean(request.getParameter(name));
+    }
+
     public static Timestamp toTimestamp(LocalDateTime ldt) {
         return ldt != null ? Timestamp.valueOf(ldt) : null;
     }

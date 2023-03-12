@@ -1,11 +1,15 @@
 package ua.aleh1s.hotelepam.model.dto;
 
+import ua.aleh1s.hotelepam.model.entity.RoomClass;
+
+import java.util.List;
+
 public record RoomDto(
         Integer number,
-        String clazz,
+        RoomClass clazz,
         String title,
         String description,
-        String[] attributes,
+        List<String> attributes,
         Integer beds,
         Integer guests,
         Double price,

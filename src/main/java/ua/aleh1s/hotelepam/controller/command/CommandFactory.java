@@ -48,5 +48,7 @@ public final class CommandFactory {
         commandMap.put("confirmRequest", new ConfirmRequestCommand());
         commandMap.put("downloadReservationPdf", new DownloadReservationPdfCommand());
         commandMap.put("getRooms", new GetRoomsCommand());
+        commandMap.put("getRoomEditor", new GetRoomEditorCommand());
+        commandMap.put("updateRoom", new UpdateRoomCommand());
     }
 }

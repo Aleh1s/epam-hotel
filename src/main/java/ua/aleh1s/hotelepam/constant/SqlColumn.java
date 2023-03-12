@@ -24,8 +24,8 @@ public class SqlColumn {
         public static final Column NUMBER = Column.of("number", Types.INTEGER);
         public static final Column CLAZZ = Column.of("class", Types.INTEGER);
         public static final Column TITLE = Column.of("title", Types.VARCHAR);
-        public static final Column DESCRIPTION = Column.of("description", Types.LONGNVARCHAR);
-        public static final Column ATTRIBUTES = Column.of("attributes", Types.LONGNVARCHAR);
+        public static final Column DESCRIPTION = Column.of("description", Types.VARCHAR);
+        public static final Column ATTRIBUTES = Column.of("attributes", Types.VARCHAR);
         public static final Column BEDS = Column.of("beds", Types.INTEGER);
         public static final Column GUESTS = Column.of("guests", Types.INTEGER);
         public static final Column AREA = Column.of("area", Types.INTEGER);

@@ -26,6 +26,11 @@ public class RoomServiceImpl implements RoomService {
     private final RoomRepository roomRepository;
 
     @Override
+    public void update(RoomEntity room) {
+        roomRepository.update(room);
+    }
+
+    @Override
     public boolean isRoomAvailable(Integer number, Period period) {
         List<ReservationEntity> actualReservations =
                 reservationRepository.getActualReservationsByRoomNumber(number);

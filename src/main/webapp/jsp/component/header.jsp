@@ -44,7 +44,7 @@
 
             <c:if test="${not empty sessionScope.role and sessionScope.role eq 'ADMIN'}">
                 <li class="nav-item">
-                    <a href="<c:url value="/controller?command=getAllRooms"/>"><fmt:message key="rooms"/></a>
+                    <a href="<c:url value="/controller?command=getRooms"/>"><fmt:message key="rooms"/></a>
                 </li>
                 <li class="nav-item">
                     <a href="<c:url value="/controller?command=createRoom"/>"><fmt:message key="create.room"/></a>

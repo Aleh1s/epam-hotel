@@ -15,7 +15,7 @@
     <div class="room-block-content">
         <div class="room-block-header">
             <div class="title">
-                <h2>${room.title()}</h2>
+                <h4>Number: ${room.number()}. ${room.title()}</h4>
             </div>
             <div class="status">
                 ${room.isUnavailable() ?
@@ -41,7 +41,7 @@
                 $${room.price()}/<fmt:message key="night"/>
             </c:set>
 
-            <tags:propertyelement name="${clazz}" value="${room.clazz()}"/>
+            <tags:propertyelement name="${clazz}" value="${room.clazz().name().toLowerCase()}"/>
             <tags:propertyelement name="${beds}" value="${room.beds()}"/>
             <tags:propertyelement name="${guests}" value="${room.guests()}"/>
             <tags:propertyelement name="${area}" value="${areaValue}"/>
@@ -49,7 +49,7 @@
         </div>
         <div class="control">
             <form action="<c:url value="/controller"/>" method="get">
-                <input type="hidden" name="command" value="editRoom">
+                <input type="hidden" name="command" value="getRoomEditor">
                 <input type="hidden" name="number" value="${room.number()}">
                 <button type="submit" class="btn-primary"><fmt:message key="edit"/></button>
             </form>

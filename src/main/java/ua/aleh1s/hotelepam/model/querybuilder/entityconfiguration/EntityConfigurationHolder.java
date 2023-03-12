@@ -95,12 +95,13 @@ public class EntityConfigurationHolder {
         Map<String, Column> roomEntityColumnMap = new HashMap<>();
         roomEntityColumnMap.put("number", SqlColumn.RoomTable.NUMBER);
         roomEntityColumnMap.put("class", SqlColumn.RoomTable.CLAZZ);
-        roomEntityColumnMap.put("description", SqlColumn.RoomTable.DESCRIPTION);
-        roomEntityColumnMap.put("price", SqlColumn.RoomTable.PRICE);
         roomEntityColumnMap.put("title", SqlColumn.RoomTable.TITLE);
+        roomEntityColumnMap.put("description", SqlColumn.RoomTable.DESCRIPTION);
         roomEntityColumnMap.put("attributes", SqlColumn.RoomTable.ATTRIBUTES);
         roomEntityColumnMap.put("beds", SqlColumn.RoomTable.BEDS);
         roomEntityColumnMap.put("guests", SqlColumn.RoomTable.GUESTS);
+        roomEntityColumnMap.put("price", SqlColumn.RoomTable.PRICE);
+        roomEntityColumnMap.put("area", SqlColumn.RoomTable.AREA);
         roomEntityColumnMap.put("isUnavailable", SqlColumn.RoomTable.IS_UNAVAILABLE);
 
         EntityConfiguration roomConfiguration =
