@@ -47,10 +47,10 @@
                     <a href="<c:url value="/controller?command=getRooms"/>"><fmt:message key="rooms"/></a>
                 </li>
                 <li class="nav-item">
-                    <a href="<c:url value="/controller?command=createRoom"/>"><fmt:message key="create.room"/></a>
+                    <a href="<c:url value="/jsp/createRoom.jsp"/>"><fmt:message key="create.room"/></a>
                 </li>
                 <li class="nav-item">
-                    <a href="<c:url value="/controller?command=createManager"/>"><fmt:message key="create.manager"/></a>
+                    <a href="<c:url value="/jsp/createManager.jsp"/>"><fmt:message key="create.manager"/></a>
                 </li>
             </c:if>
 

@@ -3,6 +3,7 @@ package ua.aleh1s.hotelepam.controller;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import ua.aleh1s.hotelepam.model.jdbc.DBManager;
 
 import java.io.IOException;
 
+@MultipartConfig(maxFileSize = 1_048_576)
 @WebServlet(name = "Controller", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
 

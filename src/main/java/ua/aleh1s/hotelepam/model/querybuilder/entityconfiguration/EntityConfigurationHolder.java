@@ -103,6 +103,7 @@ public class EntityConfigurationHolder {
         roomEntityColumnMap.put("price", SqlColumn.RoomTable.PRICE);
         roomEntityColumnMap.put("area", SqlColumn.RoomTable.AREA);
         roomEntityColumnMap.put("isUnavailable", SqlColumn.RoomTable.IS_UNAVAILABLE);
+        roomEntityColumnMap.put("image", SqlColumn.RoomTable.IMAGE);
 
         EntityConfiguration roomConfiguration =
                 EntityConfiguration.newConfiguration("room", roomEntityColumnMap);

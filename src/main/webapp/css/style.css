@@ -414,7 +414,7 @@
     font-size: 20px;
 }
 
-.pagination-elem:hover {
+.pagination-elem:hover{
     transition: all 0.2s ease 0s;
     box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
 }
@@ -422,6 +422,10 @@
 .pagination-elem.active {
     transition: all 0.2s ease 0s;
     box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+}
+
+.pagination-elem.disabled {
+    pointer-events: none;
 }
 
 .room-grid-container {
@@ -522,7 +526,7 @@
     letter-spacing: 1px;
 }
 
-.room-name {
+.room-name, .room-image {
     color: #1d3c62;
     margin-bottom: 10px;
 }

@@ -3,6 +3,7 @@ package ua.aleh1s.hotelepam.model.querybuilder.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.aleh1s.hotelepam.model.jdbc.DBManager;
+import ua.aleh1s.hotelepam.model.querybuilder.ColumnDecorator;
 import ua.aleh1s.hotelepam.model.querybuilder.Root;
 import ua.aleh1s.hotelepam.model.sqlmapper.SqlEntityMapper;
 import ua.aleh1s.hotelepam.model.querybuilder.aggregatefunc.AggregateFunctionBuilder;
@@ -19,6 +20,7 @@ public class SelectQueryBuilder<T> extends ConditionalQueryBuilder<T> {
     private static final Logger logger = LogManager.getLogger(SelectQueryBuilder.class);
     private static final String QUERY_BASE = "select * from \"%s\" ";
     private static final String QUERY_BASE_WITH_AGGREGATE_FUNC = "select %s from \"%s\" ";
+    private static final String QUERY_BASE_WITH_ONE_VALUE = "select %s from \"%s\" ";
 
     public SelectQueryBuilder(Root<T> root) {
         super(root, new StringJoiner(" ", String.format(QUERY_BASE, root.getTableName()), ";"));
@@ -28,6 +30,12 @@ public class SelectQueryBuilder<T> extends ConditionalQueryBuilder<T> {
         super(root, new StringJoiner(
                 " ", String.format(
                 QUERY_BASE_WITH_AGGREGATE_FUNC, aggregateFunctionBuilder.build(), root.getTableName()), ";"));
+    }
+
+    public SelectQueryBuilder(Root<T> root, ColumnDecorator columnDecorator) {
+        super(root, new StringJoiner(" ", String.format(
+                QUERY_BASE_WITH_ONE_VALUE, columnDecorator.getColumn().getName(), root.getTableName()
+        ), ";"));
     }
 
     @Override
@@ -82,6 +90,26 @@ public class SelectQueryBuilder<T> extends ConditionalQueryBuilder<T> {
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         result = mapper.apply(resultSet);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    public byte[] getBytes() {
+        byte[] result = new byte[0];
+        String query = build();
+        logger.info(query);
+        try (Connection connection = DBManager.getInstance().getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                super.injectValues(statement);
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        result = resultSet.getBytes(1);
                     }
                 }
             }

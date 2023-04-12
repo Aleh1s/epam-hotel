@@ -31,6 +31,7 @@ public class SqlColumn {
         public static final Column AREA = Column.of("area", Types.INTEGER);
         public static final Column PRICE = Column.of("price", Types.NUMERIC);
         public static final Column IS_UNAVAILABLE = Column.of("is_unavailable", Types.BOOLEAN);
+        public static final Column IMAGE = Column.of("image", Types.BINARY);
     }
 
     public static class ApplicationTable {

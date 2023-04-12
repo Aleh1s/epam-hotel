@@ -16,9 +16,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 
-import static ua.aleh1s.hotelepam.utils.Utils.*;
+import static ua.aleh1s.hotelepam.utils.Utils.getBigDecimalValue;
+import static ua.aleh1s.hotelepam.utils.Utils.getIntValue;
 
-public class UpdateRoomCommand implements Command {
+public class CreateRoomCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -34,34 +35,34 @@ public class UpdateRoomCommand implements Command {
         String title = request.getParameter("title");
         String description = request.getParameter("description");
         String[] attributes = request.getParameter("attributes").split(",");
-        Boolean isUnavailable = getBoolean(request, "isUnavailable");
 
-        String path = resourcesManager.getValue("path.page.room.editor");
+        String path = resourcesManager.getValue("path.page.create.room");
+
+        if (roomService.existsByRoomNumber(number))
+            throw new ApplicationException(
+                    "Room with room number " + number + " already exists.", path);
 
         int maxSizeOfImage = 1_048_576;
-        boolean isImagePresent = false;
-        byte[] imageBytes = new byte[0];
+        byte[] imageBytes;
 
         try {
             Part image = request.getPart("image");
-            if (image.getSize() != 0) {
-                try (InputStream inputStream = image.getInputStream()) {
-                    int actualSizeOfImage = inputStream.available();
+            try (InputStream inputStream = image.getInputStream()) {
+                int actualSizeOfImage = inputStream.available();
 
-                    if (actualSizeOfImage > maxSizeOfImage)
-                        throw new ApplicationException(
-                                "Max size of image is reached!!!. Try to pick another image.", path);
+                if (actualSizeOfImage > maxSizeOfImage)
+                    throw new ApplicationException(
+                            "Max size of image is reached!!!. Try to pick another image.", path);
 
-                    imageBytes = new byte[actualSizeOfImage];
-                    inputStream.read(imageBytes);
-                }
-                isImagePresent = true;
+                imageBytes = new byte[actualSizeOfImage];
+                inputStream.read(imageBytes);
             }
+
         } catch (IOException | ServletException e) {
             throw new ApplicationException();
         }
 
-        RoomEntity editedRoom = RoomEntity.builder()
+        RoomEntity newRoom = RoomEntity.builder()
                 .number(number)
                 .clazz(RoomClass.atIndex(classIdx))
                 .title(title)
@@ -71,15 +72,12 @@ public class UpdateRoomCommand implements Command {
                 .guests(guests)
                 .area(area)
                 .price(price)
-                .isUnavailable(isUnavailable)
+                .image(imageBytes)
+                .isUnavailable(true)
                 .build();
 
-        roomService.update(editedRoom);
-
-        if (isImagePresent) {
-            editedRoom.setImage(imageBytes);
-            roomService.updateImage(editedRoom);
-        }
+        roomService.create(newRoom);
+        roomService.updateImage(newRoom);
 
         path = resourcesManager.getValue("path.command.get.rooms");
         try {

@@ -20,4 +20,5 @@ public class RoomEntity {
     private Integer area;
     private BigDecimal price;
     private Boolean isUnavailable;
+    private byte[] image;
 }

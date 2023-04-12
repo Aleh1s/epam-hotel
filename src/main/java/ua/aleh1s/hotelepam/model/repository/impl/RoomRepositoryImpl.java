@@ -9,8 +9,12 @@ import ua.aleh1s.hotelepam.model.querybuilder.Root;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 
+import java.sql.Blob;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+
+import static java.util.Objects.*;
 
 public class RoomRepositoryImpl implements RoomRepository {
 
@@ -22,6 +26,23 @@ public class RoomRepositoryImpl implements RoomRepository {
             EntityManager entityManager) {
         this.roomEntityMapper = roomEntityMapper;
         this.entityManager = entityManager;
+    }
+
+    @Override
+    public void save(RoomEntity entity) {
+        Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
+        root.insert().values(
+                root.get("number").set(entity.getNumber()),
+                root.get("class").set(entity.getClazz().getIndex()),
+                root.get("title").set(entity.getTitle()),
+                root.get("description").set(entity.getDescription()),
+                root.get("attributes").set(String.join(",", entity.getAttributes())),
+                root.get("beds").set(entity.getBeds()),
+                root.get("guests").set(entity.getGuests()),
+                root.get("price").set(entity.getPrice().doubleValue()),
+                root.get("area").set(entity.getArea()),
+                root.get("isUnavailable").set(entity.getIsUnavailable())
+        ).execute();
     }
 
     @Override
@@ -49,12 +70,6 @@ public class RoomRepositoryImpl implements RoomRepository {
     }
 
     @Override
-    public List<RoomEntity> getAll() {
-        Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
-        return root.select().getResultList(roomEntityMapper);
-    }
-
-    @Override
     public List<RoomEntity> getAvailableRooms() {
         Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
         return root.select().where(root.get("isUnavailable").equal(false)).getResultList(roomEntityMapper);
@@ -71,5 +86,21 @@ public class RoomRepositoryImpl implements RoomRepository {
         Long count = root.select(root.countAll()).execute(Long.class);
 
         return Page.of(result, count);
+    }
+
+    @Override
+    public void saveImage(Integer roomNumber, byte[] image) {
+        Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
+        root.update().set(
+                root.get("image").set(image)
+        ).where(root.get("number").equal(roomNumber)).execute();
+    }
+
+    @Override
+    public byte[] getImageByRoomNumber(Integer roomNumber) {
+        Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
+        return root.select(
+                root.get("image")
+        ).where(root.get("number").equal(roomNumber)).getBytes();
     }
 }

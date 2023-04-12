@@ -40,6 +40,11 @@ public class Root<T> {
         return new SelectQueryBuilder<>(this, aggregateFunctionBuilder);
     }
 
+    public SelectQueryBuilder<T> select(ColumnDecorator columnDecorator) {
+        this.parameters = new LinkedList<>();
+        return new SelectQueryBuilder<>(this, columnDecorator);
+    }
+
     public InsertQueryBuilder<T> insert() {
         this.parameters = new LinkedList<>();
         return new InsertQueryBuilder<>(this);

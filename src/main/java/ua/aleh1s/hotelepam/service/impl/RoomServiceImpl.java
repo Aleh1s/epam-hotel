@@ -15,6 +15,7 @@ import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.utils.Period;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,8 +28,23 @@ public class RoomServiceImpl implements RoomService {
     private final RoomRepository roomRepository;
 
     @Override
+    public void create(RoomEntity room) {
+        roomRepository.save(room);
+    }
+
+    @Override
     public void update(RoomEntity room) {
         roomRepository.update(room);
+    }
+
+    @Override
+    public void updateImage(RoomEntity room) {
+        roomRepository.saveImage(room.getNumber(), room.getImage());
+    }
+
+    @Override
+    public boolean existsByRoomNumber(Integer roomNumber) {
+        return roomRepository.getByRoomNumber(roomNumber).isPresent();
     }
 
     @Override
@@ -114,6 +130,11 @@ public class RoomServiceImpl implements RoomService {
     public RoomEntity getByRoomNumber(Integer roomNumber) {
         return roomRepository.getByRoomNumber(roomNumber)
                 .orElseThrow(ApplicationException::new);
+    }
+
+    @Override
+    public byte[] getImageByRoomNumber(Integer roomNumber) {
+        return roomRepository.getImageByRoomNumber(roomNumber);
     }
 
     private boolean isRoomBusy(Period requestedPeriod, List<ReservationEntity> roomReservations) {
