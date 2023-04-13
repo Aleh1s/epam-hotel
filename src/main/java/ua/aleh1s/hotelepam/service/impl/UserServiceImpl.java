@@ -1,10 +1,12 @@
 package ua.aleh1s.hotelepam.service.impl;
 
 import lombok.AllArgsConstructor;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.model.repository.UserRepository;
 import ua.aleh1s.hotelepam.service.UserService;
+
+import java.util.Optional;
 
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -12,9 +14,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public UserEntity getById(Long id) {
+    public UserEntity getById(Long id) throws ServiceException {
         return userRepository.findById(id)
-                .orElseThrow(ApplicationException::new);
+                .orElseThrow(() -> new ServiceException("User with id " + id + " does not exist"));
     }
 
     @Override
@@ -38,8 +40,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity getByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(ApplicationException::new);
+    public UserEntity getByEmail(String email) throws ServiceException{
+        Optional<UserEntity> userEntityOptional = userRepository.findByEmail(email);
+
+        if (userEntityOptional.isPresent())
+            return userEntityOptional.get();
+
+        throw new ServiceException("User with email " + email + " does not exist");
     }
 }

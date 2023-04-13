@@ -1,5 +1,6 @@
 package ua.aleh1s.hotelepam.service.impl;
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,7 +8,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
 import ua.aleh1s.hotelepam.model.repository.impl.ReservationTokenRepositoryImpl;
 
@@ -48,6 +49,7 @@ class ReservationTokenServiceImplTest {
     }
 
     @Test
+    @SneakyThrows
     void canConfirmToken() {
         ArgumentCaptor<ReservationTokenEntity> reservationTokenCaptor =
                 ArgumentCaptor.forClass(ReservationTokenEntity.class);
@@ -61,13 +63,14 @@ class ReservationTokenServiceImplTest {
     }
 
     @Test
-    void confirmTokenShouldThrowApplicationException() {
+    void confirmTokenShouldThrowServiceException() {
         reservationToken.setConfirmedAt(LocalDateTime.now());
 
-        assertThrows(ApplicationException.class, () -> underTest.confirmToken(reservationToken));
+        assertThrows(ServiceException.class, () -> underTest.confirmToken(reservationToken));
     }
 
     @Test
+    @SneakyThrows
     void canGetById() {
         String id = UUID.randomUUID().toString();
 
@@ -90,6 +93,6 @@ class ReservationTokenServiceImplTest {
         given(reservationTokenRepository.findById(any()))
                 .willReturn(Optional.empty());
 
-        assertThrows(ApplicationException.class, () -> underTest.getById(any()));
+        assertThrows(ServiceException.class, () -> underTest.getById(any()));
     }
 }

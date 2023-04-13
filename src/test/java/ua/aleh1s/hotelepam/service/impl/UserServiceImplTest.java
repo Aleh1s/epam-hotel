@@ -1,5 +1,6 @@
 package ua.aleh1s.hotelepam.service.impl;
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,11 +8,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
-import ua.aleh1s.hotelepam.model.repository.UserRepository;
 import ua.aleh1s.hotelepam.model.repository.impl.UserRepositoryImpl;
-import ua.aleh1s.hotelepam.service.UserService;
 
 import java.util.Optional;
 
@@ -36,6 +35,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @SneakyThrows
     void canGetById() {
         Long id = 1L;
         ArgumentCaptor<Long> idCaptor =
@@ -49,11 +49,11 @@ class UserServiceImplTest {
     }
 
     @Test
-    void getByIdShouldThrowApplicationException() {
+    void getByIdShouldThrowServiceException() {
         given(userRepository.findById(any(Long.class)))
                 .willReturn(Optional.empty());
 
-        assertThrows(ApplicationException.class, () -> underTest.getById(any(Long.class)));
+        assertThrows(ServiceException.class, () -> underTest.getById(any(Long.class)));
     }
 
     @Test
@@ -121,6 +121,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @SneakyThrows
     void canGetByEmail() {
         String email = "test@gmail.com";
         ArgumentCaptor<String> emailCaptor =
@@ -136,10 +137,10 @@ class UserServiceImplTest {
     }
 
     @Test
-    void getByEmailShouldThrowApplicationException() {
+    void getByEmailShouldThrowServiceException() {
         given(userRepository.findByEmail(any()))
                 .willReturn(Optional.empty());
 
-        assertThrows(ApplicationException.class, () -> underTest.getByEmail(any()));
+        assertThrows(ServiceException.class, () -> underTest.getByEmail(any()));
     }
 }

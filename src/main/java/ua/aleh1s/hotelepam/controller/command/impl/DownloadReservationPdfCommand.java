@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
+import ua.aleh1s.hotelepam.exception.ApplicationException;
 import ua.aleh1s.hotelepam.service.PdfBuilderService;
 import ua.aleh1s.hotelepam.utils.Utils;
 
@@ -15,7 +16,7 @@ import java.io.OutputStream;
 public class DownloadReservationPdfCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ApplicationException {
         PdfBuilderService pdfBuilderService = AppContext.getInstance().getPdfBuilderService();
 
         Long reservationId = Utils.getLongValue(request, "reservationId");

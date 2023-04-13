@@ -6,8 +6,9 @@ import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
+import ua.aleh1s.hotelepam.exception.ApplicationException;
 import ua.aleh1s.hotelepam.model.dto.ReservationDto;
-import ua.aleh1s.hotelepam.model.dtomapper.ReservationDtoMapper;
+import ua.aleh1s.hotelepam.model.dtomapper.entitytodto.ReservationDtoMapper;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
@@ -21,7 +22,7 @@ import static ua.aleh1s.hotelepam.utils.Utils.getNumberOfPages;
 public class MyBookingsCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ApplicationException {
         ReservationService reservationService = AppContext.getInstance().getReservationService();
         ReservationDtoMapper reservationDtoMapper = AppContext.getInstance().getReservationDtoMapper();
 

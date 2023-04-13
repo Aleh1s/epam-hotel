@@ -6,10 +6,11 @@ import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
+import ua.aleh1s.hotelepam.exception.ApplicationException;
 import ua.aleh1s.hotelepam.model.dto.RequestDto;
 import ua.aleh1s.hotelepam.model.dto.UserDto;
-import ua.aleh1s.hotelepam.model.dtomapper.RequestDtoMapper;
-import ua.aleh1s.hotelepam.model.dtomapper.UserDtoMapper;
+import ua.aleh1s.hotelepam.model.dtomapper.entitytodto.RequestDtoMapper;
+import ua.aleh1s.hotelepam.model.dtomapper.entitytodto.UserDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.utils.Page;
@@ -24,7 +25,7 @@ import static ua.aleh1s.hotelepam.utils.Utils.getIntValueOrDefault;
 
 public class ProfileCommand implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ApplicationException {
         UserService userService = AppContext.getInstance().getUserService();
         RequestService requestService = AppContext.getInstance().getRequestService();
         RequestDtoMapper requestDtoMapper = AppContext.getInstance().getRequestDtoMapper();

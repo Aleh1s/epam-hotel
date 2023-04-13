@@ -4,19 +4,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
+import ua.aleh1s.hotelepam.exception.ApplicationException;
 import ua.aleh1s.hotelepam.service.ApplicationService;
 import ua.aleh1s.hotelepam.service.UserService;
 import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.model.dtomapper.ApplicationDtoMapper;
-import ua.aleh1s.hotelepam.model.dtomapper.UserDtoMapper;
+import ua.aleh1s.hotelepam.model.dtomapper.entitytodto.ApplicationDtoMapper;
+import ua.aleh1s.hotelepam.model.dtomapper.entitytodto.UserDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 
 public class ViewApplicationDetailsCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ApplicationException {
         Long applicationId = Utils.getLongValue(request, "applicationId");
 
         ApplicationDtoMapper applicationDtoMapper = AppContext.getInstance().getApplicationDtoMapper();

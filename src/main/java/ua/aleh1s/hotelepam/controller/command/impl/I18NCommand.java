@@ -6,20 +6,20 @@ import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
+import ua.aleh1s.hotelepam.exception.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.service.UserService;
-import ua.aleh1s.hotelepam.service.impl.UserServiceImpl;
 
-import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
 public class I18NCommand implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ApplicationException {
         Optional<String> langOptional = Optional.ofNullable(request.getParameter("lang"));
-        langOptional.ifPresent(s -> setLang(request, s));
+        if (langOptional.isPresent())
+            setLang(request, langOptional.get());
 
         String path;
         HttpSession session = request.getSession(false);
@@ -33,7 +33,7 @@ public class I18NCommand implements Command {
         return path;
     }
 
-    private void setLang(HttpServletRequest request, String lang) {
+    private void setLang(HttpServletRequest request, String lang) throws ApplicationException {
         Optional<HttpSession> sessionOptional = Optional.ofNullable(request.getSession(false));
         if (sessionOptional.isPresent())
             setLangToExistingSession(sessionOptional.get(), lang);
@@ -41,9 +41,10 @@ public class I18NCommand implements Command {
             createSessionAndSetLang(request, lang);
     }
 
-    private void setLangToExistingSession(HttpSession session, String lang) {
+    private void setLangToExistingSession(HttpSession session, String lang) throws ApplicationException {
         Optional<Long> userIdOptional = Optional.ofNullable((Long) session.getAttribute("id"));
-        userIdOptional.ifPresent(aLong -> updateUserEntityLang(lang, aLong));
+        if (userIdOptional.isPresent())
+            updateUserEntityLang(lang, userIdOptional.get());
         setLangAttribute(session, lang);
     }
 
@@ -59,7 +60,7 @@ public class I18NCommand implements Command {
         setLangAttribute(session, lang);
     }
 
-    private void updateUserEntityLang(String lang, Long userId) {
+    private void updateUserEntityLang(String lang, Long userId) throws ApplicationException {
         UserService userService = AppContext.getInstance().getUserService();
         UserEntity user = userService.getById(userId);
 

@@ -1,5 +1,6 @@
 package ua.aleh1s.hotelepam.service.impl;
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,6 +38,7 @@ class PaymentServiceImplTest {
     }
 
     @Test
+    @SneakyThrows
     void payReservation() {
         Long reservationId = 1L, customerId = 1L;
         ReservationEntity reservation = ReservationEntity.builder()

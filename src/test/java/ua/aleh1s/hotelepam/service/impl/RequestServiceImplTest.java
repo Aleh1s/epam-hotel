@@ -1,5 +1,6 @@
 package ua.aleh1s.hotelepam.service.impl;
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,10 +8,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.entity.RequestStatus;
-import ua.aleh1s.hotelepam.model.repository.RequestRepository;
 import ua.aleh1s.hotelepam.model.repository.impl.RequestRepositoryImpl;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
@@ -54,6 +54,7 @@ class RequestServiceImplTest {
     }
 
     @Test
+    @SneakyThrows
     void canGetById() {
         Long id = 1L;
 
@@ -72,11 +73,11 @@ class RequestServiceImplTest {
     }
 
     @Test
-    void getByIdShouldThrowApplicationException() {
+    void getByIdShouldThrowServiceException() {
         given(requestRepository.findById(any()))
                 .willReturn(Optional.empty());
 
-        assertThrows(ApplicationException.class, () -> underTest.getById(any()));
+        assertThrows(ServiceException.class, () -> underTest.getById(any()));
     }
 
     @Test
@@ -117,6 +118,7 @@ class RequestServiceImplTest {
     }
 
     @Test
+    @SneakyThrows
     void changeStatus() {
         request.setStatus(NEW);
         RequestStatus expected = CONFIRMED;

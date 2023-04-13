@@ -1,16 +1,8 @@
 package ua.aleh1s.hotelepam.model.criteria;
 
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.utils.Period;
-import ua.aleh1s.hotelepam.utils.Utils;
-
-import java.time.LocalDate;
-import java.util.Objects;
 
 @Setter
 @Getter

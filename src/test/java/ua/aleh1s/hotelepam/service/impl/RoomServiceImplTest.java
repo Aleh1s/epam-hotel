@@ -1,5 +1,6 @@
 package ua.aleh1s.hotelepam.service.impl;
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -45,6 +46,7 @@ class RoomServiceImplTest {
     }
 
     @Test
+    @SneakyThrows
     void canCheckIsRoomAvailableTrue() {
         Integer roomNumber = 1;
         Period period = Period.between(
@@ -73,6 +75,7 @@ class RoomServiceImplTest {
     }
 
     @Test
+    @SneakyThrows
     void canCheckIsRoomAvailableFalse() {
         Integer roomNumber = 1;
         Period period = Period.between(
@@ -131,6 +134,7 @@ class RoomServiceImplTest {
 //    }
 
     @Test
+    @SneakyThrows
     void canGetTotalPrice() {
         room.setPrice(BigDecimal.TEN);
 
@@ -152,6 +156,7 @@ class RoomServiceImplTest {
     }
 
     @Test
+    @SneakyThrows
     void canGetByRoomNumber() {
         Integer roomNumber = 1;
         ArgumentCaptor<Integer> roomNumberCaptor =

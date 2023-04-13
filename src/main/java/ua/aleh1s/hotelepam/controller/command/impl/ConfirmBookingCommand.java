@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
@@ -16,13 +16,12 @@ import ua.aleh1s.hotelepam.service.RoomService;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-import static java.util.Objects.*;
-import static ua.aleh1s.hotelepam.model.entity.ReservationStatus.*;
+import static ua.aleh1s.hotelepam.model.entity.ReservationStatus.PENDING_PAYMENT;
 
 public class ConfirmBookingCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ApplicationException {
         ReservationTokenService reservationTokenService = AppContext.getInstance().getReservationTokenService();
         ReservationService reservationService = AppContext.getInstance().getReservationService();
         RoomService roomService = AppContext.getInstance().getRoomService();

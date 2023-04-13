@@ -2,9 +2,8 @@ package ua.aleh1s.hotelepam.service.impl;
 
 import lombok.AllArgsConstructor;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
-import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.service.PaymentService;
@@ -26,21 +25,19 @@ public class PaymentServiceImpl implements PaymentService {
     private final RoomService roomService;
 
     @Override
-    public ReservationEntity payReservation(Long reservationId, Long userId) {
-        ResourcesManager resourcesManager = ResourcesManager.getInstance();
+    public ReservationEntity payReservation(Long reservationId, Long userId) throws ServiceException {
         ReservationEntity reservation = reservationService.getById(reservationId);
         RoomEntity room = roomService.getByRoomNumber(reservation.getRoomNumber());
 
-        String path = resourcesManager.getValue("path.command.my.bookings");
         if (!Objects.equals(reservation.getCustomerId(), userId))
-            throw new ApplicationException("You cannot pay this reservation!", path);
+            throw new ServiceException("You cannot pay this reservation!");
 
         if (room.getIsUnavailable())
-            throw new ApplicationException("Room is unavailable now. Try to pick another room.", path);
+            throw new ServiceException("Room is unavailable now. Try to pick another room.");
 
         if (reservation.getExpiredAt().isBefore(LocalDateTime.now())) {
             reservationService.cancelReservation(reservation);
-            throw new ApplicationException("Reservation was canceled!", path);
+            throw new ServiceException("Reservation was canceled!");
         }
 
         UserEntity user = userService.getById(userId);
@@ -49,7 +46,7 @@ public class PaymentServiceImpl implements PaymentService {
         BigDecimal totalAmount = reservation.getTotalAmount();
 
         if (totalAmount.compareTo(userAccount) > 0)
-            throw new ApplicationException("You don't have enough money!", path);
+            throw new ServiceException("You don't have enough money!");
 
         user.setAccount(userAccount.subtract(totalAmount));
         reservation.setPayedAt(LocalDateTime.now());

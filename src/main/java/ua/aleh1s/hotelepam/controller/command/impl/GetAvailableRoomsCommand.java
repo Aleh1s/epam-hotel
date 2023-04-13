@@ -5,11 +5,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.command.Command;
+import ua.aleh1s.hotelepam.exception.ApplicationException;
 import ua.aleh1s.hotelepam.model.criteria.RoomCriteria;
 import ua.aleh1s.hotelepam.model.dto.RoomDto;
-import ua.aleh1s.hotelepam.model.dtomapper.RoomDtoMapper;
+import ua.aleh1s.hotelepam.model.dtomapper.entitytodto.RoomDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.service.RoomService;
 import ua.aleh1s.hotelepam.utils.Page;
@@ -24,7 +24,7 @@ import static ua.aleh1s.hotelepam.utils.Utils.*;
 public class GetAvailableRoomsCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ApplicationException {
         ResourcesManager resourcesManager = ResourcesManager.getInstance();
         RoomDtoMapper roomDtoMapper = AppContext.getInstance().getRoomDtoMapper();
         RoomService roomService = AppContext.getInstance().getRoomService();
@@ -67,8 +67,8 @@ public class GetAvailableRoomsCommand implements Command {
         if (availableRoomPage.result().isEmpty())
             throw new ApplicationException("There are no available rooms. Try to pick another date.", path);
 
-        availableRoomPage.result().forEach(room ->
-                room.setPrice(roomService.getTotalPrice(room, requestedPeriod)));
+        for (RoomEntity room : availableRoomPage.result())
+            room.setPrice(roomService.getTotalPrice(room, requestedPeriod));
 
         List<RoomDto> roomDtoList = availableRoomPage.result().stream()
                 .map(roomDtoMapper)

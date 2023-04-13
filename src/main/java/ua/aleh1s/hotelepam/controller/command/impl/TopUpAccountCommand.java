@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
+import ua.aleh1s.hotelepam.exception.ApplicationException;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.service.UserService;
 import ua.aleh1s.hotelepam.service.impl.UserServiceImpl;
@@ -17,7 +18,7 @@ import static ua.aleh1s.hotelepam.utils.Utils.getBigDecimalValue;
 
 public class TopUpAccountCommand implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ApplicationException {
         ResourcesManager resourcesManager = ResourcesManager.getInstance();
 
         BigDecimal amount = getBigDecimalValue(request, "amount");

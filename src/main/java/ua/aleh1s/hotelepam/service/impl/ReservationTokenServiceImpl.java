@@ -1,14 +1,13 @@
 package ua.aleh1s.hotelepam.service.impl;
 
 import lombok.AllArgsConstructor;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
 import ua.aleh1s.hotelepam.model.repository.ReservationTokenRepository;
 import ua.aleh1s.hotelepam.service.ReservationTokenService;
 
 import java.time.LocalDateTime;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @AllArgsConstructor
@@ -22,17 +21,17 @@ public class ReservationTokenServiceImpl implements ReservationTokenService {
     }
 
     @Override
-    public void confirmToken(ReservationTokenEntity reservationToken) {
+    public void confirmToken(ReservationTokenEntity reservationToken) throws ServiceException {
         if (nonNull(reservationToken.getConfirmedAt()))
-            throw new ApplicationException("Token has already confirmed!");
+            throw new ServiceException("Token has already confirmed!");
 
         reservationToken.setConfirmedAt(LocalDateTime.now());
         reservationTokenRepository.update(reservationToken);
     }
 
     @Override
-    public ReservationTokenEntity getById(String tokenId) {
+    public ReservationTokenEntity getById(String tokenId) throws ServiceException {
         return reservationTokenRepository.findById(tokenId)
-                .orElseThrow(ApplicationException::new);
+                .orElseThrow(() -> new ServiceException("Reservation token with id " + tokenId + " does not exist"));
     }
 }

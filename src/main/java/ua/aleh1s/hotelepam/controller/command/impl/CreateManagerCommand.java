@@ -5,45 +5,32 @@ import jakarta.servlet.http.HttpServletResponse;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.model.entity.UserEntity;
+import ua.aleh1s.hotelepam.exception.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
+import ua.aleh1s.hotelepam.model.dto.SignupCredentials;
+import ua.aleh1s.hotelepam.model.dtomapper.requesttodto.SignupCredentialsDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.UserRole;
-import ua.aleh1s.hotelepam.service.RegistrationService;
+import ua.aleh1s.hotelepam.service.AuthService;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Locale;
 
 public class CreateManagerCommand implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ApplicationException {
         ResourcesManager resourcesManager = ResourcesManager.getInstance();
-        RegistrationService registrationService = AppContext.getInstance().getRegistrationService();
+        AuthService authService = AppContext.getInstance().getAuthService();
+        SignupCredentialsDtoMapper credentialsDtoMapper = AppContext.getInstance().getSignupCredentialsDtoMapper();
 
-        // todo: write validation
-        String phoneNumber = request.getParameter("phoneNumber").trim();
-        String firstName = request.getParameter("firstName").trim();
-        String lastName = request.getParameter("lastName").trim();
-        String password = request.getParameter("password").trim();
-        String email = request.getParameter("email").trim();
+        SignupCredentials credentials = credentialsDtoMapper.apply(request);
 
-        Locale defaultLocale = new Locale("");
-        UserRole userRole = UserRole.MANAGER;
-
-        UserEntity userEntity = UserEntity.builder()
-                .email(email).firstName(firstName).lastName(lastName)
-                .phoneNumber(phoneNumber).password(password).locale(defaultLocale)
-                .role(userRole).account(BigDecimal.ZERO)
-                .build();
-
-        registrationService.register(userEntity);
-
-        String path = resourcesManager.getValue("path.command.get.rooms");
+        String path = resourcesManager.getValue("path.page.create.manager");
         try {
-            response.sendRedirect(path);
-            path = "redirect";
-        } catch (IOException e) {
-            path = resourcesManager.getValue("path.page.error");
+            authService.register(credentials, UserRole.MANAGER);
+        } catch (ApplicationException e) {
+            e.setPath(path);
+            throw e;
         }
-        return path;
+
+        return redirect(resourcesManager.getValue("path.command.get.rooms"), response);
     }
 }

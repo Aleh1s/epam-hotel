@@ -20,26 +20,26 @@
                 <h1 class="form-header"><fmt:message key="create.manager"/></h1>
                 <div class="input-group">
                     <fmt:message var="email" key="email"/>
-                    <input class="form-input" id="email" name="email" type="email" placeholder="${email}" required>
+                    <input class="custom-form-input" id="email" name="email" type="email" placeholder="${email}" required>
                 </div>
                 <div class="input-group">
                     <fmt:message var="password" key="password"/>
-                    <input class="form-input" id="password" name="password" type="password" placeholder="${password}"
+                    <input class="custom-form-input" id="password" name="password" type="password" placeholder="${password}"
                            required>
                 </div>
                 <div class="input-group">
                     <fmt:message var="firstName" key="first.name"/>
-                    <input class="form-input" id="firstName" name="firstName" type="text" placeholder="${firstName}"
+                    <input class="custom-form-input" id="firstName" name="firstName" type="text" placeholder="${firstName}"
                            required>
                 </div>
                 <div class="input-group">
                     <fmt:message var="lastName" key="last.name"/>
-                    <input class="form-input" id="lastName" name="lastName" type="text" placeholder="${lastName}"
+                    <input class="custom-form-input" id="lastName" name="lastName" type="text" placeholder="${lastName}"
                            required>
                 </div>
                 <div class="input-group">
                     <fmt:message var="phoneNumber" key="phone.number"/>
-                    <input class="form-input" id="phoneNumber" name="phoneNumber" type="tel"
+                    <input class="custom-form-input" id="phoneNumber" name="phoneNumber" type="tel"
                            placeholder="${phoneNumber}" required>
                 </div>
                 <button class="btn-primary" type="submit"><fmt:message key="create.manager"/></button>

@@ -1,7 +1,7 @@
 package ua.aleh1s.hotelepam.service.impl;
 
 import lombok.AllArgsConstructor;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
 import ua.aleh1s.hotelepam.utils.Page;
@@ -15,9 +15,9 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationRepository applicationRepository;
 
     @Override
-    public ApplicationEntity getApplicationById(Long id) {
+    public ApplicationEntity getApplicationById(Long id) throws ServiceException {
         return applicationRepository.findById(id)
-                .orElseThrow(ApplicationException::new);
+                .orElseThrow(() -> new ServiceException("Application with id " + id +" does not exist"));
     }
 
     @Override

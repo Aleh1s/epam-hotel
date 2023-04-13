@@ -1,12 +1,13 @@
 package ua.aleh1s.hotelepam.service.impl;
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
@@ -41,6 +42,7 @@ class BookingServiceImplTest {
     private BookingServiceImpl underTest;
 
     @Test
+    @SneakyThrows
     void canBookRoom() {
         Integer roomNumber = 1;
         Long customerId = 1L, reservationId = 1L;
@@ -94,17 +96,18 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void bookRoomShouldThrowApplicationException1() {
+    void bookRoomShouldThrowServiceException1() {
         Period invalidPeriod = Period.between(
                 LocalDate.of(2023, 10, 6),
                 LocalDate.of(2023, 10, 1)
         );
 
-        assertThrows(ApplicationException.class, () -> underTest.bookRoom(1, 1L, invalidPeriod));
+        assertThrows(ServiceException.class, () -> underTest.bookRoom(1, 1L, invalidPeriod));
     }
 
     @Test
-    void bookRoomShouldThrowApplicationException2() {
+    @SneakyThrows
+    void bookRoomShouldThrowServiceException2() {
         Integer roomNumber = 1;
 
         RoomEntity room = RoomEntity.builder().build();
@@ -119,6 +122,6 @@ class BookingServiceImplTest {
         given(roomService.isRoomAvailable(roomNumber, validPeriod))
                 .willReturn(false);
 
-        assertThrows(ApplicationException.class, () -> underTest.bookRoom(roomNumber, 1L, validPeriod));
+        assertThrows(ServiceException.class, () -> underTest.bookRoom(roomNumber, 1L, validPeriod));
     }
 }

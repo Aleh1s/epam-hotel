@@ -1,7 +1,7 @@
 package ua.aleh1s.hotelepam.service.impl;
 
 import lombok.AllArgsConstructor;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
@@ -21,9 +21,9 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public ReservationEntity getById(Long id) {
+    public ReservationEntity getById(Long id) throws ServiceException {
         return reservationRepository.findById(id)
-                .orElseThrow(ApplicationException::new);
+                .orElseThrow(() -> new ServiceException("Reservation with id " + id + " does not exist"));
     }
 
     @Override

@@ -2,7 +2,7 @@ package ua.aleh1s.hotelepam.service.impl;
 
 import lombok.AllArgsConstructor;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.entity.RequestStatus;
 import ua.aleh1s.hotelepam.model.repository.RequestRepository;
@@ -23,9 +23,9 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public RequestEntity getById(Long id) {
+    public RequestEntity getById(Long id) throws ServiceException {
         return requestRepository.findById(id)
-                .orElseThrow(ApplicationException::new);
+                .orElseThrow(() -> new ServiceException("Request with id " + id + " does not exist"));
     }
 
     @Override
@@ -39,11 +39,9 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public void changeStatus(RequestEntity request, RequestStatus requestStatus) {
-        String path = ResourcesManager.getInstance().getValue("path.command.profile");
-
+    public void changeStatus(RequestEntity request, RequestStatus requestStatus) throws ServiceException {
         if (!request.getStatus().equals(NEW))
-            throw new ApplicationException("You cannot change status", path);
+            throw new ServiceException("You cannot change status");
 
         request.setStatus(requestStatus);
         update(request);

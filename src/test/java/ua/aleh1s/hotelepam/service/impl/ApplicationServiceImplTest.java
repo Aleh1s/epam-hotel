@@ -1,5 +1,6 @@
 package ua.aleh1s.hotelepam.service.impl;
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,7 +8,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
 import ua.aleh1s.hotelepam.model.repository.impl.ApplicationRepositoryImpl;
@@ -40,6 +41,7 @@ class ApplicationServiceImplTest {
     }
 
     @Test
+    @SneakyThrows
     void canGetApplicationById() {
         Long id = 1L;
         ArgumentCaptor<Long> idCaptor =
@@ -55,11 +57,11 @@ class ApplicationServiceImplTest {
     }
 
     @Test
-    void getApplicationByIdShouldThrowApplicationException() {
+    void getApplicationByIdShouldThrowServiceException() {
         given(applicationRepository.findById(any()))
                 .willReturn(Optional.empty());
 
-        assertThrows(ApplicationException.class, () -> underTest.getApplicationById(any()));
+        assertThrows(ServiceException.class, () -> underTest.getApplicationById(any()));
     }
 
     @Test

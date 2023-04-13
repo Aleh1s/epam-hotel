@@ -1,4 +1,4 @@
-package ua.aleh1s.hotelepam.model.dtomapper;
+package ua.aleh1s.hotelepam.model.dtomapper.entitytodto;
 
 import ua.aleh1s.hotelepam.model.dto.ReservationDto;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;

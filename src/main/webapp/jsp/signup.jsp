@@ -1,3 +1,5 @@
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ include file="/WEB-INF/jspf/encoding.jspf" %>
 <%@ include file="/WEB-INF/jspf/taglibs.jspf" %>
 <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
@@ -5,47 +7,72 @@
 
 <html>
 <head>
-    <title>Sign up</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Signup</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<c:import url="component/header.jsp"/>
 <tags:errorhandler message="${requestScope.errorMessage}"/>
-<div class="container">
+<c:import url="component/header.jsp"/>
+<main class="container">
     <div class="main">
-        <div class="form-container">
-            <form class="custom-form" action="<c:url value="/controller?command=signup"/>" method="post">
-                <h1 class="form-header"><fmt:message key="signup.info"/></h1>
+        <div class="form">
+            <h1 class="text-center"><fmt:message key="welcome"/></h1>
+            <form action="<c:url value="/controller?command=signup"/>" method="post">
 
-                <div class="input-group">
+                <c:set var="errors" value="${requestScope.errors}"/>
+                <div class="form-group">
                     <fmt:message var="email" key="email"/>
-                    <input class="form-input" id="email" name="email" type="email" placeholder="${email}" required>
+                    <label class="form-label" for="email">${email}</label>
+                    <input class="form-control" id="email" name="email" type="email" placeholder="${email}"
+                           required>
+                    <tags:fielderror messages="${errors['email']}"/>
                 </div>
-                <div class="input-group">
+
+                <div class="form-group">
                     <fmt:message var="password" key="password"/>
-                    <input class="form-input" id="password" name="password" type="password" placeholder="${password}"
+                    <label class="form-label" for="password">${password}</label>
+                    <input class="form-control" id="password" name="password" type="password"
+                           placeholder="${password}"
                            required>
+                    <tags:fielderror messages="${errors['password']}"/>
                 </div>
-                <div class="input-group">
+                <div class="form-group">
                     <fmt:message var="firstName" key="first.name"/>
-                    <input class="form-input" id="firstName" name="firstName" type="text" placeholder="${firstName}"
+                    <label class="form-label" for="firstName">${firstName}</label>
+                    <input class="form-control" id="firstName" name="firstName" type="text"
+                           placeholder="${firstName}"
                            required>
+                    <tags:fielderror messages="${errors['firstName']}"/>
                 </div>
-                <div class="input-group">
+                <div class="form-group">
                     <fmt:message var="lastName" key="last.name"/>
-                    <input class="form-input" id="lastName" name="lastName" type="text" placeholder="${lastName}"
+                    <label class="form-label" for="lastName">${lastName}</label>
+                    <input class="form-control" id="lastName" name="lastName" type="text" placeholder="${lastName}"
                            required>
+                    <tags:fielderror messages="${errors['lastName']}"/>
                 </div>
-                <div class="input-group">
+                <div class="form-group">
                     <fmt:message var="phoneNumber" key="phone.number"/>
-                    <input class="form-input" id="phoneNumber" name="phoneNumber" type="tel"
+                    <label class="form-label" for="phoneNumber">${phoneNumber}</label>
+                    <input class="form-control" id="phoneNumber" name="phoneNumber" type="tel"
                            placeholder="${phoneNumber}" required>
+                    <tags:fielderror messages="${errors['phoneNumber']}"/>
                 </div>
-                <button class="btn-primary" type="submit"><fmt:message key="sign.up"/></button>
+
+                <div class="form-group">
+                    <a class="link-primary fs-6" href="<c:url value="login.jsp"/>">Have already account? Log in!</a>
+                </div>
+
+                <div class="form-input">
+                    <input class="btn btn-success w-100 fs-6" type="submit" value="<fmt:message key="sign.up"/>"/>
+                </div>
             </form>
         </div>
     </div>
-    <c:import url="component/footer.jsp"/>
-</div>
+</main>
+<c:import url="component/footer.jsp"/>
 </body>
 </html>

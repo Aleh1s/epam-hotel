@@ -1,8 +1,7 @@
 package ua.aleh1s.hotelepam.service.impl;
 
 import lombok.AllArgsConstructor;
-import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.criteria.Order;
 import ua.aleh1s.hotelepam.model.criteria.RoomCriteria;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
@@ -15,7 +14,6 @@ import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.utils.Period;
 
 import java.math.BigDecimal;
-import java.sql.Blob;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,7 +46,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public boolean isRoomAvailable(Integer number, Period period) {
+    public boolean isRoomAvailable(Integer number, Period period) throws ServiceException {
         RoomEntity room = getByRoomNumber(number);
         if (room.getIsUnavailable())
             return false;
@@ -116,7 +114,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public BigDecimal getTotalPrice(Integer roomNumber, Period requestedPeriod) {
+    public BigDecimal getTotalPrice(Integer roomNumber, Period requestedPeriod) throws ServiceException {
         RoomEntity room = getByRoomNumber(roomNumber);
         return getTotalPrice(room.getPrice(), requestedPeriod);
     }
@@ -127,9 +125,9 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public RoomEntity getByRoomNumber(Integer roomNumber) {
+    public RoomEntity getByRoomNumber(Integer roomNumber) throws ServiceException {
         return roomRepository.getByRoomNumber(roomNumber)
-                .orElseThrow(ApplicationException::new);
+                .orElseThrow(() -> new ServiceException("Room with room number " + roomNumber + " does not exist"));
     }
 
     @Override

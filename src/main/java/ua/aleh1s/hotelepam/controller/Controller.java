@@ -11,9 +11,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.command.CommandFactory;
 import ua.aleh1s.hotelepam.controller.command.impl.UnknownCommand;
+import ua.aleh1s.hotelepam.controller.exception.HandlerFactory;
+import ua.aleh1s.hotelepam.exception.ApplicationException;
 import ua.aleh1s.hotelepam.model.jdbc.DBManager;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class Controller extends HttpServlet {
 
     private static final Logger log = LogManager.getLogger(Controller.class);
     private CommandFactory commandFactory;
+    private HandlerFactory handlerFactory;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -31,6 +33,7 @@ public class Controller extends HttpServlet {
         log.trace("Controller initialization");
         DBManager.getInstance();
         commandFactory = CommandFactory.getInstance();
+        handlerFactory = HandlerFactory.getInstance();
         log.trace("Controller initialized");
     }
 
@@ -57,8 +60,7 @@ public class Controller extends HttpServlet {
         try {
             path = command.execute(request, response);
         } catch (ApplicationException e) {
-            request.setAttribute("errorMessage", e.getMessage());
-            path = e.getPath();
+            path = handlerFactory.getHandler(e).handle(e, request, response);
         }
 
         if (!path.equals("redirect")) {

@@ -77,16 +77,16 @@
                             <fmt:message key="room.number"/>
                             <input id="room-number" placeholder="<fmt:message key="room.number"/>" type="number"
                                    name="roomNumber"
-                                   class="form-input" value="1" min="1" required>
+                                   class="custom-form-input" value="1" min="1" required>
                         </label>
                         <label for="date-of-entry">
                             <fmt:message key="check.in"/>
-                            <input id="date-of-entry" class="form-input" name="checkIn" type="date"
+                            <input id="date-of-entry" class="custom-form-input" name="checkIn" type="date"
                                    max="2024-01-01" required>
                         </label>
                         <label for="date-of-leaving">
                             <fmt:message key="check.out"/>
-                            <input id="date-of-leaving" class="form-input" name="checkOut" type="date"
+                            <input id="date-of-leaving" class="custom-form-input" name="checkOut" type="date"
                                    max="2024-01-01" required>
                         </label>
                         <button type="submit" class="btn-primary"><fmt:message key="request"/></button>

@@ -5,8 +5,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
 import ua.aleh1s.hotelepam.controller.command.Command;
+import ua.aleh1s.hotelepam.exception.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
@@ -25,7 +26,7 @@ import static ua.aleh1s.hotelepam.utils.Utils.toDate;
 public class ConfirmRequestCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ApplicationException {
         ResourcesManager resourcesManager = ResourcesManager.getInstance();
 
         RequestService requestService = AppContext.getInstance().getRequestService();
@@ -48,7 +49,12 @@ public class ConfirmRequestCommand implements Command {
         if (!Objects.equals(requestEntity.getCustomerId(), userId))
             throw new ApplicationException("You cannot change status", path);
 
-        requestService.changeStatus(requestEntity, CONFIRMED);
+        try {
+            requestService.changeStatus(requestEntity, CONFIRMED);
+        } catch (ServiceException e) {
+            e.setPath(resourcesManager.getValue("path.command.profile"));
+            throw e;
+        }
 
         ReservationEntity reservation = bookingService.bookRoom(
                 requestEntity.getRoomNumber(),
@@ -63,14 +69,6 @@ public class ConfirmRequestCommand implements Command {
         session.setAttribute("reservationCheckIn", toDate(requestEntity.getCheckIn()));
         session.setAttribute("reservationCheckOut", toDate(requestEntity.getCheckOut()));
 
-        path = ResourcesManager.getInstance().getValue("path.page.success.booking");
-        try {
-            response.sendRedirect(path);
-            path = "redirect";
-        } catch (IOException e) {
-            throw new ApplicationException();
-        }
-
-        return path;
+        return redirect(resourcesManager.getValue("path.page.success.booking"), response);
     }
 }

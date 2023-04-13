@@ -3,6 +3,7 @@ package ua.aleh1s.hotelepam.service.impl;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import lombok.AllArgsConstructor;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
@@ -38,7 +39,7 @@ public class PdfBuilderServiceImpl implements PdfBuilderService {
     private final RoomService roomService;
     private final UserService userService;
 
-    public ByteArrayOutputStream buildReservationPdfById(Long id) {
+    public ByteArrayOutputStream buildReservationPdfById(Long id) throws ServiceException {
         ReservationEntity reservation = reservationService.getById(id);
         RoomEntity room = roomService.getByRoomNumber(reservation.getRoomNumber());
         UserEntity user = userService.getById(reservation.getCustomerId());

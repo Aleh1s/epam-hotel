@@ -2,7 +2,7 @@ package ua.aleh1s.hotelepam.service.impl;
 
 import lombok.AllArgsConstructor;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
-import ua.aleh1s.hotelepam.controller.command.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.*;
 import ua.aleh1s.hotelepam.utils.Mail;
 import ua.aleh1s.hotelepam.service.MailService;
@@ -28,16 +28,13 @@ public class BookingServiceImpl implements BookingService {
     private final UserService userService;
 
     @Override
-    public ReservationEntity bookRoom(Integer roomNumber, Long customerId, Period requestedPeriod) {
-        ResourcesManager resourcesManager = ResourcesManager.getInstance();
-
-        String path = resourcesManager.getValue("path.command.view.room");
+    public ReservationEntity bookRoom(Integer roomNumber, Long customerId, Period requestedPeriod) throws ServiceException {
         if (!isReservationPeriodValid(requestedPeriod))
-            throw new ApplicationException("Invalid range of date", path);
+            throw new ServiceException("Invalid range of date");
 
         RoomEntity room = roomService.getByRoomNumber(roomNumber);
         if (!roomService.isRoomAvailable(roomNumber, requestedPeriod))
-            throw new ApplicationException("Room is unavailable, try pick another room.", path);
+            throw new ServiceException("Room is unavailable, try pick another room");
 
         UserEntity user = userService.getById(customerId);
         BigDecimal totalAmount = roomService.getTotalPrice(room, requestedPeriod);
