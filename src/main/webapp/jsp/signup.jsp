@@ -25,7 +25,7 @@
                 <c:set var="errors" value="${requestScope.errors}"/>
                 <div class="form-group">
                     <fmt:message var="email" key="email"/>
-                    <label class="form-label" for="email">${email}</label>
+                    <label class="form-label fs-6" for="email">${email}</label>
                     <input class="form-control" id="email" name="email" type="email" placeholder="${email}"
                            required>
                     <tags:fielderror messages="${errors['email']}"/>
@@ -33,7 +33,7 @@
 
                 <div class="form-group">
                     <fmt:message var="password" key="password"/>
-                    <label class="form-label" for="password">${password}</label>
+                    <label class="form-label fs-6" for="password">${password}</label>
                     <input class="form-control" id="password" name="password" type="password"
                            placeholder="${password}"
                            required>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="form-group">
                     <fmt:message var="firstName" key="first.name"/>
-                    <label class="form-label" for="firstName">${firstName}</label>
+                    <label class="form-label fs-6" for="firstName">${firstName}</label>
                     <input class="form-control" id="firstName" name="firstName" type="text"
                            placeholder="${firstName}"
                            required>
@@ -49,21 +49,25 @@
                 </div>
                 <div class="form-group">
                     <fmt:message var="lastName" key="last.name"/>
-                    <label class="form-label" for="lastName">${lastName}</label>
+                    <label class="form-label fs-6" for="lastName">${lastName}</label>
                     <input class="form-control" id="lastName" name="lastName" type="text" placeholder="${lastName}"
                            required>
                     <tags:fielderror messages="${errors['lastName']}"/>
                 </div>
                 <div class="form-group">
                     <fmt:message var="phoneNumber" key="phone.number"/>
-                    <label class="form-label" for="phoneNumber">${phoneNumber}</label>
-                    <input class="form-control" id="phoneNumber" name="phoneNumber" type="tel"
-                           placeholder="${phoneNumber}" required>
+                    <label class="form-label fs-6" for="phoneNumber">${phoneNumber}</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="phone-start-addon">+380</span>
+                        <input class="form-control" id="phoneNumber" name="phoneNumber" type="text"
+                               placeholder="${phoneNumber}" required aria-describedby="phone-start-addon">
+                    </div>
                     <tags:fielderror messages="${errors['phoneNumber']}"/>
                 </div>
 
                 <div class="form-group">
-                    <a class="link-primary fs-6" href="<c:url value="login.jsp"/>">Have already account? Log in!</a>
+                    <a class="link-primary fs-6" href="<c:url value="/jsp/login.jsp"/>">Have already account? Log
+                        in!</a>
                 </div>
 
                 <div class="form-input">

@@ -24,7 +24,14 @@
             </div>
         </div>
         <div class="description">
-            <p>${room.description()}</p>
+            <c:choose>
+                <c:when test="${room.description().length() > 50}">
+                    ${room.description().substring(0, 50)}...
+                </c:when>
+                <c:otherwise>
+                    ${room.description()}
+                </c:otherwise>
+            </c:choose>
         </div>
         <div class="properties">
             <fmt:message var="beds" key="beds"/>

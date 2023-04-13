@@ -7,13 +7,16 @@
 <head>
     <title>My bookings</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <c:import url="component/header.jsp"/>
 <tags:errorhandler message="${requestScope.errorMessage}"/>
 <div class="container">
-    <div class="main">
-        <div class="main-container">
+    <div class="main" style="height: 100%">
+        <div  class="main-container">
             <fmt:message var="reservationsMessage" key="reservations"/>
             <tags:horizontaldelimiter message="${reservationsMessage}"/>
 
@@ -58,11 +61,13 @@
                                             <form action="<c:url value="/controller"/>" method="get">
                                                 <input type="hidden" name="command" value="downloadReservationPdf"/>
                                                 <input type="hidden" name="reservationId" value="${reservation.id()}">
-                                                <button type="submit" class="btn-accept"><fmt:message key="download.pdf"/></button>
+                                                <button type="submit" class="btn-accept"><fmt:message
+                                                        key="download.pdf"/></button>
                                             </form>
                                         </c:when>
                                         <c:otherwise>
-                                            <button disabled class="btn-accept disabled"><fmt:message key="download.pdf"/></button>
+                                            <button disabled class="btn-accept disabled"><fmt:message
+                                                    key="download.pdf"/></button>
                                         </c:otherwise>
                                     </c:choose>
                                     <form action="<c:url value="/controller"/>" method="get">
@@ -85,7 +90,7 @@
                              command="myBookings"/>
         </div>
     </div>
-    <c:import url="component/footer.jsp"/>
 </div>
+<c:import url="component/footer.jsp"/>
 </body>
 </html>

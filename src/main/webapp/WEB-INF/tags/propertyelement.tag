@@ -3,9 +3,9 @@
 
 <div class="element">
     <label for="value">
-        ${name}
+        <strong>${name}</strong>
     </label>
     <div id="value" class="value">
-        <p>${value}</p>
+        <p style="margin: 0">${value}</p>
     </div>
 </div>

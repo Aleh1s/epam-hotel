@@ -7,6 +7,9 @@
 <head>
     <title>Successful Confirmation!</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <c:import url="component/header.jsp"/>
@@ -28,7 +31,7 @@
             </div>
         </div>
     </div>
-    <c:import url="component/footer.jsp"/>
 </div>
+<c:import url="component/footer.jsp"/>
 </body>
 </html>

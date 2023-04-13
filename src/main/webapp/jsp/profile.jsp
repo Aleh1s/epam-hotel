@@ -6,13 +6,16 @@
 <head>
     <title>Profile</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <c:import url="component/header.jsp"/>
 <tags:errorhandler message="${requestScope.errorMessage}"/>
 <div class="container">
     <div class="main">
-        <div class="main-container">
+        <div style="background: white; border-radius: 20px" class="main-container">
             <div class="profile-header">
                 <div class="profile-image">
                     <img src="https://www.w3schools.com/howto/img_avatar.png" alt="profile image">
@@ -101,17 +104,20 @@
                                                 <input type="hidden" name="command" value="viewRoom">
                                                 <input type="hidden" name="page" value="profile">
                                                 <input type="hidden" name="roomNumber" value="${request.roomNumber()}">
-                                                <button class="btn-view" type="submit"><fmt:message key="view.room"/></button>
+                                                <button class="btn-view" type="submit"><fmt:message
+                                                        key="view.room"/></button>
                                             </form>
                                             <form action="<c:url value="/controller"/>" method="post">
                                                 <input type="hidden" name="command" value="rejectRequest">
                                                 <input type="hidden" name="requestId" value="${request.id()}">
-                                                <button class="btn-trash" type="submit"><fmt:message key="reject"/></button>
+                                                <button class="btn-trash" type="submit"><fmt:message
+                                                        key="reject"/></button>
                                             </form>
                                             <form action="<c:url value="/controller"/>" method="post">
                                                 <input type="hidden" name="command" value="confirmRequest">
                                                 <input type="hidden" name="requestId" value="${request.id()}">
-                                                <button class="btn-accept" type="submit"><fmt:message key="book"/></button>
+                                                <button class="btn-accept" type="submit"><fmt:message
+                                                        key="book"/></button>
                                             </form>
                                         </td>
                                     </tr>
@@ -124,7 +130,7 @@
             </div>
         </div>
     </div>
-    <c:import url="component/footer.jsp"/>
 </div>
+<c:import url="component/footer.jsp"/>
 </body>
 </html>

@@ -19,7 +19,7 @@
             <div class="sort">
                 <form action="<c:url value="/controller"/>" method="get">
                     <input type="hidden" name="command" value="getAvailableRooms"/>
-                    <select id="price-sort" name="sort" class="form-control w-25 me-3">
+                    <select id="price-sort" name="sort" class="form-select w-25 me-3">
                         <c:set var="price" value="${sessionScope.roomCriteria.price}"/>
                         <c:set var="guests" value="${sessionScope.roomCriteria.guests}"/>
                         <c:set var="clazz" value="${sessionScope.roomCriteria.clazz}"/>

@@ -31,7 +31,7 @@ public class ReservationStatusTag extends TagSupport {
 
         JspWriter out = pageContext.getOut();
         try {
-            String formattedPTag = "<p style=\"%s\">%s</p>";
+            String formattedPTag = "<p style=\"%s; margin: 0;\"><strong>%s</strong></p>";
             if (status.equals(ReservationStatus.PENDING_CONFIRMATION))
                 out.println(String.format(formattedPTag, "color: #666666", bundle.getString("needs.confirmation")));
             else if (status.equals(ReservationStatus.PENDING_PAYMENT))

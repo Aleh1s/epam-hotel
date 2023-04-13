@@ -6,6 +6,9 @@
 <head>
     <title>Room</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <c:import url="component/header.jsp"/>
@@ -20,30 +23,13 @@
                 </div>
                 <div class="room-properties-container">
                     <div class="room-property-list">
-                        <div class="room-key-value-list">
-                            <c:if test="${not empty sessionScope.role and sessionScope.role eq 'MANAGER'}">
-                                <div>
-                                    <div class="key"><fmt:message key="room.number"/>:</div>
-                                    <div class="value">${requestScope.roomDto.number()}</div>
-                                </div>
-                            </c:if>
-                            <div>
-                                <div class="key"><fmt:message key="class"/>:</div>
-                                <div class="value">${requestScope.roomDto.clazz()}</div>
-                            </div>
-                            <div>
-                                <div class="key"><fmt:message key="persons"/>:</div>
-                                <div class="value">${requestScope.roomDto.guests()}</div>
-                            </div>
-                            <div>
-                                <div class="key"><fmt:message key="beds"/>:</div>
-                                <div class="value">${requestScope.roomDto.beds()}</div>
-                            </div>
-                            <div>
-                                <div class="key"><fmt:message key="area"/>:</div>
-                                <div class="value">${requestScope.roomDto.area()} M<sup>2</sup></div>
-                            </div>
-                        </div>
+                        <ul class="list-group w-100">
+                            <li class="list-group-item" style="color: #22406c"><strong><fmt:message key="room.number"/>:</strong> ${requestScope.roomDto.number()}</li>
+                            <li class="list-group-item" style="color: #22406c"><strong><fmt:message key="class"/>:</strong> ${requestScope.roomDto.clazz()}</li>
+                            <li class="list-group-item" style="color: #22406c"><strong><fmt:message key="persons"/>:</strong> ${requestScope.roomDto.guests()}</li>
+                            <li class="list-group-item" style="color: #22406c"><strong><fmt:message key="beds"/>:</strong> ${requestScope.roomDto.beds()}</li>
+                            <li class="list-group-item" style="color: #22406c"><strong><fmt:message key="area"/>:</strong> ${requestScope.roomDto.area()} M<sup>2</sup></li>
+                        </ul>
                     </div>
                     <div class="room-props-control">
                         <div class="room-price">
@@ -80,7 +66,7 @@
             </div>
         </div>
     </div>
-    <c:import url="component/footer.jsp"/>
 </div>
+<c:import url="component/footer.jsp"/>
 </body>
 </html>

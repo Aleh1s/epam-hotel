@@ -23,20 +23,20 @@
                 <c:set var="errors" value="${requestScope.errors}"/>
                 <div class="form-group">
                     <fmt:message var="email" key="email"/>
-                    <label for="email" class="form-label">${email}</label>
+                    <label for="email" class="form-label fs-6">${email}</label>
                     <input class="form-control" id="email" name="email" type="email" placeholder="${email}" required>
                     <tags:fielderror messages="${errors['email']}"/>
                 </div>
 
                 <div class="form-group">
                     <fmt:message var="password" key="password"/>
-                    <label for="password" class="form-label">${password}</label>
+                    <label for="password" class="form-label fs-6">${password}</label>
                     <input class="form-control" id="password" name="password" type="password" placeholder="${password}" required>
                     <tags:fielderror messages="${errors['password']}"/>
                 </div>
 
                 <div class="form-group">
-                    <a class="link-primary fs-6" href="<c:url value="signup.jsp"/>">Have no account? Sign up!</a>
+                    <a class="link-primary fs-6" href="<c:url value="/jsp/signup.jsp"/>">Have no account? Sign up!</a>
                 </div>
 
                 <div class="form-input">
