@@ -1,14 +1,24 @@
 package ua.aleh1s.hotelepam.service.impl;
 
 import lombok.AllArgsConstructor;
-import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.exception.ServiceException;
+import ua.aleh1s.hotelepam.model.dto.RequestDto;
+import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
+import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
 import ua.aleh1s.hotelepam.model.entity.RequestEntity;
 import ua.aleh1s.hotelepam.model.entity.RequestStatus;
-import ua.aleh1s.hotelepam.model.repository.RequestRepository;
+import ua.aleh1s.hotelepam.repository.RequestRepository;
+import ua.aleh1s.hotelepam.service.ApplicationService;
 import ua.aleh1s.hotelepam.service.RequestService;
+import ua.aleh1s.hotelepam.service.RoomService;
+import ua.aleh1s.hotelepam.service.exception.ValidationException;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
+import ua.aleh1s.hotelepam.utils.Period;
+import ua.aleh1s.hotelepam.validator.impl.RequestDtoValidator;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import static ua.aleh1s.hotelepam.model.entity.RequestStatus.NEW;
 
@@ -16,10 +26,45 @@ import static ua.aleh1s.hotelepam.model.entity.RequestStatus.NEW;
 public class RequestServiceImpl implements RequestService {
 
     private final RequestRepository requestRepository;
+    private final ApplicationService applicationService;
+    private final RoomService roomService;
 
     @Override
     public void create(RequestEntity entity) {
         requestRepository.create(entity);
+    }
+
+    @Override
+    public void create(RequestDto requestDto, Long applicationId) throws ServiceException {
+        RequestDtoValidator validator = new RequestDtoValidator();
+        validator.validate(requestDto);
+
+        if (validator.hasErrors())
+            throw new ValidationException(validator.getMessagesByRejectedValue());
+
+        ApplicationEntity application = applicationService.getApplicationById(applicationId);
+        if (application.getStatus().equals(ApplicationStatus.PROCESSED))
+            throw new ServiceException("Application is already processed");
+
+        if (!roomService.isRoomAvailable(requestDto.getRoomNumber(), Period.between(requestDto.getCheckIn(), requestDto.getCheckOut())))
+            throw new ServiceException("Room is unavailable");
+
+        application.setStatus(ApplicationStatus.PROCESSED);
+        applicationService.update(application);
+
+        BigDecimal totalPrice = roomService.getTotalPrice(requestDto.getRoomNumber(), Period.between(requestDto.getCheckIn(), requestDto.getCheckOut()));
+
+        RequestEntity requestEntity = RequestEntity.builder()
+                .roomNumber(requestDto.getRoomNumber())
+                .customerId(application.getCustomerId())
+                .status(RequestStatus.NEW)
+                .checkIn(requestDto.getCheckIn())
+                .checkOut(requestDto.getCheckOut())
+                .totalAmount(totalPrice)
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        requestRepository.create(requestEntity);
     }
 
     @Override

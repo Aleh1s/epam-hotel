@@ -5,16 +5,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
-import ua.aleh1s.hotelepam.model.repository.impl.ReservationRepositoryImpl;
-import ua.aleh1s.hotelepam.model.repository.impl.RoomRepositoryImpl;
+import ua.aleh1s.hotelepam.repository.impl.ReservationRepositoryImpl;
+import ua.aleh1s.hotelepam.repository.impl.RoomRepositoryImpl;
 import ua.aleh1s.hotelepam.utils.Period;
 
 import java.math.BigDecimal;

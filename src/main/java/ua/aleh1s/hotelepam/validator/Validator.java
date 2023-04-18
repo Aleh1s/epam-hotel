@@ -1,42 +1,28 @@
 package ua.aleh1s.hotelepam.validator;
 
 import lombok.Getter;
+import ua.aleh1s.hotelepam.utils.Period;
+import ua.aleh1s.hotelepam.utils.Utils;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import static java.util.Objects.*;
+import static ua.aleh1s.hotelepam.utils.Utils.*;
 
 @Getter
-public abstract class Validator<T> {
+public abstract class Validator<T> extends ErrorContainer {
 
     protected static final String REQUIRED_VALUE_MESSAGE = "%s is required, but not present";
     protected static final String EMPTY_VALUE_MESSAGE = "%s should not be empty";
 
-    protected Map<String, List<String>> messagesByRejectedValue;
-
-    {
-        this.messagesByRejectedValue = new HashMap<>();
-    }
-
     public abstract void validate(T target);
-    public boolean hasErrors() {
-        return !messagesByRejectedValue.isEmpty();
-    }
-
-    protected void rejectValue(String field, String message) {
-        List<String> messages = messagesByRejectedValue.get(field);
-
-        if (nonNull(messages))
-            messages.add(message);
-        else
-            messagesByRejectedValue.put(field, new LinkedList<>(List.of(message)));
-    }
 
     protected boolean isBlank(String value) {
         return value.isBlank();
     }
 
-    protected boolean isNull(String value) {
+    protected boolean isNull(Object value) {
         return Objects.isNull(value);
     }
 
@@ -46,5 +32,23 @@ public abstract class Validator<T> {
 
     protected String emptyValueMessage(String fieldName) {
         return String.format(EMPTY_VALUE_MESSAGE, fieldName);
+    }
+
+    protected void validatePeriod(LocalDate checkIn, LocalDate checkOut) {
+        String checkInFieldName = "checkIn", checkOutFieldName = "checkOut";
+
+        var isNull = false;
+        if (isNull(checkIn)) {
+            rejectValue(checkInFieldName, requiredValueMessage(checkInFieldName));
+            isNull = true;
+        }
+
+        if (isNull(checkOut)) {
+            rejectValue(checkOutFieldName, requiredValueMessage(checkOutFieldName));
+            isNull = true;
+        }
+
+        if (!isNull && !isReservationPeriodValid(Period.between(checkIn, checkOut)))
+            rejectValue("period", "Period is invalid");
     }
 }

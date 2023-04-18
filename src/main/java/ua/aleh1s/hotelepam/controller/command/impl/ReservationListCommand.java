@@ -9,7 +9,7 @@ import ua.aleh1s.hotelepam.service.ReservationService;
 import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.dto.ReservationDto;
-import ua.aleh1s.hotelepam.model.dtomapper.entitytodto.ReservationDtoMapper;
+import ua.aleh1s.hotelepam.mapper.dtomapper.entitytodto.ReservationDtoMapper;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;

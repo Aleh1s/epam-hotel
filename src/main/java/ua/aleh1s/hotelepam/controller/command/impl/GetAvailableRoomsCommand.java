@@ -9,7 +9,7 @@ import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.exception.ApplicationException;
 import ua.aleh1s.hotelepam.model.criteria.RoomCriteria;
 import ua.aleh1s.hotelepam.model.dto.RoomDto;
-import ua.aleh1s.hotelepam.model.dtomapper.entitytodto.RoomDtoMapper;
+import ua.aleh1s.hotelepam.mapper.dtomapper.entitytodto.RoomDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.service.RoomService;
 import ua.aleh1s.hotelepam.utils.Page;

@@ -3,18 +3,16 @@ package ua.aleh1s.hotelepam.appcontext;
 import lombok.Getter;
 import ua.aleh1s.hotelepam.controller.security.SecurityManager;
 import ua.aleh1s.hotelepam.controller.security.SecurityManagerImpl;
-import ua.aleh1s.hotelepam.model.dtomapper.entitytodto.*;
-import ua.aleh1s.hotelepam.model.dtomapper.requesttodto.LoginCredentialsDtoMapper;
-import ua.aleh1s.hotelepam.model.dtomapper.requesttodto.SignupCredentialsDtoMapper;
-import ua.aleh1s.hotelepam.model.querybuilder.EntityManager;
+import ua.aleh1s.hotelepam.mapper.dtomapper.entitytodto.*;
+import ua.aleh1s.hotelepam.mapper.dtomapper.requesttodto.*;
+import ua.aleh1s.hotelepam.mapper.sqlmapper.impl.*;
+import ua.aleh1s.hotelepam.database.querybuilder.EntityManager;
+import ua.aleh1s.hotelepam.repository.*;
+import ua.aleh1s.hotelepam.repository.impl.*;
 import ua.aleh1s.hotelepam.service.MailService;
 import ua.aleh1s.hotelepam.service.impl.MailServiceImpl;
-import ua.aleh1s.hotelepam.model.repository.*;
-import ua.aleh1s.hotelepam.model.repository.impl.*;
-import ua.aleh1s.hotelepam.model.sqlmapper.impl.*;
 import ua.aleh1s.hotelepam.service.*;
 import ua.aleh1s.hotelepam.service.impl.*;
-import ua.aleh1s.hotelepam.validator.impl.SignupCredentialsValidator;
 
 import java.util.Objects;
 
@@ -61,9 +59,6 @@ public class AppContext {
     private final SqlReservationEntityMapper reservationEntityMapper;
     private final SqlRequestEntityMapper requestEntityMapper;
     private final SqlApplicationEntityMapper applicationEntityMapper;
-    private final SignupCredentialsDtoMapper signupCredentialsDtoMapper;
-    private final LoginCredentialsDtoMapper loginCredentialsDtoMapper;
-
     {
         // Sql Entity Mappers
         this.userEntityMapper = new SqlUserEntityMapper();
@@ -94,7 +89,7 @@ public class AppContext {
         this.reservationTokenService = new ReservationTokenServiceImpl(reservationTokenRepository);
         this.reservationService = new ReservationServiceImpl(reservationRepository);
         this.applicationService = new ApplicationServiceImpl(applicationRepository);
-        this.requestService = new RequestServiceImpl(requestRepository);
+        this.requestService = new RequestServiceImpl(requestRepository, applicationService, roomService);
         this.authService = new AuthServiceImpl(userService, userDtoMapper);
         this.paymentService = new PaymentServiceImpl(reservationService, userService, roomService);
         this.bookingService = new BookingServiceImpl(roomService, reservationService, reservationTokenService, mailService, userService);
@@ -109,15 +104,15 @@ public class AppContext {
         this.sqlReservationTokenEntityMapper = new SqlReservationTokenEntityMapper();
 
         this.securityManager = new SecurityManagerImpl();
-
-        //Dto request mapper
-        this.signupCredentialsDtoMapper = new SignupCredentialsDtoMapper();
-        this.loginCredentialsDtoMapper = new LoginCredentialsDtoMapper();
     }
 
     public static synchronized AppContext getInstance() {
         if (Objects.isNull(INSTANCE))
             INSTANCE = new AppContext();
         return INSTANCE;
+    }
+
+    public HttpRequestRoomDtoMapper getHttpRequestRoomDtoMapper() {
+        return null;
     }
 }

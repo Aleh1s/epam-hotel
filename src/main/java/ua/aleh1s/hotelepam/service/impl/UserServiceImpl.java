@@ -3,7 +3,7 @@ package ua.aleh1s.hotelepam.service.impl;
 import lombok.AllArgsConstructor;
 import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
-import ua.aleh1s.hotelepam.model.repository.UserRepository;
+import ua.aleh1s.hotelepam.repository.UserRepository;
 import ua.aleh1s.hotelepam.service.UserService;
 
 import java.util.Optional;

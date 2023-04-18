@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
-import ua.aleh1s.hotelepam.model.repository.impl.UserRepositoryImpl;
+import ua.aleh1s.hotelepam.repository.impl.UserRepositoryImpl;
 
 import java.util.Optional;
 

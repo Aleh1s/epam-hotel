@@ -15,7 +15,7 @@ import ua.aleh1s.hotelepam.controller.command.CommandFactory;
 import ua.aleh1s.hotelepam.controller.command.impl.UnknownCommand;
 import ua.aleh1s.hotelepam.controller.exception.HandlerFactory;
 import ua.aleh1s.hotelepam.exception.ApplicationException;
-import ua.aleh1s.hotelepam.model.jdbc.DBManager;
+import ua.aleh1s.hotelepam.database.jdbc.DBManager;
 
 import java.io.IOException;
 

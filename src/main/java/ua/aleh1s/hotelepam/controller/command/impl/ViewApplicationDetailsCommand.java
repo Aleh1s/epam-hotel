@@ -9,8 +9,8 @@ import ua.aleh1s.hotelepam.service.ApplicationService;
 import ua.aleh1s.hotelepam.service.UserService;
 import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
-import ua.aleh1s.hotelepam.model.dtomapper.entitytodto.ApplicationDtoMapper;
-import ua.aleh1s.hotelepam.model.dtomapper.entitytodto.UserDtoMapper;
+import ua.aleh1s.hotelepam.mapper.dtomapper.entitytodto.ApplicationDtoMapper;
+import ua.aleh1s.hotelepam.mapper.dtomapper.entitytodto.UserDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 

@@ -5,7 +5,7 @@ import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
-import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
+import ua.aleh1s.hotelepam.repository.ReservationRepository;
 import ua.aleh1s.hotelepam.service.ReservationService;
 
 import static ua.aleh1s.hotelepam.model.entity.ReservationStatus.*;

@@ -1,18 +1,25 @@
 package ua.aleh1s.hotelepam.model.dto;
 
+import jakarta.servlet.http.Part;
+import lombok.Builder;
+import lombok.Getter;
 import ua.aleh1s.hotelepam.model.entity.RoomClass;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-public record RoomDto(
-        Integer number,
-        RoomClass clazz,
-        String title,
-        String description,
-        List<String> attributes,
-        Integer beds,
-        Integer guests,
-        Double price,
-        Integer area,
-        Boolean isUnavailable
-) { }
+@Builder
+@Getter
+public class RoomDto {
+    private Integer number;
+    private Integer beds;
+    private Integer guests;
+    private Integer area;
+    private String title;
+    private String description;
+    private BigDecimal price;
+    private Boolean isUnavailable;
+    private List<String> attributes;
+    private RoomClass clazz;
+    private Part image;
+}

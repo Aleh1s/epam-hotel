@@ -34,18 +34,14 @@
                         <tbody>
                         <c:forEach var="application" items="${requestScope.applicationPage.result()}">
                             <tr>
-                                <td>${application.guests()}</td>
-                                <td>${application.roomClass()}</td>
-                                <td>
-                                    <fmt:formatDate type="date" value="${application.checkIn()}" pattern="dd-MM-yyyy"/>
-                                </td>
-                                <td>
-                                    <fmt:formatDate type="date" value="${application.checkOut()}" pattern="dd-MM-yyyy"/>
-                                </td>
+                                <td>${application.guests}</td>
+                                <td>${application.roomClass}</td>
+                                <td>${application.checkIn}</td>
+                                <td>${application.checkOut}</td>
                                 <td>
                                     <form method="get" action="<c:url value="/controller"/>">
                                         <input type="hidden" name="command" value="viewApplicationDetails">
-                                        <input type="hidden" name="applicationId" value="${application.id()}">
+                                        <input type="hidden" name="applicationId" value="${application.id}">
                                         <button type="submit" class="btn-view"><fmt:message key="details"/></button>
                                     </form>
                                 </td>
@@ -62,7 +58,7 @@
                              command="applicationList"/>
         </div>
     </div>
-    <c:import url="component/footer.jsp"/>
 </div>
+<c:import url="component/footer.jsp"/>
 </body>
 </html>

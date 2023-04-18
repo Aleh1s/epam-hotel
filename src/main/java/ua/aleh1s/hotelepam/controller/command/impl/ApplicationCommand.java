@@ -7,17 +7,11 @@ import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.exception.ApplicationException;
-import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
-import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
-import ua.aleh1s.hotelepam.model.entity.RoomClass;
+import ua.aleh1s.hotelepam.mapper.dtomapper.requesttodto.HttpRequestApplicationDtoMapper;
+import ua.aleh1s.hotelepam.mapper.dtomapper.requesttodto.HttpRequestRequestDtoMapper;
+import ua.aleh1s.hotelepam.model.dto.ApplicationDto;
 import ua.aleh1s.hotelepam.service.ApplicationService;
-import ua.aleh1s.hotelepam.utils.Period;
-
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-import static ua.aleh1s.hotelepam.utils.Utils.*;
+import ua.aleh1s.hotelepam.service.exception.ValidationException;
 
 public class ApplicationCommand implements Command {
     @Override
@@ -25,43 +19,24 @@ public class ApplicationCommand implements Command {
         ResourcesManager resourcesManager = ResourcesManager.getInstance();
         ApplicationService applicationService = AppContext.getInstance().getApplicationService();
 
-        Integer guests = getIntValue(request, "guests");
-        Integer classIndex = getIntValue(request, "clazz");
-        LocalDate checkIn = getLocalDateValue(request, "checkIn");
-        LocalDate checkOut = getLocalDateValue(request, "checkOut");
-
         HttpSession session = request.getSession();
         Long id = (Long) session.getAttribute("id");
 
+        HttpRequestApplicationDtoMapper mapper = new HttpRequestApplicationDtoMapper();
+        ApplicationDto applicationDto = mapper.map(request);
+
         String path = resourcesManager.getValue("path.page.application");
-        if (!isReservationPeriodValid(Period.between(checkIn, checkOut)))
-            throw new ApplicationException("Date range is invalid", path);
+        if (mapper.hasErrors())
+            throw new ValidationException(mapper.getMessagesByRejectedValue(), path);
 
-        RoomClass clazz = RoomClass.atIndex(classIndex);
-        ApplicationEntity applicationEntry = ApplicationEntity.builder()
-                .guests(guests)
-                .roomClass(clazz)
-                .checkIn(checkIn)
-                .checkOut(checkOut)
-                .status(ApplicationStatus.NEW)
-                .customerId(id)
-                .createdAt(LocalDateTime.now())
-                .build();
-        applicationService.create(applicationEntry);
-
-        session.setAttribute("guests", guests);
-        session.setAttribute("clazz", clazz);
-        session.setAttribute("checkIn", toDate(checkIn));
-        session.setAttribute("checkOut", toDate(checkOut));
-
-        path = resourcesManager.getValue("path.page.success.application");
         try {
-            response.sendRedirect(path);
-            path = "redirect";
-        } catch (IOException e) {
-            throw new ApplicationException();
+            applicationService.create(applicationDto, id);
+        } catch (ApplicationException e) {
+            e.setPath(path);
+            throw e;
         }
 
-        return path;
+        session.setAttribute("applicationDto", applicationDto);
+        return redirect(resourcesManager.getValue("path.page.success.application"), response);
     }
 }

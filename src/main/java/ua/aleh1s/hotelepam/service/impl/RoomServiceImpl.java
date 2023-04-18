@@ -4,15 +4,20 @@ import lombok.AllArgsConstructor;
 import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.criteria.Order;
 import ua.aleh1s.hotelepam.model.criteria.RoomCriteria;
+import ua.aleh1s.hotelepam.model.dto.RoomDto;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
-import ua.aleh1s.hotelepam.model.repository.ReservationRepository;
-import ua.aleh1s.hotelepam.model.repository.RoomRepository;
+import ua.aleh1s.hotelepam.repository.ReservationRepository;
+import ua.aleh1s.hotelepam.repository.RoomRepository;
 import ua.aleh1s.hotelepam.service.RoomService;
+import ua.aleh1s.hotelepam.service.exception.ValidationException;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.utils.Period;
+import ua.aleh1s.hotelepam.validator.impl.RoomDtoValidator;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,9 +30,57 @@ public class RoomServiceImpl implements RoomService {
     private final ReservationRepository reservationRepository;
     private final RoomRepository roomRepository;
 
+    private final static Integer MAX_IMAGE_SIZE = 1_048_576;
+
     @Override
     public void create(RoomEntity room) {
         roomRepository.save(room);
+    }
+
+    @Override
+    public void create(RoomDto roomDto) throws ServiceException {
+        RoomDtoValidator validator = new RoomDtoValidator();
+        validator.validate(roomDto);
+
+        if (validator.hasErrors())
+            throw new ValidationException(validator.getMessagesByRejectedValue());
+
+        if (existsByRoomNumber(roomDto.getNumber()))
+            throw new ServiceException("Room with room number " + roomDto.getNumber() + " already exists.");
+
+        byte[] imageBytes;
+
+        try {
+            try (InputStream inputStream = roomDto.getImage().getInputStream()) {
+                int actualSizeOfImage = inputStream.available();
+
+                if (actualSizeOfImage > MAX_IMAGE_SIZE)
+                    throw new ServiceException("Max size of image is reached!!!. Try to pick another image.");
+
+                imageBytes = new byte[actualSizeOfImage];
+                inputStream.read(imageBytes);
+            }
+
+        } catch (IOException e) {
+            throw new ServiceException("Something went wrong while image uploading");
+        }
+
+        RoomEntity newRoom = RoomEntity.builder()
+                .number(roomDto.getNumber())
+                .clazz(roomDto.getClazz())
+                .title(roomDto.getTitle())
+                .description(roomDto.getDescription())
+                .attributes(roomDto.getAttributes())
+                .beds(roomDto.getBeds())
+                .guests(roomDto.getGuests())
+                .area(roomDto.getArea())
+                .price(roomDto.getPrice())
+                .image(imageBytes)
+                .isUnavailable(true)
+                .build();
+
+        roomRepository.save(newRoom);
+        updateImage(newRoom);
     }
 
     @Override

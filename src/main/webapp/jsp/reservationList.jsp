@@ -42,7 +42,7 @@
                                 </td>
                                 <td>$ ${reservation.totalAmount()}</td>
                                 <td>
-                                        <st:reservationstatus status="${reservation.status()}"/>
+                                    <st:reservationstatus status="${reservation.status()}"/>
                                 </td>
                                 <td>
                                     <form method="get" action="<c:url value="/controller"/>">
@@ -64,7 +64,7 @@
                              command="reservationList"/>
         </div>
     </div>
-    <c:import url="component/footer.jsp"/>
 </div>
+<c:import url="component/footer.jsp"/>
 </body>
 </html>

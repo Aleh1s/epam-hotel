@@ -1,16 +1,21 @@
 package ua.aleh1s.hotelepam.model.dto;
 
+import lombok.Builder;
+import lombok.Getter;
 import ua.aleh1s.hotelepam.model.entity.RequestStatus;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
-public record RequestDto(
-        Long id,
-        Integer roomNumber,
-        Long customerId,
-        RequestStatus status,
-        Date checkIn,
-        Date checkOut,
-        BigDecimal totalAmount
-) { }
+@Builder
+@Getter
+public class RequestDto {
+    private Long id;
+    private Long customerId;
+    private Integer roomNumber;
+    private RequestStatus status;
+    private LocalDate checkIn;
+    private LocalDate checkOut;
+    private BigDecimal totalAmount;
+}

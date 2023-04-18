@@ -11,7 +11,7 @@ public class SignupCredentialsValidator extends Validator<SignupCredentials> {
             Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
 
     private static final Pattern PHONE_NUMBER_PATTERN =
-            Pattern.compile("^\\+380\\d{9}$");
+            Pattern.compile("^0\\d{9}$");
 
     public void validate(SignupCredentials credentials) {
         validateEmail(credentials.email());
@@ -45,7 +45,7 @@ public class SignupCredentialsValidator extends Validator<SignupCredentials> {
                 rejectValue(fieldName, emptyValueMessage(fieldName));
 
             if (!PHONE_NUMBER_PATTERN.matcher(phoneNumber).matches())
-                rejectValue(fieldName, "Invalid phone number. Example '+380-XX-XXX-XXXX'");
+                rejectValue(fieldName, "Invalid phone number. Example '0XX-XXX-XXXX'");
         }
     }
 
@@ -87,7 +87,7 @@ public class SignupCredentialsValidator extends Validator<SignupCredentials> {
                 rejectValue(fieldName, emptyValueMessage(fieldName));
 
             if (password.length() < 6 || password.length() > 20)
-                rejectValue(fieldName, "Password length should be between 2 and 50");
+                rejectValue(fieldName, "Password length should be between 6 and 50");
         }
     }
 }

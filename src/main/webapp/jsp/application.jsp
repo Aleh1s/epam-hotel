@@ -45,12 +45,14 @@
                     <label for="date-of-entry" class="form-label fs-6"><fmt:message key="check.in"/></label>
                     <input id="date-of-entry" class="form-control" name="checkIn" type="date"
                            max="2024-01-01" required>
+                    <tags:fielderror messages="${errors['period']}"/>
                     <tags:fielderror messages="${errors['checkIn']}"/>
                 </div>
                 <div class="form-group">
                     <label for="date-of-leaving" class="form-label fs-6"><fmt:message key="check.out"/></label>
                     <input id="date-of-leaving" class="form-control" name="checkOut" type="date"
                            max="2024-01-01" required>
+                    <tags:fielderror messages="${errors['period']}"/>
                     <tags:fielderror messages="${errors['checkOut']}"/>
 
                 </div>

@@ -7,7 +7,7 @@ import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.exception.ApplicationException;
 import ua.aleh1s.hotelepam.model.dto.SignupCredentials;
-import ua.aleh1s.hotelepam.model.dtomapper.requesttodto.SignupCredentialsDtoMapper;
+import ua.aleh1s.hotelepam.mapper.dtomapper.requesttodto.SignupCredentialsDtoMapper;
 import ua.aleh1s.hotelepam.service.AuthService;
 
 import java.io.IOException;
@@ -20,9 +20,9 @@ public class SignupCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ApplicationException {
         ResourcesManager resourcesManager = ResourcesManager.getInstance();
         AuthService authService = AppContext.getInstance().getAuthService();
-        SignupCredentialsDtoMapper credentialsDtoMapper = AppContext.getInstance().getSignupCredentialsDtoMapper();
 
-        SignupCredentials credentials = credentialsDtoMapper.apply(request);
+        SignupCredentialsDtoMapper mapper = new SignupCredentialsDtoMapper();
+        SignupCredentials credentials = mapper.apply(request);
 
         try {
             authService.register(credentials, CUSTOMER);

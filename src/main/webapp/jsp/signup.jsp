@@ -57,8 +57,8 @@
                 <div class="form-group">
                     <fmt:message var="phoneNumber" key="phone.number"/>
                     <label class="form-label fs-6" for="phoneNumber">${phoneNumber}</label>
-                    <div class="input-group">
-                        <span class="input-group-text" id="phone-start-addon">+380</span>
+                    <div style="margin-bottom: 0" class="input-group">
+                        <span class="input-group-text" id="phone-start-addon">+38</span>
                         <input class="form-control" id="phoneNumber" name="phoneNumber" type="text"
                                placeholder="${phoneNumber}" required aria-describedby="phone-start-addon">
                     </div>

@@ -9,7 +9,7 @@ import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.exception.ApplicationException;
 import ua.aleh1s.hotelepam.model.dto.LoginCredentials;
 import ua.aleh1s.hotelepam.model.dto.UserDto;
-import ua.aleh1s.hotelepam.model.dtomapper.requesttodto.LoginCredentialsDtoMapper;
+import ua.aleh1s.hotelepam.mapper.dtomapper.requesttodto.LoginCredentialsDtoMapper;
 import ua.aleh1s.hotelepam.service.AuthService;
 
 import java.io.IOException;
@@ -19,12 +19,13 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ApplicationException {
         ResourcesManager resourcesManager = ResourcesManager.getInstance();
         AuthService authService = AppContext.getInstance().getAuthService();
-        LoginCredentialsDtoMapper credentialsDtoMapper = AppContext.getInstance().getLoginCredentialsDtoMapper();
 
         HttpSession session = request.getSession();
-        LoginCredentials credentials = credentialsDtoMapper.apply(request);
-        String path = ResourcesManager.getInstance().getValue("path.page.login");
 
+        LoginCredentialsDtoMapper mapper = new LoginCredentialsDtoMapper();
+        LoginCredentials credentials = mapper.apply(request);
+
+        String path;
         try {
             UserDto user = authService.login(credentials);
 
@@ -39,7 +40,7 @@ public class LoginCommand implements Command {
                 default -> throw new IllegalArgumentException("Unknown user role");
             }
         } catch (ApplicationException e) {
-            e.setPath(path);
+            e.setPath(ResourcesManager.getInstance().getValue("path.page.login"));
             throw e;
         }
 

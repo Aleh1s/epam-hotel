@@ -10,7 +10,7 @@ import ua.aleh1s.hotelepam.service.ApplicationService;
 import ua.aleh1s.hotelepam.utils.Utils;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.model.dto.ApplicationDto;
-import ua.aleh1s.hotelepam.model.dtomapper.entitytodto.ApplicationDtoMapper;
+import ua.aleh1s.hotelepam.mapper.dtomapper.entitytodto.ApplicationDtoMapper;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;

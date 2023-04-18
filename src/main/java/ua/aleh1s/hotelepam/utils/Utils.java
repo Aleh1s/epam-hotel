@@ -68,4 +68,8 @@ public class Utils {
     public static Timestamp toTimestamp(LocalDateTime ldt) {
         return ldt != null ? Timestamp.valueOf(ldt) : null;
     }
+
+    public static LocalDate toLocalDate(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
 }

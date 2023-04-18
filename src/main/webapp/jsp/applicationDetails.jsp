@@ -25,25 +25,19 @@
                             <table>
                                 <tr class="active">
                                     <td><fmt:message key="guests"/></td>
-                                    <td>${requestScope.application.guests()}</td>
+                                    <td>${requestScope.application.guests}</td>
                                 </tr>
                                 <tr>
                                     <td><fmt:message key="room.class"/></td>
-                                    <td>${requestScope.application.roomClass()}</td>
+                                    <td>${requestScope.application.roomClass}</td>
                                 </tr>
                                 <tr>
                                     <td><fmt:message key="check.in"/></td>
-                                    <td>
-                                        <fmt:formatDate type="date" value="${requestScope.application.checkIn()}"
-                                                        pattern="dd-MM-yyyy"/>
-                                    </td>
+                                    <td>${requestScope.application.checkIn}</td>
                                 </tr>
                                 <tr>
                                     <td><fmt:message key="check.out"/></td>
-                                    <td>
-                                        <fmt:formatDate type="date" value="${requestScope.application.checkOut()}"
-                                                        pattern="dd-MM-yyyy"/>
-                                    </td>
+                                    <td>${requestScope.application.checkOut}</td>
                                 </tr>
                             </table>
                         </div>
@@ -76,29 +70,36 @@
 
                     <form class="request-form" action="<c:url value="/controller"/>" method="post">
                         <input type="hidden" name="command" value="makeRequest">
-                        <label for="room-number">
-                            <fmt:message key="room.number"/>
+
+                        <c:set var="errors" value="${requestScope.errors}"/>
+                        <div class="form-group-sm w-25">
+                            <label for="room-number" class="form-label fs-6"><fmt:message key="room.number"/></label>
                             <input id="room-number" placeholder="<fmt:message key="room.number"/>" type="number"
                                    name="roomNumber"
-                                   class="custom-form-input" value="1" min="1" required>
-                        </label>
-                        <label for="date-of-entry">
-                            <fmt:message key="check.in"/>
-                            <input id="date-of-entry" class="custom-form-input" name="checkIn" type="date"
+                                   class="form-control" value="1" min="1" required>
+                            <tags:fielderror messages="${errors['roomNumber']}"/>
+                        </div>
+                        <div class="form-group-sm">
+                            <label for="date-of-entry" class="form-label fs-6"><fmt:message key="check.in"/></label>
+                            <input id="date-of-entry" class="form-control" name="checkIn" type="date"
                                    max="2024-01-01" required>
-                        </label>
-                        <label for="date-of-leaving">
-                            <fmt:message key="check.out"/>
-                            <input id="date-of-leaving" class="custom-form-input" name="checkOut" type="date"
+                            <tags:fielderror messages="${errors['checkIn']}"/>
+                            <tags:fielderror messages="${errors['period']}"/>
+                        </div>
+                        <div class="form-group-sm">
+                            <label for="date-of-leaving" class="form-label fs-6"><fmt:message key="check.out"/></label>
+                            <input id="date-of-leaving" class="form-control" name="checkOut" type="date"
                                    max="2024-01-01" required>
-                        </label>
+                            <tags:fielderror messages="${errors['checkOut']}"/>
+                            <tags:fielderror messages="${errors['period']}"/>
+                        </div>
                         <button type="submit" class="btn-primary"><fmt:message key="request"/></button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <c:import url="component/footer.jsp"/>
 </div>
+<c:import url="component/footer.jsp"/>
 </body>
 </html>

@@ -32,22 +32,22 @@
                         <table>
                             <tr class="active">
                                 <td><fmt:message key="guests"/></td>
-                                <td>${sessionScope.guests}</td>
+                                <td>${sessionScope.applicationDto.guests()}</td>
                             </tr>
                             <tr>
                                 <td><fmt:message key="room.class"/></td>
-                                <td>${sessionScope.clazz}</td>
+                                <td>${sessionScope.applicationDto.roomClass().name()}</td>
                             </tr>
                             <tr>
                                 <td><fmt:message key="check.in"/></td>
                                 <td>
-                                    <fmt:formatDate type="date" value="${sessionScope.checkIn}" pattern="dd-MM-yyyy"/>
+                                    ${sessionScope.applicationDto.checkIn()}
                                 </td>
                             </tr>
                             <tr>
                                 <td><fmt:message key="check.out"/></td>
                                 <td>
-                                    <fmt:formatDate type="date" value="${sessionScope.checkOut}" pattern="dd-MM-yyyy"/>
+                                    ${sessionScope.applicationDto.checkOut()}
                                 </td>
                             </tr>
                         </table>
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-    <c:import url="component/footer.jsp"/>
 </div>
+<c:import url="component/footer.jsp"/>
 </body>
 </html>

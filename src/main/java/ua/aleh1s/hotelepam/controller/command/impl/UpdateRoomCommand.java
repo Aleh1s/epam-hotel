@@ -8,9 +8,12 @@ import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.exception.ApplicationException;
+import ua.aleh1s.hotelepam.mapper.dtomapper.requesttodto.HttpRequestRoomDtoMapper;
+import ua.aleh1s.hotelepam.model.dto.RoomDto;
 import ua.aleh1s.hotelepam.model.entity.RoomClass;
 import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.service.RoomService;
+import ua.aleh1s.hotelepam.service.exception.ValidationException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,18 +28,12 @@ public class UpdateRoomCommand implements Command {
         RoomService roomService = AppContext.getInstance().getRoomService();
         ResourcesManager resourcesManager = ResourcesManager.getInstance();
 
-        Integer number = getIntValue(request, "number");
-        Integer classIdx = getIntValue(request, "class");
-        Integer guests = getIntValue(request, "guests");
-        Integer beds = getIntValue(request, "beds");
-        Integer area = getIntValue(request, "area");
-        BigDecimal price = getBigDecimalValue(request, "price");
-        String title = request.getParameter("title");
-        String description = request.getParameter("description");
-        String[] attributes = request.getParameter("attributes").split(",");
-        Boolean isUnavailable = getBoolean(request, "isUnavailable");
+        HttpRequestRoomDtoMapper mapper = new HttpRequestRoomDtoMapper();
+        RoomDto roomDto = mapper.map(request);
 
         String path = resourcesManager.getValue("path.page.room.editor");
+        if (mapper.hasErrors())
+            throw new ValidationException(mapper.getMessagesByRejectedValue(), path);
 
         int maxSizeOfImage = 1_048_576;
         boolean isImagePresent = false;
@@ -62,16 +59,16 @@ public class UpdateRoomCommand implements Command {
         }
 
         RoomEntity editedRoom = RoomEntity.builder()
-                .number(number)
-                .clazz(RoomClass.atIndex(classIdx))
-                .title(title)
-                .description(description)
-                .attributes(attributes)
-                .beds(beds)
-                .guests(guests)
-                .area(area)
-                .price(price)
-                .isUnavailable(isUnavailable)
+                .number(roomDto.getNumber())
+                .clazz(roomDto.getClazz())
+                .title(roomDto.getTitle())
+                .description(roomDto.getDescription())
+                .attributes(roomDto.getAttributes())
+                .beds(roomDto.getBeds())
+                .guests(roomDto.getGuests())
+                .area(roomDto.getArea())
+                .price(roomDto.getPrice())
+                .isUnavailable(roomDto.getIsUnavailable())
                 .build();
 
         roomService.update(editedRoom);

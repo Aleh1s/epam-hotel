@@ -6,7 +6,7 @@ import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.dto.LoginCredentials;
 import ua.aleh1s.hotelepam.model.dto.SignupCredentials;
 import ua.aleh1s.hotelepam.model.dto.UserDto;
-import ua.aleh1s.hotelepam.model.dtomapper.entitytodto.UserDtoMapper;
+import ua.aleh1s.hotelepam.mapper.dtomapper.entitytodto.UserDtoMapper;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.model.entity.UserRole;
 import ua.aleh1s.hotelepam.service.AuthService;

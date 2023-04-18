@@ -11,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
 import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
-import ua.aleh1s.hotelepam.model.repository.impl.ApplicationRepositoryImpl;
+import ua.aleh1s.hotelepam.repository.impl.ApplicationRepositoryImpl;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 

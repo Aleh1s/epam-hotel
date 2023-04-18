@@ -14,4 +14,9 @@ public class ValidationException extends ServiceException {
     public ValidationException(Map<String, List<String>> messagesByRejectedValue) {
         this.messagesByRejectedValue = messagesByRejectedValue;
     }
+
+    public ValidationException(Map<String, List<String>> messagesByRejectedValue, String path) {
+        setPath(path);
+        this.messagesByRejectedValue = messagesByRejectedValue;
+    }
 }

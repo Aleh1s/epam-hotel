@@ -3,7 +3,7 @@ package ua.aleh1s.hotelepam.service.impl;
 import lombok.AllArgsConstructor;
 import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
-import ua.aleh1s.hotelepam.model.repository.ReservationTokenRepository;
+import ua.aleh1s.hotelepam.repository.ReservationTokenRepository;
 import ua.aleh1s.hotelepam.service.ReservationTokenService;
 
 import java.time.LocalDateTime;

@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.entity.ReservationTokenEntity;
-import ua.aleh1s.hotelepam.model.repository.impl.ReservationTokenRepositoryImpl;
+import ua.aleh1s.hotelepam.repository.impl.ReservationTokenRepositoryImpl;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
