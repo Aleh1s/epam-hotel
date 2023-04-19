@@ -3,15 +3,24 @@ package ua.aleh1s.hotelepam.mapper.dtomapper.requesttodto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.aleh1s.hotelepam.mapper.dtomapper.Mapper;
 import ua.aleh1s.hotelepam.model.dto.RoomDto;
 import ua.aleh1s.hotelepam.model.entity.RoomClass;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Objects.nonNull;
+
 public class HttpRequestRoomDtoMapper extends Mapper<HttpServletRequest, RoomDto> {
+
+    private static final Logger logger = LogManager.getLogger(HttpRequestRoomDtoMapper.class);
+    private static final Integer MAX_IMAGE_SIZE = 1_048_576;
+
     @Override
     public RoomDto map(HttpServletRequest request) {
         String number = "number", clazz = "class", title = "title",
@@ -19,11 +28,24 @@ public class HttpRequestRoomDtoMapper extends Mapper<HttpServletRequest, RoomDto
                 beds = "beds", guests = "guests", price = "price", area = "area",
                 image = "image";
 
-        Part part = null;
+        byte[] imageBytes = new byte[0];
+
         try {
-            part = request.getPart(image);
+            Part part = request.getPart(image);
+            if (nonNull(part)) {
+                try (InputStream inputStream = part.getInputStream()) {
+                    int actualSizeOfImage = inputStream.available();
+
+                    if (actualSizeOfImage > MAX_IMAGE_SIZE) {
+                        rejectValue(image, "Image size limit is reached");
+                    } else {
+                        imageBytes = new byte[actualSizeOfImage];
+                        inputStream.read(imageBytes);
+                    }
+                }
+            }
         } catch (IOException | ServletException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         String attributesStr = request.getParameter(attributes);
@@ -39,7 +61,7 @@ public class HttpRequestRoomDtoMapper extends Mapper<HttpServletRequest, RoomDto
                 .guests(parseInt(guests, request.getParameter(guests)))
                 .price(parseBigDecimal(price, request.getParameter(price)))
                 .area(parseInt(area, request.getParameter(area)))
-                .image(part)
+                .image(imageBytes)
                 .build();
     }
 }

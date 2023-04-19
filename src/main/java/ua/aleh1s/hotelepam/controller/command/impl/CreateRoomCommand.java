@@ -21,6 +21,7 @@ public class CreateRoomCommand implements Command {
 
         HttpRequestRoomDtoMapper mapper = new HttpRequestRoomDtoMapper();
         RoomDto roomDto = mapper.map(request);
+        request.setAttribute("roomDto", roomDto);
 
         String path = resourcesManager.getValue("path.page.create.room");
         if (mapper.hasErrors())

@@ -18,43 +18,51 @@
     <div class="main">
         <div class="form">
             <h1 class="text-center"><fmt:message key="request"/></h1>
-            <form action="<c:url value="/controller?command=application"/>" method="post">
+            <form onsubmit="trimOnSubmit()" action="<c:url value="/controller?command=application"/>" method="post">
 
                 <c:set var="errors" value="${requestScope.errors}"/>
+                <c:set var="credentials" value="${requestScope.credentials}"/>
+
                 <div class="form-group">
                     <fmt:message var="guestsNumber" key="guests"/>
                     <label for="number-of-guests" class="form-label fs-6">${guestsNumber}</label>
-                    <input min="1" max="10" class="form-control" id="number-of-guests"
-                           value="1"
-                           name="guests" type="number"
-                           placeholder="${guestsNumber}" required>
+                    <input class="form-control" id="number-of-guests" name="guests" type="text" placeholder="${guestsNumber}"
+                    <c:if test="${empty errors['guests'] and not empty credentials}">
+                           value="${credentials.guests}"
+                    </c:if> required>
                     <tags:fielderror messages="${errors['guests']}"/>
                 </div>
 
                 <div class="form-group">
                     <label for="roomClass" class="form-label fs-6"><fmt:message key="class"/></label>
+                    <c:set var="selected" value="1"/>
+
+                    <c:if test="${empty errors['clazz'] and not empty credentials}">
+                        <c:set var="selected" value="${credentials.roomClass.index}"/>
+                    </c:if>
                     <select class="form-select" name="clazz" id="roomClass" required>
-                        <option value="1"><fmt:message key="standard"/></option>
-                        <option value="2"><fmt:message key="superior"/></option>
-                        <option value="3"><fmt:message key="family"/></option>
-                        <option value="4"><fmt:message key="business"/></option>
-                        <option value="5"><fmt:message key="president"/></option>
+                        <option value="1" ${selected eq '1' ? 'selected' : ''}><fmt:message key="standard"/></option>
+                        <option value="2" ${selected eq '2' ? 'selected' : ''}><fmt:message key="superior"/></option>
+                        <option value="3" ${selected eq '3' ? 'selected' : ''}><fmt:message key="family"/></option>
+                        <option value="4" ${selected eq '4' ? 'selected' : ''}><fmt:message key="business"/></option>
+                        <option value="5" ${selected eq '5' ? 'selected' : ''}><fmt:message key="president"/></option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="date-of-entry" class="form-label fs-6"><fmt:message key="check.in"/></label>
-                    <input id="date-of-entry" class="form-control" name="checkIn" type="date"
-                           max="2024-01-01" required>
+                    <input id="date-of-entry" class="form-control" name="checkIn" type="date" max="2024-01-01"
+                    <c:if test="${empty errors['period'] and not empty credentials}">
+                           value="${credentials.checkIn}"
+                    </c:if> required>
                     <tags:fielderror messages="${errors['period']}"/>
-                    <tags:fielderror messages="${errors['checkIn']}"/>
                 </div>
                 <div class="form-group">
                     <label for="date-of-leaving" class="form-label fs-6"><fmt:message key="check.out"/></label>
-                    <input id="date-of-leaving" class="form-control" name="checkOut" type="date"
-                           max="2024-01-01" required>
+                    <input id="date-of-leaving" class="form-control" name="checkOut" type="date" max="2024-01-01"
+                    <c:if test="${empty errors['period'] and not empty credentials}">
+                           value="${credentials.checkOut}"
+                    </c:if> required>
                     <tags:fielderror messages="${errors['period']}"/>
-                    <tags:fielderror messages="${errors['checkOut']}"/>
-
                 </div>
                 <div class="form-input">
                     <input class="btn btn-success w-100 fs-6" type="submit" value="<fmt:message key="request"/>"/>

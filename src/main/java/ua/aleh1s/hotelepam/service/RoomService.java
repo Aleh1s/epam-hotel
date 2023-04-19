@@ -1,6 +1,5 @@
 package ua.aleh1s.hotelepam.service;
 
-import jakarta.servlet.http.Part;
 import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.criteria.RoomCriteria;
 import ua.aleh1s.hotelepam.model.dto.RoomDto;
@@ -10,12 +9,12 @@ import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.utils.Period;
 
 import java.math.BigDecimal;
-import java.sql.Blob;
 
 public interface RoomService {
     void create(RoomEntity room) throws ServiceException;
     void create(RoomDto roomDto) throws ServiceException;
     void update(RoomEntity room) throws ServiceException;
+    void update(RoomDto roomDto) throws ServiceException;
     void updateImage(RoomEntity room) throws ServiceException;
     boolean existsByRoomNumber(Integer roomNumber) throws ServiceException;
     boolean isRoomAvailable(Integer number, Period period) throws ServiceException;

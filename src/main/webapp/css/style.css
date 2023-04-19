@@ -450,7 +450,7 @@ body {
     height: 100%;
     display: grid;
     grid-template-areas:
-            "image props"
+            "image-picker props"
             "image-price image-price"
             "description description"
             "attributes attributes"
@@ -460,8 +460,13 @@ body {
     gap: 15px;
 }
 
+.image-picker {
+    grid-area: image-picker;
+}
+
 .room-image-container {
-    grid-area: image;
+    height: 100%;
+    width: 100%;
     display: flex;
     justify-content: center;
     padding: 15px;

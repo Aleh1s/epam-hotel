@@ -1,11 +1,9 @@
 package ua.aleh1s.hotelepam.validator.impl;
 
-import jakarta.servlet.http.Part;
 import ua.aleh1s.hotelepam.model.dto.RoomDto;
 import ua.aleh1s.hotelepam.validator.Validator;
 
 import java.math.BigDecimal;
-import java.util.regex.Pattern;
 
 public class RoomDtoValidator extends Validator<RoomDto> {
 
@@ -18,7 +16,6 @@ public class RoomDtoValidator extends Validator<RoomDto> {
         validateTitle(target.getTitle());
         validateDescription(target.getDescription());
         validatePrice(target.getPrice());
-        validateImage(target.getImage());
     }
 
     private void validatePositiveNumber(String fieldName, Integer number) {
@@ -64,12 +61,5 @@ public class RoomDtoValidator extends Validator<RoomDto> {
         else if (price.compareTo(BigDecimal.ZERO) < 0) {
             rejectValue(fieldName, "Price should be greater than 0");
         }
-    }
-
-    private void validateImage(Part image) {
-        String fieldName = "image";
-
-        if (isNull(image))
-            rejectValue(fieldName, requiredValueMessage(fieldName));
     }
 }

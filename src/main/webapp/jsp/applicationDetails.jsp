@@ -68,7 +68,7 @@
                     <fmt:message var="requestMessage" key="request"/>
                     <tags:horizontaldelimiter message="${requestMessage}"/>
 
-                    <form class="request-form" action="<c:url value="/controller"/>" method="post">
+                    <form onsubmit="trimOnSubmit()" class="request-form" action="<c:url value="/controller"/>" method="post">
                         <input type="hidden" name="command" value="makeRequest">
 
                         <c:set var="errors" value="${requestScope.errors}"/>

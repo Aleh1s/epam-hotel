@@ -32,22 +32,22 @@
                         <table>
                             <tr class="active">
                                 <td><fmt:message key="guests"/></td>
-                                <td>${sessionScope.applicationDto.guests()}</td>
+                                <td>${sessionScope.applicationDto.guests}</td>
                             </tr>
                             <tr>
                                 <td><fmt:message key="room.class"/></td>
-                                <td>${sessionScope.applicationDto.roomClass().name()}</td>
+                                <td>${sessionScope.applicationDto.roomClass.name()}</td>
                             </tr>
                             <tr>
                                 <td><fmt:message key="check.in"/></td>
                                 <td>
-                                    ${sessionScope.applicationDto.checkIn()}
+                                    ${sessionScope.applicationDto.checkIn}
                                 </td>
                             </tr>
                             <tr>
                                 <td><fmt:message key="check.out"/></td>
                                 <td>
-                                    ${sessionScope.applicationDto.checkOut()}
+                                    ${sessionScope.applicationDto.checkOut}
                                 </td>
                             </tr>
                         </table>

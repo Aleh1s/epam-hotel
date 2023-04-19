@@ -19,15 +19,22 @@
     <div class="main">
         <div class="main-container">
             <div class="room-editor-grid-container">
-                <div class="room-image-container">
-                    <img src="https://www.thespruce.com/thmb/2_Q52GK3rayV1wnqm6vyBvgI3Ew=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/put-together-a-perfect-guest-room-1976987-hero-223e3e8f697e4b13b62ad4fe898d492d.jpg"
-                         alt="Room image">
+                <c:set var="errors" value="${requestScope.errors}"/>
+                <c:set var="roomDto" value="${requestScope.roomDto}"/>
+                <div class="image-picker">
+                    <div class="room-image-container" id="imagePreview">
+                        <img src="../img/upload_area.png" alt="Room image">
+                    </div>
+                    <tags:fielderror messages="${errors['image']}"/>
                 </div>
                 <div class="room-properties-editor">
                     <c:set var="errors" value="${requestScope.errors}"/>
                     <div class="form-group w-100">
                         <label for="roomNumber" class="form-label fs-6"><fmt:message key="room.number"/></label>
-                        <input class="form-control" form="editForm" id="roomNumber" type="text" name="number" required/>
+                        <input class="form-control" form="editForm" id="roomNumber" type="text" name="number" placeholder="<fmt:message key="room.number"/>"
+                        <c:if test="${empty errors['number'] and not empty roomDto}">
+                               value="${roomDto.number}"
+                        </c:if> required>
                         <tags:fielderror messages="${errors['number']}"/>
                     </div>
                     <div id="class" class="form-group w-100">
@@ -53,12 +60,18 @@
                     </div>
                     <div class="form-group w-100">
                         <label for="guests" class="form-label fs-6"><fmt:message key="guests"/></label>
-                        <input class="form-control" form="editForm" id="guests" type="text" name="guests" min="1" required/>
+                        <input class="form-control" form="editForm" id="guests" type="text" name="guests" placeholder="<fmt:message key="guests"/>"
+                        <c:if test="${empty errors['guests'] and not empty roomDto}">
+                               value="${roomDto.guests}"
+                        </c:if> required>
                         <tags:fielderror messages="${errors['guests']}"/>
                     </div>
                     <div class="form-group w-100">
                         <label for="beds" class="form-label fs-6"><fmt:message key="beds"/></label>
-                        <input form="editForm" id="beds" class="form-control" type="text" name="beds" required/>
+                        <input form="editForm" id="beds" class="form-control" type="text" name="beds" placeholder="<fmt:message key="beds"/>"
+                        <c:if test="${empty errors['beds'] and not empty roomDto}">
+                            value="${roomDto.beds}"
+                        </c:if> required>
                         <tags:fielderror messages="${errors['beds']}"/>
                     </div>
                 </div>
@@ -66,23 +79,28 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="image" class="form-label fs-6"><fmt:message key="image"/></label>
-                                <input class="form-control" form="editForm" id="image" type="file" name="image"
+                                <label for="imagePicker" class="form-label fs-6"><fmt:message key="image"/></label>
+                                <input class="form-control" form="editForm" id="imagePicker" type="file" name="image"
                                        accept=".jpg,.jpeg,.png"/>
-                                <tags:fielderror messages="${errors['image']}"/>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 <label for="price" class="form-label fs-6"><fmt:message key="price"/></label>
-                                <input class="form-control" form="editForm" id="price" type="text" name="price" required/>
+                                <input class="form-control" form="editForm" id="price" type="text" name="price" placeholder="<fmt:message key="price"/>"
+                                <c:if test="${empty errors['price'] and not empty roomDto}">
+                                       value="${roomDto.price}"
+                                </c:if> required>
                                 <tags:fielderror messages="${errors['price']}"/>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 <label for="area" class="form-label fs-6"><fmt:message key="area"/></label>
-                                <input form="editForm" class="form-control" id="area" type="text" name="area" required/>
+                                <input form="editForm" class="form-control" id="area" type="text" name="area" placeholder="<fmt:message key="area"/>"
+                                <c:if test="${empty errors['area'] and not empty roomDto}">
+                                       value="${roomDto.area}"
+                                </c:if> required>
                                 <tags:fielderror messages="${errors['area']}"/>
                             </div>
                         </div>
@@ -91,26 +109,30 @@
                 <div class="room-description-container">
                     <div style="margin-bottom: 20px" class="form-group">
                         <label for="title" class="form-label fs-6"><fmt:message key="title"/></label>
-                        <input class="form-control" form="editForm" id="title" type="text" name="title" required/>
+                        <input class="form-control" form="editForm" id="title" type="text" name="title" placeholder="<fmt:message key="title"/>"
+                        <c:if test="${not empty roomDto}">
+                               value="${roomDto.title}"
+                        </c:if> required>
                         <tags:fielderror messages="${errors['title']}"/>
                     </div>
                     <div class="form-group">
                         <label for="description" class="form-label fs-6"><fmt:message key="description"/></label>
-                        <textarea style="min-height: 150px" class="form-control" form="editForm" id="description"
-                                  name="description" required></textarea>
+                        <textarea style="min-height: 150px" class="form-control" form="editForm" id="description" placeholder="<fmt:message key="description"/>" name="description" required><c:if test="${not empty roomDto}">${roomDto.description}</c:if></textarea>
                         <tags:fielderror messages="${errors['description']}"/>
                     </div>
                 </div>
                 <div class="attributes-container">
                     <div class="form-group">
                         <label for="attributes" class="form-label fs-6"><fmt:message key="attributes"/></label>
-                        <input class="form-control" id="attributes" form="editForm" type="text" name="attributes"
-                               required>
+                        <input class="form-control" id="attributes" form="editForm" type="text" name="attributes" placeholder="<fmt:message key="attributes"/>"
+                        <c:if test="${not empty roomDto}">
+                               value="${String.join(",", roomDto.attributes)}"
+                        </c:if> required>
                         <tags:fielderror messages="${errors['attributes']}"/>
                     </div>
                 </div>
                 <div class="button-container">
-                    <form class="edit-room-form" id="editForm" method="post" action="<c:url value="/controller"/>"
+                    <form onsubmit="trimOnSubmit()" class="edit-room-form" id="editForm" method="post" action="<c:url value="/controller"/>"
                           enctype="multipart/form-data">
                         <input type="hidden" name="command" value="createRoom">
                         <button type="submit" class="btn btn-success w-100"><fmt:message key="create.room"/></button>
@@ -121,5 +143,6 @@
     </div>
 </div>
 <c:import url="component/footer.jsp"/>
+<script src="../js/script.js"></script>
 </body>
 </html>

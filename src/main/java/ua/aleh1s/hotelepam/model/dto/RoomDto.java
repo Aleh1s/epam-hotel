@@ -21,5 +21,5 @@ public class RoomDto {
     private Boolean isUnavailable;
     private List<String> attributes;
     private RoomClass clazz;
-    private Part image;
+    private byte[] image;
 }

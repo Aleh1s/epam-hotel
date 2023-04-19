@@ -18,7 +18,7 @@
     <div class="main">
         <div class="form">
             <h1 class="text-center"><fmt:message key="welcome"/></h1>
-            <form action="<c:url value="/controller?command=login"/>" method="post">
+            <form onsubmit="trimOnSubmit()" action="<c:url value="/controller?command=login"/>" method="post">
 
                 <c:set var="errors" value="${requestScope.errors}"/>
                 <div class="form-group">

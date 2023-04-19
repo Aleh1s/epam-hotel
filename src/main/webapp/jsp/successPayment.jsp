@@ -53,7 +53,7 @@
             </div>
         </div>
     </div>
-    <c:import url="component/footer.jsp"/>
 </div>
+<c:import url="component/footer.jsp"/>
 </body>
 </html>

@@ -19,12 +19,17 @@
     <div class="main">
         <div class="main-container">
             <div class="room-editor-grid-container">
-                <div class="room-image-container">
-                    <img src="http://localhost:8080/controller?command=getRoomImage&roomNumber=${requestScope.roomDto.number()}"
-                         alt="Room image">
+                <c:set var="errors" value="${requestScope.errors}"/>
+                <c:set var="roomDto" value="${requestScope.roomDto}"/>
+                <div class="image-picker">
+                    <div class="room-image-container" id="imagePreview">
+                        <img src="http://localhost:8080/controller?command=getRoomImage&roomNumber=${roomDto.number}" alt="Room image">
+                    </div>
+                    <tags:fielderror messages="${errors['image']}"/>
                 </div>
                 <div class="room-properties-editor">
-                    <c:set var="index" value="${requestScope.roomDto.clazz().index}"/>
+                    <c:set var="index" value="${roomDto.clazz.index}"/>
+
                     <div id="class" class="form-group w-100">
                         <label for="class" class="form-label fs-6"><fmt:message key="class"/></label>
                         <select name="class" form="editForm" class="form-select" required>
@@ -47,40 +52,46 @@
                     </div>
                     <div class="form-group w-100">
                         <label for="guests" class="form-label fs-6"><fmt:message key="guests"/></label>
-                        <input class="form-control" form="editForm" id="guests" type="number" name="guests" min="1"
-                               value="${requestScope.roomDto.guests()}"
-                               placeholder=""
-                               required/>
+                        <input class="form-control" form="editForm" id="guests" type="text" name="guests"
+                        <c:if test="${empty errors['guests']}">
+                               value="${roomDto.guests}"
+                        </c:if> required>
+                        <tags:fielderror messages="${errors['guests']}"/>
                     </div>
                     <div class="form-group w-100">
                         <label for="beds" class="form-label fs-6"><fmt:message key="beds"/></label>
-                        <input form="editForm" id="beds" class="form-control" type="number" name="beds" min="1"
-                               value="${requestScope.roomDto.beds()}"
-                               required/>
+                        <input form="editForm" id="beds" class="form-control" type="text" name="beds"
+                        <c:if test="${empty errors['beds']}">
+                               value="${roomDto.beds}"
+                        </c:if> required>
+                        <tags:fielderror messages="${errors['beds']}"/>
                     </div>
                     <div class="form-group w-100">
                         <label for="area" class="form-label fs-6"><fmt:message key="area"/></label>
-                        <input form="editForm" class="form-control" id="area" type="number" name="area" min="1"
-                               value="${requestScope.roomDto.area()}"
-                               required/>
+                        <input form="editForm" class="form-control" id="area" type="text" name="area"
+                        <c:if test="${empty errors['area']}">
+                               value="${roomDto.area}"
+                        </c:if> required>
+                        <tags:fielderror messages="${errors['area']}"/>
                     </div>
                 </div>
                 <div class="image-price-container">
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="image" class="form-label fs-6"><fmt:message key="image"/></label>
-                                <input class="form-control" form="editForm" id="image" type="file" name="image"
+                                <label for="imagePicker" class="form-label fs-6"><fmt:message key="image"/></label>
+                                <input class="form-control" form="editForm" id="imagePicker" type="file" name="image"
                                        accept=".jpg,.jpeg,.png"/>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 <label for="price" class="form-label fs-6"><fmt:message key="price"/></label>
-                                <input class="form-control" form="editForm" id="price" type="number" name="price"
-                                       min="1"
-                                       value="${requestScope.roomDto.price()}"
-                                       required/>
+                                <input class="form-control" form="editForm" id="price" type="text" name="price"
+                                <c:if test="${empty errors['price']}">
+                                       value="${roomDto.price}"
+                                </c:if> required>
+                                <tags:fielderror messages="${errors['price']}"/>
                             </div>
                         </div>
                     </div>
@@ -89,27 +100,29 @@
                     <div style="margin-bottom: 20px" class="form-group">
                         <label for="title" class="form-label fs-6"><fmt:message key="title"/></label>
                         <input class="form-control" form="editForm" id="title" type="text" name="title"
-                               value="${requestScope.roomDto.title()}" required/>
+                               value="${roomDto.title}"/>
+                        <tags:fielderror messages="${errors['title']}"/>
                     </div>
                     <div class="form-group">
                         <label for="description" class="form-label fs-6"><fmt:message key="description"/></label>
-                        <textarea style="min-height: 150px" class="form-control" form="editForm" id="description" name="description" required>${requestScope.roomDto.description()}</textarea>
+                        <textarea style="min-height: 150px" class="form-control" form="editForm" id="description" name="description" required>${roomDto.description}</textarea>
+                        <tags:fielderror messages="${errors['description']}"/>
                     </div>
                 </div>
                 <div class="attributes-container">
                     <div class="form-group">
                         <label for="attributes" class="form-label fs-6"><fmt:message key="attributes"/></label>
                         <input class="form-control" id="attributes" form="editForm" type="text" name="attributes"
-                               value="${String.join(",", requestScope.roomDto.attributes())}"
-                               required>
+                               value="${String.join(",", roomDto.attributes)}" required>
+                        <tags:fielderror messages="${errors['attributes']}"/>
                     </div>
                 </div>
                 <div class="button-container">
-                    <form class="edit-room-form" method="post" id="editForm" action="<c:url value="/controller"/>"
+                    <form onsubmit="trimOnSubmit()" class="edit-room-form" method="post" id="editForm" action="<c:url value="/controller"/>"
                           enctype="multipart/form-data">
                         <input type="hidden" name="command" value="updateRoom">
-                        <input type="hidden" name="number" value="${requestScope.roomDto.number()}">
-                        <input type="hidden" name="isUnavailable" value="${requestScope.roomDto.isUnavailable()}">
+                        <input type="hidden" name="number" value="${requestScope.roomDto.number}">
+                        <input type="hidden" name="isUnavailable" value="${requestScope.roomDto.isUnavailable}">
                         <button type="submit" class="btn btn-success w-100"><fmt:message key="save"/></button>
                     </form>
                 </div>
@@ -118,5 +131,6 @@
     </div>
 </div>
 <c:import url="component/footer.jsp"/>
+<script src="../js/script.js"></script>
 </body>
 </html>

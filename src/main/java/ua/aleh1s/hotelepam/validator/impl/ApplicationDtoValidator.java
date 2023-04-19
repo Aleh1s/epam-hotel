@@ -21,6 +21,4 @@ public class ApplicationDtoValidator extends Validator<ApplicationDto> {
                 rejectValue(fieldName, "Guests should be between 1 and 10");
         }
     }
-
-
 }

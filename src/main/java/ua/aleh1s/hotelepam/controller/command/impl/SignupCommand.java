@@ -6,6 +6,7 @@ import ua.aleh1s.hotelepam.appcontext.AppContext;
 import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
 import ua.aleh1s.hotelepam.controller.command.Command;
 import ua.aleh1s.hotelepam.exception.ApplicationException;
+import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.dto.SignupCredentials;
 import ua.aleh1s.hotelepam.mapper.dtomapper.requesttodto.SignupCredentialsDtoMapper;
 import ua.aleh1s.hotelepam.service.AuthService;
@@ -26,18 +27,12 @@ public class SignupCommand implements Command {
 
         try {
             authService.register(credentials, CUSTOMER);
-        } catch (ApplicationException e) {
+        } catch (ServiceException e) {
+            request.setAttribute("credentials", credentials);
             e.setPath(resourcesManager.getValue("path.page.signup"));
             throw e;
         }
 
-        String path = resourcesManager.getValue("path.page.login");
-        try {
-            response.sendRedirect(path);
-            path = "redirect";
-        } catch (IOException e) {
-            path = resourcesManager.getValue("path.page.error");
-        }
-        return path;
+        return redirect(resourcesManager.getValue("path.page.login"), response);
     }
 }

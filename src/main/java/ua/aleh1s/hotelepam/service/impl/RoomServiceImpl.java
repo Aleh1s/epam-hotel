@@ -1,6 +1,11 @@
 package ua.aleh1s.hotelepam.service.impl;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Part;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ua.aleh1s.hotelepam.exception.ApplicationException;
 import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.criteria.Order;
 import ua.aleh1s.hotelepam.model.criteria.RoomCriteria;
@@ -22,15 +27,15 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.*;
 import static ua.aleh1s.hotelepam.model.criteria.Order.DESC;
 
 @AllArgsConstructor
 public class RoomServiceImpl implements RoomService {
 
+
     private final ReservationRepository reservationRepository;
     private final RoomRepository roomRepository;
-
-    private final static Integer MAX_IMAGE_SIZE = 1_048_576;
 
     @Override
     public void create(RoomEntity room) {
@@ -45,47 +50,39 @@ public class RoomServiceImpl implements RoomService {
         if (validator.hasErrors())
             throw new ValidationException(validator.getMessagesByRejectedValue());
 
+        if (roomDto.getImage().length == 0)
+            throw new ServiceException("Room image is required!");
+
         if (existsByRoomNumber(roomDto.getNumber()))
             throw new ServiceException("Room with room number " + roomDto.getNumber() + " already exists.");
 
-        byte[] imageBytes;
+        RoomEntity roomEntity = from(roomDto);
+        roomEntity.setIsUnavailable(true);
 
-        try {
-            try (InputStream inputStream = roomDto.getImage().getInputStream()) {
-                int actualSizeOfImage = inputStream.available();
-
-                if (actualSizeOfImage > MAX_IMAGE_SIZE)
-                    throw new ServiceException("Max size of image is reached!!!. Try to pick another image.");
-
-                imageBytes = new byte[actualSizeOfImage];
-                inputStream.read(imageBytes);
-            }
-
-        } catch (IOException e) {
-            throw new ServiceException("Something went wrong while image uploading");
-        }
-
-        RoomEntity newRoom = RoomEntity.builder()
-                .number(roomDto.getNumber())
-                .clazz(roomDto.getClazz())
-                .title(roomDto.getTitle())
-                .description(roomDto.getDescription())
-                .attributes(roomDto.getAttributes())
-                .beds(roomDto.getBeds())
-                .guests(roomDto.getGuests())
-                .area(roomDto.getArea())
-                .price(roomDto.getPrice())
-                .image(imageBytes)
-                .isUnavailable(true)
-                .build();
-
-        roomRepository.save(newRoom);
-        updateImage(newRoom);
+        create(roomEntity);
+        updateImage(roomEntity);
     }
 
     @Override
     public void update(RoomEntity room) {
         roomRepository.update(room);
+    }
+
+    @Override
+    public void update(RoomDto roomDto) throws ServiceException {
+        RoomDtoValidator validator = new RoomDtoValidator();
+        validator.validate(roomDto);
+
+        if (validator.hasErrors())
+            throw new ValidationException(validator.getMessagesByRejectedValue());
+
+        RoomEntity roomEntity = from(roomDto);
+        roomEntity.setIsUnavailable(true);
+
+        update(roomEntity);
+
+        if (roomEntity.getImage().length > 0)
+            updateImage(roomEntity);
     }
 
     @Override
@@ -149,11 +146,11 @@ public class RoomServiceImpl implements RoomService {
         Order clazz = criteria.getClazz();
 
         Comparator<RoomEntity> comparator;
-        if (Objects.nonNull(price)) {
+        if (nonNull(price)) {
             comparator = Comparator.comparing(RoomEntity::getPrice);
             if (price.equals(DESC))
                 comparator = comparator.reversed();
-        } else if (Objects.nonNull(guests)) {
+        } else if (nonNull(guests)) {
             comparator = Comparator.comparing(RoomEntity::getGuests);
             if (guests.equals(DESC))
                 comparator.reversed();
@@ -197,5 +194,21 @@ public class RoomServiceImpl implements RoomService {
     private BigDecimal getTotalPrice(BigDecimal pricePerNight, Period requestedPeriod) {
         int nights = requestedPeriod.getDaysBetween();
         return pricePerNight.multiply(BigDecimal.valueOf(nights));
+    }
+
+    private RoomEntity from(RoomDto roomDto) {
+        return RoomEntity.builder()
+                .number(roomDto.getNumber())
+                .clazz(roomDto.getClazz())
+                .title(roomDto.getTitle())
+                .description(roomDto.getDescription())
+                .attributes(roomDto.getAttributes())
+                .beds(roomDto.getBeds())
+                .guests(roomDto.getGuests())
+                .area(roomDto.getArea())
+                .price(roomDto.getPrice())
+                .image(roomDto.getImage())
+                .isUnavailable(roomDto.getIsUnavailable())
+                .build();
     }
 }

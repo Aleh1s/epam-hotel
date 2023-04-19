@@ -18,7 +18,7 @@
     <div class="main">
         <div class="form">
             <h1 class="text-center"><fmt:message key="new.manager"/></h1>
-            <form action="<c:url value="/controller"/>" method="post">
+            <form onsubmit="trimOnSubmit()" action="<c:url value="/controller"/>" method="post">
                 <input type="hidden" name="command" value="createManager">
 
                 <c:set var="errors" value="${requestScope.errors}"/>

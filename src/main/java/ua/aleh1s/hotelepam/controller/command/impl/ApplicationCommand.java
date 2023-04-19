@@ -24,6 +24,7 @@ public class ApplicationCommand implements Command {
 
         HttpRequestApplicationDtoMapper mapper = new HttpRequestApplicationDtoMapper();
         ApplicationDto applicationDto = mapper.map(request);
+        request.setAttribute("credentials", applicationDto);
 
         String path = resourcesManager.getValue("path.page.application");
         if (mapper.hasErrors())
