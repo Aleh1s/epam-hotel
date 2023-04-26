@@ -15,4 +15,5 @@ public interface RequestService {
     void update(RequestEntity entity) throws ServiceException;
     Page<RequestEntity> getAllActiveRequestsByUserId(Long userId, PageRequest pageRequest) throws ServiceException;
     void changeStatus(RequestEntity entity, RequestStatus status) throws ServiceException;
+    void confirmRequest(Long requestId) throws ServiceException;
 }

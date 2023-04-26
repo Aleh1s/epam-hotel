@@ -26,6 +26,7 @@ public class BookingServiceImpl implements BookingService {
     private final ReservationTokenService reservationTokenService;
     private final MailService mailService;
     private final UserService userService;
+    private final RequestService requestService;
 
     @Override
     public ReservationEntity bookRoom(Integer roomNumber, Long customerId, Period requestedPeriod) throws ServiceException {
@@ -77,6 +78,19 @@ public class BookingServiceImpl implements BookingService {
         mailService.send(mail);
 
         return reservation;
+    }
+
+    @Override
+    public ReservationEntity bookRoom(Long requestId) throws ServiceException {
+        RequestEntity request = requestService.getById(requestId);
+        return bookRoom(
+                request.getRoomNumber(),
+                request.getCustomerId(),
+                Period.between(
+                        request.getCheckIn(),
+                        request.getCheckOut()
+                )
+        );
     }
 
     private String buildEmail(String name, String link, Locale lang) {

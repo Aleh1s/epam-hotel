@@ -31,43 +31,22 @@ public class ConfirmRequestCommand implements Command {
 
         RequestService requestService = AppContext.getInstance().getRequestService();
         BookingService bookingService = AppContext.getInstance().getBookingService();
-        RoomService roomService = AppContext.getInstance().getRoomService();
 
         Long requestId = getLongValue(request, "requestId");
-
         HttpSession session = request.getSession(false);
-        Long userId = (Long) session.getAttribute("id");
 
-        RequestEntity requestEntity = requestService.getById(requestId);
-        RoomEntity room = roomService.getByRoomNumber(requestEntity.getRoomNumber());
-
-        if (room.getIsUnavailable())
-            throw new ApplicationException("Room is unavailable now. Try to pick another room.",
-                    ResourcesManager.getInstance().getValue("path.command.profile"));
-
-        String path = resourcesManager.getValue("path.command.profile");
-        if (!Objects.equals(requestEntity.getCustomerId(), userId))
-            throw new ApplicationException("You cannot change status", path);
-
+        ReservationEntity reservation;
         try {
-            requestService.changeStatus(requestEntity, CONFIRMED);
+            requestService.confirmRequest(requestId);
+            reservation = bookingService.bookRoom(requestId);
         } catch (ServiceException e) {
-            e.setPath(resourcesManager.getValue("path.command.profile"));
+            e.setPath(ResourcesManager.getInstance().getValue("path.command.profile"));
             throw e;
         }
 
-        ReservationEntity reservation = bookingService.bookRoom(
-                requestEntity.getRoomNumber(),
-                requestEntity.getCustomerId(),
-                Period.between(
-                        requestEntity.getCheckIn(),
-                        requestEntity.getCheckOut()
-                )
-        );
-
         session.setAttribute("reservationTotalAmount", reservation.getTotalAmount());
-        session.setAttribute("reservationCheckIn", toDate(requestEntity.getCheckIn()));
-        session.setAttribute("reservationCheckOut", toDate(requestEntity.getCheckOut()));
+        session.setAttribute("reservationCheckIn", reservation.getCheckIn());
+        session.setAttribute("reservationCheckOut", reservation.getCheckOut());
 
         return redirect(resourcesManager.getValue("path.page.success.booking"), response);
     }

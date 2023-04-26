@@ -92,7 +92,7 @@ public class AppContext {
         this.requestService = new RequestServiceImpl(requestRepository, applicationService, roomService);
         this.authService = new AuthServiceImpl(userService, userDtoMapper);
         this.paymentService = new PaymentServiceImpl(reservationService, userService, roomService);
-        this.bookingService = new BookingServiceImpl(roomService, reservationService, reservationTokenService, mailService, userService);
+        this.bookingService = new BookingServiceImpl(roomService, reservationService, reservationTokenService, mailService, userService, requestService);
         this.pdfBuilderService = new PdfBuilderServiceImpl(reservationService, roomService, userService);
 
         //Sql entity mappers

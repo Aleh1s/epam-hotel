@@ -1,12 +1,11 @@
 package ua.aleh1s.hotelepam.service.impl;
 
 import lombok.AllArgsConstructor;
+import ua.aleh1s.hotelepam.appcontext.ResourcesManager;
+import ua.aleh1s.hotelepam.exception.ApplicationException;
 import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.dto.RequestDto;
-import ua.aleh1s.hotelepam.model.entity.ApplicationEntity;
-import ua.aleh1s.hotelepam.model.entity.ApplicationStatus;
-import ua.aleh1s.hotelepam.model.entity.RequestEntity;
-import ua.aleh1s.hotelepam.model.entity.RequestStatus;
+import ua.aleh1s.hotelepam.model.entity.*;
 import ua.aleh1s.hotelepam.repository.RequestRepository;
 import ua.aleh1s.hotelepam.service.ApplicationService;
 import ua.aleh1s.hotelepam.service.RequestService;
@@ -20,6 +19,7 @@ import ua.aleh1s.hotelepam.validator.impl.RequestDtoValidator;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import static ua.aleh1s.hotelepam.model.entity.RequestStatus.CONFIRMED;
 import static ua.aleh1s.hotelepam.model.entity.RequestStatus.NEW;
 
 @AllArgsConstructor
@@ -90,5 +90,16 @@ public class RequestServiceImpl implements RequestService {
 
         request.setStatus(requestStatus);
         update(request);
+    }
+
+    @Override
+    public void confirmRequest(Long requestId) throws ServiceException {
+        RequestEntity requestEntity = getById(requestId);
+        RoomEntity room = roomService.getByRoomNumber(requestEntity.getRoomNumber());
+
+        if (room.getIsUnavailable())
+            throw new ServiceException("Room is unavailable now. Try to pick another room");
+
+        changeStatus(requestEntity, CONFIRMED);
     }
 }

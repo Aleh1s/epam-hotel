@@ -37,17 +37,11 @@
                             </tr>
                             <tr>
                                 <td><fmt:message key="check.in"/></td>
-                                <td>
-                                    <fmt:formatDate type="date" value="${sessionScope.reservationCheckIn}"
-                                                    pattern="dd-MM-yyyy"/>
-                                </td>
+                                <td>${sessionScope.reservationCheckIn}</td>
                             </tr>
                             <tr>
                                 <td><fmt:message key="check.out"/></td>
-                                <td>
-                                    <fmt:formatDate type="date" value="${sessionScope.reservationCheckOut}"
-                                                    pattern="dd-MM-yyyy"/>
-                                </td>
+                                <td>${sessionScope.reservationCheckOut}</td>
                             </tr>
                         </table>
                     </div>
