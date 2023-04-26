@@ -25,6 +25,7 @@
         <bcrypt.version>0.4</bcrypt.version>
         <mail.version>1.6.2</mail.version>
         <itextpdf.version>5.5.13.3</itextpdf.version>
+        <lombok.version>1.18.26</lombok.version>
     </properties>
 
     <dependencies>
@@ -112,7 +113,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.26</version>
+            <version>${lombok.version}</version>
         </dependency>
     </dependencies>
 

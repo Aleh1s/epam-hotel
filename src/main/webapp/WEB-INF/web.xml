@@ -5,7 +5,6 @@
           https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
 
-
     <jsp-config>
         <taglib>
             <taglib-uri>simpleTags</taglib-uri>
@@ -13,14 +12,14 @@
         </taglib>
     </jsp-config>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>/jsp/home.jsp</welcome-file>
     </welcome-file-list>
-    <!--    <error-page>-->
-    <!--        <error-code>404</error-code>-->
-    <!--        <location>/jsp/error.jsp</location>-->
-    <!--    </error-page>-->
-    <!--    <error-page>-->
-    <!--        <exception-type>java.lang.RuntimeException</exception-type>-->
-    <!--        <location>/jsp/error.jsp</location>-->
-    <!--    </error-page>-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/jsp/resourceNotFound.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/jsp/error.jsp</location>
+    </error-page>
 </web-app>
