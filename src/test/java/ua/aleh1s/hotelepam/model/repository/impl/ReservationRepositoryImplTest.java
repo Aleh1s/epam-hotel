@@ -80,11 +80,6 @@ class ReservationRepositoryImplTest {
         assertEquals(expected, actual);
     }
 
-    @Test
-    @Disabled
-    void getAllActualReservationByStatus() {
-
-    }
 
     @Test
     void findById() {
@@ -117,23 +112,5 @@ class ReservationRepositoryImplTest {
 
         verify(updateQueryBuilder, times(1))
                 .execute();
-    }
-
-    @Test
-    @Disabled
-    void getActualReservations() {
-
-    }
-
-    @Test
-    @Disabled
-    void getActualReservationsByRoomNumber() {
-
-    }
-
-    @Test
-    @Disabled
-    void getAllReservationsByUserId() {
-
     }
 }

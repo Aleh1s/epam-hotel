@@ -47,6 +47,9 @@ class RoomServiceImplTest {
     @SneakyThrows
     void canCheckIsRoomAvailableTrue() {
         Integer roomNumber = 1;
+
+        room.setIsUnavailable(false);
+
         Period period = Period.between(
                 LocalDate.of(2023, 10, 1),
                 LocalDate.of(2023, 10, 8)
@@ -64,6 +67,9 @@ class RoomServiceImplTest {
 
         List<ReservationEntity> actualReservations = List.of(reservation1, reservation2);
 
+        given(roomRepository.getByRoomNumber(roomNumber))
+                .willReturn(Optional.of(room));
+
         given(reservationRepository.getActualReservationsByRoomNumber(roomNumber))
                 .willReturn(actualReservations);
 
@@ -76,6 +82,9 @@ class RoomServiceImplTest {
     @SneakyThrows
     void canCheckIsRoomAvailableFalse() {
         Integer roomNumber = 1;
+
+        room.setIsUnavailable(false);
+
         Period period = Period.between(
                 LocalDate.of(2023, 10, 1),
                 LocalDate.of(2023, 10, 8)
@@ -88,6 +97,9 @@ class RoomServiceImplTest {
 
         List<ReservationEntity> actualReservations = List.of(reservation1);
 
+        given(roomRepository.getByRoomNumber(roomNumber))
+                .willReturn(Optional.of(room));
+
         given(reservationRepository.getActualReservationsByRoomNumber(roomNumber))
                 .willReturn(actualReservations);
 
@@ -95,41 +107,6 @@ class RoomServiceImplTest {
 
         assertFalse(isRoomAvailable);
     }
-
-//    @Test
-//    @Disabled
-//    void canGetAvailableRooms() {
-//        Integer guests = 1;
-//        Period period = Period.between(
-//                LocalDate.of(2023, 10, 1),
-//                LocalDate.of(2023, 10, 8)
-//        );
-//
-//        ReservationEntity reservation1 = ReservationEntity.builder()
-//                .number(1)
-//                .checkIn(LocalDate.of(2023, 9, 27))
-//                .checkOut(LocalDate.of(2023, 10, 1))
-//                .build();
-//
-//        ReservationEntity reservation2 = ReservationEntity.builder()
-//                .number(2)
-//                .checkIn(LocalDate.of(2023, 10, 8))
-//                .checkOut(LocalDate.of(2023, 10, 15))
-//                .build();
-//
-//        room.setRoomNumber(3);
-//
-//        given(reservationRepository.getActualReservations())
-//                .willReturn(List.of(reservation1, reservation2));
-//
-//        List<RoomEntity> rooms = List.of(room);
-//        given(roomRepository.getAllByGuests(guests))
-//                .willReturn(rooms);
-//
-//        List<RoomEntity> actual = underTest.getAvailableRooms(guests, period);
-//
-//        assertEquals(rooms, actual);
-//    }
 
     @Test
     @SneakyThrows
@@ -169,8 +146,4 @@ class RoomServiceImplTest {
                 .getByRoomNumber(roomNumberCaptor.capture());
         assertEquals(roomNumber, roomNumberCaptor.getValue());
     }
-
-    @Test
-    @Disabled
-    void getSortedRooms() {}
 }

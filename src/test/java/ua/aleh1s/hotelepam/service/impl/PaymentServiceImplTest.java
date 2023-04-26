@@ -10,8 +10,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ua.aleh1s.hotelepam.model.entity.ReservationEntity;
 import ua.aleh1s.hotelepam.model.entity.ReservationStatus;
+import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.service.ReservationService;
+import ua.aleh1s.hotelepam.service.RoomService;
 import ua.aleh1s.hotelepam.service.UserService;
 
 import java.math.BigDecimal;
@@ -29,6 +31,8 @@ class PaymentServiceImplTest {
     private ReservationServiceImpl reservationService;
     @Mock
     private UserServiceImpl userService;
+    @Mock
+    private RoomService roomService;
     @InjectMocks
     private PaymentServiceImpl underTest;
 
@@ -40,9 +44,11 @@ class PaymentServiceImplTest {
     @Test
     @SneakyThrows
     void payReservation() {
+        Integer roomNumber = 1;
         Long reservationId = 1L, customerId = 1L;
         ReservationEntity reservation = ReservationEntity.builder()
                 .customerId(customerId)
+                .roomNumber(roomNumber)
                 .totalAmount(BigDecimal.TEN)
                 .expiredAt(LocalDateTime.now().plusMinutes(2))
                 .build();
@@ -50,6 +56,10 @@ class PaymentServiceImplTest {
         UserEntity user = UserEntity.builder()
                 .id(customerId)
                 .account(BigDecimal.TEN)
+                .build();
+
+        RoomEntity room = RoomEntity.builder()
+                .isUnavailable(false)
                 .build();
 
         ArgumentCaptor<UserEntity> userCaptor =
@@ -60,6 +70,9 @@ class PaymentServiceImplTest {
 
         given(reservationService.getById(reservationId))
                 .willReturn(reservation);
+
+        given(roomService.getByRoomNumber(roomNumber))
+                .willReturn(room);
 
         given(userService.getById(customerId))
                 .willReturn(user);

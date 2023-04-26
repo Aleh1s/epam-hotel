@@ -13,6 +13,10 @@ import ua.aleh1s.hotelepam.model.entity.UserEntity;
 import ua.aleh1s.hotelepam.model.entity.UserRole;
 import ua.aleh1s.hotelepam.service.exception.EmailAlreadyExistsException;
 import ua.aleh1s.hotelepam.service.exception.PhoneAlreadyExistsException;
+import ua.aleh1s.hotelepam.service.exception.ValidationException;
+
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
@@ -34,9 +38,9 @@ class AuthServiceImplTest {
     void setUp() {
         credentials = new SignupCredentials(
                 "test@gmail.com",
+                "0999999999",
                 "Test",
                 "Test",
-                "testPhoneNumber",
                 "password"
         );
     }
@@ -75,5 +79,35 @@ class AuthServiceImplTest {
                 .willReturn(true);
 
         assertThrows(PhoneAlreadyExistsException.class, () -> underTest.register(credentials, UserRole.CUSTOMER));
+    }
+
+    @Test
+    @SneakyThrows
+    void registerInvalidCredentials() {
+        SignupCredentials credentials = new SignupCredentials(
+                "Invalid email",
+                "Invalid phone number",
+                "",
+                "",
+                ""
+        );
+
+        Map<String, List<String>> messagesByRejectedValue = null;
+
+        try {
+            underTest.register(credentials, UserRole.CUSTOMER);
+        } catch (ValidationException e) {
+            messagesByRejectedValue = e.getMessagesByRejectedValue();
+        }
+
+        if (messagesByRejectedValue == null) {
+            fail("Expected error messages, but they are not present");
+        } else {
+            assertNotNull(messagesByRejectedValue.get("email"));
+            assertNotNull(messagesByRejectedValue.get("phoneNumber"));
+            assertNotNull(messagesByRejectedValue.get("firstName"));
+            assertNotNull(messagesByRejectedValue.get("lastName"));
+            assertNotNull(messagesByRejectedValue.get("password"));
+        }
     }
 }

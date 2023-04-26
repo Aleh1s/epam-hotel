@@ -29,9 +29,6 @@ public class PaymentServiceImpl implements PaymentService {
         ReservationEntity reservation = reservationService.getById(reservationId);
         RoomEntity room = roomService.getByRoomNumber(reservation.getRoomNumber());
 
-        if (!Objects.equals(reservation.getCustomerId(), userId))
-            throw new ServiceException("You cannot pay this reservation!");
-
         if (room.getIsUnavailable())
             throw new ServiceException("Room is unavailable now. Try to pick another room.");
 
