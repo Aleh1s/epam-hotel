@@ -16,4 +16,5 @@ public interface RoomRepository {
     Page<RoomEntity> getAll(PageRequest pageRequest);
     void saveImage(Integer roomNumber, byte[] image);
     byte[] getImageByRoomNumber(Integer roomNumber);
+    void deleteByNumber(Integer roomNumber);
 }

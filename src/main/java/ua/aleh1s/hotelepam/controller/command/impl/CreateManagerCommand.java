@@ -23,6 +23,7 @@ public class CreateManagerCommand implements Command {
         try {
             authService.register(credentials, UserRole.MANAGER);
         } catch (ApplicationException e) {
+            request.setAttribute("credentials", credentials);
             e.setPath(resourcesManager.getValue("path.page.create.manager"));
             throw e;
         }

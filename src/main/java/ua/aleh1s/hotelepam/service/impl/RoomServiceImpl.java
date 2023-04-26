@@ -185,6 +185,17 @@ public class RoomServiceImpl implements RoomService {
         return roomRepository.getImageByRoomNumber(roomNumber);
     }
 
+    @Override
+    public void deleteByNumber(Integer roomNumber) throws ServiceException {
+        List<ReservationEntity> actualReservations =
+                reservationRepository.getActualReservationsByRoomNumber(roomNumber);
+
+        if (!actualReservations.isEmpty())
+            throw new ServiceException("Cannot delete room. It has uncompleted reservations!");
+
+        roomRepository.deleteByNumber(roomNumber);
+    }
+
     private boolean isRoomBusy(Period requestedPeriod, List<ReservationEntity> roomReservations) {
         return roomReservations.stream()
                 .map(it -> new Period(it.getCheckIn(), it.getCheckOut()))

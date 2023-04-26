@@ -68,7 +68,8 @@ public class RoomRepositoryImpl implements RoomRepository {
     @Override
     public List<RoomEntity> getAvailableRooms() {
         Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
-        return root.select().where(root.get("isUnavailable").equal(false)).getResultList(roomEntityMapper);
+        return root.select().where(root.get("isUnavailable").equal(false))
+                .getResultList(roomEntityMapper);
     }
 
     @Override
@@ -98,5 +99,11 @@ public class RoomRepositoryImpl implements RoomRepository {
         return root.select(
                 root.get("image")
         ).where(root.get("number").equal(roomNumber)).getBytes();
+    }
+
+    @Override
+    public void deleteByNumber(Integer roomNumber) {
+        Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
+        root.delete().where(root.get("number").equal(roomNumber)).execute();
     }
 }

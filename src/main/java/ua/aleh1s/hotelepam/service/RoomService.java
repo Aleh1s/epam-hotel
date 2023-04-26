@@ -24,4 +24,5 @@ public interface RoomService {
     BigDecimal getTotalPrice(RoomEntity room, Period requestedPeriod) throws ServiceException;
     RoomEntity getByRoomNumber(Integer roomNumber) throws ServiceException;
     byte[] getImageByRoomNumber(Integer roomNumber) throws ServiceException;
+    void deleteByNumber(Integer roomNumber) throws ServiceException;
 }

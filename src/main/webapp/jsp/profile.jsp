@@ -31,11 +31,11 @@
                                    required/>
                             <button type="submit" class="btn-primary"><fmt:message key="top.up"/></button>
                         </form>
-                        <form action="<c:url value="/controller"/>" method="post">
-                            <input type="hidden" name="command" value="logOut"/>
-                            <button type="submit" class="btn-danger"><fmt:message key="log.out"/></button>
-                        </form>
                     </c:if>
+                    <form action="<c:url value="/controller"/>" method="post">
+                        <input type="hidden" name="command" value="logOut"/>
+                        <button type="submit" class="btn-danger"><fmt:message key="log.out"/></button>
+                    </form>
                 </div>
                 <div class="header-user-info">
                     <h2>${requestScope.userDto.firstName()} ${requestScope.userDto.lastName()}</h2>
@@ -90,26 +90,26 @@
                                 <tbody>
                                 <c:forEach var="request" items="${requestScope.requestDtoPage.result()}">
                                     <tr>
-                                        <td>${request.checkIn()}</td>
-                                        <td>${request.checkOut()}</td>
-                                        <td>$ ${request.totalAmount()}</td>
+                                        <td>${request.checkIn}</td>
+                                        <td>${request.checkOut}</td>
+                                        <td>$ ${request.totalAmount}</td>
                                         <td class="control">
                                             <form action="<c:url value="/controller"/>" method="get">
                                                 <input type="hidden" name="command" value="viewRoom">
                                                 <input type="hidden" name="page" value="profile">
-                                                <input type="hidden" name="roomNumber" value="${request.roomNumber()}">
+                                                <input type="hidden" name="roomNumber" value="${request.roomNumber}">
                                                 <button class="btn-view" type="submit"><fmt:message
                                                         key="view.room"/></button>
                                             </form>
                                             <form action="<c:url value="/controller"/>" method="post">
                                                 <input type="hidden" name="command" value="rejectRequest">
-                                                <input type="hidden" name="requestId" value="${request.id()}">
+                                                <input type="hidden" name="requestId" value="${request.id}">
                                                 <button class="btn-trash" type="submit"><fmt:message
                                                         key="reject"/></button>
                                             </form>
                                             <form action="<c:url value="/controller"/>" method="post">
                                                 <input type="hidden" name="command" value="confirmRequest">
-                                                <input type="hidden" name="requestId" value="${request.id()}">
+                                                <input type="hidden" name="requestId" value="${request.id}">
                                                 <button class="btn-accept" type="submit"><fmt:message
                                                         key="book"/></button>
                                             </form>

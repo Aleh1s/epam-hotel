@@ -158,6 +158,17 @@ body {
 .footer {
     height: 130px;
     background: #34568B;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer > div {
+    color: white;
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-style: oblique;
 }
 
 .main-container {

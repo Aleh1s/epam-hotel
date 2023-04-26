@@ -22,34 +22,42 @@
                 <input type="hidden" name="command" value="createManager">
 
                 <c:set var="errors" value="${requestScope.errors}"/>
+                <c:set var="credentials" value="${requestScope.credentials}"/>
+
                 <div class="form-group">
                     <fmt:message var="email" key="email"/>
                     <label for="email" class="form-label fs-6">${email}</label>
                     <input class="form-control" id="email" name="email" type="email" placeholder="${email}"
-                           required>
+                    <c:if test="${empty errors['email'] and not empty credentials}">
+                           value="${credentials.email()}"
+                    </c:if> required>
                     <tags:fielderror messages="${errors['email']}"/>
                 </div>
                 <div class="form-group">
                     <fmt:message var="password" key="password"/>
                     <label for="password" class="form-label fs-6">${password}</label>
-                    <input class="form-control" id="password" name="password" type="password"
-                           placeholder="${password}"
-                           required>
+                    <input class="form-control" id="password" name="password" type="password" placeholder="${password}"
+                    <c:if test="${empty errors['password'] and not empty credentials}">
+                           value="${credentials.password()}"
+                    </c:if> required>
                     <tags:fielderror messages="${errors['password']}"/>
                 </div>
                 <div class="form-group">
                     <fmt:message var="firstName" key="first.name"/>
                     <label for="firstName" class="form-label fs-6">${firstName}</label>
-                    <input class="form-control" id="firstName" name="firstName" type="text"
-                           placeholder="${firstName}"
-                           required>
+                    <input class="form-control" id="firstName" name="firstName" type="text" placeholder="${firstName}"
+                    <c:if test="${empty errors['firstName'] and not empty credentials}">
+                           value="${credentials.firstName()}"
+                    </c:if> required>
                     <tags:fielderror messages="${errors['firstName']}"/>
                 </div>
                 <div class="form-group">
                     <fmt:message var="lastName" key="last.name"/>
                     <label for="lastName" class="form-label fs-6">${lastName}</label>
                     <input class="form-control" id="lastName" name="lastName" type="text" placeholder="${lastName}"
-                           required>
+                    <c:if test="${empty errors['lastName'] and not empty credentials}">
+                           value="${credentials.lastName()}"
+                    </c:if> required>
                     <tags:fielderror messages="${errors['lastName']}"/>
                 </div>
                 <div class="form-group">
@@ -58,7 +66,10 @@
                     <div style="margin-bottom: 0" class="input-group">
                         <span class="input-group-text" id="phone-start-addon">+38</span>
                         <input class="form-control" id="phoneNumber" name="phoneNumber" type="tel"
-                               placeholder="${phoneNumber}" required aria-describedby="phone-start-addon">
+                               placeholder="${phoneNumber}" aria-describedby="phone-start-addon"
+                        <c:if test="${empty errors['phoneNumber'] and not empty credentials}">
+                               value="${credentials.phoneNumber()}"
+                        </c:if> required>
                     </div>
                     <tags:fielderror messages="${errors['phoneNumber']}"/>
                 </div>

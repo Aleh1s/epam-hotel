@@ -60,6 +60,11 @@
                 <input type="hidden" name="number" value="${room.number}">
                 <button type="submit" class="btn-primary"><fmt:message key="edit"/></button>
             </form>
+            <form action="<c:url value="/controller"/>" method="get">
+                <input type="hidden" name="command" value="deleteRoom">
+                <input type="hidden" name="number" value="${room.number}">
+                <button type="submit" class="btn-danger"><fmt:message key="delete"/></button>
+            </form>
             <c:choose>
                 <c:when test="${room.isUnavailable}">
                     <form action="<c:url value="/controller"/>" method="post">

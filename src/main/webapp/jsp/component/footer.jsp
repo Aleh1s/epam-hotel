@@ -4,5 +4,7 @@
 <fmt:setBundle basename="locale"/>
 
 <footer class="footer">
-
+    <div>Via Tammaricella 127</div>
+    <div>+380 (68)-663-2241</div>
+    <div>hotel@gmail.com</div>
 </footer>
