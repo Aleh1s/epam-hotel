@@ -46,7 +46,7 @@
                                 </td>
                                 <td>
                                     <form method="get" action="<c:url value="/controller"/>">
-                                        <input type="hidden" name="command" value="getFullReservation"/>
+                                        <input type="hidden" name="command" value="downloadReservationPdf"/>
                                         <input type="hidden" name="reservationId" value="${reservation.id()}"/>
                                         <button type="submit" class="btn-view"><fmt:message key="full.info"/></button>
                                     </form>

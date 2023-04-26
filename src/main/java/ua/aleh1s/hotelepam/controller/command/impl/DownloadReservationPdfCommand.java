@@ -25,7 +25,7 @@ public class DownloadReservationPdfCommand implements Command {
         response.setHeader("Content-disposition", String.format("attachment; filename=reservation_%d.pdf", reservationId));
 
         try (ByteArrayOutputStream baos = pdfBuilderService.buildReservationPdfById(reservationId);
-             OutputStream out = response.getOutputStream()) {
+         OutputStream out = response.getOutputStream()) {
             baos.writeTo(out);
         } catch (IOException e) {
             e.printStackTrace();

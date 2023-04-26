@@ -4,7 +4,7 @@ import ua.aleh1s.hotelepam.exception.ServiceException;
 
 public class WrongPasswordException extends ServiceException {
     public WrongPasswordException() {
-        super("Password is wrong");
+        super("Password or username is wrong");
     }
 
 }
