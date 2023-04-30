@@ -12,6 +12,7 @@ import ua.aleh1s.hotelepam.mapper.dtomapper.requesttodto.HttpRequestRequestDtoMa
 import ua.aleh1s.hotelepam.model.dto.ApplicationDto;
 import ua.aleh1s.hotelepam.service.ApplicationService;
 import ua.aleh1s.hotelepam.service.exception.ValidationException;
+import ua.aleh1s.hotelepam.utils.Utils;
 
 public class ApplicationCommand implements Command {
     @Override

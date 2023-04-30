@@ -54,6 +54,5 @@ public final class CommandFactory {
         commandMap.put("createManager", new CreateManagerCommand());
         commandMap.put("createRoom", new CreateRoomCommand());
         commandMap.put("getRoomImage", new GetRoomImageCommand());
-        commandMap.put("deleteRoom", new DeleteRoomCommand());
     }
 }

@@ -111,8 +111,4 @@ public class AppContext {
             INSTANCE = new AppContext();
         return INSTANCE;
     }
-
-    public HttpRequestRoomDtoMapper getHttpRequestRoomDtoMapper() {
-        return null;
-    }
 }

@@ -1,11 +1,11 @@
 package ua.aleh1s.hotelepam.repository.impl;
 
-import ua.aleh1s.hotelepam.model.entity.RoomEntity;
 import ua.aleh1s.hotelepam.database.querybuilder.EntityManager;
 import ua.aleh1s.hotelepam.database.querybuilder.OrderUnit;
-import ua.aleh1s.hotelepam.repository.RoomRepository;
-import ua.aleh1s.hotelepam.mapper.sqlmapper.impl.SqlRoomEntityMapper;
 import ua.aleh1s.hotelepam.database.querybuilder.Root;
+import ua.aleh1s.hotelepam.mapper.sqlmapper.impl.SqlRoomEntityMapper;
+import ua.aleh1s.hotelepam.model.entity.RoomEntity;
+import ua.aleh1s.hotelepam.repository.RoomRepository;
 import ua.aleh1s.hotelepam.utils.Page;
 import ua.aleh1s.hotelepam.utils.PageRequest;
 
@@ -99,11 +99,5 @@ public class RoomRepositoryImpl implements RoomRepository {
         return root.select(
                 root.get("image")
         ).where(root.get("number").equal(roomNumber)).getBytes();
-    }
-
-    @Override
-    public void deleteByNumber(Integer roomNumber) {
-        Root<RoomEntity> root = entityManager.valueOf(RoomEntity.class);
-        root.delete().where(root.get("number").equal(roomNumber)).execute();
     }
 }

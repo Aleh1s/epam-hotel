@@ -39,6 +39,7 @@ public class BookCommand implements Command {
             e.setPath(resourcesManager.getValue("path.command.view.room"));
             throw e;
         }
+
         session.setAttribute("reservationTotalAmount", reservation.getTotalAmount());
         session.setAttribute("reservationCheckIn", Utils.toDate(checkIn));
         session.setAttribute("reservationCheckOut", Utils.toDate(checkOut));

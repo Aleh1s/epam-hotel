@@ -3,10 +3,7 @@ package ua.aleh1s.hotelepam.database.querybuilder.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.aleh1s.hotelepam.database.jdbc.DBManager;
-import ua.aleh1s.hotelepam.database.querybuilder.InsertionValue;
-import ua.aleh1s.hotelepam.database.querybuilder.Parameter;
-import ua.aleh1s.hotelepam.database.querybuilder.QueryBuilder;
-import ua.aleh1s.hotelepam.database.querybuilder.Root;
+import ua.aleh1s.hotelepam.database.querybuilder.*;
 import ua.aleh1s.hotelepam.database.querybuilder.entityconfiguration.Column;
 
 import java.sql.*;
@@ -15,7 +12,6 @@ import java.util.StringJoiner;
 public class InsertQueryBuilder<T> extends QueryBuilder<T> {
 
     private static final String QUERY_BASE = "insert into \"%s\" ";
-    private static final Logger logger = LogManager.getLogger(InsertQueryBuilder.class);
     public InsertQueryBuilder(Root<T> root) {
         super(root, new StringJoiner(" ", String.format(QUERY_BASE, root.getTableName()), ";"));
     }
@@ -54,11 +50,11 @@ public class InsertQueryBuilder<T> extends QueryBuilder<T> {
                         }
                     }
                 } else {
-                    throw new RuntimeException();
+                    throw new QueryBuilderException("Primary key expected, but not present");
                 }
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
+            throw new QueryBuilderException(e);
         }
         return id;
     }

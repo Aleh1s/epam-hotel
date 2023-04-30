@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.aleh1s.hotelepam.database.jdbc.DBManager;
 import ua.aleh1s.hotelepam.database.querybuilder.OrderUnit;
+import ua.aleh1s.hotelepam.database.querybuilder.QueryBuilderException;
 import ua.aleh1s.hotelepam.database.querybuilder.Root;
 import ua.aleh1s.hotelepam.database.querybuilder.aggregatefunc.AggregateFunctionBuilder;
 import ua.aleh1s.hotelepam.database.querybuilder.node.PredicateNode;
@@ -75,7 +76,7 @@ public class SelectQueryBuilder<T> extends ConditionalQueryBuilder<T> {
                 }
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
+            throw new QueryBuilderException(e);
         }
         return resultList;
     }
@@ -94,7 +95,7 @@ public class SelectQueryBuilder<T> extends ConditionalQueryBuilder<T> {
                 }
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
+            throw new QueryBuilderException(e);
         }
         return result;
     }
@@ -114,7 +115,7 @@ public class SelectQueryBuilder<T> extends ConditionalQueryBuilder<T> {
                 }
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
+            throw new QueryBuilderException(e);
         }
         return result;
     }

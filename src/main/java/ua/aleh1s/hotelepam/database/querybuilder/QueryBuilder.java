@@ -42,7 +42,7 @@ public abstract class QueryBuilder<T> {
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
+            throw new QueryBuilderException(e);
         }
     }
 
@@ -61,7 +61,7 @@ public abstract class QueryBuilder<T> {
                 }
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
+            throw new QueryBuilderException(e);
         }
         return result;
     }

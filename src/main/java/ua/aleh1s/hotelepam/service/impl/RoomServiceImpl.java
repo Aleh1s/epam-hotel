@@ -1,11 +1,6 @@
 package ua.aleh1s.hotelepam.service.impl;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Part;
 import lombok.AllArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import ua.aleh1s.hotelepam.exception.ApplicationException;
 import ua.aleh1s.hotelepam.exception.ServiceException;
 import ua.aleh1s.hotelepam.model.criteria.Order;
 import ua.aleh1s.hotelepam.model.criteria.RoomCriteria;
@@ -21,13 +16,14 @@ import ua.aleh1s.hotelepam.utils.PageRequest;
 import ua.aleh1s.hotelepam.utils.Period;
 import ua.aleh1s.hotelepam.validator.impl.RoomDtoValidator;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.*;
+import static java.util.Objects.nonNull;
 import static ua.aleh1s.hotelepam.model.criteria.Order.DESC;
 
 @AllArgsConstructor
@@ -183,17 +179,6 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public byte[] getImageByRoomNumber(Integer roomNumber) {
         return roomRepository.getImageByRoomNumber(roomNumber);
-    }
-
-    @Override
-    public void deleteByNumber(Integer roomNumber) throws ServiceException {
-        List<ReservationEntity> actualReservations =
-                reservationRepository.getActualReservationsByRoomNumber(roomNumber);
-
-        if (!actualReservations.isEmpty())
-            throw new ServiceException("Cannot delete room. It has uncompleted reservations!");
-
-        roomRepository.deleteByNumber(roomNumber);
     }
 
     private boolean isRoomBusy(Period requestedPeriod, List<ReservationEntity> roomReservations) {
